@@ -1,3 +1,4 @@
+<!--首页顶上那个导航栏-->
 <template>
   <div class="navbar">
     <div class="left-side">

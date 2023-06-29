@@ -16,7 +16,7 @@ export default {
   'searchTable.form.status.online': 'Online',
   'searchTable.form.status.offline': 'Offline',
   'searchTable.form.search': 'Search',
-  'searchTable.form.reset': 'Reset',
+  'searchTable.form.clean': 'Reset',
   'searchTable.form.selectDefault': 'All',
   'searchTable.operation.create': 'Create',
   'searchTable.operation.import': 'Import',

@@ -8,6 +8,7 @@
   import { openWindow, regexUrl } from '@/utils';
   import useMenuTree from './use-menu-tree';
 
+  // 这是在通过代码构建页面,及构建左侧导航栏页面
   export default defineComponent({
     emit: ['collapse'],
     setup() {
@@ -30,6 +31,7 @@
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
 
+      // 用于打开新页面
       const goto = (item: RouteRecordRaw) => {
         // Open external link
         if (regexUrl.test(item.path)) {
@@ -89,6 +91,7 @@
           appStore.updateSettings({ menuCollapse: val });
       };
 
+      // travel遍历一个菜单, renderSubMenu就是遍历menuTree之后的内容
       const renderSubMenu = () => {
         function travel(_route: RouteRecordRaw[], nodes = []) {
           if (_route) {

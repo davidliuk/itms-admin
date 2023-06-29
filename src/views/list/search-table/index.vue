@@ -1,9 +1,39 @@
 <template>
+  <!--    该模板为查询界面模板  -->
   <div class="container">
     <Breadcrumb :items="['menu.list', 'menu.list.searchTable']" />
     <a-card class="general-card" :title="$t('menu.list.searchTable')">
       <a-row>
         <a-col :flex="1">
+          <!--这里是查询部分，分为6个查询部分，我们的订单查询要结合订单的元信息进行查询
+          也就是数据库表的order_info部分
+    order_no              char(64)       default ''                not null comment '订单号',
+    nick_name             varchar(200)                             null comment '会员昵称',
+    receiver_name         varchar(100)                             null comment '收货人姓名',
+    order_status          tinyint        default 0                 not null comment '订单状态【0->待付款；1->待发货；2->已发货；3->待用户收货，已完成；-1->已取消】',
+    payment_time          datetime                                 null comment '支付时间',
+    take_name             varchar(50)    default ''                null comment '提货点名称',
+
+    高级功能
+    
+    user_id               bigint         default 0                 not null comment '会员_id',
+    total_amount          decimal(10, 2) default 0.00              not null comment '订单总额（应当设定为一个区间）',
+    feight_fee            decimal(10, 2) default 0.00              not null comment '运费',
+    refundable_time       datetime                                 null comment '可退款日期（签收后1天）',
+    courier_id            bigint         default 0                 not null comment '配送员id',
+    courier_name          varchar(20)                              null comment '配送员名称',
+    courier_phone         varchar(11)                              null comment '配送员电话',
+    receiver_phone        varchar(32)                              null comment '收货人电话',
+    receiver_post_code    varchar(32)                              null comment '收货人邮编',
+    receiver_province     bigint                                   null comment '省份/直辖市',
+    receiver_city         bigint                                   null comment '城市',
+    receiver_district     bigint                                   null comment '区',
+    receiver_address      varchar(200)                             null comment '详细地址',
+    delivery_time         datetime                                 null comment '发货时间',
+    take_time             datetime                                 null comment '提货时间',
+    receive_time          datetime                                 null comment '确认收货时间',
+    ware_id               bigint         default 0                 not null comment '仓库id',
+          -->
           <a-form
             :model="formModel"
             :label-col-props="{ span: 6 }"
@@ -17,7 +47,7 @@
                   :label="$t('searchTable.form.number')"
                 >
                   <a-input
-                    v-model="formModel.number"
+                    v-model="formModel.order_no"
                     :placeholder="$t('searchTable.form.number.placeholder')"
                   />
                 </a-form-item>
@@ -25,31 +55,44 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('searchTable.form.name')">
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formModel.nick_name"
                     :placeholder="$t('searchTable.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="contentType"
-                  :label="$t('searchTable.form.contentType')"
+                  field="name"
+                  :label="$t('searchTable.form.receiver_name')"
                 >
-                  <a-select
-                    v-model="formModel.contentType"
-                    :options="contentTypeOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                  <a-input
+                    v-model="formModel.nick_name"
+                    :placeholder="
+                      $t('searchTable.form.receiver_name.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
+              <!--              <a-col :span="8">-->
+              <!--                <a-form-item-->
+              <!--                  field="contentType"-->
+              <!--                  :label="$t('searchTable.form.contentType')"-->
+              <!--                >-->
+              <!--                  <a-select-->
+              <!--                    v-model="formModel.contentType"-->
+              <!--                    :options="contentTypeOptions"-->
+              <!--                    :placeholder="$t('searchTable.form.selectDefault')"-->
+              <!--                  />-->
+              <!--                </a-form-item>-->
+              <!--              </a-col>-->
               <a-col :span="8">
                 <a-form-item
-                  field="filterType"
-                  :label="$t('searchTable.form.filterType')"
+                  field="order_status"
+                  :label="$t('searchTable.form.order_status')"
                 >
                   <a-select
-                    v-model="formModel.filterType"
-                    :options="filterTypeOptions"
+                    v-model="formModel.order_status"
+                    :options="order_statusOptions"
                     :placeholder="$t('searchTable.form.selectDefault')"
                   />
                 </a-form-item>
@@ -57,26 +100,37 @@
               <a-col :span="8">
                 <a-form-item
                   field="createdTime"
-                  :label="$t('searchTable.form.createdTime')"
+                  :label="$t('searchTable.form.payment_time')"
                 >
                   <a-range-picker
-                    v-model="formModel.createdTime"
+                    v-model="formModel.payment_time"
                     style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="status"
-                  :label="$t('searchTable.form.status')"
+                  field="number"
+                  :label="$t('searchTable.form.take_name')"
                 >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                  <a-input
+                    v-model="formModel.take_name"
+                    :placeholder="$t('searchTable.form.take_name')"
                   />
                 </a-form-item>
               </a-col>
+              <!--              <a-col :span="8">-->
+              <!--                <a-form-item-->
+              <!--                  field="status"-->
+              <!--                  :label="$t('searchTable.form.status')"-->
+              <!--                >-->
+              <!--                  <a-select-->
+              <!--                    v-model="formModel.status"-->
+              <!--                    :options="statusOptions"-->
+              <!--                    :placeholder="$t('searchTable.form.selectDefault')"-->
+              <!--                  />-->
+              <!--                </a-form-item>-->
+              <!--              </a-col>-->
             </a-row>
           </a-form>
         </a-col>
@@ -93,7 +147,7 @@
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('searchTable.form.reset') }}
+              {{ $t('searchTable.form.clean') }}
             </a-button>
           </a-space>
         </a-col>
@@ -196,10 +250,10 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <template #contentType="{ record }">
+        <template #order_status="{ record }">
           <a-space>
             <a-avatar
-              v-if="record.contentType === 'img'"
+              v-if="record.order_status === '待付款'"
               :size="16"
               shape="square"
             >
@@ -209,7 +263,27 @@
               />
             </a-avatar>
             <a-avatar
-              v-else-if="record.contentType === 'horizontalVideo'"
+              v-else-if="record.order_status === '代发货'"
+              :size="16"
+              shape="square"
+            >
+              <img
+                alt="avatar"
+                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
+              />
+            </a-avatar>
+            <a-avatar
+              v-else-if="record.order_status === '已发货'"
+              :size="16"
+              shape="square"
+            >
+              <img
+                alt="avatar"
+                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
+              />
+            </a-avatar>
+            <a-avatar
+              v-else-if="record.order_status === '已完成'"
               :size="16"
               shape="square"
             >
@@ -224,16 +298,14 @@
                 src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
               />
             </a-avatar>
-            {{ $t(`searchTable.form.contentType.${record.contentType}`) }}
+            {{ $t(`searchTable.form.order_status.${record.order_status}`) }}
           </a-space>
         </template>
-        <template #filterType="{ record }">
-          {{ $t(`searchTable.form.filterType.${record.filterType}`) }}
+        <template #payment_time="{ record }">
+          {{ $t(`searchTable.form.order_status.${record.payment_time}`) }}
         </template>
-        <template #status="{ record }">
-          <span v-if="record.status === 'offline'" class="circle"></span>
-          <span v-else class="circle pass"></span>
-          {{ $t(`searchTable.form.status.${record.status}`) }}
+        <template #take_name="{ record }">
+          {{ $t(`searchTable.form.order_status.${record.take_name}`) }}
         </template>
         <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
@@ -259,14 +331,21 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  // order_no              char(64)       default ''                not null comment '订单号',
+  // nick_name             varchar(200)                             null comment '会员昵称',
+  // receiver_name         varchar(100)                             null comment '收货人姓名',
+  // order_status          tinyint        default 0                 not null comment '订单状态【0->待付款；1->待发货；2->已发货；3->待用户收货，已完成；-1->已取消】',
+  // payment_time          datetime                                 null comment '支付时间',
+  // take_name             varchar(50)    default ''                null comment '提货点名称',
+
   const generateFormModel = () => {
     return {
-      number: '',
-      name: '',
-      contentType: '',
-      filterType: '',
-      createdTime: [],
-      status: '',
+      order_no: '',
+      nick_name: '',
+      receiver_name: '',
+      order_status: '',
+      payment_time: [],
+      take_name: '',
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -304,40 +383,53 @@
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
+    // order_no
+    // nick_name
+    // receiver_name
+    // order_status
+    // payment_time
+    // take_name
+    // total_amount
+    // courier_name
     {
       title: t('searchTable.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('searchTable.columns.number'),
-      dataIndex: 'number',
+      title: t('searchTable.columns.order_no'),
+      dataIndex: 'order_no',
     },
     {
-      title: t('searchTable.columns.name'),
-      dataIndex: 'name',
+      title: t('searchTable.columns.nick_name'),
+      dataIndex: 'nick_name',
     },
     {
-      title: t('searchTable.columns.contentType'),
-      dataIndex: 'contentType',
-      slotName: 'contentType',
+      title: t('searchTable.columns.receiver_name'),
+      dataIndex: 'receiver_name',
+      slotName: 'receiver_name',
     },
     {
-      title: t('searchTable.columns.filterType'),
-      dataIndex: 'filterType',
+      title: t('searchTable.columns.order_status'),
+      dataIndex: 'order_status',
     },
     {
-      title: t('searchTable.columns.count'),
-      dataIndex: 'count',
+      title: t('searchTable.columns.payment_time'),
+      dataIndex: 'payment_time',
     },
     {
-      title: t('searchTable.columns.createdTime'),
-      dataIndex: 'createdTime',
+      title: t('searchTable.columns.take_name'),
+      dataIndex: 'take_name',
     },
     {
-      title: t('searchTable.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
+      title: t('searchTable.columns.total_amount'),
+      dataIndex: 'total_amount',
+      slotName: 'total_amount',
+    },
+    {
+      title: t('searchTable.columns.courier_name'),
+      dataIndex: 'courier_name',
+      slotName: 'courier_name',
     },
     {
       title: t('searchTable.columns.operations'),
@@ -345,6 +437,7 @@
       slotName: 'operations',
     },
   ]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('searchTable.form.contentType.img'),
@@ -359,17 +452,30 @@
       value: 'verticalVideo',
     },
   ]);
-  const filterTypeOptions = computed<SelectOptionData[]>(() => [
+  // eslint-disable-next-line camelcase
+  const order_statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('searchTable.form.filterType.artificial'),
-      value: 'artificial',
+      label: t('searchTable.form.order_status.PendingPayment'),
+      value: 'PendingPayment',
     },
     {
-      label: t('searchTable.form.filterType.rules'),
-      value: 'rules',
+      label: t('searchTable.form.order_status.PendingShipment'),
+      value: 'PendingShipment',
+    },
+    {
+      label: t('searchTable.form.order_status.Shipped'),
+      value: 'Shipped',
+    },
+    {
+      label: t('searchTable.form.order_status.Completed'),
+      value: 'Completed',
+    },
+    {
+      label: t('searchTable.form.order_status.Cancelled'),
+      value: 'Cancelled',
     },
   ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
+  computed<SelectOptionData[]>(() => [
     {
       label: t('searchTable.form.status.online'),
       value: 'online',
@@ -379,6 +485,7 @@
       value: 'offline',
     },
   ]);
+  // 从后端获取各种数据，我们把查询条件也传过去，让后端处理处数据来
   const fetchData = async (
     params: PolicyParams = { current: 1, pageSize: 20 }
   ) => {
@@ -400,14 +507,23 @@
       ...basePagination,
       ...formModel.value,
     } as unknown as PolicyParams);
+    // 传入和数据结构就是两个字典拼在一起，仅此而已
+    // console.log({
+    //     ...basePagination,
+    //     ...formModel.value,
+    // })
   };
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, current });
   };
 
   fetchData();
+
+  // 这个是清空，也就是清空搜索条件，仅此而已
   const reset = () => {
+    // 这个fromModel就是搜索条件
     formModel.value = generateFormModel();
+    // console.log(formModel.value);
   };
 
   const handleSelectDensity = (

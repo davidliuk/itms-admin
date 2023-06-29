@@ -1,16 +1,26 @@
 import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
+import { LoginRes } from '@/api/user';
 
 export interface PolicyRecord {
+  // order_no
+  // nick_name
+  // receiver_name
+  // order_status
+  // payment_time
+  // take_name
+  // total_amount
+  // courier_name
   id: string;
-  number: number;
-  name: string;
-  contentType: 'img' | 'horizontalVideo' | 'verticalVideo';
-  filterType: 'artificial' | 'rules';
-  count: number;
-  status: 'online' | 'offline';
-  createdTime: string;
+  order_no: number;
+  nick_name: string;
+  receiver_name: string;
+  order_status: '待付款' | '代发货' | '已发货' | '已完成' | '已取消';
+  payment_time: string;
+  take_name: string;
+  total_amount: number;
+  courier_name: string;
 }
 
 export interface PolicyParams extends Partial<PolicyRecord> {
@@ -24,12 +34,13 @@ export interface PolicyListRes {
 }
 
 export function queryPolicyList(params: PolicyParams) {
-  return axios.get<PolicyListRes>('/api/list/policy', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
+  return axios.post<PolicyListRes>('/api/list/policy', params);
+  // return axios.get<PolicyListRes>('/api/list/policy', {
+  //   params,
+  //   paramsSerializer: (obj) => {
+  //     return qs.stringify(obj);
+  //   },
+  // });
 }
 
 export interface ServiceRecord {

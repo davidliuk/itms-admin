@@ -1,0 +1,4909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="@123.57.29.205">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.48">
+    <root id="1">
+      <DefaultCasing>exact</DefaultCasing>
+      <DefaultEngine>InnoDB</DefaultEngine>
+      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
+      <Grants>|root||root||ALTER|G
+|root||root|localhost|ALTER|G
+|root||root||ALTER ROUTINE|G
+|root||root|localhost|ALTER ROUTINE|G
+|root||root||CREATE|G
+|root||root|localhost|CREATE|G
+|root||root||CREATE ROUTINE|G
+|root||root|localhost|CREATE ROUTINE|G
+|root||root||CREATE TABLESPACE|G
+|root||root|localhost|CREATE TABLESPACE|G
+|root||root||CREATE TEMPORARY TABLES|G
+|root||root|localhost|CREATE TEMPORARY TABLES|G
+|root||root||CREATE USER|G
+|root||root|localhost|CREATE USER|G
+|root||root||CREATE VIEW|G
+|root||root|localhost|CREATE VIEW|G
+|root||root||DELETE|G
+|root||root|localhost|DELETE|G
+|root||root||DROP|G
+|root||root|localhost|DROP|G
+|root||root||EVENT|G
+|root||root|localhost|EVENT|G
+|root||root||EXECUTE|G
+|root||root|localhost|EXECUTE|G
+|root||root||FILE|G
+|root||root|localhost|FILE|G
+|root||root||INDEX|G
+|root||root|localhost|INDEX|G
+|root||root||INSERT|G
+|root||root|localhost|INSERT|G
+|root||root||LOCK TABLES|G
+|root||root|localhost|LOCK TABLES|G
+|root||root||PROCESS|G
+|root||root|localhost|PROCESS|G
+|root||root||REFERENCES|G
+|root||root|localhost|REFERENCES|G
+|root||root||RELOAD|G
+|root||root|localhost|RELOAD|G
+|root||root||REPLICATION CLIENT|G
+|root||root|localhost|REPLICATION CLIENT|G
+|root||root||REPLICATION SLAVE|G
+|root||root|localhost|REPLICATION SLAVE|G
+|root||root||SELECT|G
+|root||root|localhost|SELECT|G
+|root||root||SHOW DATABASES|G
+|root||root|localhost|SHOW DATABASES|G
+|root||root||SHOW VIEW|G
+|root||root|localhost|SHOW VIEW|G
+|root||root||SHUTDOWN|G
+|root||root|localhost|SHUTDOWN|G
+|root||mysql.session|localhost|SUPER|G
+|root||root||SUPER|G
+|root||root|localhost|SUPER|G
+|root||root||TRIGGER|G
+|root||root|localhost|TRIGGER|G
+|root||root||UPDATE|G
+|root||root|localhost|UPDATE|G
+|root||root||grant option|G
+|root||root|localhost|grant option|G
+|root||user01|localhost|grant option|G
+dbx|schema||user01|localhost|CREATE|G
+dbx|schema||user01|localhost|INSERT|G
+dbx|schema||user01|localhost|SELECT|G
+dbx|schema||user01|localhost|UPDATE|G
+performance_schema|schema||mysql.session|localhost|SELECT|G
+sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
+      <ServerVersion>5.7.37</ServerVersion>
+    </root>
+    <collation id="2" parent="1" name="armscii8_bin">
+      <Charset>armscii8</Charset>
+    </collation>
+    <collation id="3" parent="1" name="armscii8_general_ci">
+      <Charset>armscii8</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="4" parent="1" name="ascii_bin">
+      <Charset>ascii</Charset>
+    </collation>
+    <collation id="5" parent="1" name="ascii_general_ci">
+      <Charset>ascii</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="6" parent="1" name="big5_bin">
+      <Charset>big5</Charset>
+    </collation>
+    <collation id="7" parent="1" name="big5_chinese_ci">
+      <Charset>big5</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="8" parent="1" name="binary">
+      <Charset>binary</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="9" parent="1" name="cp1250_bin">
+      <Charset>cp1250</Charset>
+    </collation>
+    <collation id="10" parent="1" name="cp1250_croatian_ci">
+      <Charset>cp1250</Charset>
+    </collation>
+    <collation id="11" parent="1" name="cp1250_czech_cs">
+      <Charset>cp1250</Charset>
+    </collation>
+    <collation id="12" parent="1" name="cp1250_general_ci">
+      <Charset>cp1250</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="13" parent="1" name="cp1250_polish_ci">
+      <Charset>cp1250</Charset>
+    </collation>
+    <collation id="14" parent="1" name="cp1251_bin">
+      <Charset>cp1251</Charset>
+    </collation>
+    <collation id="15" parent="1" name="cp1251_bulgarian_ci">
+      <Charset>cp1251</Charset>
+    </collation>
+    <collation id="16" parent="1" name="cp1251_general_ci">
+      <Charset>cp1251</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="17" parent="1" name="cp1251_general_cs">
+      <Charset>cp1251</Charset>
+    </collation>
+    <collation id="18" parent="1" name="cp1251_ukrainian_ci">
+      <Charset>cp1251</Charset>
+    </collation>
+    <collation id="19" parent="1" name="cp1256_bin">
+      <Charset>cp1256</Charset>
+    </collation>
+    <collation id="20" parent="1" name="cp1256_general_ci">
+      <Charset>cp1256</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="21" parent="1" name="cp1257_bin">
+      <Charset>cp1257</Charset>
+    </collation>
+    <collation id="22" parent="1" name="cp1257_general_ci">
+      <Charset>cp1257</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="23" parent="1" name="cp1257_lithuanian_ci">
+      <Charset>cp1257</Charset>
+    </collation>
+    <collation id="24" parent="1" name="cp850_bin">
+      <Charset>cp850</Charset>
+    </collation>
+    <collation id="25" parent="1" name="cp850_general_ci">
+      <Charset>cp850</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="26" parent="1" name="cp852_bin">
+      <Charset>cp852</Charset>
+    </collation>
+    <collation id="27" parent="1" name="cp852_general_ci">
+      <Charset>cp852</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="28" parent="1" name="cp866_bin">
+      <Charset>cp866</Charset>
+    </collation>
+    <collation id="29" parent="1" name="cp866_general_ci">
+      <Charset>cp866</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="30" parent="1" name="cp932_bin">
+      <Charset>cp932</Charset>
+    </collation>
+    <collation id="31" parent="1" name="cp932_japanese_ci">
+      <Charset>cp932</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="32" parent="1" name="dec8_bin">
+      <Charset>dec8</Charset>
+    </collation>
+    <collation id="33" parent="1" name="dec8_swedish_ci">
+      <Charset>dec8</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="34" parent="1" name="eucjpms_bin">
+      <Charset>eucjpms</Charset>
+    </collation>
+    <collation id="35" parent="1" name="eucjpms_japanese_ci">
+      <Charset>eucjpms</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="36" parent="1" name="euckr_bin">
+      <Charset>euckr</Charset>
+    </collation>
+    <collation id="37" parent="1" name="euckr_korean_ci">
+      <Charset>euckr</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="38" parent="1" name="gb18030_bin">
+      <Charset>gb18030</Charset>
+    </collation>
+    <collation id="39" parent="1" name="gb18030_chinese_ci">
+      <Charset>gb18030</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="40" parent="1" name="gb18030_unicode_520_ci">
+      <Charset>gb18030</Charset>
+    </collation>
+    <collation id="41" parent="1" name="gb2312_bin">
+      <Charset>gb2312</Charset>
+    </collation>
+    <collation id="42" parent="1" name="gb2312_chinese_ci">
+      <Charset>gb2312</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="43" parent="1" name="gbk_bin">
+      <Charset>gbk</Charset>
+    </collation>
+    <collation id="44" parent="1" name="gbk_chinese_ci">
+      <Charset>gbk</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="45" parent="1" name="geostd8_bin">
+      <Charset>geostd8</Charset>
+    </collation>
+    <collation id="46" parent="1" name="geostd8_general_ci">
+      <Charset>geostd8</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="47" parent="1" name="greek_bin">
+      <Charset>greek</Charset>
+    </collation>
+    <collation id="48" parent="1" name="greek_general_ci">
+      <Charset>greek</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="49" parent="1" name="hebrew_bin">
+      <Charset>hebrew</Charset>
+    </collation>
+    <collation id="50" parent="1" name="hebrew_general_ci">
+      <Charset>hebrew</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="51" parent="1" name="hp8_bin">
+      <Charset>hp8</Charset>
+    </collation>
+    <collation id="52" parent="1" name="hp8_english_ci">
+      <Charset>hp8</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="53" parent="1" name="keybcs2_bin">
+      <Charset>keybcs2</Charset>
+    </collation>
+    <collation id="54" parent="1" name="keybcs2_general_ci">
+      <Charset>keybcs2</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="55" parent="1" name="koi8r_bin">
+      <Charset>koi8r</Charset>
+    </collation>
+    <collation id="56" parent="1" name="koi8r_general_ci">
+      <Charset>koi8r</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="57" parent="1" name="koi8u_bin">
+      <Charset>koi8u</Charset>
+    </collation>
+    <collation id="58" parent="1" name="koi8u_general_ci">
+      <Charset>koi8u</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="59" parent="1" name="latin1_bin">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="60" parent="1" name="latin1_danish_ci">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="61" parent="1" name="latin1_general_ci">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="62" parent="1" name="latin1_general_cs">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="63" parent="1" name="latin1_german1_ci">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="64" parent="1" name="latin1_german2_ci">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="65" parent="1" name="latin1_spanish_ci">
+      <Charset>latin1</Charset>
+    </collation>
+    <collation id="66" parent="1" name="latin1_swedish_ci">
+      <Charset>latin1</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="67" parent="1" name="latin2_bin">
+      <Charset>latin2</Charset>
+    </collation>
+    <collation id="68" parent="1" name="latin2_croatian_ci">
+      <Charset>latin2</Charset>
+    </collation>
+    <collation id="69" parent="1" name="latin2_czech_cs">
+      <Charset>latin2</Charset>
+    </collation>
+    <collation id="70" parent="1" name="latin2_general_ci">
+      <Charset>latin2</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="71" parent="1" name="latin2_hungarian_ci">
+      <Charset>latin2</Charset>
+    </collation>
+    <collation id="72" parent="1" name="latin5_bin">
+      <Charset>latin5</Charset>
+    </collation>
+    <collation id="73" parent="1" name="latin5_turkish_ci">
+      <Charset>latin5</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="74" parent="1" name="latin7_bin">
+      <Charset>latin7</Charset>
+    </collation>
+    <collation id="75" parent="1" name="latin7_estonian_cs">
+      <Charset>latin7</Charset>
+    </collation>
+    <collation id="76" parent="1" name="latin7_general_ci">
+      <Charset>latin7</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="77" parent="1" name="latin7_general_cs">
+      <Charset>latin7</Charset>
+    </collation>
+    <collation id="78" parent="1" name="macce_bin">
+      <Charset>macce</Charset>
+    </collation>
+    <collation id="79" parent="1" name="macce_general_ci">
+      <Charset>macce</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="80" parent="1" name="macroman_bin">
+      <Charset>macroman</Charset>
+    </collation>
+    <collation id="81" parent="1" name="macroman_general_ci">
+      <Charset>macroman</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="82" parent="1" name="sjis_bin">
+      <Charset>sjis</Charset>
+    </collation>
+    <collation id="83" parent="1" name="sjis_japanese_ci">
+      <Charset>sjis</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="84" parent="1" name="swe7_bin">
+      <Charset>swe7</Charset>
+    </collation>
+    <collation id="85" parent="1" name="swe7_swedish_ci">
+      <Charset>swe7</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="86" parent="1" name="tis620_bin">
+      <Charset>tis620</Charset>
+    </collation>
+    <collation id="87" parent="1" name="tis620_thai_ci">
+      <Charset>tis620</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="88" parent="1" name="ucs2_bin">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="89" parent="1" name="ucs2_croatian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="90" parent="1" name="ucs2_czech_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="91" parent="1" name="ucs2_danish_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="92" parent="1" name="ucs2_esperanto_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="93" parent="1" name="ucs2_estonian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="94" parent="1" name="ucs2_general_ci">
+      <Charset>ucs2</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="95" parent="1" name="ucs2_general_mysql500_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="96" parent="1" name="ucs2_german2_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="97" parent="1" name="ucs2_hungarian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="98" parent="1" name="ucs2_icelandic_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="99" parent="1" name="ucs2_latvian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="100" parent="1" name="ucs2_lithuanian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="101" parent="1" name="ucs2_persian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="102" parent="1" name="ucs2_polish_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="103" parent="1" name="ucs2_roman_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="104" parent="1" name="ucs2_romanian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="105" parent="1" name="ucs2_sinhala_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="106" parent="1" name="ucs2_slovak_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="107" parent="1" name="ucs2_slovenian_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="108" parent="1" name="ucs2_spanish2_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="109" parent="1" name="ucs2_spanish_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="110" parent="1" name="ucs2_swedish_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="111" parent="1" name="ucs2_turkish_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="112" parent="1" name="ucs2_unicode_520_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="113" parent="1" name="ucs2_unicode_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="114" parent="1" name="ucs2_vietnamese_ci">
+      <Charset>ucs2</Charset>
+    </collation>
+    <collation id="115" parent="1" name="ujis_bin">
+      <Charset>ujis</Charset>
+    </collation>
+    <collation id="116" parent="1" name="ujis_japanese_ci">
+      <Charset>ujis</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="117" parent="1" name="utf16_bin">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="118" parent="1" name="utf16_croatian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="119" parent="1" name="utf16_czech_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="120" parent="1" name="utf16_danish_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="121" parent="1" name="utf16_esperanto_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="122" parent="1" name="utf16_estonian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="123" parent="1" name="utf16_general_ci">
+      <Charset>utf16</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="124" parent="1" name="utf16_german2_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="125" parent="1" name="utf16_hungarian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="126" parent="1" name="utf16_icelandic_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="127" parent="1" name="utf16_latvian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="128" parent="1" name="utf16_lithuanian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="129" parent="1" name="utf16_persian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="130" parent="1" name="utf16_polish_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="131" parent="1" name="utf16_roman_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="132" parent="1" name="utf16_romanian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="133" parent="1" name="utf16_sinhala_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="134" parent="1" name="utf16_slovak_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="135" parent="1" name="utf16_slovenian_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="136" parent="1" name="utf16_spanish2_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="137" parent="1" name="utf16_spanish_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="138" parent="1" name="utf16_swedish_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="139" parent="1" name="utf16_turkish_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="140" parent="1" name="utf16_unicode_520_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="141" parent="1" name="utf16_unicode_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="142" parent="1" name="utf16_vietnamese_ci">
+      <Charset>utf16</Charset>
+    </collation>
+    <collation id="143" parent="1" name="utf16le_bin">
+      <Charset>utf16le</Charset>
+    </collation>
+    <collation id="144" parent="1" name="utf16le_general_ci">
+      <Charset>utf16le</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="145" parent="1" name="utf32_bin">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="146" parent="1" name="utf32_croatian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="147" parent="1" name="utf32_czech_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="148" parent="1" name="utf32_danish_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="149" parent="1" name="utf32_esperanto_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="150" parent="1" name="utf32_estonian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="151" parent="1" name="utf32_general_ci">
+      <Charset>utf32</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="152" parent="1" name="utf32_german2_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="153" parent="1" name="utf32_hungarian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="154" parent="1" name="utf32_icelandic_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="155" parent="1" name="utf32_latvian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="156" parent="1" name="utf32_lithuanian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="157" parent="1" name="utf32_persian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="158" parent="1" name="utf32_polish_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="159" parent="1" name="utf32_roman_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="160" parent="1" name="utf32_romanian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="161" parent="1" name="utf32_sinhala_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="162" parent="1" name="utf32_slovak_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="163" parent="1" name="utf32_slovenian_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="164" parent="1" name="utf32_spanish2_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="165" parent="1" name="utf32_spanish_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="166" parent="1" name="utf32_swedish_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="167" parent="1" name="utf32_turkish_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="168" parent="1" name="utf32_unicode_520_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="169" parent="1" name="utf32_unicode_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="170" parent="1" name="utf32_vietnamese_ci">
+      <Charset>utf32</Charset>
+    </collation>
+    <collation id="171" parent="1" name="utf8_bin">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="172" parent="1" name="utf8_croatian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="173" parent="1" name="utf8_czech_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="174" parent="1" name="utf8_danish_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="175" parent="1" name="utf8_esperanto_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="176" parent="1" name="utf8_estonian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="177" parent="1" name="utf8_general_ci">
+      <Charset>utf8</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="178" parent="1" name="utf8_general_mysql500_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="179" parent="1" name="utf8_german2_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="180" parent="1" name="utf8_hungarian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="181" parent="1" name="utf8_icelandic_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="182" parent="1" name="utf8_latvian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="183" parent="1" name="utf8_lithuanian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="184" parent="1" name="utf8_persian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="185" parent="1" name="utf8_polish_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="186" parent="1" name="utf8_roman_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="187" parent="1" name="utf8_romanian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="188" parent="1" name="utf8_sinhala_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="189" parent="1" name="utf8_slovak_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="190" parent="1" name="utf8_slovenian_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="191" parent="1" name="utf8_spanish2_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="192" parent="1" name="utf8_spanish_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="193" parent="1" name="utf8_swedish_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="194" parent="1" name="utf8_turkish_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="195" parent="1" name="utf8_unicode_520_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="196" parent="1" name="utf8_unicode_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="197" parent="1" name="utf8_vietnamese_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="198" parent="1" name="utf8mb4_bin">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="199" parent="1" name="utf8mb4_croatian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="200" parent="1" name="utf8mb4_czech_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="201" parent="1" name="utf8mb4_danish_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="202" parent="1" name="utf8mb4_esperanto_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="203" parent="1" name="utf8mb4_estonian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="204" parent="1" name="utf8mb4_general_ci">
+      <Charset>utf8mb4</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="205" parent="1" name="utf8mb4_german2_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="206" parent="1" name="utf8mb4_hungarian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="207" parent="1" name="utf8mb4_icelandic_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="208" parent="1" name="utf8mb4_latvian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="209" parent="1" name="utf8mb4_lithuanian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="210" parent="1" name="utf8mb4_persian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="211" parent="1" name="utf8mb4_polish_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="212" parent="1" name="utf8mb4_roman_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="213" parent="1" name="utf8mb4_romanian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="214" parent="1" name="utf8mb4_sinhala_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="215" parent="1" name="utf8mb4_slovak_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="216" parent="1" name="utf8mb4_slovenian_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="217" parent="1" name="utf8mb4_spanish2_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="218" parent="1" name="utf8mb4_spanish_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="219" parent="1" name="utf8mb4_swedish_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="220" parent="1" name="utf8mb4_turkish_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="221" parent="1" name="utf8mb4_unicode_520_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="222" parent="1" name="utf8mb4_unicode_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="223" parent="1" name="utf8mb4_vietnamese_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <schema id="224" parent="1" name="glkt_acl">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <schema id="225" parent="1" name="glkt_activity">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="226" parent="1" name="glkt_live">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="227" parent="1" name="glkt_order">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="228" parent="1" name="glkt_user">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="229" parent="1" name="glkt_vod">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="230" parent="1" name="glkt_wechat">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="231" parent="1" name="hmdp">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="232" parent="1" name="information_schema">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="233" parent="1" name="itms-acl">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="234" parent="1" name="itms-order">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="235" parent="1" name="itms-product">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="236" parent="1" name="itms-sys">
+      <CollationName>utf32_general_ci</CollationName>
+    </schema>
+    <schema id="237" parent="1" name="itms-user">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="238" parent="1" name="knownact_feed">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="239" parent="1" name="knownact_post">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="240" parent="1" name="knownact_user">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="241" parent="1" name="mall_admin">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="242" parent="1" name="mall_oms">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="243" parent="1" name="mall_pms">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="244" parent="1" name="mall_sms">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="245" parent="1" name="mall_ums">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="246" parent="1" name="mall_wms">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="247" parent="1" name="my_db">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="248" parent="1" name="mysql">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="249" parent="1" name="neusurvey_survey">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="250" parent="1" name="neusurvey_user">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="251" parent="1" name="performance_schema">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="252" parent="1" name="seckill">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="253" parent="1" name="shequ-acl">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="254" parent="1" name="socialrec">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="255" parent="1" name="sys">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="256" parent="1" name="tracenote">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="257" parent="1" name="tracenote_user">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="258" parent="1" name="xcplus_users">
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <user id="259" parent="1" name="mysql.session">
+      <Host>localhost</Host>
+    </user>
+    <user id="260" parent="1" name="mysql.sys">
+      <Host>localhost</Host>
+    </user>
+    <user id="261" parent="1" name="root"/>
+    <user id="262" parent="1" name="root">
+      <Host>localhost</Host>
+    </user>
+    <user id="263" parent="1" name="test"/>
+    <user id="264" parent="1" name="user01">
+      <Host>localhost</Host>
+    </user>
+    <table id="265" parent="233" name="admin">
+      <Comment>用户表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_bin</CollationName>
+    </table>
+    <table id="266" parent="233" name="admin_login_log">
+      <Comment>后台用户登录日志表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="267" parent="233" name="admin_role">
+      <Comment>用户角色</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="268" parent="233" name="permission">
+      <Comment>权限</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_bin</CollationName>
+    </table>
+    <table id="269" parent="233" name="role">
+      <Comment>角色</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="270" parent="233" name="role_permission">
+      <Comment>角色权限</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="271" parent="234" name="cart_info">
+      <Comment>购物车表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="272" parent="234" name="order_deliver">
+      <Comment>订单配送表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="273" parent="234" name="order_info">
+      <Comment>订单</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="274" parent="234" name="order_item">
+      <Comment>订单项信息</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="275" parent="234" name="order_log">
+      <Comment>订单操作日志记录</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="276" parent="234" name="order_return_apply">
+      <Comment>订单退货申请</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="277" parent="234" name="order_return_reason">
+      <Comment>退货原因表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="278" parent="234" name="order_set">
+      <Comment>订单设置表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="279" parent="234" name="payment_info">
+      <Comment>支付信息表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="280" parent="234" name="refund_info">
+      <Comment>退款信息表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="281" parent="235" name="attr">
+      <Comment>商品属性</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="282" parent="235" name="attr_group">
+      <Comment>属性分组</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="283" parent="235" name="base_category_trademark">
+      <Comment>三级分类表</Comment>
+      <Engine>InnoDB</Engine>
+      <Options>row_format
+DYNAMIC</Options>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="284" parent="235" name="category">
+      <Comment>商品三级分类</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="285" parent="235" name="comment">
+      <Comment>商品评价</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="286" parent="235" name="comment_replay">
+      <Comment>产品评价回复表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="287" parent="235" name="sku_attr_value">
+      <Comment>spu属性值</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="288" parent="235" name="sku_image">
+      <Comment>商品图片</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="289" parent="235" name="sku_info">
+      <Comment>sku信息</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="290" parent="235" name="sku_poster">
+      <Comment>商品海报表</Comment>
+      <Engine>InnoDB</Engine>
+      <Options>row_format
+DYNAMIC</Options>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="291" parent="235" name="sku_stock_history">
+      <Comment>sku的库存历史记录</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="292" parent="235" name="sku_ware">
+      <Comment>sku ware关联表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="293" parent="235" name="supplier">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf32_general_ci</CollationName>
+    </table>
+    <table id="294" parent="236" name="distribution_order">
+      <Comment>分发单表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="295" parent="236" name="purchase_order">
+      <Comment>购货表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="296" parent="236" name="region">
+      <Comment>地区表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="297" parent="236" name="region_station">
+      <Comment>分站信息表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="298" parent="236" name="region_ware">
+      <Comment>城市仓库关联表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="299" parent="236" name="transfer_order">
+      <Comment>调拨单表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="300" parent="236" name="ware">
+      <Comment>仓库表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="301" parent="237" name="address">
+      <Comment>配送地址表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="302" parent="237" name="courier_account">
+      <Comment>配送员账户</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="303" parent="237" name="courier_bank">
+      <Comment>配送员银行卡表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="304" parent="237" name="courier_bill">
+      <Comment>交易账单表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="305" parent="237" name="courier_info">
+      <Comment>配送员表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="306" parent="237" name="courier_withdraw">
+      <Comment>配送员提现表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="307" parent="237" name="delivery_bill">
+      <Comment>配送单表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="308" parent="237" name="invoice">
+      <Comment>发票表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="309" parent="237" name="logistics">
+      <Comment>物流公司表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="310" parent="237" name="user">
+      <Comment>会员表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="311" parent="237" name="user_login_log">
+      <Comment>用户登陆记录表</Comment>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <column id="312" parent="265" name="id">
+      <AutoIncrement>12</AutoIncrement>
+      <Comment>会员id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="313" parent="265" name="username">
+      <Comment>用户名</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="314" parent="265" name="password">
+      <Comment>密码</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="315" parent="265" name="name">
+      <Comment>姓名</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="316" parent="265" name="phone">
+      <Comment>手机</Comment>
+      <DasType>varchar(11)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="317" parent="265" name="ware_id">
+      <Comment>仓库id（默认为：0为平台用户）</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="318" parent="265" name="station_id">
+      <Comment>分站id（默认为：0为平台用户）</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="319" parent="265" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="320" parent="265" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="321" parent="265" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="322" parent="265" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="323" parent="265" name="uname">
+      <ColNames>username</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="324" parent="265" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="325" parent="265" name="uname">
+      <UnderlyingIndexName>uname</UnderlyingIndexName>
+    </key>
+    <column id="326" parent="266" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="327" parent="266" name="admin_id">
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="328" parent="266" name="ip">
+      <DasType>varchar(64)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="329" parent="266" name="address">
+      <DasType>varchar(100)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="330" parent="266" name="user_agent">
+      <Comment>浏览器登录类型</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="331" parent="266" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="332" parent="266" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="333" parent="266" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="334" parent="266" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="335" parent="266" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="336" parent="267" name="id">
+      <AutoIncrement>20</AutoIncrement>
+      <Comment>主键id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="337" parent="267" name="role_id">
+      <Comment>角色id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="338" parent="267" name="admin_id">
+      <Comment>用户id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="339" parent="267" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="340" parent="267" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>5</Position>
+    </column>
+    <column id="341" parent="267" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <index id="342" parent="267" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="343" parent="267" name="idx_role_id">
+      <ColNames>role_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="344" parent="267" name="idx_user_id">
+      <ColNames>admin_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="345" parent="267" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="346" parent="268" name="id">
+      <AutoIncrement>102</AutoIncrement>
+      <Comment>编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="347" parent="268" name="pid">
+      <Comment>所属上级</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="348" parent="268" name="name">
+      <Comment>名称</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="349" parent="268" name="code">
+      <Comment>名称code</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="350" parent="268" name="to_code">
+      <Comment>跳转页面code</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="351" parent="268" name="type">
+      <Comment>类型(1:菜单,2:按钮)</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="352" parent="268" name="status">
+      <Comment>状态(0:禁止,1:正常)</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="353" parent="268" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="354" parent="268" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="355" parent="268" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="356" parent="268" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="357" parent="268" name="idx_pid">
+      <ColNames>pid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="358" parent="268" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="359" parent="269" name="id">
+      <AutoIncrement>26</AutoIncrement>
+      <Comment>角色id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="360" parent="269" name="role_name">
+      <Comment>角色名称</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="361" parent="269" name="role_code">
+      <Comment>角色编码</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="362" parent="269" name="remark">
+      <Comment>备注</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="363" parent="269" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="364" parent="269" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>6</Position>
+    </column>
+    <column id="365" parent="269" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="366" parent="269" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="367" parent="269" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="368" parent="270" name="id">
+      <AutoIncrement>351</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="369" parent="270" name="role_id">
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="370" parent="270" name="permission_id">
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="371" parent="270" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="372" parent="270" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>5</Position>
+    </column>
+    <column id="373" parent="270" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <index id="374" parent="270" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="375" parent="270" name="idx_role_id">
+      <ColNames>role_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="376" parent="270" name="idx_permission_id">
+      <ColNames>permission_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="377" parent="270" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="378" parent="271" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="379" parent="271" name="user_id">
+      <Comment>用户id</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="380" parent="271" name="category_id">
+      <Comment>分类id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="381" parent="271" name="sku_type">
+      <Comment>sku类型</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="382" parent="271" name="sku_name">
+      <Comment>sku名称 (冗余)</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="383" parent="271" name="sku_id">
+      <Comment>skuid</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="384" parent="271" name="cart_price">
+      <Comment>放入购物车时价格</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="385" parent="271" name="sku_num">
+      <Comment>数量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="386" parent="271" name="per_limit">
+      <Comment>限购个数</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="387" parent="271" name="img_url">
+      <Comment>图片文件</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="388" parent="271" name="is_checked">
+      <DasType>tinyint(1)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <column id="389" parent="271" name="status">
+      <Comment>状态（1：正常 0：无效）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="390" parent="271" name="ware_id">
+      <Comment>仓库id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="391" parent="271" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="392" parent="271" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>15</Position>
+    </column>
+    <column id="393" parent="271" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <index id="394" parent="271" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="395" parent="271" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="396" parent="272" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="397" parent="272" name="deliver_date">
+      <Comment>配送日期</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="398" parent="272" name="order_id">
+      <Comment>订单id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="399" parent="272" name="logistics_id">
+      <Comment>物流公司id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="400" parent="272" name="logistics_name">
+      <Comment>物流公司名称</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="401" parent="272" name="logistics_phone">
+      <Comment>物流公司电话</Comment>
+      <DasType>varchar(11)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="402" parent="272" name="status">
+      <Comment>状态（0：默认，1：已发货，2：配送员收货，3：配送员送达）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="403" parent="272" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="404" parent="272" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="405" parent="272" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="406" parent="272" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="407" parent="272" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="408" parent="273" name="id">
+      <AutoIncrement>199</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="409" parent="273" name="user_id">
+      <Comment>会员_id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="410" parent="273" name="nick_name">
+      <Comment>昵称</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="411" parent="273" name="order_no">
+      <Comment>订单号</Comment>
+      <DasType>char(64)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="412" parent="273" name="coupon_id">
+      <Comment>使用的优惠券</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="413" parent="273" name="total_amount">
+      <Comment>订单总额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="414" parent="273" name="activity_amount">
+      <Comment>促销金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="415" parent="273" name="coupon_amount">
+      <Comment>优惠券</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="416" parent="273" name="original_total_amount">
+      <Comment>原价金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="417" parent="273" name="feight_fee">
+      <Comment>运费</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <column id="418" parent="273" name="feight_fee_reduce">
+      <Comment>减免运费</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <column id="419" parent="273" name="refundable_time">
+      <Comment>可退款日期（签收后1天）</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="420" parent="273" name="pay_type">
+      <Comment>支付方式【1-&gt;微信】</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="421" parent="273" name="source_type">
+      <Comment>订单来源[0-&gt;小程序；1-&gt;H5]</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>14</Position>
+    </column>
+    <column id="422" parent="273" name="order_status">
+      <Comment>订单状态【0-&gt;待付款；1-&gt;待发货；2-&gt;已发货；3-&gt;待用户收货，已完成；-1-&gt;已取消】</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>15</Position>
+    </column>
+    <column id="423" parent="273" name="process_status">
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <column id="424" parent="273" name="courier_id">
+      <Comment>配送员id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>17</Position>
+    </column>
+    <column id="425" parent="273" name="courier_name">
+      <Comment>配送员名称</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>18</Position>
+    </column>
+    <column id="426" parent="273" name="courier_phone">
+      <Comment>配送员电话</Comment>
+      <DasType>varchar(11)|0s</DasType>
+      <Position>19</Position>
+    </column>
+    <column id="427" parent="273" name="take_name">
+      <Comment>提货点名称</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <Position>20</Position>
+    </column>
+    <column id="428" parent="273" name="receiver_name">
+      <Comment>收货人姓名</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>21</Position>
+    </column>
+    <column id="429" parent="273" name="receiver_phone">
+      <Comment>收货人电话</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <Position>22</Position>
+    </column>
+    <column id="430" parent="273" name="receiver_post_code">
+      <Comment>收货人邮编</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <Position>23</Position>
+    </column>
+    <column id="431" parent="273" name="receiver_province">
+      <Comment>省份/直辖市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>24</Position>
+    </column>
+    <column id="432" parent="273" name="receiver_city">
+      <Comment>城市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>25</Position>
+    </column>
+    <column id="433" parent="273" name="receiver_district">
+      <Comment>区</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>26</Position>
+    </column>
+    <column id="434" parent="273" name="receiver_address">
+      <Comment>详细地址</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>27</Position>
+    </column>
+    <column id="435" parent="273" name="payment_time">
+      <Comment>支付时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>28</Position>
+    </column>
+    <column id="436" parent="273" name="delivery_time">
+      <Comment>发货时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>29</Position>
+    </column>
+    <column id="437" parent="273" name="take_time">
+      <Comment>提货时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>30</Position>
+    </column>
+    <column id="438" parent="273" name="receive_time">
+      <Comment>确认收货时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>31</Position>
+    </column>
+    <column id="439" parent="273" name="remark">
+      <Comment>订单备注</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>32</Position>
+    </column>
+    <column id="440" parent="273" name="cancel_time">
+      <Comment>取消订单时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>33</Position>
+    </column>
+    <column id="441" parent="273" name="cancel_reason">
+      <Comment>取消订单原因</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>34</Position>
+    </column>
+    <column id="442" parent="273" name="ware_id">
+      <Comment>仓库id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>35</Position>
+    </column>
+    <column id="443" parent="273" name="commission_amount">
+      <Comment>配送员佣金</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>36</Position>
+    </column>
+    <column id="444" parent="273" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>37</Position>
+    </column>
+    <column id="445" parent="273" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>38</Position>
+    </column>
+    <column id="446" parent="273" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>39</Position>
+    </column>
+    <index id="447" parent="273" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="448" parent="273" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="449" parent="274" name="id">
+      <AutoIncrement>433</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="450" parent="274" name="order_id">
+      <Comment>order_id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="451" parent="274" name="category_id">
+      <Comment>商品分类id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="452" parent="274" name="sku_type">
+      <Comment>sku类型</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="453" parent="274" name="sku_id">
+      <Comment>商品sku编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="454" parent="274" name="sku_name">
+      <Comment>商品sku名字</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="455" parent="274" name="img_url">
+      <Comment>商品sku图片</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="456" parent="274" name="sku_price">
+      <Comment>商品sku价格</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="457" parent="274" name="sku_num">
+      <Comment>商品购买的数量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="458" parent="274" name="split_activity_amount">
+      <Comment>商品促销分解金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="459" parent="274" name="split_coupon_amount">
+      <Comment>优惠券优惠分解金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="460" parent="274" name="split_total_amount">
+      <Comment>该商品经过优惠后的分解金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="461" parent="274" name="courier_id">
+      <Comment>配送员id（冗余）</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="462" parent="274" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="463" parent="274" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>15</Position>
+    </column>
+    <column id="464" parent="274" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <index id="465" parent="274" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="466" parent="274" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="467" parent="275" name="id">
+      <AutoIncrement>177</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="468" parent="275" name="order_id">
+      <Comment>订单id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="469" parent="275" name="operate_user">
+      <Comment>操作人：用户；系统；后台管理员</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="470" parent="275" name="process_status">
+      <Comment>订单状态</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="471" parent="275" name="note">
+      <Comment>备注</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="472" parent="275" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="473" parent="275" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="474" parent="275" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="475" parent="275" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="476" parent="275" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="477" parent="276" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="478" parent="276" name="order_id">
+      <Comment>订单id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="479" parent="276" name="merchant_id">
+      <Comment>配送员门店id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="480" parent="276" name="sku_id">
+      <Comment>退货商品id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="481" parent="276" name="order_sn">
+      <Comment>订单编号</Comment>
+      <DasType>varchar(64)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="482" parent="276" name="name">
+      <Comment>会员用户名</Comment>
+      <DasType>varchar(64)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="483" parent="276" name="return_amount">
+      <Comment>退款金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="484" parent="276" name="return_name">
+      <Comment>退货人姓名</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="485" parent="276" name="return_phone">
+      <Comment>退货人电话</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="486" parent="276" name="status">
+      <Comment>申请状态：0-&gt;待处理；1-&gt;退货中；2-&gt;已完成；3-&gt;已拒绝</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="487" parent="276" name="handle_time">
+      <Comment>处理时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="488" parent="276" name="sku_pic">
+      <Comment>商品图片</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="489" parent="276" name="sku_name">
+      <Comment>商品名称</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="490" parent="276" name="sku_num">
+      <Comment>退货数量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>14</Position>
+    </column>
+    <column id="491" parent="276" name="sku_price">
+      <Comment>商品单价</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>15</Position>
+    </column>
+    <column id="492" parent="276" name="sku_real_price">
+      <Comment>商品实际支付单价</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>16</Position>
+    </column>
+    <column id="493" parent="276" name="reason">
+      <Comment>原因</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>17</Position>
+    </column>
+    <column id="494" parent="276" name="description">
+      <Comment>描述</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>18</Position>
+    </column>
+    <column id="495" parent="276" name="proof_pics">
+      <Comment>凭证图片，以逗号隔开</Comment>
+      <DasType>varchar(1000)|0s</DasType>
+      <Position>19</Position>
+    </column>
+    <column id="496" parent="276" name="handle_note">
+      <Comment>处理备注</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>20</Position>
+    </column>
+    <column id="497" parent="276" name="handle_man">
+      <Comment>处理人员</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>21</Position>
+    </column>
+    <column id="498" parent="276" name="receive_man">
+      <Comment>收货人</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>22</Position>
+    </column>
+    <column id="499" parent="276" name="receive_time">
+      <Comment>收货时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>23</Position>
+    </column>
+    <column id="500" parent="276" name="receive_note">
+      <Comment>收货备注</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>24</Position>
+    </column>
+    <column id="501" parent="276" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>25</Position>
+    </column>
+    <column id="502" parent="276" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>26</Position>
+    </column>
+    <column id="503" parent="276" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>27</Position>
+    </column>
+    <index id="504" parent="276" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="505" parent="276" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="506" parent="277" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="507" parent="277" name="name">
+      <Comment>退货类型</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="508" parent="277" name="sort">
+      <DasType>int(11)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="509" parent="277" name="status">
+      <Comment>状态：0-&gt;不启用；1-&gt;启用</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="510" parent="277" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="511" parent="277" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>6</Position>
+    </column>
+    <column id="512" parent="277" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="513" parent="277" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="514" parent="277" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="515" parent="278" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="516" parent="278" name="seckill_order_overtime">
+      <Comment>秒杀订单超时关闭时间(分)</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="517" parent="278" name="normal_order_overtime">
+      <Comment>正常订单超时时间(分)</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="518" parent="278" name="confirm_overtime">
+      <Comment>发货后自动确认收货时间（天）</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="519" parent="278" name="finish_overtime">
+      <Comment>自动完成交易时间，不能申请售后（天）</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="520" parent="278" name="profit_rate">
+      <Comment>佣金分成比例</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="521" parent="278" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="522" parent="278" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+    </column>
+    <column id="523" parent="278" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <index id="524" parent="278" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="525" parent="278" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="526" parent="279" name="id">
+      <AutoIncrement>108</AutoIncrement>
+      <Comment>编号</Comment>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="527" parent="279" name="order_no">
+      <Comment>订单号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="528" parent="279" name="order_id">
+      <Comment>订单编号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="529" parent="279" name="user_id">
+      <Comment>用户id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="530" parent="279" name="payment_type">
+      <Comment>支付类型（微信 支付宝）</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="531" parent="279" name="trade_no">
+      <Comment>交易编号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="532" parent="279" name="total_amount">
+      <Comment>支付金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="533" parent="279" name="subject">
+      <Comment>交易内容</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="534" parent="279" name="payment_status">
+      <Comment>支付状态</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="535" parent="279" name="callback_time">
+      <Comment>回调时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="536" parent="279" name="callback_content">
+      <Comment>回调信息</Comment>
+      <DasType>text|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="537" parent="279" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="538" parent="279" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>13</Position>
+    </column>
+    <column id="539" parent="279" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <index id="540" parent="279" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="541" parent="279" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="542" parent="280" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>编号</Comment>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="543" parent="280" name="out_trade_no">
+      <Comment>对外业务编号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="544" parent="280" name="order_id">
+      <Comment>订单编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="545" parent="280" name="sku_id">
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="546" parent="280" name="payment_type">
+      <Comment>支付类型（微信 支付宝）</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="547" parent="280" name="trade_no">
+      <Comment>交易编号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="548" parent="280" name="total_amount">
+      <Comment>退款金额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="549" parent="280" name="subject">
+      <Comment>交易内容</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="550" parent="280" name="refund_status">
+      <Comment>退款状态</Comment>
+      <DasType>varchar(30)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="551" parent="280" name="callback_time">
+      <Comment>回调时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="552" parent="280" name="callback_content">
+      <Comment>回调信息</Comment>
+      <DasType>text|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="553" parent="280" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="554" parent="280" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>13</Position>
+    </column>
+    <column id="555" parent="280" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <index id="556" parent="280" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="557" parent="280" name="idx_out_trade_no">
+      <ColNames>out_trade_no</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="558" parent="280" name="idx_order_id">
+      <ColNames>order_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="559" parent="280" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="560" parent="281" name="id">
+      <AutoIncrement>11</AutoIncrement>
+      <Comment>属性id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="561" parent="281" name="name">
+      <Comment>属性名</Comment>
+      <DasType>char(30)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="562" parent="281" name="input_type">
+      <Comment>属性录入方式：0-&gt;手工录入；1-&gt;从列表中选取</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="563" parent="281" name="select_list">
+      <Comment>可选值列表[用逗号分隔]</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="564" parent="281" name="attr_group_id">
+      <Comment>属性分组id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="565" parent="281" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="566" parent="281" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="567" parent="281" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="568" parent="281" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="569" parent="281" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="570" parent="282" name="id">
+      <AutoIncrement>7</AutoIncrement>
+      <Comment>分组id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="571" parent="282" name="name">
+      <Comment>组名</Comment>
+      <DasType>char(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="572" parent="282" name="sort">
+      <Comment>排序</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="573" parent="282" name="remark">
+      <Comment>备注</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="574" parent="282" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="575" parent="282" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>6</Position>
+    </column>
+    <column id="576" parent="282" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="577" parent="282" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="578" parent="282" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="579" parent="283" name="id">
+      <AutoIncrement>12</AutoIncrement>
+      <Comment>编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="580" parent="283" name="category3_id">
+      <Comment>三级级分类id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="581" parent="283" name="trademark_id">
+      <Comment>品牌id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="582" parent="283" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="583" parent="283" name="update_time">
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>5</Position>
+    </column>
+    <column id="584" parent="283" name="is_deleted">
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <index id="585" parent="283" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="586" parent="283" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="587" parent="284" name="id">
+      <AutoIncrement>16</AutoIncrement>
+      <Comment>分类id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="588" parent="284" name="name">
+      <Comment>分类名称</Comment>
+      <DasType>char(50)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="589" parent="284" name="img_url">
+      <DasType>varchar(200)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="590" parent="284" name="parent_id">
+      <Comment>父分类id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="591" parent="284" name="status">
+      <Comment>是否显示[0-不显示，1显示]</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="592" parent="284" name="sort">
+      <Comment>排序</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="593" parent="284" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="594" parent="284" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+    </column>
+    <column id="595" parent="284" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <index id="596" parent="284" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="597" parent="284" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="598" parent="285" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="599" parent="285" name="sku_id">
+      <Comment>sku_id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="600" parent="285" name="sku_name">
+      <Comment>商品名字</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="601" parent="285" name="nick_name">
+      <Comment>会员昵称</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="602" parent="285" name="icon">
+      <Comment>用户头像</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="603" parent="285" name="star">
+      <Comment>星级</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="604" parent="285" name="ip">
+      <Comment>会员ip</Comment>
+      <DasType>varchar(64)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="605" parent="285" name="status">
+      <Comment>显示状态[0-不显示，1-显示]</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="606" parent="285" name="follow_count">
+      <Comment>点赞数</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="607" parent="285" name="reply_count">
+      <Comment>回复数</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="608" parent="285" name="resources">
+      <Comment>评论图片/视频[json数据；[{type:文件类型,url:资源路径}]]</Comment>
+      <DasType>varchar(1000)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="609" parent="285" name="content">
+      <Comment>内容</Comment>
+      <DasType>text|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="610" parent="285" name="type">
+      <Comment>评论类型[0 - 对商品的直接评论，1 - 对评论的回复]</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="611" parent="285" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="612" parent="285" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>15</Position>
+    </column>
+    <column id="613" parent="285" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <index id="614" parent="285" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="615" parent="285" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="616" parent="286" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="617" parent="286" name="comment_id">
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="618" parent="286" name="nick_name">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="619" parent="286" name="icon">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="620" parent="286" name="content">
+      <DasType>varchar(1000)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="621" parent="286" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="622" parent="286" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="623" parent="286" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="624" parent="286" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="625" parent="286" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="626" parent="287" name="id">
+      <AutoIncrement>219</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="627" parent="287" name="sku_id">
+      <Comment>商品id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="628" parent="287" name="attr_id">
+      <Comment>属性id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="629" parent="287" name="attr_name">
+      <Comment>属性名</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="630" parent="287" name="attr_value">
+      <Comment>属性值</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="631" parent="287" name="sort">
+      <Comment>顺序</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="632" parent="287" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="633" parent="287" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+    </column>
+    <column id="634" parent="287" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <index id="635" parent="287" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="636" parent="287" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="637" parent="288" name="id">
+      <AutoIncrement>110</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="638" parent="288" name="sku_id">
+      <Comment>sku_id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="639" parent="288" name="img_name">
+      <Comment>图片名称</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="640" parent="288" name="img_url">
+      <Comment>图片地址</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="641" parent="288" name="sort">
+      <Comment>排序</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="642" parent="288" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="643" parent="288" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="644" parent="288" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="645" parent="288" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="646" parent="288" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="647" parent="289" name="id">
+      <AutoIncrement>21</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="648" parent="289" name="category_id">
+      <Comment>分类id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="649" parent="289" name="attr_group_id">
+      <Comment>平台属性分组id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="650" parent="289" name="sku_type">
+      <Comment>商品类型：0-&gt;普通商品 1-&gt;秒杀商品</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="651" parent="289" name="sku_name">
+      <Comment>sku名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="652" parent="289" name="img_url">
+      <Comment>展示图片</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="653" parent="289" name="per_limit">
+      <Comment>限购个数/每天（0：不限购）</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="654" parent="289" name="publish_status">
+      <Comment>上架状态：0-&gt;下架；1-&gt;上架</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="655" parent="289" name="check_status">
+      <Comment>审核状态：0-&gt;未审核；1-&gt;审核通过</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="656" parent="289" name="is_new_person">
+      <Comment>是否新人专享：0-&gt;否；1-&gt;是</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <column id="657" parent="289" name="sort">
+      <Comment>排序</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <column id="658" parent="289" name="sku_code">
+      <Comment>sku编码</Comment>
+      <DasType>varchar(30)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="659" parent="289" name="price">
+      <Comment>价格</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+    </column>
+    <column id="660" parent="289" name="market_price">
+      <Comment>市场价</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="661" parent="289" name="version">
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>15</Position>
+    </column>
+    <column id="662" parent="289" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <column id="663" parent="289" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>17</Position>
+    </column>
+    <column id="664" parent="289" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>18</Position>
+    </column>
+    <index id="665" parent="289" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="666" parent="289" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="667" parent="290" name="id">
+      <AutoIncrement>160</AutoIncrement>
+      <Comment>编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="668" parent="290" name="sku_id">
+      <Comment>商品id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="669" parent="290" name="img_name">
+      <Comment>文件名称</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="670" parent="290" name="img_url">
+      <Comment>文件路径</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="671" parent="290" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="672" parent="290" name="update_time">
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>6</Position>
+    </column>
+    <column id="673" parent="290" name="is_deleted">
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="674" parent="290" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="675" parent="290" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="676" parent="291" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="677" parent="291" name="sku_id">
+      <Comment>sku</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="678" parent="291" name="ware_id">
+      <Comment>仓库</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="679" parent="291" name="price">
+      <Comment>销售价格</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="680" parent="291" name="stock">
+      <Comment>库存</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="681" parent="291" name="sale">
+      <Comment>销量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="682" parent="291" name="sale_date">
+      <Comment>销售日期</Comment>
+      <DasType>date|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="683" parent="291" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="684" parent="291" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="685" parent="291" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="686" parent="291" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="687" parent="291" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="688" parent="292" name="id">
+      <AutoIncrement>21</AutoIncrement>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="689" parent="292" name="sku_id">
+      <Comment>sku</Comment>
+      <DasType>varchar(30)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="690" parent="292" name="ware_id">
+      <Comment>仓库</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="691" parent="292" name="stock">
+      <Comment>库存</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="692" parent="292" name="lock_stock">
+      <Comment>锁定库存</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="693" parent="292" name="low_stock">
+      <Comment>预警库存，到达预警库存就会安排补货</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="694" parent="292" name="sale">
+      <Comment>销量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="695" parent="292" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="696" parent="292" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="697" parent="292" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="698" parent="292" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="699" parent="292" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="700" parent="293" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="701" parent="293" name="name">
+      <Comment>收货人姓名</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>2</Position>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </column>
+    <column id="702" parent="293" name="phone">
+      <Comment>收货人电话</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <Position>3</Position>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </column>
+    <column id="703" parent="293" name="post_code">
+      <Comment>收货人邮编</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <Position>4</Position>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </column>
+    <column id="704" parent="293" name="province">
+      <Comment>省份/直辖市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="705" parent="293" name="city">
+      <Comment>城市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="706" parent="293" name="district">
+      <Comment>区</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="707" parent="293" name="detail_address">
+      <Comment>详细地址</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>8</Position>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </column>
+    <column id="708" parent="293" name="longitude">
+      <Comment>经度</Comment>
+      <DasType>decimal(10,7 digit)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="709" parent="293" name="latitude">
+      <Comment>纬度</Comment>
+      <DasType>decimal(10,7 digit)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="710" parent="293" name="work_time">
+      <DasType>varchar(100)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="711" parent="293" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="712" parent="293" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>13</Position>
+    </column>
+    <column id="713" parent="293" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <index id="714" parent="293" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="715" parent="293" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="716" parent="294" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="717" parent="294" name="ware_id">
+      <Comment>仓库id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="718" parent="294" name="station_id">
+      <Comment>分站id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="719" parent="294" name="sku_id">
+      <Comment>商品sku编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="720" parent="294" name="sku_name">
+      <Comment>sku名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="721" parent="294" name="sku_num">
+      <Comment>数量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="722" parent="294" name="status">
+      <Comment>状态(0:未分发,1:已分发,2:已入库)</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="723" parent="294" name="out_time">
+      <Comment>出库时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="724" parent="294" name="in_time">
+      <Comment>入库时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="725" parent="294" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <column id="726" parent="294" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>11</Position>
+    </column>
+    <column id="727" parent="294" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <index id="728" parent="294" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="729" parent="294" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="730" parent="295" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="731" parent="295" name="ware_id">
+      <Comment>仓库id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="732" parent="295" name="sku_id">
+      <Comment>商品sku编号</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="733" parent="295" name="sku_name">
+      <Comment>sku名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="734" parent="295" name="sku_num">
+      <Comment>数量</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="735" parent="295" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="736" parent="295" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="737" parent="295" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="738" parent="295" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="739" parent="295" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="740" parent="296" name="id">
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="741" parent="296" name="parent_id">
+      <Comment>上级id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="742" parent="296" name="name">
+      <Comment>名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="743" parent="296" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="744" parent="296" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>5</Position>
+    </column>
+    <column id="745" parent="296" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <index id="746" parent="296" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="747" parent="296" name="idx_parent_id">
+      <ColNames>parent_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="748" parent="296" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="749" parent="297" name="id">
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="750" parent="297" name="region_id">
+      <Comment>地区id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="751" parent="297" name="name">
+      <Comment>名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="752" parent="297" name="phone">
+      <Comment>手机</Comment>
+      <DasType>varchar(11)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="753" parent="297" name="province">
+      <Comment>省</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="754" parent="297" name="city">
+      <Comment>城市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="755" parent="297" name="district">
+      <Comment>区域code</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="756" parent="297" name="detail_address">
+      <Comment>详细地址</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="757" parent="297" name="longitude">
+      <Comment>经度</Comment>
+      <DasType>decimal(10,7 digit)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="758" parent="297" name="latitude">
+      <Comment>纬度</Comment>
+      <DasType>decimal(10,7 digit)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="759" parent="297" name="store_path">
+      <Comment>门店照片</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="760" parent="297" name="work_time">
+      <Comment>营业时间</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="761" parent="297" name="work_status">
+      <Comment>营业状态</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+    </column>
+    <column id="762" parent="297" name="check_status">
+      <Comment>审核状态（0：提交审核 1：审核通过 -1：审核未通过）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="763" parent="297" name="check_time">
+      <Comment>审核时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>15</Position>
+    </column>
+    <column id="764" parent="297" name="check_user">
+      <Comment>审核用户</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>16</Position>
+    </column>
+    <column id="765" parent="297" name="check_content">
+      <Comment>审核内容</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>17</Position>
+    </column>
+    <column id="766" parent="297" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>18</Position>
+    </column>
+    <column id="767" parent="297" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>19</Position>
+    </column>
+    <column id="768" parent="297" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>20</Position>
+    </column>
+    <index id="769" parent="297" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="770" parent="297" name="idx_region_id">
+      <ColNames>region_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="771" parent="297" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="772" parent="298" name="id">
+      <AutoIncrement>31</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="773" parent="298" name="region_id">
+      <Comment>开通区域id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="774" parent="298" name="region_name">
+      <Comment>区域名称</Comment>
+      <DasType>varchar(30)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="775" parent="298" name="ware_id">
+      <Comment>仓库</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="776" parent="298" name="ware_name">
+      <Comment>仓库名称</Comment>
+      <DasType>varchar(30)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="777" parent="298" name="status">
+      <Comment>状态（0：未开通 1：已开通）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="778" parent="298" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="779" parent="298" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+    </column>
+    <column id="780" parent="298" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <index id="781" parent="298" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="782" parent="298" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="783" parent="299" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="784" parent="299" name="ware_id">
+      <Comment>仓库id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="785" parent="299" name="station_id">
+      <Comment>分站id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="786" parent="299" name="status">
+      <Comment>状态(0:未出库,1:已出库,2:已入库)</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="787" parent="299" name="out_time">
+      <Comment>出库时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="788" parent="299" name="in_time">
+      <Comment>入库时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="789" parent="299" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="790" parent="299" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+    </column>
+    <column id="791" parent="299" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <index id="792" parent="299" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="793" parent="299" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="794" parent="300" name="id">
+      <AutoIncrement>8</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="795" parent="300" name="name">
+      <Comment>名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="796" parent="300" name="province">
+      <Comment>省code</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="797" parent="300" name="city">
+      <Comment>城市code</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="798" parent="300" name="district">
+      <Comment>区域code</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="799" parent="300" name="detail_address">
+      <Comment>详细地址</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="800" parent="300" name="longitude">
+      <Comment>经度</Comment>
+      <DasType>decimal(10,7 digit)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="801" parent="300" name="latitude">
+      <Comment>纬度</Comment>
+      <DasType>decimal(10,7 digit)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="802" parent="300" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="803" parent="300" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>10</Position>
+    </column>
+    <column id="804" parent="300" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <index id="805" parent="300" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="806" parent="300" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="807" parent="301" name="id">
+      <AutoIncrement>70</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="808" parent="301" name="user_id">
+      <Comment>会员ID</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="809" parent="301" name="region_id">
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="810" parent="301" name="name">
+      <Comment>收货人姓名</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="811" parent="301" name="phone">
+      <Comment>收货人电话</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="812" parent="301" name="post_code">
+      <Comment>收货人邮编</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="813" parent="301" name="province">
+      <Comment>省份/直辖市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="814" parent="301" name="city">
+      <Comment>城市</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="815" parent="301" name="district">
+      <Comment>区</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="816" parent="301" name="detail_address">
+      <Comment>详细地址</Comment>
+      <DasType>varchar(200)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="817" parent="301" name="is_default">
+      <Comment>是否默认</Comment>
+      <DasType>char(1)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="818" parent="301" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="819" parent="301" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>13</Position>
+    </column>
+    <column id="820" parent="301" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <index id="821" parent="301" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="822" parent="301" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="823" parent="302" name="id">
+      <AutoIncrement>5</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="824" parent="302" name="courier_id">
+      <Comment>配送员ID</Comment>
+      <DasType>varchar(36)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="825" parent="302" name="total_amount">
+      <Comment>总收益, 可能有部分余额因为订单未结束而不能提现</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="826" parent="302" name="available_amount">
+      <Comment>可提现余额</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="827" parent="302" name="frozen_amount">
+      <Comment>冻结余额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="828" parent="302" name="version">
+      <DasType>int(11)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="829" parent="302" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="830" parent="302" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+    </column>
+    <column id="831" parent="302" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <index id="832" parent="302" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="833" parent="302" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="834" parent="303" name="id">
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="835" parent="303" name="courier_id">
+      <Comment>配送员ID</Comment>
+      <DasType>varchar(36)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="836" parent="303" name="account_type">
+      <Comment>账户类型(微信,银行)</Comment>
+      <DasType>varchar(10)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="837" parent="303" name="bank_name">
+      <Comment>银行名称</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="838" parent="303" name="bank_account_no">
+      <Comment>银行账号</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="839" parent="303" name="bank_account_name">
+      <Comment>银行账户名</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="840" parent="303" name="wechat_id">
+      <Comment>微信ID</Comment>
+      <DasType>varchar(80)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="841" parent="303" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="842" parent="303" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="843" parent="303" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="844" parent="303" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="845" parent="303" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="846" parent="304" name="id">
+      <AutoIncrement>15</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="847" parent="304" name="courier_id">
+      <Comment>配送员ID</Comment>
+      <DasType>varchar(36)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="848" parent="304" name="bill_type">
+      <Comment>账单类型</Comment>
+      <DasType>varchar(10)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="849" parent="304" name="business_no">
+      <Comment>业务编号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="850" parent="304" name="bill_time">
+      <Comment>交易时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="851" parent="304" name="bill_amount">
+      <Comment>账单金额</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="852" parent="304" name="bill_no">
+      <Comment>账单编号</Comment>
+      <DasType>varchar(50)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="853" parent="304" name="bill_desc">
+      <Comment>账单描述</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="854" parent="304" name="balance_before">
+      <Comment>交易前资金余额</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="855" parent="304" name="balance_after">
+      <Comment>交易后资金余额</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="856" parent="304" name="bill_status">
+      <Comment>账单状态（0：未到账 1：已到账）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="857" parent="304" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+    </column>
+    <column id="858" parent="304" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>13</Position>
+    </column>
+    <column id="859" parent="304" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <index id="860" parent="304" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="861" parent="304" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="862" parent="305" name="id">
+      <AutoIncrement>12</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="863" parent="305" name="user_id">
+      <Comment>用户id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="864" parent="305" name="station_id">
+      <Comment>区域id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="865" parent="305" name="name">
+      <Comment>名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="866" parent="305" name="phone">
+      <Comment>手机号码</Comment>
+      <DasType>varchar(11)|0s</DasType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="867" parent="305" name="id_no">
+      <Comment>身份证</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="868" parent="305" name="id_no_url1">
+      <Comment>身份证图片路径</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="869" parent="305" name="id_no_url2">
+      <Comment>身份证图片路径</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="870" parent="305" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="871" parent="305" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>10</Position>
+    </column>
+    <column id="872" parent="305" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <index id="873" parent="305" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="874" parent="305" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="875" parent="306" name="id">
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="876" parent="306" name="courier_id">
+      <Comment>配送员ID</Comment>
+      <DasType>varchar(36)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="877" parent="306" name="merchant_amount">
+      <Comment>提现金额</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="878" parent="306" name="merchant_status">
+      <Comment>提现状态</Comment>
+      <DasType>varchar(10)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="879" parent="306" name="fail_reason">
+      <Comment>提现失败原因</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="880" parent="306" name="payment_method">
+      <Comment>提现支付方式</Comment>
+      <DasType>varchar(10)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="881" parent="306" name="bank_name">
+      <Comment>银行名称</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="882" parent="306" name="bank_account_no">
+      <Comment>银行账号</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="883" parent="306" name="bank_account_name">
+      <Comment>银行账户名</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="884" parent="306" name="wechat_id">
+      <Comment>微信ID</Comment>
+      <DasType>varchar(80)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="885" parent="306" name="withdraw_time">
+      <Comment>提现时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="886" parent="306" name="verify_time">
+      <Comment>审核时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="887" parent="306" name="transfer_time">
+      <Comment>打款时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="888" parent="306" name="withdraw_no">
+      <Comment>提现交易编号</Comment>
+      <DasType>varchar(16)|0s</DasType>
+      <Position>14</Position>
+    </column>
+    <column id="889" parent="306" name="reject_reason">
+      <Comment>审核拒绝理由</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>15</Position>
+    </column>
+    <column id="890" parent="306" name="complete_time">
+      <Comment>提现成功时间</Comment>
+      <DasType>datetime|0s</DasType>
+      <Position>16</Position>
+    </column>
+    <column id="891" parent="306" name="payment_amount">
+      <Comment>提现金额</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>17</Position>
+    </column>
+    <column id="892" parent="306" name="tax_amount">
+      <Comment>手续费</Comment>
+      <DasType>decimal(12,2 digit)|0s</DasType>
+      <Position>18</Position>
+    </column>
+    <column id="893" parent="306" name="remark">
+      <Comment>备注</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>19</Position>
+    </column>
+    <column id="894" parent="306" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>20</Position>
+    </column>
+    <column id="895" parent="306" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>21</Position>
+    </column>
+    <column id="896" parent="306" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>22</Position>
+    </column>
+    <index id="897" parent="306" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="898" parent="306" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="899" parent="307" name="id">
+      <AutoIncrement>70</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="900" parent="307" name="user_id">
+      <Comment>会员ID</Comment>
+      <DasType>varchar(36)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="901" parent="307" name="courier_id">
+      <Comment>配送员id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="902" parent="307" name="staion_id">
+      <Comment>分站id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="903" parent="307" name="order_id">
+      <Comment>订单id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="904" parent="307" name="type">
+      <Comment>任务类型(1:送货,2:收款,3:换货,4:退货)</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="905" parent="307" name="status">
+      <Comment>任务状态（0: 可分配, 1: 已分配 3: 完成, 4: 失败xx共5个）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="906" parent="307" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="907" parent="307" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>9</Position>
+    </column>
+    <column id="908" parent="307" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <index id="909" parent="307" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="910" parent="307" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="911" parent="308" name="id">
+      <AutoIncrement>70</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="912" parent="308" name="user_id">
+      <Comment>会员ID</Comment>
+      <DasType>varchar(36)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="913" parent="308" name="courier_id">
+      <Comment>配送员id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="914" parent="308" name="order_id">
+      <Comment>订单id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="915" parent="308" name="total_amount">
+      <Comment>总额</Comment>
+      <DasType>decimal(10,2 digit)|0s</DasType>
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="916" parent="308" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="917" parent="308" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="918" parent="308" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="919" parent="308" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="920" parent="308" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="921" parent="309" name="id">
+      <AutoIncrement>3</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="922" parent="309" name="ware_id">
+      <Comment>仓库id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="923" parent="309" name="name">
+      <Comment>名称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="924" parent="309" name="phone">
+      <Comment>手机</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="925" parent="309" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="926" parent="309" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>6</Position>
+    </column>
+    <column id="927" parent="309" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="928" parent="309" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="929" parent="309" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="930" parent="310" name="id">
+      <AutoIncrement>37</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="931" parent="310" name="username">
+      <Comment>用户名</Comment>
+      <DasType>varchar(20)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="932" parent="310" name="password">
+      <Comment>密码</Comment>
+      <DasType>varchar(32)|0s</DasType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="933" parent="310" name="user_type">
+      <Comment>用户类型（0：会员 1：配送员）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="934" parent="310" name="photo_url">
+      <Comment>会员头像</Comment>
+      <DasType>varchar(500)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="935" parent="310" name="nick_name">
+      <Comment>昵称</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="936" parent="310" name="id_no">
+      <Comment>身份证号码</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="937" parent="310" name="gender">
+      <Comment>性别</Comment>
+      <DasType>tinyint(1)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="938" parent="310" name="phone">
+      <Comment>电话号码</Comment>
+      <DasType>varchar(17)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="939" parent="310" name="remark">
+      <Comment>备注</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="940" parent="310" name="open_id">
+      <Comment>小程序open id</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="941" parent="310" name="union_id">
+      <Comment>微信开放平台unionID</Comment>
+      <DasType>varchar(45)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="942" parent="310" name="is_new">
+      <Comment>是否新用户</Comment>
+      <DasType>char(1)|0s</DasType>
+      <Position>13</Position>
+    </column>
+    <column id="943" parent="310" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+    </column>
+    <column id="944" parent="310" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>15</Position>
+    </column>
+    <column id="945" parent="310" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <index id="946" parent="310" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="947" parent="310" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="948" parent="311" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="949" parent="311" name="user_id">
+      <Comment>用户id</Comment>
+      <DasType>bigint(20)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="950" parent="311" name="ip">
+      <Comment>登录ip</Comment>
+      <DasType>varchar(64)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="951" parent="311" name="address">
+      <Comment>登录地址</Comment>
+      <DasType>varchar(64)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="952" parent="311" name="user_agent">
+      <Comment>浏览器登录类型</Comment>
+      <DasType>varchar(100)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="953" parent="311" name="create_time">
+      <Comment>创建时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="954" parent="311" name="update_time">
+      <Comment>更新时间</Comment>
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>7</Position>
+    </column>
+    <column id="955" parent="311" name="is_deleted">
+      <Comment>删除标记（0:不可用 1:可用）</Comment>
+      <DasType>tinyint(4)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="956" parent="311" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="957" parent="311" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
