@@ -20,6 +20,10 @@ import '@/views/visualization/multi-dimension-data-analysis/mock';
 import '@/views/user/info/mock';
 import '@/views/user/setting/mock';
 
+import '@/views/center/search-table/mock';
+import '@/views/center/project/mock';
+import '@/views/center/transfer_order/mock';
+
 Mock.setup({
   timeout: '600-1000',
 });

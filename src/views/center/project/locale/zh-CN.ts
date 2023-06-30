@@ -1,0 +1,52 @@
+export default {
+  'menu.center.centerStock': '货物库存表格',
+  'centerStock.form.sku_id': '商品编号',
+  'centerStock.form.sku_id.placeholder': '请输入商品编号',
+  'centerStock.form.sku_name': '商品名称',
+  'centerStock.form.sku_name.placeholder': '请输入商品名称',
+  'centerStock.form.createdTime': '创建时间',
+
+  'centerStock.form.status': '状态',
+  'centerStock.form.status.online': '已上线',
+  'centerStock.form.status.offline': '已下线',
+
+  'centerStock.form.search': '查询',
+  'centerStock.form.reset': '重置',
+  'centerStock.form.selectDefault': '全部',
+  'centerStock.operation.create': '新建',
+  'centerStock.operation.import': '批量导入',
+  'centerStock.operation.download': '下载',
+  // columns
+  // `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  // `sku_id` varchar(30) DEFAULT NULL COMMENT 'sku',
+  // `ware_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '仓库',
+  // `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存',
+  // `lock_stock` int(11) NOT NULL DEFAULT '0' COMMENT '锁定库存',
+  // `low_stock` int(11) NOT NULL DEFAULT '0' COMMENT '预警库存，到达预警库存就会安排补货',
+  // `sale` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
+  // `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  // `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+
+  'centerStock.columns.index': '#',
+  'centerStock.columns.sku_id': '商品编号',
+  'centerStock.columns.sku_name': '商品名称',
+  'centerStock.columns.ware_id': '区域中心库房id',
+  'centerStock.columns.stock': '总库存',
+  'centerStock.columns.lock_stock': '锁定库存',
+  'centerStock.columns.low_stock': '预警销量',
+  'centerStock.columns.sale': '销量',
+  'centerStock.columns.createdTime': '创建时间',
+  'centerStock.columns.updatedTime': '更新时间',
+  'centerStock.columns.operations': '操作',
+  'centerStock.columns.operations.view': '查看',
+
+  // size
+  'centerStock.size.mini': '迷你',
+  'centerStock.size.small': '偏小',
+  'centerStock.size.medium': '中等',
+  'centerStock.size.large': '偏大',
+  // actions
+  'centerStock.actions.refresh': '刷新',
+  'centerStock.actions.density': '密度',
+  'centerStock.actions.columnSetting': '列设置',
+};

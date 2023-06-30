@@ -26,6 +26,10 @@ import locale500 from '@/views/exception/500/locale/zh-CN';
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 
+import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
+import localeCenterProjectStock from '@/views/center/project/locale/zh-CN';
+import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
+
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -44,6 +48,7 @@ export default {
   'menu.faq': '常见问题',
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
+  'menu.center': '区域中心仓库',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
@@ -63,5 +68,9 @@ export default {
   ...locale404,
   ...locale500,
   ...localeUserInfo,
+
   ...localeUserSetting,
+  ...localeeSearchTable,
+  ...localeCenterProjectStock,
+  ...localeCenterTransferOrder,
 };
