@@ -24,6 +24,10 @@ import '@/views/center/search-table/mock';
 import '@/views/center/project/mock';
 import '@/views/center/transfer_order/mock';
 
+import '@/views/acl/role/mock';
+import '@/views/acl/admin/mock';
+import '@/views/acl/permission/mock';
+
 Mock.setup({
   timeout: '600-1000',
 });

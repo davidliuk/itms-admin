@@ -8,7 +8,7 @@ export default {
   'searchTable.form.receiver_name.placeholder': '请输入收货人姓名',
   'searchTable.form.order_status': '订单状态',
   'searchTable.form.order_status.PendingPayment': '待付款',
-  'searchTable.form.order_status.PendingShipment': '代发货',
+  'searchTable.form.order_status.PendingShipment': '待发货',
   'searchTable.form.order_status.Shipped': '已发货',
   'searchTable.form.order_status.Completed': '已完成',
   'searchTable.form.order_status.Cancelled': '已取消',

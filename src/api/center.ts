@@ -4,7 +4,6 @@ import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
 export interface PolicyRecord {
   // 内容不影响
-
   id: string;
   ware_id: string;
   sku_id: string;

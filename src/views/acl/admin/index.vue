@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.searchTable']" />
-    <a-card class="general-card" :title="$t('menu.center.searchTable')">
+    <Breadcrumb :items="['menu.acl', 'menu.acl.admin']" />
+    <a-card class="general-card" :title="$t('menu.acl.admin')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,79 +13,95 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="distribution_id"
-                  :label="$t('searchTable.form.distribution_id')"
-                >
+                <a-form-item field="id" :label="$t('admin.form.id')">
                   <a-input
-                    v-model="formModel.distribution_id"
-                    :placeholder="
-                      $t('searchTable.form.distribution_id.placeholder')
-                    "
+                    v-model="formModel.id"
+                    :placeholder="$t('admin.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="ware_id"
-                  :label="$t('searchTable.form.ware_id')"
-                >
+                <a-form-item field="name" :label="$t('admin.form.name')">
                   <a-input
-                    v-model="formModel.ware_id"
-                    :placeholder="$t('searchTable.form.ware_id.placeholder')"
+                    v-model="formModel.name"
+                    :placeholder="$t('admin.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="station_id"
-                  :label="$t('searchTable.form.station_id')"
-                >
+                <a-form-item field="phone" :label="$t('admin.form.phone')">
                   <a-input
-                    v-model="formModel.station_id"
-                    :placeholder="$t('searchTable.form.station_id.placeholder')"
+                    v-model="formModel.phone"
+                    :placeholder="$t('admin.form.phone.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="sku_id"
-                  :label="$t('searchTable.form.sku_id')"
-                >
+                <a-form-item field="email" :label="$t('admin.form.email')">
                   <a-input
-                    v-model="formModel.sku_id"
-                    :placeholder="$t('searchTable.form.sku_id.placeholder')"
+                    v-model="formModel.email"
+                    :placeholder="$t('admin.form.email.placeholder')"
                   />
                   <!-- <a-select
-                    v-model="formModel.sku_id"
+                    v-model="formModel.email"
                     :options="filterTypeOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    :placeholder="$t('admin.form.selectDefault')"
                   /> -->
                 </a-form-item>
               </a-col>
               <a-col :span="8">
+                <a-form-item field="wareId" :label="$t('admin.form.wareId')">
+                  <a-input
+                    v-model="formModel.wareId"
+                    :placeholder="$t('admin.form.wareId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item
-                  field="createdTime"
-                  :label="$t('searchTable.form.createdTime')"
+                  field="stationId"
+                  :label="$t('admin.form.stationId')"
+                >
+                  <a-input
+                    v-model="formModel.stationId"
+                    :placeholder="$t('admin.form.stationId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <!-- <a-col :span="8">
+                <a-form-item
+                  field="createTime"
+                  :label="$t('admin.form.createTime')"
                 >
                   <a-range-picker
-                    v-model="formModel.createdTime"
+                    v-model="formModel.createTime"
                     style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
+                  field="updateTime"
+                  :label="$t('admin.form.updateTime')"
+                >
+                  <a-range-picker
+                    v-model="formModel.updateTime"
+                    style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col> -->
+              <!-- <a-col :span="8">
+                <a-form-item
                   field="status"
-                  :label="$t('searchTable.form.status')"
+                  :label="$t('admin.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    :placeholder="$t('admin.form.selectDefault')"
                   />
                 </a-form-item>
-              </a-col>
+              </a-col> -->
             </a-row>
           </a-form>
         </a-col>
@@ -99,13 +115,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('searchTable.form.search') }}
+              {{ $t('admin.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('searchTable.form.reset') }}
+              {{ $t('admin.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -121,12 +137,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('searchTable.operation.create') }}
+              {{ $t('admin.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('searchTable.operation.import') }}
+                  {{ $t('admin.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -141,16 +157,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('searchTable.operation.download') }}
+            {{ $t('admin.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
+          <a-tooltip :content="$t('admin.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('searchTable.actions.density')">
+            <a-tooltip :content="$t('admin.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -166,7 +182,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+          <a-tooltip :content="$t('admin.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -231,7 +247,7 @@
             v-else-if="record.status === 'stocked'"
             class="circle pass"
           ></span>
-          {{ $t(`searchTable.form.status.${record.status}`) }}
+          {{ $t(`admin.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
@@ -239,7 +255,7 @@
         <!-- 查看 -->
         <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('searchTable.columns.operations.view') }}
+            {{ $t('admin.columns.operations.view') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -252,9 +268,8 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/center';
+  import { queryAdminList, Admin, AdminParams } from '@/api/acl';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -264,18 +279,20 @@
 
   const generateFormModel = () => {
     return {
-      distribution_id: '',
-      ware_id: '',
-      station_id: '',
-      sku_id: '',
-      sku_name: '',
-      createdTime: [],
-      status: '',
+      id: '',
+      username: '',
+      name: '',
+      phone: '',
+      email: '',
+      wareId: '',
+      stationId: '',
+      createTime: new Date(),
+      updateTime: new Date(),
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<PolicyRecord[]>([]);
+  const renderData = ref<Admin[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -291,66 +308,86 @@
   });
   const densityList = computed(() => [
     {
-      name: t('searchTable.size.mini'),
+      name: t('admin.size.mini'),
       value: 'mini',
     },
     {
-      name: t('searchTable.size.small'),
+      name: t('admin.size.small'),
       value: 'small',
     },
     {
-      name: t('searchTable.size.medium'),
+      name: t('admin.size.medium'),
       value: 'medium',
     },
     {
-      name: t('searchTable.size.large'),
+      name: t('admin.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('searchTable.columns.index'),
+      title: t('admin.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('searchTable.columns.id'),
+      title: t('admin.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('searchTable.columns.ware_id'),
-      dataIndex: 'ware_id',
+      title: t('admin.columns.username'),
+      dataIndex: 'username',
     },
     {
-      title: t('searchTable.columns.station_id'),
-      dataIndex: 'station_id',
-      slotName: 'station_id',
+      title: t('admin.columns.name'),
+      dataIndex: 'name',
     },
     {
-      title: t('searchTable.columns.sku_id'),
-      dataIndex: 'sku_id',
+      title: t('admin.columns.phone'),
+      dataIndex: 'phone',
     },
     {
-      title: t('searchTable.columns.sku_name'),
-      dataIndex: 'sku_name',
-      slotName: 'sku_name',
+      title: t('admin.columns.email'),
+      dataIndex: 'email',
     },
     {
-      title: t('searchTable.columns.sku_num'),
-      dataIndex: 'sku_num',
+      title: t('admin.columns.wareId'),
+      dataIndex: 'wareId',
     },
     {
-      title: t('searchTable.columns.createdTime'),
-      dataIndex: 'createdTime',
+      title: t('admin.columns.stationId'),
+      dataIndex: 'stationId',
     },
+    // {
+    //   title: t('admin.columns.createTime'),
+    //   dataIndex: 'createTime',
+    // },
+    // {
+    //   title: t('admin.columns.updateTime'),
+    //   dataIndex: 'updateTime',
+    // },
+    // {
+    //   title: t('admin.columns.phone'),
+    //   dataIndex: 'phone',
+    //   slotName: 'phone',
+    // },
+    // {
+    //   title: t('admin.columns.sku_name'),
+    //   dataIndex: 'sku_name',
+    //   slotName: 'sku_name',
+    // },
+    // {
+    //   title: t('admin.columns.sku_num'),
+    //   dataIndex: 'sku_num',
+    // },
+    // {
+    //   title: t('admin.columns.status'),
+    //   dataIndex: 'status',
+    //   slotName: 'status',
+    // },
     {
-      title: t('searchTable.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
-    {
-      title: t('searchTable.columns.operations'),
+      title: t('admin.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
@@ -359,37 +396,22 @@
   // //过滤器
   //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
   //     {
-  //       label: t('searchTable.form.filterType.artificial'),
+  //       label: t('admin.form.filterType.artificial'),
   //       value: 'artificial',
   //     },
   //     {
-  //       label: t('searchTable.form.filterType.rules'),
+  //       label: t('admin.form.filterType.rules'),
   //       value: 'rules',
   //     },
   //   ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('searchTable.form.status.no_shipped'),
-      value: 'no_shipped',
-    },
-    {
-      label: t('searchTable.form.status.shipped'),
-      value: 'shipped',
-    },
-    {
-      label: t('searchTable.form.status.stocked'),
-      value: 'stocked',
-    },
-  ]);
 
   // 分页
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    params: AdminParams = { current: 1, pageSize: 20 }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
-      console.log(data);
+      const { data } = await queryAdminList(params);
       renderData.value = data.list;
       pagination.current = params.current;
       pagination.total = data.total;
@@ -404,7 +426,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as PolicyParams);
+    } as unknown as AdminParams);
   };
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, current });
@@ -485,7 +507,7 @@
 
 <script lang="ts">
   export default {
-    name: 'SearchTable',
+    name: 'admin',
   };
 </script>
 

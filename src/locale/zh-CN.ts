@@ -30,6 +30,10 @@ import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
 import localeCenterProjectStock from '@/views/center/project/locale/zh-CN';
 import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
 
+import localeAdmin from '@/views/acl/admin/locale/zh-CN';
+import localeRole from '@/views/acl/role/locale/zh-CN';
+import localePermission from '@/views/acl/permission/locale/zh-CN';
+
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -49,6 +53,7 @@ export default {
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
   'menu.center': '区域中心仓库',
+  'menu.acl': '权限管理',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
@@ -73,4 +78,8 @@ export default {
   ...localeeSearchTable,
   ...localeCenterProjectStock,
   ...localeCenterTransferOrder,
+
+  ...localeAdmin,
+  ...localeRole,
+  ...localePermission,
 };

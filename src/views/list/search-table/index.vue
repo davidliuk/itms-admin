@@ -263,7 +263,7 @@
               />
             </a-avatar>
             <a-avatar
-              v-else-if="record.order_status === '代发货'"
+              v-else-if="record.order_status === '待发货'"
               :size="16"
               shape="square"
             >
@@ -301,9 +301,9 @@
             {{ $t(`searchTable.form.order_status.${record.order_status}`) }}
           </a-space>
         </template>
-        <template #payment_time="{ record }">
+        <!-- <template #payment_time="{ record }">
           {{ $t(`searchTable.form.order_status.${record.payment_time}`) }}
-        </template>
+        </template> -->
         <template #take_name="{ record }">
           {{ $t(`searchTable.form.order_status.${record.take_name}`) }}
         </template>
@@ -344,7 +344,7 @@
       nick_name: '',
       receiver_name: '',
       order_status: '',
-      payment_time: [],
+      payment_time: '',
       take_name: '',
     };
   };

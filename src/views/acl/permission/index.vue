@@ -1,116 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.searchTable']" />
-    <a-card class="general-card" :title="$t('menu.center.searchTable')">
-      <a-row>
-        <!-- 6个输入框 -->
-        <a-col :flex="1">
-          <a-form
-            :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
-            label-align="left"
-          >
-            <a-row :gutter="16">
-              <a-col :span="8">
-                <a-form-item
-                  field="distribution_id"
-                  :label="$t('searchTable.form.distribution_id')"
-                >
-                  <a-input
-                    v-model="formModel.distribution_id"
-                    :placeholder="
-                      $t('searchTable.form.distribution_id.placeholder')
-                    "
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="ware_id"
-                  :label="$t('searchTable.form.ware_id')"
-                >
-                  <a-input
-                    v-model="formModel.ware_id"
-                    :placeholder="$t('searchTable.form.ware_id.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="station_id"
-                  :label="$t('searchTable.form.station_id')"
-                >
-                  <a-input
-                    v-model="formModel.station_id"
-                    :placeholder="$t('searchTable.form.station_id.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="sku_id"
-                  :label="$t('searchTable.form.sku_id')"
-                >
-                  <a-input
-                    v-model="formModel.sku_id"
-                    :placeholder="$t('searchTable.form.sku_id.placeholder')"
-                  />
-                  <!-- <a-select
-                    v-model="formModel.sku_id"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
-                  /> -->
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createdTime"
-                  :label="$t('searchTable.form.createdTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createdTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('searchTable.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col>
-            </a-row>
-          </a-form>
-        </a-col>
-
-        <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
-              <template #icon>
-                <icon-search />
-              </template>
-              {{ $t('searchTable.form.search') }}
-            </a-button>
-            <a-button @click="reset">
-              <template #icon>
-                <icon-refresh />
-              </template>
-              {{ $t('searchTable.form.reset') }}
-            </a-button>
-          </a-space>
-        </a-col>
-      </a-row>
-
+    <Breadcrumb :items="['menu.acl', 'menu.acl.permission']" />
+    <a-card class="general-card" :title="$t('menu.acl.permission')">
       <a-divider style="margin-top: 0" />
       <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
@@ -121,12 +12,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('searchTable.operation.create') }}
+              {{ $t('permission.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('searchTable.operation.import') }}
+                  {{ $t('permission.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -141,16 +32,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('searchTable.operation.download') }}
+            {{ $t('permission.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
+          <a-tooltip :content="$t('permission.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('searchTable.actions.density')">
+            <a-tooltip :content="$t('permission.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -166,7 +57,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+          <a-tooltip :content="$t('permission.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -231,7 +122,7 @@
             v-else-if="record.status === 'stocked'"
             class="circle pass"
           ></span>
-          {{ $t(`searchTable.form.status.${record.status}`) }}
+          {{ $t(`permission.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
@@ -239,7 +130,7 @@
         <!-- 查看 -->
         <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('searchTable.columns.operations.view') }}
+            {{ $t('permission.columns.operations.view') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -252,9 +143,8 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/center';
+  import { queryPermissionList, Permission } from '@/api/acl';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -262,21 +152,9 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const generateFormModel = () => {
-    return {
-      distribution_id: '',
-      ware_id: '',
-      station_id: '',
-      sku_id: '',
-      sku_name: '',
-      createdTime: [],
-      status: '',
-    };
-  };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<PolicyRecord[]>([]);
-  const formModel = ref(generateFormModel());
+  const renderData = ref<Permission[]>([]);
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
@@ -291,66 +169,84 @@
   });
   const densityList = computed(() => [
     {
-      name: t('searchTable.size.mini'),
+      name: t('permission.size.mini'),
       value: 'mini',
     },
     {
-      name: t('searchTable.size.small'),
+      name: t('permission.size.small'),
       value: 'small',
     },
     {
-      name: t('searchTable.size.medium'),
+      name: t('permission.size.medium'),
       value: 'medium',
     },
     {
-      name: t('searchTable.size.large'),
+      name: t('permission.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('searchTable.columns.index'),
+      title: t('permission.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('searchTable.columns.id'),
+      title: t('permission.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('searchTable.columns.ware_id'),
-      dataIndex: 'ware_id',
+      title: t('permission.columns.name'),
+      dataIndex: 'name',
     },
     {
-      title: t('searchTable.columns.station_id'),
-      dataIndex: 'station_id',
-      slotName: 'station_id',
+      title: t('permission.columns.code'),
+      dataIndex: 'code',
+    },
+    // {
+    //   title: t('permission.columns.toCode'),
+    //   dataIndex: 'toCode',
+    // },
+    {
+      title: t('permission.columns.type'),
+      dataIndex: 'type',
+      slotName: 'type',
     },
     {
-      title: t('searchTable.columns.sku_id'),
-      dataIndex: 'sku_id',
-    },
-    {
-      title: t('searchTable.columns.sku_name'),
-      dataIndex: 'sku_name',
-      slotName: 'sku_name',
-    },
-    {
-      title: t('searchTable.columns.sku_num'),
-      dataIndex: 'sku_num',
-    },
-    {
-      title: t('searchTable.columns.createdTime'),
-      dataIndex: 'createdTime',
-    },
-    {
-      title: t('searchTable.columns.status'),
+      title: t('permission.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('searchTable.columns.operations'),
+      title: t('permission.columns.createTime'),
+      dataIndex: 'createTime',
+    },
+    {
+      title: t('permission.columns.updateTime'),
+      dataIndex: 'updateTime',
+    },
+    // {
+    //   title: t('permission.columns.code'),
+    //   dataIndex: 'code',
+    //   slotName: 'code',
+    // },
+    // {
+    //   title: t('permission.columns.sku_name'),
+    //   dataIndex: 'sku_name',
+    //   slotName: 'sku_name',
+    // },
+    // {
+    //   title: t('permission.columns.sku_num'),
+    //   dataIndex: 'sku_num',
+    // },
+    // {
+    //   title: t('permission.columns.status'),
+    //   dataIndex: 'status',
+    //   slotName: 'status',
+    // },
+    {
+      title: t('permission.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
@@ -359,40 +255,21 @@
   // //过滤器
   //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
   //     {
-  //       label: t('searchTable.form.filterType.artificial'),
+  //       label: t('permission.form.filterType.artificial'),
   //       value: 'artificial',
   //     },
   //     {
-  //       label: t('searchTable.form.filterType.rules'),
+  //       label: t('permission.form.filterType.rules'),
   //       value: 'rules',
   //     },
   //   ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('searchTable.form.status.no_shipped'),
-      value: 'no_shipped',
-    },
-    {
-      label: t('searchTable.form.status.shipped'),
-      value: 'shipped',
-    },
-    {
-      label: t('searchTable.form.status.stocked'),
-      value: 'stocked',
-    },
-  ]);
 
   // 分页
-  const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
-  ) => {
+  const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
-      console.log(data);
+      const { data } = await queryPermissionList();
       renderData.value = data.list;
-      pagination.current = params.current;
-      pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -401,20 +278,13 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as PolicyParams);
+    fetchData();
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData();
   };
   fetchData();
 
-  // 重置
-  const reset = () => {
-    formModel.value = generateFormModel();
-  };
   // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
@@ -485,7 +355,7 @@
 
 <script lang="ts">
   export default {
-    name: 'SearchTable',
+    name: 'permission',
   };
 </script>
 

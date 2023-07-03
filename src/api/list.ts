@@ -16,7 +16,7 @@ export interface PolicyRecord {
   order_no: number;
   nick_name: string;
   receiver_name: string;
-  order_status: '待付款' | '代发货' | '已发货' | '已完成' | '已取消';
+  order_status: '待付款' | '待发货' | '已发货' | '已完成' | '已取消';
   payment_time: string;
   take_name: string;
   total_amount: number;
