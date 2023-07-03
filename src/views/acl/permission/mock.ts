@@ -36,7 +36,7 @@ const theServiceList: ServiceRecord[] = [
 setupMock({
   setup() {
     // the service
-    Mock.mock(new RegExp('/api/center/the-service'), () => {
+    Mock.mock(new RegExp('/admin/center/the-service'), () => {
       return successResponseWrap(
         theServiceList.map((_, index) => ({
           ...theServiceList[index % theServiceList.length],

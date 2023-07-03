@@ -268,7 +268,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryAdminList, Admin, AdminParams } from '@/api/acl';
+  import { queryAdminList, Admin } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -407,13 +407,15 @@
 
   // 分页
   const fetchData = async (
-    params: AdminParams = { current: 1, pageSize: 20 }
+    current: number,
+    pageSize: number,
+    params: Partial<Admin>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryAdminList(params);
+      const { data } = await queryAdminList(current, pageSize, params);
       renderData.value = data.list;
-      pagination.current = params.current;
+      pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -423,15 +425,12 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as AdminParams);
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData(current, basePagination.pageSize, formModel.value);
   };
-  fetchData();
+  fetchData(basePagination.current, basePagination.pageSize, formModel.value);
 
   // 重置
   const reset = () => {

@@ -1,6 +1,12 @@
 import axios from 'axios';
 import qs from 'query-string';
 
+export interface Result<T> {
+  code: number;
+  message: string;
+  data: T;
+}
+
 export interface Role {
   // 内容不影响
   id: string;
@@ -22,7 +28,7 @@ export interface PageRes<T> {
 }
 
 export function queryRoleList(params: RoleParams) {
-  return axios.get<PageRes<Role>>('/api/acl/role', {
+  return axios.get<PageRes<Role>>('/admin/acl/role', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
@@ -39,17 +45,30 @@ export interface Admin {
   email: string;
   wareId: string;
   stationId: string;
-  createTime: string;
-  updateTime: string;
+  createTime: Date;
+  updateTime: Date;
 }
 
-export interface AdminParams extends Partial<Admin> {
-  current: number;
-  pageSize: number;
-}
+// export interface AdminParams extends Partial<Admin> {
+//   current: number;
+//   pageSize: number;
+// }
 
-export function queryAdminList(params: AdminParams) {
-  return axios.get<PageRes<Admin>>('/api/acl/admin', {
+// export function queryAdminList(params: AdminParams) {
+//   return axios.get<PageRes<Admin>>('/admin/acl/admin', {
+//     params,
+//     paramsSerializer: (obj) => {
+//       return qs.stringify(obj);
+//     },
+//   });
+// }
+
+export function queryAdminList(
+  current: number,
+  limit: number,
+  params: Partial<Admin>
+) {
+  return axios.get<PageRes<Admin>>(`/admin/acl/admin/${current}/${limit}`, {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
@@ -59,15 +78,18 @@ export function queryAdminList(params: AdminParams) {
 
 export interface Permission {
   // 内容不影响
-  id: string;
-  pid: string;
+  id: number;
+  pid: number;
+  level: number;
   name: string;
   code: string;
-  to_code: string;
+  toCode: string;
   type: number;
   status: number;
+  select: boolean;
   createTime: string;
   updateTime: string;
+  children: Permission[];
 }
 
 // export function queryPermissionList(
@@ -76,7 +98,7 @@ export interface Permission {
 //   params: Partial<Permission>
 // ) {
 //   return axios.get<PageRes<Permission>>(
-//     `/api/acl/permission/${current}/${limit}`,
+//     `/admin/acl/permission/${current}/${limit}`,
 //     {
 //       params,
 //       paramsSerializer: (obj) => {
@@ -87,5 +109,5 @@ export interface Permission {
 // }
 
 export function queryPermissionList() {
-  return axios.get<PageRes<Permission>>(`/api/acl/permission`);
+  return axios.get<Permission[]>(`/admin/acl/permission`);
 }

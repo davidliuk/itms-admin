@@ -98,18 +98,11 @@
       <a-table
         row-key="id"
         :loading="loading"
-        :pagination="pagination"
         :columns="(cloneColumns as TableColumnData[])"
         :data="renderData"
         :bordered="false"
         :size="size"
-        @page-change="onPageChange"
       >
-        <!-- 分页 -->
-        <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
-        </template>
-
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
@@ -160,13 +153,6 @@
 
   const size = ref<SizeProps>('medium');
 
-  const basePagination: Pagination = {
-    current: 1,
-    pageSize: 20,
-  };
-  const pagination = reactive({
-    ...basePagination,
-  });
   const densityList = computed(() => [
     {
       name: t('permission.size.mini'),
@@ -269,7 +255,7 @@
     setLoading(true);
     try {
       const { data } = await queryPermissionList();
-      renderData.value = data.list;
+      renderData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
