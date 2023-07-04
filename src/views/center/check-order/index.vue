@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.centerStock']" />
-    <a-card class="general-card" :title="$t('menu.center.centerStock')">
+    <Breadcrumb :items="['menu.center', 'menu.center.CheckOrder']" />
+    <a-card class="general-card" :title="$t('menu.center.CheckOrder')">
       <a-row>
+        <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -12,78 +13,118 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="sku_id"
-                  :label="$t('centerStock.form.sku_id')"
-                >
+                <a-form-item field="id" :label="$t('CheckOrder.form.id')">
                   <a-input
-                    v-model="formModel.sku_id"
-                    :placeholder="$t('centerStock.form.sku_id.placeholder')"
+                    v-model="formModel.id"
+                    :placeholder="$t('CheckOrder.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="sku_name"
-                  :label="$t('centerStock.form.sku_name')"
+                  field="wareId"
+                  :label="$t('CheckOrder.form.wareId')"
                 >
                   <a-input
-                    v-model="formModel.sku_name"
-                    :placeholder="$t('centerStock.form.sku_name.placeholder')"
+                    v-model="formModel.wareId"
+                    :placeholder="$t('CheckOrder.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="createdTime"
-                  :label="$t('centerStock.form.createdTime')"
+                  field="stationId"
+                  :label="$t('CheckOrder.form.stationId')"
+                >
+                  <a-input
+                    v-model="formModel.stationId"
+                    :placeholder="$t('CheckOrder.form.stationId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="skuId" :label="$t('CheckOrder.form.skuId')">
+                  <a-input
+                    v-model="formModel.skuId"
+                    :placeholder="$t('CheckOrder.form.skuId.placeholder')"
+                  />
+                  <!-- <a-select
+                    v-model="formModel.skuId"
+                    :options="filterTypeOptions"
+                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                  /> -->
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="createTime"
+                  :label="$t('CheckOrder.form.createTime')"
                 >
                   <a-range-picker
-                    v-model="formModel.createdTime"
+                    v-model="formModel.createTime"
                     style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="status"
+                  :label="$t('CheckOrder.form.status')"
+                >
+                  <a-select
+                    v-model="formModel.status"
+                    :options="statusOptions"
+                    :placeholder="$t('CheckOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
             </a-row>
           </a-form>
         </a-col>
+
+        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
+        <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('centerStock.form.search') }}
+              {{ $t('CheckOrder.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('centerStock.form.reset') }}
+              {{ $t('CheckOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
       </a-row>
+
       <a-divider style="margin-top: 0" />
+      <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
+        <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
             <a-button type="primary">
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('centerStock.operation.create') }}
+              {{ $t('CheckOrder.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('centerStock.operation.import') }}
+                  {{ $t('CheckOrder.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
           </a-space>
         </a-col>
+        <!-- 表格上面的下载设置等 -->
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
@@ -92,17 +133,20 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('centerStock.operation.download') }}
+            {{ $t('CheckOrder.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('centerStock.actions.refresh')">
+          <a-tooltip :content="$t('CheckOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('centerStock.actions.density')">
+            <!-- 密度 -->
+            <a-tooltip :content="$t('CheckOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
+
+            <!-- size -->
             <template #content>
               <a-doption
                 v-for="item in densityList"
@@ -114,7 +158,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('centerStock.actions.columnSetting')">
+          <a-tooltip :content="$t('CheckOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -150,6 +194,8 @@
           </a-tooltip>
         </a-col>
       </a-row>
+
+      <!-- 表格 -->
       <a-table
         row-key="id"
         :loading="loading"
@@ -160,53 +206,36 @@
         :size="size"
         @page-change="onPageChange"
       >
+        <!-- 分页 -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <template #contentType="{ record }">
-          <a-space>
-            <a-avatar
-              v-if="record.contentType === 'img'"
-              :size="16"
-              shape="square"
-            >
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/581b17753093199839f2e327e726b157.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            <a-avatar
-              v-else-if="record.contentType === 'horizontalVideo'"
-              :size="16"
-              shape="square"
-            >
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            <a-avatar v-else :size="16" shape="square">
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            {{ $t(`centerStock.form.contentType.${record.contentType}`) }}
-          </a-space>
-        </template>
-        <template #filterType="{ record }">
-          {{ $t(`centerStock.form.filterType.${record.filterType}`) }}
-        </template>
+
+        <!-- 表格form里 -->
+        <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.status === 'offline'" class="circle"></span>
-          <span v-else class="circle pass"></span>
-          {{ $t(`centerStock.form.status.${record.status}`) }}
+          <span v-if="record.status === 'no_distribute'" class="circle"></span>
+          <span
+            v-else-if="record.status === 'distributed'"
+            class="circle pass"
+          ></span>
+          <span
+            v-else-if="record.status === 'stocked'"
+            class="circle pass"
+          ></span>
+          {{ $t(`CheckOrder.form.status.${record.status}`) }}
         </template>
+        <!-- 表格form里 -->
+
+        <!-- table里 -->
+        <!-- 查看 -->
         <template #operations>
+          <!--            <a-button ">view</a-button>-->
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('centerStock.columns.operations.view') }}
+            {{ $t('CheckOrder.columns.operations.view') }}
           </a-button>
         </template>
+        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -216,8 +245,9 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { querySkuWareList, SkuWare } from '@/api/center';
+  import { queryCheckOrderList, CheckOrder } from '@/api/center';
   import { Pagination } from '@/types/global';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -228,20 +258,25 @@
   const generateFormModel = () => {
     return {
       id: '',
+      imgUrl: '',
+      inTime: null,
+      orderId: '',
+      outTime: null,
       skuId: '',
       skuName: '',
-      wareId: '',
-      stock: '',
-      lockStock: '',
-      lowStock: '',
-      sale: '',
-      createTime: null,
+      skuNum: '',
+      skuPrice: '',
+      stationId: '',
+      status: '',
+      // 0:未分发,1:已分发,2:已入库
       updateTime: null,
+      createTime: null,
+      wareId: '',
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<SkuWare[]>([]);
+  const renderData = ref<CheckOrder[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -257,78 +292,115 @@
   });
   const densityList = computed(() => [
     {
-      name: t('centerStock.size.mini'),
+      name: t('CheckOrder.size.mini'),
       value: 'mini',
     },
     {
-      name: t('centerStock.size.small'),
+      name: t('CheckOrder.size.small'),
       value: 'small',
     },
     {
-      name: t('centerStock.size.medium'),
+      name: t('CheckOrder.size.medium'),
       value: 'medium',
     },
     {
-      name: t('centerStock.size.large'),
+      name: t('CheckOrder.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('centerStock.columns.index'),
+      title: t('CheckOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('centerStock.columns.sku_id'),
-      dataIndex: 'sku_id',
+      title: t('CheckOrder.columns.id'),
+      dataIndex: 'id',
     },
     {
-      title: t('centerStock.columns.sku_name'),
-      dataIndex: 'sku_name',
+      title: t('CheckOrder.columns.wareId'),
+      dataIndex: 'wareId',
     },
     {
-      title: t('centerStock.columns.ware_id'),
-      dataIndex: 'ware_id',
-      slotName: 'ware_id',
+      title: t('CheckOrder.columns.stationId'),
+      dataIndex: 'stationId',
+      slotName: 'stationId',
     },
     {
-      title: t('centerStock.columns.stock'),
-      dataIndex: 'stock',
+      title: t('CheckOrder.columns.skuId'),
+      dataIndex: 'skuId',
     },
     {
-      title: t('centerStock.columns.lock_stock'),
-      dataIndex: 'lock_stock',
+      title: t('CheckOrder.columns.skuName'),
+      dataIndex: 'skuName',
+      slotName: 'skuName',
     },
     {
-      title: t('centerStock.columns.low_stock'),
-      dataIndex: 'low_stock',
-    },
-
-    {
-      title: t('centerStock.columns.createdTime'),
-      dataIndex: 'createdTime',
+      title: t('CheckOrder.columns.skuNum'),
+      dataIndex: 'skuNum',
     },
     {
-      title: t('centerStock.columns.updatedTime'),
-      dataIndex: 'updatedTime',
+      title: t('CheckOrder.columns.createTime'),
+      dataIndex: 'createTime',
     },
     {
-      title: t('centerStock.columns.operations'),
+      title: t('CheckOrder.columns.status'),
+      dataIndex: 'status',
+      slotName: 'status',
+    },
+    {
+      title: t('CheckOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
+  // 'CheckOrder.columns.index': '#',
+  //     'CheckOrder.columns.id': '分发单标识',
+  //     'CheckOrder.columns.orderId': '分发单所属订单',
+  //     'CheckOrder.columns.wareId': '仓库标识',
+  //     'CheckOrder.columns.stationId': '分站标识(id换成分站库房名称)',
+  //
+  //     'CheckOrder.columns.inTime': '入库时间',
+  //     'CheckOrder.columns.outTime': '出库时间',
+  //     'CheckOrder.columns.createTime': '创建时间',
+  //     'CheckOrder.columns.updateTime': '更新时间',
+  //
+  //     'CheckOrder.columns.status': '状态',
+  //     'CheckOrder.columns.operations': '操作',
+  //     'CheckOrder.columns.operations.view': '查看商品详情',
+  //
+  //     'CheckOrder.columns.skuId': '商品编号',
+  //     'CheckOrder.columns.skuImg': '商品图片',
+  //     'CheckOrder.columns.skuNum': '商品数量',
+  //     'CheckOrder.columns.skuName': '商品名称',
+  //     'CheckOrder.columns.skuPrice': '商品价格',
+  const statusOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('CheckOrder.form.status.no_distribute'),
+      value: 'no_distribute',
+    },
+    {
+      label: t('CheckOrder.form.status.distributed'),
+      value: 'distributed',
+    },
+    {
+      label: t('CheckOrder.form.status.stocked'),
+      value: 'stocked',
+    },
+  ]);
 
+  // 分页
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<SkuWare>
+    params: Partial<CheckOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await querySkuWareList(current, pageSize, params);
+      const { data } = await queryCheckOrderList(current, pageSize, params);
+      console.log(data);
       renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
@@ -347,17 +419,19 @@
   };
 
   fetchData(pagination.current, pagination.pageSize, formModel.value);
+
+  // 重置
   const reset = () => {
     formModel.value = generateFormModel();
   };
-
+  // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
   ) => {
     size.value = val as SizeProps;
   };
-
+  // 改变内容
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -420,7 +494,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CenterStock',
+    name: 'CheckOrder',
   };
 </script>
 

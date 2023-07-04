@@ -355,7 +355,7 @@
 
 <script lang="ts">
   export default {
-    name: 'permission',
+    name: 'Permission',
   };
 </script>
 

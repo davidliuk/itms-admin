@@ -21,7 +21,7 @@ import '@/views/user/info/mock';
 import '@/views/user/setting/mock';
 
 import '@/views/center/search-table/mock';
-import '@/views/center/project/mock';
+import '@/views/center/skuware/mock';
 import '@/views/center/transfer_order/mock';
 
 // import '@/views/acl/role/mock';

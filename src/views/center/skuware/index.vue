@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.acl', 'menu.acl.role']" />
-    <a-card class="general-card" :title="$t('menu.acl.role')">
+    <Breadcrumb :items="['menu.center', 'menu.center.centerStock']" />
+    <a-card class="general-card" :title="$t('menu.center.centerStock')">
       <a-row>
-        <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -13,46 +12,31 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('role.form.id')">
+                <a-form-item
+                  field="sku_id"
+                  :label="$t('centerStock.form.sku_id')"
+                >
                   <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('role.form.id.placeholder')"
+                    v-model="formModel.skuId"
+                    :placeholder="$t('centerStock.form.sku_id.placeholder')"
                   />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="name" :label="$t('role.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('role.form.name.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="code" :label="$t('role.form.code')">
-                  <a-input
-                    v-model="formModel.code"
-                    :placeholder="$t('role.form.code.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="remark" :label="$t('role.form.remark')">
-                  <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('role.form.remark.placeholder')"
-                  />
-                  <!-- <a-select
-                    v-model="formModel.remark"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('role.form.selectDefault')"
-                  /> -->
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="createTime"
-                  :label="$t('role.form.createTime')"
+                  field="sku_name"
+                  :label="$t('centerStock.form.sku_name')"
+                >
+                  <a-input
+                    v-model="formModel.sku_name"
+                    :placeholder="$t('centerStock.form.sku_name.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="createdTime"
+                  :label="$t('centerStock.form.createdTime')"
                 >
                   <a-range-picker
                     v-model="formModel.createTime"
@@ -60,76 +44,46 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="updateTime"
-                  :label="$t('role.form.updateTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.updateTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('role.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('role.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col> -->
             </a-row>
           </a-form>
         </a-col>
-
-        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('role.form.search') }}
+              {{ $t('centerStock.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('role.form.reset') }}
+              {{ $t('centerStock.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
       </a-row>
-
       <a-divider style="margin-top: 0" />
-      <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
-        <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
             <a-button type="primary">
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('role.operation.create') }}
+              {{ $t('centerStock.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('role.operation.import') }}
+                  {{ $t('centerStock.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
           </a-space>
         </a-col>
-        <!-- 表格上面的下载设置等 -->
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
@@ -138,20 +92,17 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('role.operation.download') }}
+            {{ $t('centerStock.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('role.actions.refresh')">
+          <a-tooltip :content="$t('centerStock.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <!-- 密度 -->
-            <a-tooltip :content="$t('role.actions.density')">
+            <a-tooltip :content="$t('centerStock.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
-
-            <!-- size -->
             <template #content>
               <a-doption
                 v-for="item in densityList"
@@ -163,7 +114,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('role.actions.columnSetting')">
+          <a-tooltip :content="$t('centerStock.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -199,8 +150,6 @@
           </a-tooltip>
         </a-col>
       </a-row>
-
-      <!-- 表格 -->
       <a-table
         row-key="id"
         :loading="loading"
@@ -211,35 +160,53 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- 分页 -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-
-        <!-- 表格form里 -->
-        <!-- 状态 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'no_shipped'" class="circle"></span>
-          <span
-            v-else-if="record.status === 'shipped'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
-            class="circle pass"
-          ></span>
-          {{ $t(`role.form.status.${record.status}`) }}
+        <template #contentType="{ record }">
+          <a-space>
+            <a-avatar
+              v-if="record.contentType === 'img'"
+              :size="16"
+              shape="square"
+            >
+              <img
+                alt="avatar"
+                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/581b17753093199839f2e327e726b157.svg~tplv-49unhts6dw-image.image"
+              />
+            </a-avatar>
+            <a-avatar
+              v-else-if="record.contentType === 'horizontalVideo'"
+              :size="16"
+              shape="square"
+            >
+              <img
+                alt="avatar"
+                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
+              />
+            </a-avatar>
+            <a-avatar v-else :size="16" shape="square">
+              <img
+                alt="avatar"
+                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
+              />
+            </a-avatar>
+            {{ $t(`centerStock.form.contentType.${record.contentType}`) }}
+          </a-space>
         </template>
-        <!-- 表格form里 -->
-
-        <!-- table里 -->
-        <!-- 查看 -->
+        <template #filterType="{ record }">
+          {{ $t(`centerStock.form.filterType.${record.filterType}`) }}
+        </template>
+        <template #status="{ record }">
+          <span v-if="record.status === 'offline'" class="circle"></span>
+          <span v-else class="circle pass"></span>
+          {{ $t(`centerStock.form.status.${record.status}`) }}
+        </template>
         <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('role.columns.operations.view') }}
+            {{ $t('centerStock.columns.operations.view') }}
           </a-button>
         </template>
-        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -249,7 +216,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryRoleList, Role, RoleParams } from '@/api/acl';
+  import { querySkuWareList, SkuWare } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -261,16 +228,20 @@
   const generateFormModel = () => {
     return {
       id: '',
-      name: '',
-      code: '',
-      remark: '',
+      skuId: '',
+      skuName: '',
+      wareId: '',
+      stock: '',
+      lockStock: '',
+      lowStock: '',
+      sale: '',
       createTime: null,
       updateTime: null,
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Role[]>([]);
+  const renderData = ref<SkuWare[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -286,100 +257,78 @@
   });
   const densityList = computed(() => [
     {
-      name: t('role.size.mini'),
+      name: t('centerStock.size.mini'),
       value: 'mini',
     },
     {
-      name: t('role.size.small'),
+      name: t('centerStock.size.small'),
       value: 'small',
     },
     {
-      name: t('role.size.medium'),
+      name: t('centerStock.size.medium'),
       value: 'medium',
     },
     {
-      name: t('role.size.large'),
+      name: t('centerStock.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('role.columns.index'),
+      title: t('centerStock.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('role.columns.id'),
-      dataIndex: 'id',
+      title: t('centerStock.columns.sku_id'),
+      dataIndex: 'sku_id',
     },
     {
-      title: t('role.columns.name'),
-      dataIndex: 'name',
+      title: t('centerStock.columns.sku_name'),
+      dataIndex: 'sku_name',
     },
     {
-      title: t('role.columns.code'),
-      dataIndex: 'code',
+      title: t('centerStock.columns.ware_id'),
+      dataIndex: 'ware_id',
+      slotName: 'ware_id',
     },
     {
-      title: t('role.columns.remark'),
-      dataIndex: 'remark',
+      title: t('centerStock.columns.stock'),
+      dataIndex: 'stock',
     },
     {
-      title: t('role.columns.createTime'),
-      dataIndex: 'createTime',
+      title: t('centerStock.columns.lock_stock'),
+      dataIndex: 'lock_stock',
     },
     {
-      title: t('role.columns.updateTime'),
-      dataIndex: 'updateTime',
+      title: t('centerStock.columns.low_stock'),
+      dataIndex: 'low_stock',
     },
-    // {
-    //   title: t('role.columns.code'),
-    //   dataIndex: 'code',
-    //   slotName: 'code',
-    // },
-    // {
-    //   title: t('role.columns.sku_name'),
-    //   dataIndex: 'sku_name',
-    //   slotName: 'sku_name',
-    // },
-    // {
-    //   title: t('role.columns.sku_num'),
-    //   dataIndex: 'sku_num',
-    // },
-    // {
-    //   title: t('role.columns.status'),
-    //   dataIndex: 'status',
-    //   slotName: 'status',
-    // },
+
     {
-      title: t('role.columns.operations'),
+      title: t('centerStock.columns.createdTime'),
+      dataIndex: 'createdTime',
+    },
+    {
+      title: t('centerStock.columns.updatedTime'),
+      dataIndex: 'updatedTime',
+    },
+    {
+      title: t('centerStock.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
 
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('role.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('role.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
-
-  // 分页
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<Role>
+    params: Partial<SkuWare>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryRoleList(current, pageSize, params);
+      const { data } = await querySkuWareList(current, pageSize, params);
       renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
@@ -391,25 +340,24 @@
   };
 
   const search = () => {
-    fetchData(pagination.current, pagination.pageSize, formModel.value);
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
-    fetchData(current, pagination.pageSize, formModel.value);
+    fetchData(current, basePagination.pageSize, formModel.value);
   };
-  fetchData(pagination.current, pagination.pageSize, formModel.value);
 
-  // 重置
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
   const reset = () => {
     formModel.value = generateFormModel();
   };
-  // 设置密度
+
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
   ) => {
     size.value = val as SizeProps;
   };
-  // 改变内容
+
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -468,11 +416,31 @@
     },
     { deep: true, immediate: true }
   );
+
+  // const projectData = async (
+  //     current: number,
+  //     pageSize: number,
+  //     params: Partial<Admin>
+  // ) => {
+  //   setLoading(true);
+  //   try {
+  //     const { data } = await queryProjectList(current, pageSize, params);
+  //     renderData.value = data.list;
+  //     // pagination.current = params.current;
+  //     // pagination.total = data.total;
+  //   } catch (err) {
+  //     // you can report use errorHandler or other
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  //
+  // projectData();
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Role',
+    name: 'CenterStock',
   };
 </script>
 

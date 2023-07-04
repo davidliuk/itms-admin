@@ -581,6 +581,7 @@
   const search = () => {
     fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
+
   const onPageChange = (current: number) => {
     fetchData(current, pagination.pageSize, formModel.value);
   };
@@ -660,7 +661,7 @@
 
 <script lang="ts">
   export default {
-    name: 'admin',
+    name: 'Admin',
   };
 </script>
 

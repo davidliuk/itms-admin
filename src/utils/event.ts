@@ -1,3 +1,4 @@
+// 用于添加和移除事件监听器
 export function addEventListen(
   target: Window | HTMLElement,
   event: string,

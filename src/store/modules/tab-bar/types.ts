@@ -9,4 +9,5 @@ export interface TagProps {
 export interface TabBarState {
   tagList: TagProps[];
   cacheTabList: Set<string>;
+  // 表示一个不重复且无序的字符串集合。
 }

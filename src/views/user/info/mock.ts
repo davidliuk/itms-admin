@@ -4,7 +4,7 @@ import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 setupMock({
   setup() {
     // 最新项目
-    Mock.mock(new RegExp('/api/user/my-project/list'), () => {
+    Mock.mock(new RegExp('/api/user/my-skuware/list'), () => {
       const contributors = [
         {
           name: '秦臻宇',
@@ -104,7 +104,7 @@ setupMock({
     });
 
     // 项目和团队列表
-    Mock.mock(new RegExp('/api/user/project-and-team/list'), () => {
+    Mock.mock(new RegExp('/api/user/skuware-and-team/list'), () => {
       return successResponseWrap([
         {
           id: 1,

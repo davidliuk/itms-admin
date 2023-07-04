@@ -25,7 +25,7 @@ const LIST: AppRouteRecordRaw = {
     {
       path: 'project_stock', // The midline path complies with SEO specifications
       name: 'centerProjectStock',
-      component: () => import('@/views/center/project/index.vue'),
+      component: () => import('@/views/center/skuware/index.vue'),
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
         locale: 'menu.center.centerStock',
@@ -40,6 +40,17 @@ const LIST: AppRouteRecordRaw = {
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
         locale: 'menu.center.transferOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'check_order', // The midline path complies with SEO specifications
+      name: 'centerCheckOrder',
+      component: () => import('@/views/center/check-order/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.CheckOrder',
         requiresAuth: true,
         roles: ['*'],
       },

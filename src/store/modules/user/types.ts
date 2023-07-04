@@ -1,4 +1,6 @@
 export type RoleType = '' | '*' | 'admin' | 'user';
+// RoleType 是一个联合类型（Union Type），它表示用户角色类型。
+// 它包含四个可能的取值："''"（空字符串）、"''"、"'admin'" 和 "'user'"。
 export interface UserState {
   name?: string;
   avatar?: string;
@@ -16,4 +18,6 @@ export interface UserState {
   accountId?: string;
   certification?: number;
   role: RoleType;
+  // 在 TypeScript 中，? 是一个可选属性的标记，
+  // 用于指示属性是可选的，即可以存在也可以不存在。
 }
