@@ -216,9 +216,8 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/center';
+  import { querySkuWareList, SkuWare } from '@/api/center';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -228,20 +227,21 @@
 
   const generateFormModel = () => {
     return {
-      sku_id: '',
-      sku_name: '',
-      ware_id: '',
+      id: '',
+      skuId: '',
+      skuName: '',
+      wareId: '',
       stock: '',
-      lock_stock: '',
-      low_stock: '',
+      lockStock: '',
+      lowStock: '',
       sale: '',
-      createdTime: [],
-      updatedTime: [],
+      createTime: null,
+      updateTime: null,
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<PolicyRecord[]>([]);
+  const renderData = ref<SkuWare[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -322,13 +322,15 @@
   ]);
 
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    current: number,
+    pageSize: number,
+    params: Partial<SkuWare>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      const { data } = await querySkuWareList(current, pageSize, params);
+      renderData.value = data.records;
+      pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -338,16 +340,13 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as PolicyParams);
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData(current, basePagination.pageSize, formModel.value);
   };
 
-  fetchData();
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
   const reset = () => {
     formModel.value = generateFormModel();
   };

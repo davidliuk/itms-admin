@@ -16,6 +16,7 @@ export interface Role {
   createTime: Date;
   updateTime: Date;
 }
+
 export interface PageRes<T> {
   records: T[];
   total: number;
@@ -77,6 +78,10 @@ export function queryAdminList(
       return qs.stringify(obj);
     },
   });
+}
+
+export function deleteAdmin(id: number) {
+  return axios.delete<any>(`/admin/acl/role/remove/${id}`);
 }
 
 export interface Permission {

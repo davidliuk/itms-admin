@@ -45,6 +45,7 @@ export default {
   'admin.columns.updatedTime': '更新时间',
   'admin.columns.operations': '操作',
   'admin.columns.operations.view': '查看',
+  'admin.columns.operations.delete': '删除',
 
   // size
   'admin.size.mini': '迷你',

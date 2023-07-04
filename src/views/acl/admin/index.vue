@@ -253,9 +253,17 @@
 
         <!-- table里 -->
         <!-- 查看 -->
-        <template #operations>
+        <template #operations="{ record }">
           <a-button v-permission="['admin']" type="text" size="small">
             {{ $t('admin.columns.operations.view') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteAdminById(record.id)"
+          >
+            {{ $t('admin.columns.operations.delete') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -268,7 +276,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryAdminList, Admin } from '@/api/acl';
+  import { queryAdminList, deleteAdmin, Admin } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -417,6 +425,18 @@
       renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteAdminById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteAdmin(id);
+      fetchData(pagination.current, pagination.pageSize, formModel.value);
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

@@ -5,10 +5,9 @@ import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 export interface PolicyRecord {
   // 内容不影响
   id: string;
-  ware_id: string;
-  sku_id: string;
-  station_id: string;
+  sku_id: number;
   sku_name: '小熊玩具' | '水杯' | '耳机' | '纸巾';
+  ware_id: string;
   sku_num: number;
   status: '未分发' | '已分发' | '已入库';
   createdTime: string;
@@ -29,6 +28,38 @@ export interface PolicyRecord {
   // `in_time` datetime DEFAULT NULL COMMENT '入库时间',
   // `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   // `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+}
+
+export interface PageRes<T> {
+  records: T[];
+  total: number;
+}
+
+export interface SkuWare {
+  // 内容不影响
+  id: string;
+  skuId: number;
+  skuName: string;
+  wareId: string;
+  stock: number;
+  lockStock: number;
+  lowStock: number;
+  sale: number;
+  createTime: Date;
+  updateTime: Date;
+}
+
+export function querySkuWareList(
+  current: number,
+  limit: number,
+  params: Partial<SkuWare>
+) {
+  return axios.post<PageRes<SkuWare>>(
+    `/admin/product/skuWare/${current}/${limit}`,
+    {
+      params,
+    }
+  );
 }
 
 export interface PolicyParams extends Partial<PolicyRecord> {
