@@ -286,8 +286,8 @@
       email: '',
       wareId: '',
       stationId: '',
-      createTime: new Date(),
-      updateTime: new Date(),
+      // createTime: null,
+      // updateTime: null,
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -414,7 +414,7 @@
     setLoading(true);
     try {
       const { data } = await queryAdminList(current, pageSize, params);
-      renderData.value = data.list;
+      renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
@@ -425,12 +425,12 @@
   };
 
   const search = () => {
-    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+    fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
-    fetchData(current, basePagination.pageSize, formModel.value);
+    fetchData(current, pagination.pageSize, formModel.value);
   };
-  fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
 
   // 重置
   const reset = () => {

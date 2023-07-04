@@ -101,6 +101,8 @@
         :columns="(cloneColumns as TableColumnData[])"
         :data="renderData"
         :bordered="false"
+        :default-expanded-keys="[1]"
+        :default-expand-all-rows="true"
         :size="size"
       >
         <!-- 表格form里 -->
@@ -116,6 +118,18 @@
             class="circle pass"
           ></span>
           {{ $t(`permission.form.status.${record.status}`) }}
+        </template>
+        <template #type="{ record }">
+          <span v-if="record.type === 'no_shipped'" class="circle"></span>
+          <span
+            v-else-if="record.type === 'shipped'"
+            class="circle pass"
+          ></span>
+          <span
+            v-else-if="record.type === 'stocked'"
+            class="circle pass"
+          ></span>
+          {{ $t(`permission.form.type.${record.type}`) }}
         </template>
         <!-- 表格form里 -->
 
@@ -266,9 +280,9 @@
   const search = () => {
     fetchData();
   };
-  const onPageChange = (current: number) => {
-    fetchData();
-  };
+  // const onPageChange = (current: number) => {
+  //   fetchData();
+  // };
   fetchData();
 
   // 设置密度

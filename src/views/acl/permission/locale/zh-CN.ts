@@ -30,6 +30,12 @@ export default {
   'permission.columns.operations': '操作',
   'permission.columns.operations.view': '查看',
 
+  'permission.form.type.1': '菜单',
+  'permission.form.type.2': '按钮',
+  'permission.form.status.null': '正常',
+  'permission.form.status.0': '禁止',
+  'permission.form.status.1': '正常',
+
   // size
   'permission.size.mini': '迷你',
   'permission.size.small': '偏小',

@@ -264,8 +264,8 @@
       name: '',
       code: '',
       remark: '',
-      createTime: new Date(),
-      updateTime: new Date(),
+      createTime: null,
+      updateTime: null,
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -373,13 +373,15 @@
 
   // 分页
   const fetchData = async (
-    params: RoleParams = { current: 1, pageSize: 20 }
+    current: number,
+    pageSize: number,
+    params: Partial<Role>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryRoleList(params);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      const { data } = await queryRoleList(current, pageSize, params);
+      renderData.value = data.records;
+      pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -389,15 +391,12 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as RoleParams);
+    fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData(current, pagination.pageSize, formModel.value);
   };
-  fetchData();
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
 
   // 重置
   const reset = () => {

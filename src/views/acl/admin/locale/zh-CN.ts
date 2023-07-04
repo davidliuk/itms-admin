@@ -36,7 +36,7 @@ export default {
   'admin.columns.index': '#',
   'admin.columns.id': '编号',
   'admin.columns.username': '账户',
-  'admin.columns.name': '商品名称',
+  'admin.columns.name': '名称',
   'admin.columns.phone': '手机号',
   'admin.columns.email': '邮箱',
   'admin.columns.wareId': '库房ID',

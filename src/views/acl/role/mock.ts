@@ -24,7 +24,7 @@ setupMock({
       const p = current as number;
       const ps = pageSize as number;
       return successResponseWrap({
-        list: data.list.slice((p - 1) * ps, p * ps),
+        records: data.list.slice((p - 1) * ps, p * ps),
         total: 55,
       });
     });

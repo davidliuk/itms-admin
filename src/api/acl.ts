@@ -13,8 +13,12 @@ export interface Role {
   name: string;
   code: string;
   remark: string;
-  createTime: string;
-  updateTime: string;
+  createTime: Date;
+  updateTime: Date;
+}
+export interface PageRes<T> {
+  records: T[];
+  total: number;
 }
 
 export interface RoleParams extends Partial<Role> {
@@ -22,17 +26,16 @@ export interface RoleParams extends Partial<Role> {
   pageSize: number;
 }
 
-export interface PageRes<T> {
-  list: T[];
-  total: number;
-}
-
-export function queryRoleList(params: RoleParams) {
-  return axios.get<PageRes<Role>>('/admin/acl/role', {
+export function queryRoleList(
+  current: number,
+  limit: number,
+  params: Partial<Role>
+) {
+  return axios.post<PageRes<Role>>(`/admin/acl/role/${current}/${limit}`, {
     params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
+    // paramsSerializer: (obj) => {
+    //   return qs.stringify(obj);
+    // },
   });
 }
 
@@ -55,7 +58,7 @@ export interface Admin {
 // }
 
 // export function queryAdminList(params: AdminParams) {
-//   return axios.get<PageRes<Admin>>('/admin/acl/admin', {
+//   return axios.get<PageRes<Admin>>('/admin/acl/user', {
 //     params,
 //     paramsSerializer: (obj) => {
 //       return qs.stringify(obj);
@@ -68,7 +71,7 @@ export function queryAdminList(
   limit: number,
   params: Partial<Admin>
 ) {
-  return axios.get<PageRes<Admin>>(`/admin/acl/admin/${current}/${limit}`, {
+  return axios.get<PageRes<Admin>>(`/admin/acl/user/${current}/${limit}`, {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
