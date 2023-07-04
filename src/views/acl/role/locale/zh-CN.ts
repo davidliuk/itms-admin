@@ -1,5 +1,7 @@
 export default {
   'menu.acl.role': '角色管理',
+
+  // form
   'role.form.id': '编号',
   'role.form.id.placeholder': '请输入角色编号',
   'role.form.name': '名称',
@@ -13,11 +15,13 @@ export default {
   'role.form.search': '查询',
   'role.form.reset': '重置',
   'role.form.selectDefault': '全部',
+
+  // operation
   'role.operation.create': '新建',
   'role.operation.import': '批量导入',
   'role.operation.download': '下载',
-  // columns
 
+  // columns
   'role.columns.index': '#',
   'role.columns.id': '角色id',
   'role.columns.name': '名称',
@@ -27,6 +31,9 @@ export default {
   'role.columns.updateTime': '修改时间',
   'role.columns.operations': '操作',
   'role.columns.operations.view': '查看',
+  'role.columns.operations.delete': '删除',
+  'role.columns.operations.update': '修改',
+  'role.columns.operations.assign': '授权',
 
   // size
   'role.size.mini': '迷你',

@@ -30,7 +30,7 @@ export default {
   'centerStock.columns.index': '#',
   'centerStock.columns.sku_id': '商品编号',
   'centerStock.columns.sku_name': '商品名称',
-  'centerStock.columns.ware_id': '区域中心库房id',
+  'centerStock.columns.ware_id': '区域中心库房编号',
   'centerStock.columns.stock': '总库存',
   'centerStock.columns.lock_stock': '锁定库存',
   'centerStock.columns.low_stock': '预警销量',
