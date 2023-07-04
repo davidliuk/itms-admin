@@ -526,7 +526,7 @@
 
 <script lang="ts">
   export default {
-    name: 'admin',
+    name: 'Admin',
   };
 </script>
 

@@ -34,6 +34,10 @@ import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
 import localePermission from '@/views/acl/permission/locale/zh-CN';
 
+import localeMissionTable from '@/views/station/mission-table/locale/zh-CN';
+import localeCourierTable from '@/views/station/courier-table/locale/zh-CN';
+import localeStationInfo from '@/views/station/station-info/locale/zh-CN';
+
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -44,6 +48,7 @@ export default {
   'menu.list': '列表页',
   'menu.result': '结果页',
   'menu.exception': '异常页',
+  'menu.station':'分站管理',
   'menu.form': '表单页',
   'menu.profile': '详情页',
   'menu.visualization': '数据可视化',
@@ -82,4 +87,8 @@ export default {
   ...localeAdmin,
   ...localeRole,
   ...localePermission,
+
+  ...localeMissionTable,
+  ...localeCourierTable,
+  ...localeStationInfo,
 };

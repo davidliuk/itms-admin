@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.acl', 'menu.acl.role']" />
-    <a-card class="general-card" :title="$t('menu.acl.role')">
+    <Breadcrumb :items="['menu.station', 'menu.station.missionTable']" />
+    <a-card class="general-card" :title="$t('menu.station.missionTable')">
       <a-row>
-        <!-- 6个输入框 -->
+        <!--查询框-->
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -12,124 +12,68 @@
             label-align="left"
           >
             <a-row :gutter="16">
+              <!--任务类型-->
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('role.form.id')">
-                  <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('role.form.id.placeholder')"
+                <a-form-item field="type" :label="$t('missionTable.form.type')">
+                  <a-select
+                    v-model="formModel.type"
+                    :options="typeOptions"
+                    :placeholder="$t('missionTable.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
+              <!--任务状态-->
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('role.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('role.form.name.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="code" :label="$t('role.form.code')">
-                  <a-input
-                    v-model="formModel.code"
-                    :placeholder="$t('role.form.code.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="remark" :label="$t('role.form.remark')">
-                  <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('role.form.remark.placeholder')"
-                  />
-                  <!-- <a-select
-                    v-model="formModel.remark"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('role.form.selectDefault')"
-                  /> -->
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('role.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="updateTime"
-                  :label="$t('role.form.updateTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.updateTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <!-- <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('role.form.status')"
+                  :label="$t('missionTable.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('role.form.selectDefault')"
+                    :placeholder="$t('missionTable.form.selectDefault')"
                   />
                 </a-form-item>
-              </a-col> -->
+              </a-col>
+              <!--创建时间-->
+              <a-col :span="8">
+                <a-form-item
+                  field="createdTime"
+                  :label="$t('missionTable.form.createdTime')"
+                >
+                  <a-range-picker
+                    v-model="formModel.createdTime"
+                    style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col>
             </a-row>
           </a-form>
         </a-col>
-
-        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
+      </a-row>
+      <a-divider style="margin-top: 0" />
+      <a-row style="margin-bottom: 16px">
+        <!--查询重置按钮-->
+        <a-col :span="12">
+          <a-space>
+            <!--查询-->
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('role.form.search') }}
+              {{ $t('missionTable.form.search') }}
             </a-button>
+            <!--重置-->
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('role.form.reset') }}
+              {{ $t('missionTable.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
-      </a-row>
-
-      <a-divider style="margin-top: 0" />
-      <!-- 表格上面的一排按钮 -->
-      <a-row style="margin-bottom: 16px">
-        <!-- 表格上面的新建、批量导入 -->
-        <a-col :span="12">
-          <a-space>
-            <a-button type="primary">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('role.operation.create') }}
-            </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ $t('role.operation.import') }}
-                </a-button>
-              </template>
-            </a-upload>
-          </a-space>
-        </a-col>
-        <!-- 表格上面的下载设置等 -->
+        <!--右侧四个小icon--下载，刷新，密度,列设置-->
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
@@ -138,20 +82,17 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('role.operation.download') }}
+            {{ $t('missionTable.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('role.actions.refresh')">
+          <a-tooltip :content="$t('missionTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <!-- 密度 -->
-            <a-tooltip :content="$t('role.actions.density')">
+            <a-tooltip :content="$t('missionTable.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
-
-            <!-- size -->
             <template #content>
               <a-doption
                 v-for="item in densityList"
@@ -163,7 +104,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('role.actions.columnSetting')">
+          <a-tooltip :content="$t('missionTable.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -199,8 +140,7 @@
           </a-tooltip>
         </a-col>
       </a-row>
-
-      <!-- 表格 -->
+      <!--数据表格-->
       <a-table
         row-key="id"
         :loading="loading"
@@ -211,35 +151,39 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- 分页 -->
+        <!--编号-->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-
-        <!-- 表格form里 -->
-        <!-- 状态 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'no_shipped'" class="circle"></span>
-          <span
-            v-else-if="record.status === 'shipped'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
-            class="circle pass"
-          ></span>
-          {{ $t(`role.form.status.${record.status}`) }}
+        <!--订单编号-->
+        <template #id="{ record }">
+          {{ $t(`missionTable.form.id.${record.id}`) }}
         </template>
-        <!-- 表格form里 -->
-
-        <!-- table里 -->
-        <!-- 查看 -->
+        <!--用户-->
+        <template #user="{ record }">
+          {{ $t(`missionTable.form.user.${record.user}`) }}
+        </template>
+        <!--配送员-->
+        <template #courier="{ record }">
+          {{ $t(`missionTable.form.courier.${record.courier}`) }}
+        </template>
+        <!--类型-->
+        <template #type="{ record }">
+          {{ $t(`missionTable.form.type.${record.type}`) }}
+        </template>
+        <!--状态，保留，判断要改-->
+        <template #status="{ record }">
+          {{ $t(`missionTable.form.status.${record.status}`) }}
+        </template>
+        <!--操作-->
         <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('role.columns.operations.view') }}
+            {{ $t('missionTable.columns.operations.view') }}
+          </a-button>
+          <a-button v-permission="['admin']" type="outline" size="small">
+            {{ $t('missionTable.columns.operations.assign') }}
           </a-button>
         </template>
-        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -249,8 +193,13 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryRoleList, Role, RoleParams } from '@/api/acl';
+  import {
+    queryMissionList,
+    MissionRecord,
+    MissionParams,
+  } from '@/api/station';
   import { Pagination } from '@/types/global';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -261,16 +210,16 @@
   const generateFormModel = () => {
     return {
       id: '',
-      name: '',
-      code: '',
-      remark: '',
-      createTime: null,
-      updateTime: null,
+      user: '',
+      courier: '',
+      type: '',
+      status: '',
+      createdTime: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Role[]>([]);
+  const renderData = ref<MissionRecord[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -286,102 +235,112 @@
   });
   const densityList = computed(() => [
     {
-      name: t('role.size.mini'),
+      name: t('missionTable.size.mini'),
       value: 'mini',
     },
     {
-      name: t('role.size.small'),
+      name: t('missionTable.size.small'),
       value: 'small',
     },
     {
-      name: t('role.size.medium'),
+      name: t('missionTable.size.medium'),
       value: 'medium',
     },
     {
-      name: t('role.size.large'),
+      name: t('missionTable.size.large'),
       value: 'large',
     },
   ]);
-
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('role.columns.index'),
+      title: t('missionTable.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('role.columns.id'),
+      title: t('missionTable.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('role.columns.name'),
-      dataIndex: 'name',
+      title: t('missionTable.columns.user'),
+      dataIndex: 'user',
     },
     {
-      title: t('role.columns.code'),
-      dataIndex: 'code',
+      title: t('missionTable.columns.courier'),
+      dataIndex: 'courier',
     },
     {
-      title: t('role.columns.remark'),
-      dataIndex: 'remark',
+      title: t('missionTable.columns.type'),
+      dataIndex: 'type',
+      slotName: 'type',
     },
     {
-      title: t('role.columns.createTime'),
-      dataIndex: 'createTime',
+      title: t('missionTable.columns.createdTime'),
+      dataIndex: 'createdTime',
     },
     {
-      title: t('role.columns.updateTime'),
-      dataIndex: 'updateTime',
+      title: t('missionTable.columns.status'),
+      dataIndex: 'status',
+      slotName: 'status',
     },
-    // {
-    //   title: t('role.columns.code'),
-    //   dataIndex: 'code',
-    //   slotName: 'code',
-    // },
-    // {
-    //   title: t('role.columns.sku_name'),
-    //   dataIndex: 'sku_name',
-    //   slotName: 'sku_name',
-    // },
-    // {
-    //   title: t('role.columns.sku_num'),
-    //   dataIndex: 'sku_num',
-    // },
-    // {
-    //   title: t('role.columns.status'),
-    //   dataIndex: 'status',
-    //   slotName: 'status',
-    // },
     {
-      title: t('role.columns.operations'),
+      title: t('missionTable.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('role.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('role.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
-
-  // 分页
+  const typeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('missionTable.form.type.deliver'),
+      value: '送货',
+    },
+    {
+      label: t('missionTable.form.type.payment'),
+      value: '收款',
+    },
+    {
+      label: t('missionTable.form.type.return'),
+      value: '退货',
+    },
+    {
+      label: t('missionTable.form.type.exchange'),
+      value: '换货',
+    },
+  ]);
+  const statusOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('missionTable.form.status.dispatched'),
+      value: '已调度',
+    },
+    {
+      label: t('missionTable.form.status.assignable'),
+      value: '可分配',
+    },
+    {
+      label: t('missionTable.form.status.assigned'),
+      value: '已分配',
+    },
+    {
+      label: t('missionTable.form.status.received'),
+      value: '已领货',
+    },
+    {
+      label: t('missionTable.form.status.finished'),
+      value: '成功',
+    },
+    {
+      label: t('missionTable.form.status.failed'),
+      value: '失败',
+    },
+  ]);
   const fetchData = async (
-    current: number,
-    pageSize: number,
-    params: Partial<Role>
+    params: MissionParams = { current: 1, pageSize: 20 }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryRoleList(current, pageSize, params);
-      renderData.value = data.records;
-      pagination.current = current;
+      const { data } = await queryMissionList(params);
+      renderData.value = data.list;
+      pagination.current = params.current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -391,25 +350,27 @@
   };
 
   const search = () => {
-    fetchData(pagination.current, pagination.pageSize, formModel.value);
+    fetchData({
+      ...basePagination,
+      ...formModel.value,
+    } as unknown as MissionParams);
   };
   const onPageChange = (current: number) => {
-    fetchData(current, pagination.pageSize, formModel.value);
+    fetchData({ ...basePagination, current });
   };
-  fetchData(pagination.current, pagination.pageSize, formModel.value);
 
-  // 重置
+  fetchData();
   const reset = () => {
     formModel.value = generateFormModel();
   };
-  // 设置密度
+
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
   ) => {
     size.value = val as SizeProps;
   };
-  // 改变内容
+
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -472,7 +433,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Role',
+    name: 'MissionTable',
   };
 </script>
 
