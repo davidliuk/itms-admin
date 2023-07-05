@@ -230,19 +230,25 @@
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations>
-<!--                      <a-button>view</a-button>-->
-          <a-button v-permission="['admin']" type="text" size="small" @click="SkuDetail">
+          <!--                      <a-button>view</a-button>-->
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="SkuDetail"
+          >
             {{ $t('CheckOrder.columns.operations.view') }}
           </a-button>
 
-          <a-modal v-model:visible="visible" @ok="handleOk" @cancel="handleCancel">
-            <template #title>
-              验收单商品详情
-            </template>
-<!--            :data="data"-->
+          <a-modal
+            v-model:visible="visible"
+            @ok="handleOk"
+            @cancel="handleCancel"
+          >
+            <template #title> 验收单商品详情 </template>
+            <!--            :data="data"-->
             <a-table :columns="Skucolumns" />
           </a-modal>
-
         </template>
         <!-- 查看 -->
       </a-table>
@@ -379,7 +385,7 @@
       value: 'stocked',
     },
   ]);
-// 展示商品的表格内容
+  // 展示商品的表格内容
 
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
@@ -411,8 +417,7 @@
   };
   const handleCancel = () => {
     visible.value = false;
-  }
-
+  };
 
   // 分页
   const fetchData = async (
