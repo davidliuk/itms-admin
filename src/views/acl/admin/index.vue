@@ -126,14 +126,13 @@
           </a-space>
         </a-col>
       </a-row>
-
       <a-divider style="margin-top: 0" />
       <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="handleCreateClick">
               <template #icon>
                 <icon-plus />
               </template>
@@ -218,7 +217,76 @@
           </a-tooltip>
         </a-col>
       </a-row>
-
+      <a-modal
+        :visible="isCreating || isUpdating"
+        :title="$t(`admin.form.title.${isCreating ? 'create' : 'update'}`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`admin.form.${key}`)"
+          >
+            <a-input
+              v-model="form[key]"
+              :placeholder="$t(`admin.form.${key}.placeholder`)"
+            />
+          </a-form-item>
+          <!-- <a-form-item field="username" :label="$t('admin.form.username')">
+            <a-input
+              v-model="form.username"
+              :placeholder="$t('admin.form.id.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item field="name" :label="$t('admin.form.name')">
+            <a-input
+              v-model="form.name"
+              :placeholder="$t('admin.form.name.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item field="password" :label="$t('admin.form.password')">
+            <a-input
+              v-model="form.password"
+              :placeholder="$t('admin.form.password.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item field="phone" :label="$t('admin.form.phone')">
+            <a-input
+              v-model="form.phone"
+              :placeholder="$t('admin.form.phone.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item field="email" :label="$t('admin.form.email')">
+            <a-input
+              v-model="form.email"
+              :placeholder="$t('admin.form.email.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item field="wareId" :label="$t('admin.form.wareId')">
+            <a-input
+              v-model="form.wareId"
+              :placeholder="$t('admin.form.wareId.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item field="stationId" :label="$t('admin.form.stationId')">
+            <a-input
+              v-model="form.stationId"
+              :placeholder="$t('admin.form.stationId.placeholder')"
+            />
+          </a-form-item> -->
+          <!-- <a-form-item field="post" label="Post">
+            <a-select v-model="form.post">
+              <a-option value="post1">Post1</a-option>
+              <a-option value="post2">Post2</a-option>
+              <a-option value="post3">Post3</a-option>
+              <a-option value="post4">Post4</a-option>
+            </a-select>
+          </a-form-item> -->
+        </a-form>
+      </a-modal>
       <!-- 表格 -->
       <a-table
         row-key="id"
@@ -265,6 +333,22 @@
           >
             {{ $t('admin.columns.operations.delete') }}
           </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
+          >
+            {{ $t('admin.columns.operations.update') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteAdminById(record.id)"
+          >
+            {{ $t('admin.columns.operations.assign') }}
+          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -276,11 +360,18 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryAdminList, deleteAdmin, Admin } from '@/api/acl';
+  import {
+    queryAdminList,
+    addAdmin,
+    updateAdmin,
+    deleteAdmin,
+    Admin,
+  } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import copy from '@/utils/objects';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -290,6 +381,7 @@
       id: '',
       username: '',
       name: '',
+      password: '',
       phone: '',
       email: '',
       wareId: '',
@@ -297,6 +389,48 @@
       // createTime: null,
       // updateTime: null,
     };
+  };
+
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+  // const form = reactive({
+  //   username: '',
+  //   name: '',
+  //   password: '',
+  //   phone: '',
+  //   email: '',
+  //   wareId: '',
+  //   stationId: '',
+  // });
+  let form = reactive(generateFormModel());
+
+  const handleCreateClick = () => {
+    isCreating.value = true;
+  };
+  const handleUpdateClick = (admin: Admin) => {
+    copy(admin, form);
+    // form = admin;
+    isUpdating.value = true;
+  };
+  const handleBeforeOk = (done) => {
+    console.log(form);
+    // window.setTimeout(() => {
+    //   done();
+    //   // prevent close
+    //   // done(false)
+    //   handleClose();
+    // }, 3000);
+    if (isCreating.value) {
+      addAdmin(form as unknown as Admin);
+    } else {
+      updateAdmin(form as unknown as Admin);
+    }
+    handleClose();
+  };
+  const handleClose = () => {
+    isCreating.value = false;
+    isUpdating.value = false;
+    form = reactive(generateFormModel());
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
@@ -447,6 +581,7 @@
   const search = () => {
     fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
+
   const onPageChange = (current: number) => {
     fetchData(current, pagination.pageSize, formModel.value);
   };

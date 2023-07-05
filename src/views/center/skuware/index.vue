@@ -17,7 +17,7 @@
                   :label="$t('centerStock.form.sku_id')"
                 >
                   <a-input
-                    v-model="formModel.sku_id"
+                    v-model="formModel.skuId"
                     :placeholder="$t('centerStock.form.sku_id.placeholder')"
                   />
                 </a-form-item>
@@ -39,7 +39,7 @@
                   :label="$t('centerStock.form.createdTime')"
                 >
                   <a-range-picker
-                    v-model="formModel.createdTime"
+                    v-model="formModel.createTime"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -416,6 +416,26 @@
     },
     { deep: true, immediate: true }
   );
+
+  // const projectData = async (
+  //     current: number,
+  //     pageSize: number,
+  //     params: Partial<Admin>
+  // ) => {
+  //   setLoading(true);
+  //   try {
+  //     const { data } = await queryProjectList(current, pageSize, params);
+  //     renderData.value = data.list;
+  //     // pagination.current = params.current;
+  //     // pagination.total = data.total;
+  //   } catch (err) {
+  //     // you can report use errorHandler or other
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  //
+  // projectData();
 </script>
 
 <script lang="ts">

@@ -55,6 +55,7 @@
           </template>
         </a-card-meta>
       </a-space>
+
       <template #actions>
         <a-switch v-if="actionType === 'switch'" v-model="open" />
         <a-space v-else-if="actionType === 'button'">
@@ -70,6 +71,7 @@
             <a-button v-else-if="!open" type="outline" @click="handleToggle">
               {{ openTxt }}
             </a-button>
+            <a-button type="outline" @click="temp()"> temp </a-button>
           </template>
         </a-space>
         <div v-else>
@@ -90,6 +92,8 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { useToggle } from '@vueuse/core';
+  import axios from 'axios';
+  import { Admin, queryAdminList } from '@/api/acl';
 
   const props = defineProps({
     loading: {
@@ -158,13 +162,30 @@
       default: '',
     },
   });
-  const [open, toggle] = useToggle(props.defaultValue);
+  const [open, toggle] = useToggle(props.defaultValue); // 切换true和false
+  // 这行代码使用了useToggle自定义Hook，并返回了一个包含两个元素的数组。
+  // open是一个变量，用于表示一个开关状态（通常是布尔类型），toggle是一个函数，用于切换开关状态。
   const handleToggle = () => {
+    // 这行代码定义了一个handleToggle函数，当调用时会执行toggle函数，从而切换开关状态。
     toggle();
   };
   const isExpires = ref(props.expires);
   const renew = () => {
     isExpires.value = false;
+  };
+
+  const temp = () => {
+    // botadd.error_message = "",
+    axios({
+      method: 'get',
+      url: 'http:/127.0.0.1:8202/admin/sys/transferOrder',
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 </script>
 

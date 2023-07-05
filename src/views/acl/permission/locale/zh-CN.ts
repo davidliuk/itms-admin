@@ -1,5 +1,6 @@
 export default {
   'menu.acl.permission': '权限管理',
+
   'permission.form.id': '编号',
   'permission.form.id.placeholder': '请输入角色编号',
   'permission.form.name': '名称',
@@ -16,8 +17,8 @@ export default {
   'permission.operation.create': '新建',
   'permission.operation.import': '批量导入',
   'permission.operation.download': '下载',
-  // columns
 
+  // columns
   'permission.columns.index': '#',
   'permission.columns.id': '编号',
   'permission.columns.name': '名称',

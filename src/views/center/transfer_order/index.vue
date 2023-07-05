@@ -6,7 +6,7 @@
       <a-col :span="24">
         <a-card class="general-card" :title="$t('menu.center.transferOrder')">
           <a-row justify="space-between">
-            <!-- 四个页面切换：全部、已完成、未完成 -->
+            <!-- 三个页面切换：全部、已完成、未完成 -->
             <a-col :span="24">
               <a-tabs :default-active-tab="1" type="rounded">
                 <a-tab-pane key="1" :title="$t('transferOrder.tab.title.all')">
@@ -27,6 +27,7 @@
               </a-tabs>
             </a-col>
 
+            <!-- 搜索框 -->
             <a-input-search
               :placeholder="$t('transferOrder.searchInput.placeholder')"
               style="width: 240px; position: absolute; top: 60px; right: 20px"

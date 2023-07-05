@@ -1,9 +1,11 @@
 import type { RouteLocationNormalized } from 'vue-router';
+// 当前的代码文件中使用该类型来声明和操作规范化的路由位置。
+// 它包含了路由的各种属性和配置信息，如路径、查询参数、路由参数、命名视图等。
 import { defineStore } from 'pinia';
 import {
-  DEFAULT_ROUTE,
-  DEFAULT_ROUTE_NAME,
-  REDIRECT_ROUTE_NAME,
+  DEFAULT_ROUTE, // 默认路由
+  DEFAULT_ROUTE_NAME, // 默认路由名称
+  REDIRECT_ROUTE_NAME, // 重定向路由名称
 } from '@/router/constants';
 import { isString } from '@/utils/is';
 import { TabBarState, TagProps } from './types';
@@ -33,7 +35,7 @@ const useAppStore = defineStore('tabBar', {
     },
     getCacheList(): string[] {
       return Array.from(this.cacheTabList);
-    },
+    }, // 使用 Array.from() 方法将 cacheTabList 中的 Set 对象转换为一个数组。
   },
 
   actions: {

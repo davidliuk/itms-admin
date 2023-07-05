@@ -1,5 +1,7 @@
 export default {
-  'menu.list.admin': 'Search Table',
+  'menu.acl.admin': 'Admin Management',
+
+  // form
   'admin.form.number': 'Set Number',
   'admin.form.number.placeholder': 'Please enter Set Number',
   'admin.form.name': 'Set Name',
@@ -18,9 +20,12 @@ export default {
   'admin.form.search': 'Search',
   'admin.form.reset': 'Reset',
   'admin.form.selectDefault': 'All',
+
+  // operation
   'admin.operation.create': 'Create',
   'admin.operation.import': 'Import',
   'admin.operation.download': 'Download',
+
   // columns
   'admin.columns.index': '#',
   'admin.columns.number': 'Set Number',
@@ -32,11 +37,13 @@ export default {
   'admin.columns.status': 'Status',
   'admin.columns.operations': 'Operations',
   'admin.columns.operations.view': 'View',
+
   // size
   'admin.size.mini': 'mini',
   'admin.size.small': 'small',
   'admin.size.medium': 'middle',
   'admin.size.large': 'large',
+
   // actions
   'admin.actions.refresh': 'refresh',
   'admin.actions.density': 'density',

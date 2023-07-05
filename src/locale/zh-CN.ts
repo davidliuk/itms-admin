@@ -27,12 +27,13 @@ import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
-import localeCenterProjectStock from '@/views/center/project/locale/zh-CN';
+import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN';
 import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
 
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
 import localePermission from '@/views/acl/permission/locale/zh-CN';
+import localeCheckOrder from '@/views/center/check-order/locale/zh-CN';
 
 import localeMissionTable from '@/views/station/mission-table/locale/zh-CN';
 import localeCourierTable from '@/views/station/courier-table/locale/zh-CN';
@@ -87,8 +88,12 @@ export default {
   ...localeAdmin,
   ...localeRole,
   ...localePermission,
+<<<<<<< HEAD
 
   ...localeMissionTable,
   ...localeCourierTable,
   ...localeStationInfo,
+=======
+  ...localeCheckOrder,
+>>>>>>> 86491a70517824459506565ced03891c39d999bc
 };

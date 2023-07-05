@@ -1,3 +1,4 @@
+// types是用来定义ts类型的
 export interface AnyObject {
   [key: string]: unknown;
 }

@@ -1,11 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string';
-
-export interface Result<T> {
-  code: number;
-  message: string;
-  data: T;
-}
 
 export interface Role {
   // 内容不影响
@@ -22,11 +15,6 @@ export interface PageRes<T> {
   total: number;
 }
 
-export interface RoleParams extends Partial<Role> {
-  current: number;
-  pageSize: number;
-}
-
 export function queryRoleList(
   current: number,
   limit: number,
@@ -40,10 +28,23 @@ export function queryRoleList(
   });
 }
 
+export function addRole(role: Role) {
+  return axios.post<any>('/admin/acl/role', role);
+}
+
+export function updateRole(role: Role) {
+  return axios.put<any>('/admin/acl/role', role);
+}
+
+export function deleteRole(role: Role) {
+  return axios.post<any>('/admin/acl/role', role);
+}
+
 export interface Admin {
   // 内容不影响
   id: string;
   username: string;
+  password: string;
   name: string;
   phone: string;
   email: string;
@@ -53,35 +54,29 @@ export interface Admin {
   updateTime: Date;
 }
 
-// export interface AdminParams extends Partial<Admin> {
-//   current: number;
-//   pageSize: number;
-// }
-
-// export function queryAdminList(params: AdminParams) {
-//   return axios.get<PageRes<Admin>>('/admin/acl/user', {
-//     params,
-//     paramsSerializer: (obj) => {
-//       return qs.stringify(obj);
-//     },
-//   });
-// }
-
 export function queryAdminList(
   current: number,
   limit: number,
   params: Partial<Admin>
 ) {
-  return axios.get<PageRes<Admin>>(`/admin/acl/user/${current}/${limit}`, {
+  return axios.post<PageRes<Admin>>(`/admin/acl/user/${current}/${limit}`, {
     params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
+    // paramsSerializer: (obj) => {
+    //   return qs.stringify(obj);
+    // },
   });
 }
 
+export function addAdmin(admin: Admin) {
+  return axios.post<any>('/admin/acl/user', admin);
+}
+
+export function updateAdmin(admin: Admin) {
+  return axios.put<any>('/admin/acl/user', admin);
+}
+
 export function deleteAdmin(id: number) {
-  return axios.delete<any>(`/admin/acl/role/remove/${id}`);
+  return axios.delete<any>(`/admin/acl/user/${id}`);
 }
 
 export interface Permission {
@@ -100,22 +95,18 @@ export interface Permission {
   children: Permission[];
 }
 
-// export function queryPermissionList(
-//   current: number,
-//   limit: number,
-//   params: Partial<Permission>
-// ) {
-//   return axios.get<PageRes<Permission>>(
-//     `/admin/acl/permission/${current}/${limit}`,
-//     {
-//       params,
-//       paramsSerializer: (obj) => {
-//         return qs.stringify(obj);
-//       },
-//     }
-//   );
-// }
-
 export function queryPermissionList() {
   return axios.get<Permission[]>(`/admin/acl/permission`);
+}
+
+export function addPermission(permission: Permission) {
+  return axios.post<any>('/admin/acl/permission', permission);
+}
+
+export function updatePermission(permission: Permission) {
+  return axios.put<any>('/admin/acl/permission', permission);
+}
+
+export function deletePermission(id: number) {
+  return axios.delete<any>(`/admin/acl/permission/${id}`);
 }

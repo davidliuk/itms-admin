@@ -146,11 +146,11 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!--编号-->
+        <!--序号-->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <!--配送员编号-->
+        <!--任务单编号-->
         <template #id="{ record }">
           {{ $t(`courierTable.form.id.${record.id}`) }}
         </template>

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.station', 'menu.station.missionTable']" />
-    <a-card class="general-card" :title="$t('menu.station.missionTable')">
+    <Breadcrumb :items="['menu.center', 'menu.center.CheckOrder']" />
+    <a-card class="general-card" :title="$t('menu.center.CheckOrder')">
       <a-row>
-        <!--查询框-->
+        <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -12,113 +12,119 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <!--分站id-->
               <a-col :span="8">
-                <a-form-item
-                  field="name"
-                  :label="$t('missionTable.form.stationId')"
-                >
+                <a-form-item field="id" :label="$t('CheckOrder.form.id')">
                   <a-input
-                    v-model="formModel.stationId"
-                    :placeholder="$t('missionTable.form.stationId.placeholder')"
+                    v-model="formModel.id"
+                    :placeholder="$t('CheckOrder.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <!--库房id-->
               <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('missionTable.form.wareId')"
+                  :label="$t('CheckOrder.form.wareId')"
+                >
+                  <a-input
+                    v-model="formModel.wareId"
+                    :placeholder="$t('CheckOrder.form.wareId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="stationId"
+                  :label="$t('CheckOrder.form.stationId')"
                 >
                   <a-input
                     v-model="formModel.stationId"
-                    :placeholder="$t('missionTable.form.wareId.placeholder')"
+                    :placeholder="$t('CheckOrder.form.stationId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <!--收件人姓名-->
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('missionTable.form.name')">
+                <a-form-item field="skuId" :label="$t('CheckOrder.form.skuId')">
                   <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('missionTable.form.name.placeholder')"
+                    v-model="formModel.skuId"
+                    :placeholder="$t('CheckOrder.form.skuId.placeholder')"
                   />
+                  <!-- <a-select
+                    v-model="formModel.skuId"
+                    :options="filterTypeOptions"
+                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                  /> -->
                 </a-form-item>
               </a-col>
-              <!--配送员id-->
               <a-col :span="8">
                 <a-form-item
-                  field="courierId"
-                  :label="$t('missionTable.form.courierId')"
+                  field="createTime"
+                  :label="$t('CheckOrder.form.createTime')"
                 >
-                  <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('missionTable.form.courierId.placeholder')"
+                  <a-range-picker
+                    v-model="formModel.createTime"
+                    style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
-              <!--任务类型-->
-              <a-col :span="8">
-                <a-form-item field="type" :label="$t('missionTable.form.workType')">
-                  <a-select
-                    v-model="formModel.workType"
-                    :options="typeOptions"
-                    :placeholder="$t('missionTable.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col>
-              <!--任务状态-->
               <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('missionTable.form.workStatus')"
+                  :label="$t('CheckOrder.form.status')"
                 >
                   <a-select
-                    v-model="formModel.workStatus"
+                    v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('missionTable.form.selectDefault')"
+                    :placeholder="$t('CheckOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
-              <!--              &lt;!&ndash;开始时间&ndash;&gt;-->
-              <!--              <a-col :span="8">-->
-              <!--                <a-form-item-->
-              <!--                  field="createdTime"-->
-              <!--                  :label="$t('missionTable.form.createdTime')"-->
-              <!--                >-->
-              <!--                  <a-range-picker-->
-              <!--                    v-model="formModel.createdTime"-->
-              <!--                    style="width: 100%"-->
-              <!--                  />-->
-              <!--                </a-form-item>-->
-              <!--              </a-col>-->
             </a-row>
           </a-form>
         </a-col>
+
+        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
-      </a-row>
-      <a-divider style="margin-top: 0" />
-      <a-row style="margin-bottom: 16px">
-        <!--查询重置按钮-->
-        <a-col :span="12">
-          <a-space>
-            <!--查询-->
+        <!-- 查找重置按钮 -->
+        <a-col :flex="'86px'" style="text-align: right">
+          <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('missionTable.form.search') }}
+              {{ $t('CheckOrder.form.search') }}
             </a-button>
-            <!--重置-->
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('missionTable.form.reset') }}
+              {{ $t('CheckOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
-        <!--右侧四个小icon--下载，刷新，密度,列设置-->
+      </a-row>
+
+      <a-divider style="margin-top: 0" />
+      <!-- 表格上面的一排按钮 -->
+      <a-row style="margin-bottom: 16px">
+        <!-- 表格上面的新建、批量导入 -->
+        <a-col :span="12">
+          <a-space>
+            <a-button type="primary">
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('CheckOrder.operation.create') }}
+            </a-button>
+            <a-upload action="/">
+              <template #upload-button>
+                <a-button>
+                  {{ $t('CheckOrder.operation.import') }}
+                </a-button>
+              </template>
+            </a-upload>
+          </a-space>
+        </a-col>
+        <!-- 表格上面的下载设置等 -->
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
@@ -127,17 +133,20 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('missionTable.operation.download') }}
+            {{ $t('CheckOrder.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('missionTable.actions.refresh')">
+          <a-tooltip :content="$t('CheckOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('missionTable.actions.density')">
+            <!-- 密度 -->
+            <a-tooltip :content="$t('CheckOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
+
+            <!-- size -->
             <template #content>
               <a-doption
                 v-for="item in densityList"
@@ -149,7 +158,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('missionTable.actions.columnSetting')">
+          <a-tooltip :content="$t('CheckOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -185,7 +194,8 @@
           </a-tooltip>
         </a-col>
       </a-row>
-      <!--数据表格-->
+
+      <!-- 表格 -->
       <a-table
         row-key="id"
         :loading="loading"
@@ -196,63 +206,51 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!--编号-->
+        <!-- 分页 -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <!--任务单编号-->
-        <template #id="{ record }">
-          {{ $t(`missionTable.form.id.${record.id}`) }}
+
+        <!-- 表格form里 -->
+        <!-- 状态 -->
+        <template #status="{ record }">
+          <span v-if="record.status === 'no_distribute'" class="circle"></span>
+          <span
+            v-else-if="record.status === 'distributed'"
+            class="circle pass"
+          ></span>
+          <span
+            v-else-if="record.status === 'stocked'"
+            class="circle pass"
+          ></span>
+          {{ $t(`CheckOrder.form.status.${record.status}`) }}
         </template>
-        <!--分站编号-->
-        <template #stationId="{ record }">
-          {{ $t(`missionTable.form.stationId.${record.stationId}`) }}
-        </template>
-        <!--收货人-->
-        <template #name="{ record }">
-          {{ $t(`missionTable.form.name.${record.name}`) }}
-        </template>
-        <!--用户-->
-        <template #userId="{ record }">
-          {{ $t(`missionTable.form.userId.${record.userId}`) }}
-        </template>
-        <!--配送员-->
-        <template #courierId="{ record }">
-          {{ $t(`missionTable.form.courierId.${record.courierId}`) }}
-        </template>
-        <!--订单编号-->
-        <template #orderId="{ record }">
-          {{ $t(`missionTable.form.orderId.${record.orderId}`) }}
-        </template>
-        <!--库房编号-->
-        <template #wareId="{ record }">
-          {{ $t(`missionTable.form.wareId.${record.wareId}`) }}
-        </template>
-        <!--类型-->
-        <template #workType="{ record }">
-          {{ $t(`missionTable.form.workType.${record.workType}`) }}
-        </template>
-        <!--状态-->
-        <template #workStatus="{ record }">
-          {{ $t(`missionTable.form.workStatus.${record.workStatus}`) }}
-        </template>
-        <!--开始时间-->
-        <template #startTime="{ record }">
-          {{ $t(`missionTable.form.startTime.${record.startTime}`) }}
-        </template>
-        <!--结束时间-->
-        <template #endTime="{ record }">
-          {{ $t(`missionTable.form.endTime.${record.endTime}`) }}
-        </template>
-        <!--操作-->
+        <!-- 表格form里 -->
+
+        <!-- table里 -->
+        <!-- 查看 -->
         <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('missionTable.columns.operations.view') }}
+          <!--                      <a-button>view</a-button>-->
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="SkuDetail"
+          >
+            {{ $t('CheckOrder.columns.operations.view') }}
           </a-button>
-          <a-button v-permission="['admin']" type="outline" size="small">
-            {{ $t('missionTable.columns.operations.assign') }}
-          </a-button>
+
+          <a-modal
+            v-model:visible="visible"
+            @ok="handleOk"
+            @cancel="handleCancel"
+          >
+            <template #title> 验收单商品详情 </template>
+            <!--            :data="data"-->
+            <a-table :columns="Skucolumns" />
+          </a-modal>
         </template>
+        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -262,16 +260,12 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryWorkOrderList,
-    WorkOrder,
-  } from '@/api/station';
+  import { queryCheckOrderList, CheckOrder } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import {querySkuWareList, SkuWare} from "@/api/center";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -279,21 +273,25 @@
   const generateFormModel = () => {
     return {
       id: '',
-      stationId: '',
-      name: '',
-      userId: '',
-      courierId: '',
+      imgUrl: '',
+      inTime: null,
       orderId: '',
+      outTime: null,
+      skuId: '',
+      skuName: '',
+      skuNum: '',
+      skuPrice: '',
+      stationId: '',
+      status: '',
+      // 0:未分发,1:已分发,2:已入库
+      updateTime: null,
+      createTime: null,
       wareId: '',
-      workStatus: '',
-      workType: '',
-      startTime: null,
-      endTime: null,
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<WorkOrder[]>([]);
+  const renderData = ref<CheckOrder[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -309,151 +307,128 @@
   });
   const densityList = computed(() => [
     {
-      name: t('missionTable.size.mini'),
+      name: t('CheckOrder.size.mini'),
       value: 'mini',
     },
     {
-      name: t('missionTable.size.small'),
+      name: t('CheckOrder.size.small'),
       value: 'small',
     },
     {
-      name: t('missionTable.size.medium'),
+      name: t('CheckOrder.size.medium'),
       value: 'medium',
     },
     {
-      name: t('missionTable.size.large'),
+      name: t('CheckOrder.size.large'),
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('missionTable.columns.index'),
+      title: t('CheckOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('missionTable.columns.id'),
+      title: t('CheckOrder.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('missionTable.columns.stationId'),
-      dataIndex: 'stationId',
-    },
-    {
-      title: t('missionTable.columns.name'),
-      dataIndex: 'name',
-    },
-    {
-      title: t('missionTable.columns.userId'),
-      dataIndex: 'userId',
-    },
-    {
-      title: t('missionTable.columns.courierId'),
-      dataIndex: 'courierId',
-    },
-    {
-      title: t('missionTable.columns.wareId'),
+      title: t('CheckOrder.columns.wareId'),
       dataIndex: 'wareId',
     },
     {
-      title: t('missionTable.columns.workType'),
-      dataIndex: 'workType',
-      slotName: 'type',
+      title: t('CheckOrder.columns.stationId'),
+      dataIndex: 'stationId',
+      slotName: 'stationId',
     },
     {
-      title: t('missionTable.columns.workStatus'),
-      dataIndex: 'workStatus',
+      title: t('CheckOrder.columns.skuId'),
+      dataIndex: 'skuId',
+    },
+    {
+      title: t('CheckOrder.columns.skuName'),
+      dataIndex: 'skuName',
+      slotName: 'skuName',
+    },
+    {
+      title: t('CheckOrder.columns.skuNum'),
+      dataIndex: 'skuNum',
+    },
+    {
+      title: t('CheckOrder.columns.createTime'),
+      dataIndex: 'createTime',
+    },
+    {
+      title: t('CheckOrder.columns.status'),
+      dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('missionTable.columns.startTime'),
-      dataIndex: 'startTime',
-    },
-    {
-      title: t('missionTable.columns.endTime'),
-      dataIndex: 'endTime',
-    },
-    {
-      title: t('missionTable.columns.operations'),
+      title: t('CheckOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-  const typeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('missionTable.form.workType.deliver'),
-      value: '送货',
-    },
-    {
-      label: t('missionTable.form.workType.return'),
-      value: '退货',
-    },
-    {
-      label: t('missionTable.form.workType.exchange'),
-      value: '换货',
-    },
-  ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('missionTable.form.workStatus.dispatched'),
-      value: '已调度',
+      label: t('CheckOrder.form.status.no_distribute'),
+      value: 'no_distribute',
     },
     {
-      label: t('missionTable.form.workStatus.out'),
-      value: '出库',
+      label: t('CheckOrder.form.status.distributed'),
+      value: 'distributed',
     },
     {
-      label: t('missionTable.form.workStatus.in'),
-      value: '进库',
-    },
-    {
-      label: t('missionTable.form.workStatus.assignable'),
-      value: '可分配',
-    },
-    {
-      label: t('missionTable.form.workStatus.assigned'),
-      value: '已分配',
-    },
-    {
-      label: t('missionTable.form.workStatus.waitCourierTake'),
-      value: '待领货',
-    },
-    {
-      label: t('missionTable.form.workStatus.waitUserTake'),
-      value: '待收货',
-    },
-    {
-      label: t('missionTable.form.workStatus.finished'),
-      value: '成功',
-    },
-    {
-      label: t('missionTable.form.workStatus.cancel'),
-      value: '取消',
+      label: t('CheckOrder.form.status.stocked'),
+      value: 'stocked',
     },
   ]);
-  // const fetchData = async (
-  //   params: MissionParams = { current: 1, pageSize: 20 }
-  // ) => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await queryMissionList(params);
-  //     renderData.value = data.list;
-  //     pagination.current = params.current;
-  //     pagination.total = data.total;
-  //   } catch (err) {
-  //     // you can report use errorHandler or other
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  // 展示商品的表格内容
+
+  const Skucolumns = computed<TableColumnData[]>(() => [
+    {
+      title: '商品编号',
+      dataIndex: 'skuId',
+    },
+    {
+      title: '商品名称',
+      dataIndex: 'skuName',
+    },
+    {
+      title: '商品价格',
+      dataIndex: 'skuPrice',
+    },
+    {
+      title: '商品数量',
+      dataIndex: 'skuNum',
+    },
+  ]);
+
+  // 展示商品详细信息
+  const visible = ref(false);
+
+  const SkuDetail = () => {
+    visible.value = true;
+  };
+  const handleOk = () => {
+    visible.value = false;
+  };
+  const handleCancel = () => {
+    visible.value = false;
+  };
+
+  // 分页
   const fetchData = async (
-      current: number,
-      pageSize: number,
-      params: Partial<WorkOrder>
+    current: number,
+    pageSize: number,
+    params: Partial<CheckOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryWorkOrderList(current, pageSize, params);
+      const { data } = await queryCheckOrderList(current, pageSize, params);
+      console.log(data);
       renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
@@ -463,26 +438,28 @@
       setLoading(false);
     }
   };
+
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
-
   const onPageChange = (current: number) => {
     fetchData(current, basePagination.pageSize, formModel.value);
   };
 
   fetchData(pagination.current, pagination.pageSize, formModel.value);
+
+  // 重置
   const reset = () => {
     formModel.value = generateFormModel();
   };
-
+  // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
   ) => {
     size.value = val as SizeProps;
   };
-
+  // 改变内容
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -545,7 +522,7 @@
 
 <script lang="ts">
   export default {
-    name: 'MissionTable',
+    name: 'CheckOrder',
   };
 </script>
 
