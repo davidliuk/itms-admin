@@ -230,10 +230,19 @@
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations>
-          <!--            <a-button ">view</a-button>-->
-          <a-button v-permission="['admin']" type="text" size="small">
+<!--                      <a-button>view</a-button>-->
+          <a-button v-permission="['admin']" type="text" size="small" @click="SkuDetail">
             {{ $t('CheckOrder.columns.operations.view') }}
           </a-button>
+
+          <a-modal v-model:visible="visible" @ok="handleOk" @cancel="handleCancel">
+            <template #title>
+              验收单商品详情
+            </template>
+<!--            :data="data"-->
+            <a-table :columns="Skucolumns" />
+          </a-modal>
+
         </template>
         <!-- 查看 -->
       </a-table>
@@ -356,26 +365,6 @@
       slotName: 'operations',
     },
   ]);
-  // 'CheckOrder.columns.index': '#',
-  //     'CheckOrder.columns.id': '分发单标识',
-  //     'CheckOrder.columns.orderId': '分发单所属订单',
-  //     'CheckOrder.columns.wareId': '仓库标识',
-  //     'CheckOrder.columns.stationId': '分站标识(id换成分站库房名称)',
-  //
-  //     'CheckOrder.columns.inTime': '入库时间',
-  //     'CheckOrder.columns.outTime': '出库时间',
-  //     'CheckOrder.columns.createTime': '创建时间',
-  //     'CheckOrder.columns.updateTime': '更新时间',
-  //
-  //     'CheckOrder.columns.status': '状态',
-  //     'CheckOrder.columns.operations': '操作',
-  //     'CheckOrder.columns.operations.view': '查看商品详情',
-  //
-  //     'CheckOrder.columns.skuId': '商品编号',
-  //     'CheckOrder.columns.skuImg': '商品图片',
-  //     'CheckOrder.columns.skuNum': '商品数量',
-  //     'CheckOrder.columns.skuName': '商品名称',
-  //     'CheckOrder.columns.skuPrice': '商品价格',
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('CheckOrder.form.status.no_distribute'),
@@ -390,6 +379,40 @@
       value: 'stocked',
     },
   ]);
+// 展示商品的表格内容
+
+  const Skucolumns = computed<TableColumnData[]>(() => [
+    {
+      title: '商品编号',
+      dataIndex: 'skuId',
+    },
+    {
+      title: '商品名称',
+      dataIndex: 'skuName',
+    },
+    {
+      title: '商品价格',
+      dataIndex: 'skuPrice',
+    },
+    {
+      title: '商品数量',
+      dataIndex: 'skuNum',
+    },
+  ]);
+
+  // 展示商品详细信息
+  const visible = ref(false);
+
+  const SkuDetail = () => {
+    visible.value = true;
+  };
+  const handleOk = () => {
+    visible.value = false;
+  };
+  const handleCancel = () => {
+    visible.value = false;
+  }
+
 
   // 分页
   const fetchData = async (
