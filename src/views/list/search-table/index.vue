@@ -307,9 +307,23 @@
         <template #take_name="{ record }">
           {{ $t(`searchTable.form.order_status.${record.take_name}`) }}
         </template>
-        <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
+        <template #operations="{ rowIndex }">
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleSeeOrder(rowIndex)"
+          >
             {{ $t('searchTable.columns.operations.view') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            status="danger"
+            @click="handleDeleteOrder(rowIndex)"
+          >
+            {{ $t('searchTable.columns.operations.delete') }}
           </a-button>
         </template>
       </a-table>
@@ -321,12 +335,20 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/list';
+  import {
+    queryPolicyList,
+    PolicyRecord,
+    PolicyParams,
+    deletePolicyList,
+  } from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { Modal } from '@arco-design/web-vue';
+  import router from '@/router';
+  import { useOrderInfoStore } from '@/store';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -591,6 +613,38 @@
     },
     { deep: true, immediate: true }
   );
+
+  // lsp custom functions
+  const handleDeleteOrder = async (index: any) => {
+    setLoading(true);
+    try {
+      const { data } = await deletePolicyList(renderData.value[index].id); // 这里收集返回信息,如果失败 todo 要提醒
+      if (false) {
+        // todo 如果失败 弹框提示
+      } else {
+        renderData.value.splice(index, 1); // 只有这个的话,前端的就会直接减少一列
+      }
+      fetchData(); // 获取数组,  todo 不过这个可以直接让后端返回一个处理好的数组
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const orderStore = useOrderInfoStore();
+  const visible = ref(false);
+  const handleSeeOrder = async (index: any) => {
+    setLoading(true);
+    const dateToshow = renderData.value[index];
+    // todo 转到一个新页面去， 有什么操作？有OK操作（手动调度），有cancle操作（修改订单地址）
+    orderStore.setInfo(dateToshow);
+    await router.push({name: 'order_info'});
+    setLoading(false);
+  };
+
+  // render的时间全部都是一个时间,这个无所谓
+  // console.log(renderData);
 </script>
 
 <script lang="ts">

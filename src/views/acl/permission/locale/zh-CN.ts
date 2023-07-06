@@ -42,6 +42,7 @@ export default {
   'permission.size.small': '偏小',
   'permission.size.medium': '中等',
   'permission.size.large': '偏大',
+  
   // actions
   'permission.actions.refresh': '刷新',
   'permission.actions.density': '密度',

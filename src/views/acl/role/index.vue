@@ -114,7 +114,7 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="handleCreateClick">
               <template #icon>
                 <icon-plus />
               </template>
@@ -200,6 +200,54 @@
         </a-col>
       </a-row>
 
+      <a-modal
+        :visible="isCreating || isUpdating"
+        :title="$t(`role.form.title.${isCreating ? 'create' : 'update'}`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`role.form.${key}`)"
+          >
+            <a-input
+              v-model="form[key]"
+              :placeholder="$t(`role.form.${key}.placeholder`)"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <a-modal
+        :visible="isAssigning"
+        :title="$t('role.form.title.assign')"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-space direction="vertical" size="large">
+          <a-cascader
+            v-if="!isAssignListFinished"
+            :options="[]"
+            :style="{ width: '480px' }"
+            placeholder="Please select ..."
+            loading
+          />
+          <a-cascader
+            v-else
+            :options="options"
+            :field-names="fieldNames"
+            :style="{ width: '480px' }"
+            placeholder="Please select ..."
+            multiple
+            allow-search
+            allow-clear
+            check-strictly
+          />
+        </a-space>
+      </a-modal>
+
       <!-- 表格 -->
       <a-table
         row-key="id"
@@ -234,9 +282,33 @@
 
         <!-- table里 -->
         <!-- 查看 -->
-        <template #operations>
+        <template #operations="{ record }">
           <a-button v-permission="['admin']" type="text" size="small">
             {{ $t('role.columns.operations.view') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="assignRole(record)"
+          >
+            {{ $t('role.columns.operations.assign') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteAdminById(record.id)"
+          >
+            {{ $t('role.columns.operations.delete') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
+          >
+            {{ $t('role.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -249,15 +321,17 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryRoleList, Role, RoleParams } from '@/api/acl';
+  import { Permission, queryPermissionList, queryRoleList, Role } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import copy from '@/utils/objects';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-
+  const fieldNames = { value: 'id', label: 'name' };
+  const isAssignListFinished = ref(false);
   const generateFormModel = () => {
     return {
       id: '',
@@ -267,6 +341,57 @@
       createTime: null,
       updateTime: null,
     };
+  };
+
+  let options: Permission[];
+
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+  const isAssigning = ref(false);
+  // const form = reactive({
+  //   username: '',
+  //   name: '',
+  //   password: '',
+  //   phone: '',
+  //   email: '',
+  //   wareId: '',
+  //   stationId: '',
+  // });
+  let form = reactive(generateFormModel());
+  const handleCreateClick = () => {
+    isCreating.value = true;
+  };
+  const handleUpdateClick = (role: Role) => {
+    copy(role, form);
+    // form = admin;
+    isUpdating.value = true;
+  };
+  const handleBeforeOk = (done) => {
+    // window.setTimeout(() => {
+    //   done();
+    //   // prevent close
+    //   // done(false)
+    //   handleClose();
+    // }, 3000);
+    if (isCreating.value) {
+      //   addRole(form as unknown as Role);
+      // } else {
+      //   updateRole(form as unknown as Role);
+    }
+    handleClose();
+  };
+  const handleClose = () => {
+    isCreating.value = false;
+    isUpdating.value = false;
+    isAssigning.value = false;
+    form = reactive(generateFormModel());
+  };
+  const assignRole = async (role: Role) => {
+    isAssignListFinished.value = false;
+    isAssigning.value = true;
+    const { data } = await queryPermissionList();
+    options = reactive(data);
+    isAssignListFinished.value = true;
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();

@@ -32,6 +32,7 @@ export default {
   'searchTable.columns.courier_name': '配送员',
   'searchTable.columns.operations': '操作',
   'searchTable.columns.operations.view': '查看',
+  'searchTable.columns.operations.delete': '删除',
 
   // size
   'searchTable.size.mini': '迷你',
