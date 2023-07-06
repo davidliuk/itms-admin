@@ -3,6 +3,7 @@ export default {
 
   'admin.form.title.create': '新建人员',
   'admin.form.title.update': '修改人员',
+  'admin.form.title.assign': '授权角色',
   'admin.form.id': '编号',
   'admin.form.id.placeholder': '请输入编号',
   'admin.form.username': '账户',

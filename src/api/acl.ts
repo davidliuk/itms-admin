@@ -28,10 +28,18 @@ export function queryRoleList(
   });
 }
 
+export function toAssign(adminId: string) {
+  return axios.get<any>(`/admin/acl/user/toAssign/${adminId}`);
+}
+export function doAssign(adminId: string, roleIds: string[]) {
+  return axios.post<any>(`/admin/acl/user/doAssign/${adminId}`, roleIds);
+}
+export function findAllList() {
+  return axios.get<Role[]>('/admin/acl/role/findAllList');
+}
 export function addRole(role: Role) {
   return axios.post<any>('/admin/acl/role', role);
 }
-
 export function updateRole(role: Role) {
   return axios.put<any>('/admin/acl/role', role);
 }
