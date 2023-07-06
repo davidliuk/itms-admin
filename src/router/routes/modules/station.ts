@@ -42,6 +42,16 @@ const STATION: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'station-table', // The midline path complies with SEO specifications
+      name: 'StationTable',
+      component: () => import('@/views/station/station-table/index.vue'),
+      meta: {
+        locale: 'menu.station.stationTable',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

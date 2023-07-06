@@ -639,7 +639,7 @@
     const dateToshow = renderData.value[index];
     // todo 转到一个新页面去， 有什么操作？有OK操作（手动调度），有cancle操作（修改订单地址）
     orderStore.setInfo(dateToshow);
-    await router.push({name: 'order_info'});
+    await router.push({ name: 'order_info' });
     setLoading(false);
   };
 

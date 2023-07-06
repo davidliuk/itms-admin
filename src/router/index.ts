@@ -7,8 +7,6 @@ import { REDIRECT_MAIN, NOT_FOUND_ROUTE } from './routes/base';
 import createRouteGuard from './guard';
 import PROFILE from './lsp-self-router/profile';
 
-
-
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 const router = createRouter({

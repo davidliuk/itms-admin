@@ -27,6 +27,7 @@ import '@/views/center/transfer_order/mock';
 import '@/views/station/mission-table/mock';
 import '@/views/station/courier-table/mock';
 import '@/views/station/station-info/mock';
+import '@/views/station/station-table/mock';
 
 // import '@/views/acl/role/mock';
 // import '@/views/acl/admin/mock';

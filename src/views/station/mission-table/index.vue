@@ -15,7 +15,7 @@
               <!--分站id-->
               <a-col :span="8">
                 <a-form-item
-                  field="name"
+                  field="stationId"
                   :label="$t('missionTable.form.stationId')"
                 >
                   <a-input
@@ -31,7 +31,7 @@
                   :label="$t('missionTable.form.wareId')"
                 >
                   <a-input
-                    v-model="formModel.stationId"
+                    v-model="formModel.wareId"
                     :placeholder="$t('missionTable.form.wareId.placeholder')"
                   />
                 </a-form-item>
@@ -52,14 +52,17 @@
                   :label="$t('missionTable.form.courierId')"
                 >
                   <a-input
-                    v-model="formModel.id"
+                    v-model="formModel.courierId"
                     :placeholder="$t('missionTable.form.courierId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <!--任务类型-->
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('missionTable.form.workType')">
+                <a-form-item
+                  field="workType"
+                  :label="$t('missionTable.form.workType')"
+                >
                   <a-select
                     v-model="formModel.workType"
                     :options="typeOptions"
@@ -70,7 +73,7 @@
               <!--任务状态-->
               <a-col :span="8">
                 <a-form-item
-                  field="status"
+                  field="workStatus"
                   :label="$t('missionTable.form.workStatus')"
                 >
                   <a-select
@@ -95,21 +98,17 @@
             </a-row>
           </a-form>
         </a-col>
+        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
-      </a-row>
-      <a-divider style="margin-top: 0" />
-      <a-row style="margin-bottom: 16px">
-        <!--查询重置按钮-->
-        <a-col :span="12">
-          <a-space>
-            <!--查询-->
+        <!-- 查找重置按钮 -->
+        <a-col :flex="'86px'" style="text-align: right">
+          <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
               {{ $t('missionTable.form.search') }}
             </a-button>
-            <!--重置-->
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
@@ -118,10 +117,31 @@
             </a-button>
           </a-space>
         </a-col>
+      </a-row>
+      <a-divider style="margin-top: 0" />
+      <a-row style="margin-bottom: 16px">
+        <!--创建和批量导入-->
+        <a-col :span="12">
+          <a-space>
+            <a-button type="primary" @click="handleCreateClick">
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('missionTable.operation.create') }}
+            </a-button>
+            <a-upload action="/">
+              <template #upload-button>
+                <a-button>
+                  {{ $t('missionTable.operation.import') }}
+                </a-button>
+              </template>
+            </a-upload>
+          </a-space>
+        </a-col>
         <!--右侧四个小icon--下载，刷新，密度,列设置-->
         <a-col
           :span="12"
-          style="display: flex; align-items: center; justify-content: end"
+          style="display: flex; align-items: center; justify-content: flex-end"
         >
           <a-button>
             <template #icon>
@@ -245,11 +265,21 @@
           {{ $t(`missionTable.form.endTime.${record.endTime}`) }}
         </template>
         <!--操作-->
-        <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
+        <template #operations="{ record }">
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="getWorkOrderById(record.id)"
+          >
             {{ $t('missionTable.columns.operations.view') }}
           </a-button>
-          <a-button v-permission="['admin']" type="outline" size="small">
+          <a-button
+            v-permission="['admin']"
+            type="outline"
+            size="small"
+            @click="assignById(record.id)"
+          >
             {{ $t('missionTable.columns.operations.assign') }}
           </a-button>
         </template>
@@ -262,20 +292,18 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryWorkOrderList,
-    WorkOrder,
-  } from '@/api/station';
+  import { queryWorkOrderList, WorkOrder } from '@/api/station';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import {querySkuWareList, SkuWare} from "@/api/center";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+  // const DELIVERY = 'DELIVERY';
 
+  // 全部
   const generateFormModel = () => {
     return {
       id: '',
@@ -291,6 +319,23 @@
       endTime: null,
     };
   };
+  // // 查询
+  // const searchFormModel = () => {
+  //   return {
+  //     id: '',
+  //     stationId: '',
+  //     name: '',
+  //     userId: '',
+  //     courierId: '',
+  //     orderId: '',
+  //     wareId: '',
+  //     // workStatus: '',
+  //     // workType: DELIVERY,
+  //     startTime: null,
+  //     endTime: null,
+  //   };
+  // };
+  // const searchModel = ref(searchFormModel());
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<WorkOrder[]>([]);
@@ -382,53 +427,53 @@
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('missionTable.form.workType.deliver'),
-      value: '送货',
-    },
-    {
-      label: t('missionTable.form.workType.return'),
-      value: '退货',
+      value: 'DELIVERY',
     },
     {
       label: t('missionTable.form.workType.exchange'),
-      value: '换货',
+      value: 'EXCHANGE',
+    },
+    {
+      label: t('missionTable.form.workType.return'),
+      value: 'RETURN',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('missionTable.form.workStatus.dispatched'),
-      value: '已调度',
+      value: 'DISPATCH',
     },
     {
       label: t('missionTable.form.workStatus.out'),
-      value: '出库',
+      value: 'OUT',
     },
     {
       label: t('missionTable.form.workStatus.in'),
-      value: '进库',
+      value: 'IN',
     },
     {
       label: t('missionTable.form.workStatus.assignable'),
-      value: '可分配',
+      value: 'WAITING_ASSIGN',
     },
     {
       label: t('missionTable.form.workStatus.assigned'),
-      value: '已分配',
+      value: 'ASSIGN',
     },
     {
       label: t('missionTable.form.workStatus.waitCourierTake'),
-      value: '待领货',
+      value: 'WAITING_COURIER_TAKE',
     },
     {
       label: t('missionTable.form.workStatus.waitUserTake'),
-      value: '待收货',
+      value: 'WAITING_USER_TAKE',
     },
     {
       label: t('missionTable.form.workStatus.finished'),
-      value: '成功',
+      value: 'FINISHED',
     },
     {
       label: t('missionTable.form.workStatus.cancel'),
-      value: '取消',
+      value: 'CANCEL',
     },
   ]);
   // const fetchData = async (
@@ -447,11 +492,12 @@
   //   }
   // };
   const fetchData = async (
-      current: number,
-      pageSize: number,
-      params: Partial<WorkOrder>
+    current: number,
+    pageSize: number,
+    params: Partial<WorkOrder>
   ) => {
     setLoading(true);
+
     try {
       const { data } = await queryWorkOrderList(current, pageSize, params);
       renderData.value = data.records;
@@ -463,8 +509,19 @@
       setLoading(false);
     }
   };
+
+  const getWorkOrderById = (id: number) => {
+    // 根据id或许任务单详情
+  };
+
+  const assignById = (id: number) => {
+    // 根据任务单id分配任务
+  };
+
+  // 查询重置
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+    console.log(formModel.value);
   };
 
   const onPageChange = (current: number) => {
@@ -472,10 +529,12 @@
   };
 
   fetchData(pagination.current, pagination.pageSize, formModel.value);
+
   const reset = () => {
     formModel.value = generateFormModel();
   };
 
+  // 小图标
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event

@@ -387,6 +387,9 @@
     isCreating.value = true;
   };
   const handleUpdateClick = (admin: Admin) => {
+    console.log(admin);
+    console.log('-----------');
+    console.log(form);
     copy(admin, form);
     // form = admin;
     isUpdating.value = true;
