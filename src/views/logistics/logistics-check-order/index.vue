@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.CheckOrder']" />
-    <a-card class="general-card" :title="$t('menu.center.CheckOrder')">
+    <Breadcrumb :items="['menu.logistics', 'menu.logistics.LogCheckOrder']" />
+    <a-card class="general-card" :title="$t('menu.logistics.LogCheckOrder')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,52 +13,57 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('CheckOrder.form.id')">
+                <a-form-item field="id" :label="$t('LogCheckOrder.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('CheckOrder.form.id.placeholder')"
+                    :placeholder="$t('LogCheckOrder.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('CheckOrder.form.wareId')"
+                  :label="$t('LogCheckOrder.form.wareId')"
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('CheckOrder.form.wareId.placeholder')"
+                    :placeholder="$t('LogCheckOrder.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="stationId"
-                  :label="$t('CheckOrder.form.stationId')"
+                  :label="$t('LogCheckOrder.form.stationId')"
                 >
                   <a-input
                     v-model="formModel.stationId"
-                    :placeholder="$t('CheckOrder.form.stationId.placeholder')"
+                    :placeholder="
+                      $t('LogCheckOrder.form.stationId.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="skuId" :label="$t('CheckOrder.form.skuId')">
+                <a-form-item
+                  field="skuId"
+                  :label="$t('LogCheckOrder.form.skuId')"
+                >
                   <a-input
                     v-model="formModel.skuId"
-                    :placeholder="$t('CheckOrder.form.skuId.placeholder')"
+                    :placeholder="$t('LogCheckOrder.form.skuId.placeholder')"
                   />
                   <!-- <a-select
                     v-model="formModel.skuId"
                     :options="filterTypeOptions"
-                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                    :placeholder="$t('LogCheckOrder.form.selectDefault')"
                   /> -->
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="createTime"
-                  :label="$t('CheckOrder.form.createTime')"
+                  :label="$t('LogCheckOrder.form.createTime')"
                 >
                   <a-range-picker
                     v-model="formModel.createTime"
@@ -69,12 +74,12 @@
               <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('CheckOrder.form.status')"
+                  :label="$t('LogCheckOrder.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                    :placeholder="$t('LogCheckOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
@@ -91,13 +96,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('CheckOrder.form.search') }}
+              {{ $t('LogCheckOrder.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('CheckOrder.form.reset') }}
+              {{ $t('LogCheckOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -113,12 +118,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('CheckOrder.operation.create') }}
+              {{ $t('LogCheckOrder.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('CheckOrder.operation.import') }}
+                  {{ $t('LogCheckOrder.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -133,16 +138,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('CheckOrder.operation.download') }}
+            {{ $t('LogCheckOrder.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('CheckOrder.actions.refresh')">
+          <a-tooltip :content="$t('LogCheckOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('CheckOrder.actions.density')">
+            <a-tooltip :content="$t('LogCheckOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -158,7 +163,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('CheckOrder.actions.columnSetting')">
+          <a-tooltip :content="$t('LogCheckOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -223,21 +228,23 @@
             v-else-if="record.status === 'stocked'"
             class="circle pass"
           ></span>
-          {{ $t(`CheckOrder.form.status.${record.status}`) }}
+          {{ $t(`LogCheckOrder.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
+          <!--                      <a-button>view</a-button>-->
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            {{ $t('CheckOrder.columns.operations.view') }}
+            {{ $t('LogCheckOrder.columns.operations.view') }}
           </a-button>
+
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
@@ -252,25 +259,9 @@
               :bordered="false"
               :size="size"
               @page-change="onPageChange"
-            >
-              <template #imgUrl="{ record }">
-                <img
-                  :src="record.imgUrl"
-                  alt="Product Image"
-                  style="width: 100px; height: 100px"
-                />
-              </template>
-            </a-table>
+            ></a-table>
+            <!--            <a-table :columns="Skucolumns" />-->
           </a-modal>
-
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteCheckOrderById(record.id)"
-          >
-            {{ $t('CheckOrder.columns.operations.delete') }}
-          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -283,12 +274,12 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryCheckOrderList,
-    CheckOrder,
+    queryLogCheckOrderList,
+    LogCheckOrder,
     queryOrderInfo,
+    OrderInfo,
     OrderItem,
-    deleteCheckOrder,
-  } from '@/api/center';
+  } from '@/api/logistics';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -305,10 +296,10 @@
       inTime: null,
       orderId: '',
       outTime: null,
-      // skuId: '',
-      // skuName: '',
-      // skuNum: '',
-      // skuPrice: '',
+      skuId: '',
+      skuName: '',
+      skuNum: '',
+      skuPrice: '',
       stationId: '',
       status: '',
       // 0:未分发,1:已分发,2:已入库
@@ -319,12 +310,13 @@
   };
   const generateorderItemModel = () => {
     return {
+      // 定义类型
       orderItemList: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<CheckOrder[]>([]);
+  const renderData = ref<LogCheckOrder[]>([]);
   const orderItemData = ref<OrderItem[]>([]);
   const formModel = ref(generateFormModel()); // 输入框要用的
   const cloneColumns = ref<Column[]>([]);
@@ -339,119 +331,103 @@
   const pagination = reactive({
     ...basePagination,
   });
-
-  // 密度选择
   const densityList = computed(() => [
     {
-      name: t('CheckOrder.size.mini'),
+      name: t('LogCheckOrder.size.mini'),
       value: 'mini',
     },
     {
-      name: t('CheckOrder.size.small'),
+      name: t('LogCheckOrder.size.small'),
       value: 'small',
     },
     {
-      name: t('CheckOrder.size.medium'),
+      name: t('LogCheckOrder.size.medium'),
       value: 'medium',
     },
     {
-      name: t('CheckOrder.size.large'),
+      name: t('LogCheckOrder.size.large'),
       value: 'large',
     },
   ]);
 
-  // 展示分发单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('CheckOrder.columns.index'),
+      title: t('LogCheckOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('CheckOrder.columns.id'),
+      title: t('LogCheckOrder.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('CheckOrder.columns.wareId'),
+      title: t('LogCheckOrder.columns.wareId'),
       dataIndex: 'wareId',
     },
     {
-      title: t('CheckOrder.columns.stationId'),
+      title: t('LogCheckOrder.columns.stationId'),
       dataIndex: 'stationId',
       slotName: 'stationId',
     },
     {
-      title: t('CheckOrder.columns.createTime'),
+      title: t('LogCheckOrder.columns.createTime'),
       dataIndex: 'createTime',
     },
     {
-      title: t('CheckOrder.columns.status'),
+      title: t('LogCheckOrder.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('CheckOrder.columns.operations'),
+      title: t('LogCheckOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-  // 搜索状态输入框下拉列表
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('CheckOrder.form.status.no_distribute'),
+      label: t('LogCheckOrder.form.status.no_distribute'),
       value: 'no_distribute',
     },
     {
-      label: t('CheckOrder.form.status.distributed'),
+      label: t('LogCheckOrder.form.status.distributed'),
       value: 'distributed',
     },
     {
-      label: t('CheckOrder.form.status.stocked'),
+      label: t('LogCheckOrder.form.status.stocked'),
       value: 'stocked',
     },
   ]);
-
   // 展示商品的表格内容
+
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
-      title: t('CheckOrder.columns.skuId'),
+      title: t('LogCheckOrder.columns.skuId'),
       dataIndex: 'skuId',
     },
     {
-      title: t('CheckOrder.columns.skuName'),
+      title: t('LogCheckOrder.columns.skuName'),
       dataIndex: 'skuName',
       slotName: 'skuName',
     },
     {
-      title: t('CheckOrder.columns.skuImg'),
-      dataIndex: 'imgUrl',
-      slotName: 'imgUrl',
+      title: t('TransferOrder.columns.skuImg'),
+      dataIndex: 'skuImg',
+      slotName: 'skuImg',
     },
     {
-      title: t('CheckOrder.columns.skuNum'),
+      title: t('LogCheckOrder.columns.skuNum'),
       dataIndex: 'skuNum',
     },
     {
-      title: t('CheckOrder.columns.skuPrice'),
+      title: t('LogCheckOrder.columns.skuPrice'),
       dataIndex: 'skuPrice',
     },
   ]);
 
-  // 删除分发单
-  const deleteCheckOrderById = async (id: number) => {
-    setLoading(true);
-    try {
-      await deleteCheckOrder(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // 展示商品详细信息
   const visible = ref(false);
+
   const findOrderItemData = async (orderId: number) => {
     setLoading(true);
     try {
@@ -464,6 +440,7 @@
       setLoading(false);
     }
   };
+
   const SkuDetail = (orderId: number) => {
     findOrderItemData(orderId, generateorderItemModel.value);
     visible.value = true;
@@ -479,11 +456,11 @@
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<CheckOrder>
+    params: Partial<LogCheckOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryCheckOrderList(current, pageSize, params);
+      const { data } = await queryLogCheckOrderList(current, pageSize, params);
       console.log(data);
       renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
       pagination.current = current;
@@ -579,7 +556,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CheckOrder',
+    name: 'LogCheckOrder',
   };
 </script>
 

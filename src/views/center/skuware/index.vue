@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.centerStock']" />
-    <a-card class="general-card" :title="$t('menu.center.centerStock')">
+    <Breadcrumb :items="['menu.center', 'menu.center.skuWare']" />
+    <a-card class="general-card" :title="$t('menu.center.skuWare')">
       <a-row>
         <a-col :flex="1">
+          <!--          三个输入框-->
           <a-form
             :model="formModel"
             :label-col-props="{ span: 6 }"
@@ -12,31 +13,28 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="sku_id"
-                  :label="$t('centerStock.form.sku_id')"
-                >
+                <a-form-item field="skuId" :label="$t('skuWare.form.skuId')">
                   <a-input
                     v-model="formModel.skuId"
-                    :placeholder="$t('centerStock.form.sku_id.placeholder')"
+                    :placeholder="$t('skuWare.form.skuId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="sku_name"
-                  :label="$t('centerStock.form.sku_name')"
+                  field="skuName"
+                  :label="$t('skuWare.form.skuName')"
                 >
                   <a-input
-                    v-model="formModel.sku_name"
-                    :placeholder="$t('centerStock.form.sku_name.placeholder')"
+                    v-model="formModel.skuName"
+                    :placeholder="$t('skuWare.form.skuName.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="createdTime"
-                  :label="$t('centerStock.form.createdTime')"
+                  field="createTime"
+                  :label="$t('skuWare.form.createTime')"
                 >
                   <a-range-picker
                     v-model="formModel.createTime"
@@ -47,38 +45,42 @@
             </a-row>
           </a-form>
         </a-col>
+
         <a-divider style="height: 84px" direction="vertical" />
+        <!--        两个按钮：查找和重置-->
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('centerStock.form.search') }}
+              {{ $t('skuWare.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('centerStock.form.reset') }}
+              {{ $t('skuWare.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
       </a-row>
+
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
+            <!--新建、批量导入-->
+            <a-button type="primary" @click="handleCreateClick">
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('centerStock.operation.create') }}
+              {{ $t('skuWare.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('centerStock.operation.import') }}
+                  {{ $t('skuWare.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -88,19 +90,20 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
+          <!--右边的四个操作-->
           <a-button>
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('centerStock.operation.download') }}
+            {{ $t('skuWare.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('centerStock.actions.refresh')">
+          <a-tooltip :content="$t('skuWare.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('centerStock.actions.density')">
+            <a-tooltip :content="$t('skuWare.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -114,7 +117,8 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('centerStock.actions.columnSetting')">
+          <a-tooltip :content="$t('skuWare.actions.columnSetting')">
+            <!--列設置-->
             <a-popover
               trigger="click"
               position="bl"
@@ -150,6 +154,37 @@
           </a-tooltip>
         </a-col>
       </a-row>
+
+      <a-modal
+        :visible="isCreating || isUpdating"
+        :title="$t(`skuWare.form.title.${isCreating ? 'create' : 'update'}`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`skuWare.form.${key}`)"
+          >
+            <a-input
+              v-if="key !== 'createTime' && key !== 'updateTime'"
+              v-model="form[key]"
+              :placeholder="$t(`skuWare.form.${key}.placeholder`)"
+            />
+            <a-date-picker
+              v-else
+              v-model="form[key]"
+              style="width: 100%"
+              show-time
+              :time-picker-props="{ defaultValue: '09:09:06' }"
+              format="YYYY-MM-DD HH:mm:ss"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+
       <a-table
         row-key="id"
         :loading="loading"
@@ -191,21 +226,40 @@
                 src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
               />
             </a-avatar>
-            {{ $t(`centerStock.form.contentType.${record.contentType}`) }}
+            {{ $t(`skuWare.form.contentType.${record.contentType}`) }}
           </a-space>
         </template>
         <template #filterType="{ record }">
-          {{ $t(`centerStock.form.filterType.${record.filterType}`) }}
+          {{ $t(`skuWare.form.filterType.${record.filterType}`) }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 'offline'" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`centerStock.form.status.${record.status}`) }}
+          {{ $t(`skuWare.form.status.${record.status}`) }}
         </template>
-        <template #operations>
+        <template #operations="{ record }">
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('centerStock.columns.operations.view') }}
+            {{ $t('skuWare.columns.operations.view') }}
           </a-button>
+
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
+          >
+            {{ $t('skuWare.columns.operations.update') }}
+          </a-button>
+
+          <!--          库存为0的时候可以删除-->
+          <!--          <a-button-->
+          <!--              v-permission="['admin']"-->
+          <!--              type="text"-->
+          <!--              size="small"-->
+          <!--              @click="deleteSkuWareById(record.id)"-->
+          <!--          >-->
+          <!--            {{ $t('SkuWare.columns.operations.assign') }}-->
+          <!--          </a-button>-->
         </template>
       </a-table>
     </a-card>
@@ -216,14 +270,12 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { querySkuWareList, SkuWare } from '@/api/center';
+  import { querySkuWareList, SkuWare, addSkuWare } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-
-  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
-  type Column = TableColumnData & { checked?: true };
+  import copy from '@/utils/objects';
 
   const generateFormModel = () => {
     return {
@@ -239,6 +291,88 @@
       updateTime: null,
     };
   };
+
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+  let form = reactive(generateFormModel());
+
+  // 库存信息展示
+  const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('skuWare.columns.index'),
+      dataIndex: 'index',
+      slotName: 'index',
+    },
+    {
+      title: t('skuWare.columns.skuName'),
+      dataIndex: 'skuName',
+    },
+    {
+      title: t('skuWare.columns.wareId'),
+      dataIndex: 'wareId',
+      slotName: 'wareId',
+    },
+    {
+      title: t('skuWare.columns.stock'),
+      dataIndex: 'stock',
+    },
+    {
+      title: t('skuWare.columns.lockStock'),
+      dataIndex: 'lockStock',
+    },
+    {
+      title: t('skuWare.columns.lowStock'),
+      dataIndex: 'lowStock',
+    },
+
+    {
+      title: t('skuWare.columns.createTime'),
+      dataIndex: 'createTime',
+    },
+    {
+      title: t('skuWare.columns.updateTime'),
+      dataIndex: 'updateTime',
+    },
+    {
+      title: t('skuWare.columns.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+    },
+  ]);
+
+  const handleCreateClick = () => {
+    isCreating.value = true;
+  };
+  const handleUpdateClick = (skuWare: SkuWare) => {
+    skuWare.stock = '';
+    copy(skuWare, form);
+    isUpdating.value = true;
+  };
+  // 往后面传参数的时候记得异步操作
+  const handleBeforeOk = async () => {
+    if (isCreating.value) {
+      await addSkuWare(form as unknown as SkuWare);
+    } else {
+      await addSkuWare(form as unknown as SkuWare);
+    }
+    handleClose();
+  };
+  const handleClose = () => {
+    isCreating.value = false;
+    isUpdating.value = false;
+    form = reactive(generateFormModel());
+    // window.setTimeout(() => {
+    //   done();
+    //   // prevent close
+    //   // done(false)
+    //   handleClose();
+    // }, 3000);
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+
+  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
+  type Column = TableColumnData & { checked?: true };
+
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<SkuWare[]>([]);
@@ -257,69 +391,26 @@
   });
   const densityList = computed(() => [
     {
-      name: t('centerStock.size.mini'),
+      name: t('skuWare.size.mini'),
       value: 'mini',
     },
     {
-      name: t('centerStock.size.small'),
+      name: t('skuWare.size.small'),
       value: 'small',
     },
     {
-      name: t('centerStock.size.medium'),
+      name: t('skuWare.size.medium'),
       value: 'medium',
     },
     {
-      name: t('centerStock.size.large'),
+      name: t('skuWare.size.large'),
       value: 'large',
     },
   ]);
 
-  const columns = computed<TableColumnData[]>(() => [
-    {
-      title: t('centerStock.columns.index'),
-      dataIndex: 'index',
-      slotName: 'index',
-    },
-    {
-      title: t('centerStock.columns.sku_id'),
-      dataIndex: 'sku_id',
-    },
-    {
-      title: t('centerStock.columns.sku_name'),
-      dataIndex: 'sku_name',
-    },
-    {
-      title: t('centerStock.columns.ware_id'),
-      dataIndex: 'ware_id',
-      slotName: 'ware_id',
-    },
-    {
-      title: t('centerStock.columns.stock'),
-      dataIndex: 'stock',
-    },
-    {
-      title: t('centerStock.columns.lock_stock'),
-      dataIndex: 'lock_stock',
-    },
-    {
-      title: t('centerStock.columns.low_stock'),
-      dataIndex: 'low_stock',
-    },
-
-    {
-      title: t('centerStock.columns.createdTime'),
-      dataIndex: 'createdTime',
-    },
-    {
-      title: t('centerStock.columns.updatedTime'),
-      dataIndex: 'updatedTime',
-    },
-    {
-      title: t('centerStock.columns.operations'),
-      dataIndex: 'operations',
-      slotName: 'operations',
-    },
-  ]);
+  const reset = () => {
+    formModel.value = generateFormModel();
+  };
 
   const fetchData = async (
     current: number,
@@ -340,6 +431,7 @@
   };
 
   const search = () => {
+    console.log(formModel);
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
@@ -347,10 +439,8 @@
   };
 
   fetchData(pagination.current, pagination.pageSize, formModel.value);
-  const reset = () => {
-    formModel.value = generateFormModel();
-  };
 
+  // 密度选择
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
@@ -358,6 +448,7 @@
     size.value = val as SizeProps;
   };
 
+  // 用于处理列的显示/隐藏操作
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -372,6 +463,7 @@
     }
   };
 
+  // 用于交换数组中两个元素的位置
   const exchangeArray = <T extends Array<any>>(
     array: T,
     beforeIdx: number,
@@ -390,6 +482,7 @@
     return newArray;
   };
 
+  // 处理弹出框的显示状态变化
   const popupVisibleChange = (val: boolean) => {
     if (val) {
       nextTick(() => {
@@ -406,41 +499,30 @@
   };
 
   watch(
+    // watch函数来监视columns的变化，并在变化发生时执行相应的回调函数。
     () => columns.value,
+    // 当 columns 的值发生变化时，监视函数会被调用，并且箭头函数会被执行，返回 columns 的当前值。
     (val) => {
+      // 监视函数
       cloneColumns.value = cloneDeep(val);
       cloneColumns.value.forEach((item, index) => {
         item.checked = true;
       });
       showColumns.value = cloneDeep(cloneColumns.value);
+      // 使用cloneDeep函数将columns的值深拷贝到cloneColumns变量中。
+      // 遍历cloneColumns中的每个元素，将其checked属性设置为true。
+      // 使用cloneDeep函数将cloneColumns的值深拷贝到showColumns变量中。
     },
     { deep: true, immediate: true }
+    // 通过使用watch函数的deep选项和immediate选项，可以实现对columns值的深度监视，并在组件初始化时立即执行一次回调函数。
+    // deep：布尔值，表示是否进行深度监视。默认为 false，即只监视 source 的第一层属性变化。如果设置为 true，则会递归监视所有嵌套属性的变化。
+    // immediate：布尔值，表示是否在初始化时立即执行监视函数。默认为 false，即只在 source 的值变化后才执行监视函数。如果设置为 true，则在初始化时立即执行监视函数。
   );
-
-  // const projectData = async (
-  //     current: number,
-  //     pageSize: number,
-  //     params: Partial<Admin>
-  // ) => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await queryProjectList(current, pageSize, params);
-  //     renderData.value = data.list;
-  //     // pagination.current = params.current;
-  //     // pagination.total = data.total;
-  //   } catch (err) {
-  //     // you can report use errorHandler or other
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  //
-  // projectData();
 </script>
 
 <script lang="ts">
   export default {
-    name: 'CenterStock',
+    name: 'SkuWare',
   };
 </script>
 

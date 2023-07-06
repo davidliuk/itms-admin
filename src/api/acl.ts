@@ -49,7 +49,6 @@ export function deleteRole(role: Role) {
 }
 
 export interface Admin {
-  // 内容不影响
   id: string;
   username: string;
   password: string;

@@ -26,14 +26,19 @@ import locale500 from '@/views/exception/500/locale/zh-CN';
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 
-import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
-import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN';
-import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
-
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
 import localePermission from '@/views/acl/permission/locale/zh-CN';
-import localeCheckOrder from '@/views/center/check-order/locale/zh-CN';
+
+import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
+import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN'; // 库存
+import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
+import localeCheckOrder from '@/views/center/check-order/locale/zh-CN'; // 分发单->分站，验货单->运输公司
+import localeTransferOrder from '@/views/center/transfer-order/locale/zh-CN'; // 调拨单->中心库房
+
+// @ts-ignore
+import localeLogisticsCheckOrder from '@/views/logistics/logistics-check-order/locale/zh-CN';
+// 运输公司接收的验货单
 
 import localeMissionTable from '@/views/station/mission-table/locale/zh-CN';
 import localeCourierTable from '@/views/station/courier-table/locale/zh-CN';
@@ -60,6 +65,7 @@ export default {
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
   'menu.center': '区域中心仓库',
+  'menu.logistics': '运输公司',
   'menu.acl': '权限管理',
   ...localeSettings,
   ...localeMessageBox,
@@ -96,4 +102,6 @@ export default {
   ...localeStationTable,
 
   ...localeCheckOrder,
+  ...localeTransferOrder,
+  ...localeLogisticsCheckOrder,
 };
