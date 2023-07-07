@@ -39,7 +39,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
     const res = response.data;
-    console.log(res);
+    // console.log(res);
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000 && res.code !== 200) {
       Message.error({

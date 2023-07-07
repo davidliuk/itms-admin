@@ -4,7 +4,7 @@ import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 import { LoginRes } from '@/api/user';
 
 export interface PolicyRecord {
-  id: number;
+  id: string;
   user_id: number;
   nick_name: string;
   order_no: string;
@@ -63,12 +63,15 @@ export interface PolicyListRes {
 
 export function queryPolicyList(params: PolicyParams) {
   return axios.post<PolicyListRes>('/api/list/policy', params);
-  // return axios.get<PolicyListRes>('/api/list/policy', {
-  //   params,
-  //   paramsSerializer: (obj) => {
-  //     return qs.stringify(obj);
-  //   },
-  // });
+  // return axios.get<PolicyListRes>(
+  //   '/api/order/auth/findUserOrderPage/{page}/{limit}',
+  //   {
+  //     params,
+  //     paramsSerializer: (obj) => {
+  //       return qs.stringify(obj);
+  //     },
+  //   }
+  // );
 }
 
 export function deletePolicyList(id: string) {

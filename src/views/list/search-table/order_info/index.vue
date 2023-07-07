@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.profile', 'menu.profile.basic']" />
+<!--    <Breadcrumb :items="['menu.profile', 'menu.profile.basic']" />-->
     <a-space direction="vertical" :size="16" fill>
-      <a-card class="general-card" :title="$t('basicProfile.title.form')">
-        <template #extra>
+      <a-card class="general-card">
+<!--      <a-card class="general-card" :title="$t('basicProfile.title.form')">-->
+        <!--<template #extra>
           <a-space>
-            <!-- todo:手动调度-->
+            todo:手动调度
             <a-button :disabled="taskButtonDisabled">{{
               $t('basicProfile.task')
             }}</a-button>
@@ -18,7 +19,7 @@
               {{ $t('basicProfile.goBack') }}
             </a-button>
           </a-space>
-        </template>
+        </template>-->
         <a-space v-if="step > 0 && step < 5">
           <a-steps :current="step" class="steps" label-placement="vertical">
             <a-step description="用户正在付款">{{
@@ -63,7 +64,7 @@
   import { queryProfileBasic, ProfileBasicRes } from '@/api/profile';
 
   import useLoading from '@/hooks/loading';
-  import router from '@/router/index'; // 注意:创建route的时候,要使用文件收集法,否则会出现循环import问题
+  import router from '@/router'; // 注意:创建route的时候,要使用文件收集法,否则会出现循环import问题
   import { useOrderInfoStore } from '@/store';
   import OperationLog from './components/operation-log.vue';
   import ProfileItem from './components/profile-item.vue';
@@ -78,11 +79,6 @@
   // 这是两个按钮的相关属性绑定
   const backButtonLoading = ref(false); // 返回键的"运行中"状态
   const taskButtonDisabled = ref(false); // 手工调度的"禁用"状态
-  const handleBack = () => {
-    backButtonLoading.value = true;
-    taskButtonDisabled.value = true;
-    router.push({ name: 'SearchTable' });
-  };
 
   // 下面是步骤显示器STEP的相关属性
   // console.log(typeof currentData.order_status);

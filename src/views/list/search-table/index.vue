@@ -2,6 +2,18 @@
   <!--    该模板为查询界面模板  -->
   <div class="container">
     <Breadcrumb :items="['menu.list', 'menu.list.searchTable']" />
+    <a-modal
+      v-model:visible="visibleModal"
+      fullscreen
+      ok-text="手工调度"
+      cancel-text="返回"
+      @ok="handleTask"
+      @cancel="handleBack"
+      unmount-on-close
+    >
+      <template #title> 订单详情 </template>
+      <div><OrderInfo /></div>
+    </a-modal>
     <a-card class="general-card" :title="$t('menu.list.searchTable')">
       <a-row>
         <a-col :flex="1">
@@ -66,7 +78,7 @@
                   :label="$t('searchTable.form.receiver_name')"
                 >
                   <a-input
-                    v-model="formModel.nick_name"
+                    v-model="formModel.receiver_name"
                     :placeholder="
                       $t('searchTable.form.receiver_name.placeholder')
                     "
@@ -250,7 +262,13 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
+        <!--        <template #order_status="{ record }">-->
+        <!--          {{ console.log(OrderStateGetString(record.order_status)) }}-->
+        <!--        </template>-->
         <template #order_status="{ record }">
+          {{ OrderStateGetString(record.order_status).value }}
+        </template>
+        <!--<template #order_status="{ record }">
           <a-space>
             <a-avatar
               v-if="record.order_status === '待付款'"
@@ -300,7 +318,7 @@
             </a-avatar>
             {{ $t(`searchTable.form.order_status.${record.order_status}`) }}
           </a-space>
-        </template>
+        </template>-->
         <!-- <template #payment_time="{ record }">
           {{ $t(`searchTable.form.order_status.${record.payment_time}`) }}
         </template> -->
@@ -349,6 +367,8 @@
   import { Modal } from '@arco-design/web-vue';
   import router from '@/router';
   import { useOrderInfoStore } from '@/store';
+  import { OrderStateGetString } from '@/utils/lsp-utils/order_state_to_string';
+  import OrderInfo from './order_info/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -434,6 +454,7 @@
     {
       title: t('searchTable.columns.order_status'),
       dataIndex: 'order_status',
+      slotName: 'order_status',
     },
     {
       title: t('searchTable.columns.payment_time'),
@@ -634,17 +655,26 @@
 
   const orderStore = useOrderInfoStore();
   const visible = ref(false);
-  const handleSeeOrder = async (index: any) => {
+  const handleSeeOrder = (index: any) => {
     setLoading(true);
     const dateToshow = renderData.value[index];
     // todo 转到一个新页面去， 有什么操作？有OK操作（手动调度），有cancle操作（修改订单地址）
     orderStore.setInfo(dateToshow);
-    await router.push({name: 'order_info'});
+    // await router.push({ name: 'order_info' });
+    visibleModal.value = true;
     setLoading(false);
   };
 
   // render的时间全部都是一个时间,这个无所谓
   // console.log(renderData);
+
+  const visibleModal = ref(false);
+  const handleTask = () => {
+    visible.value = false;
+  };
+  const handleBack = () => {
+    visible.value = false;
+  };
 </script>
 
 <script lang="ts">

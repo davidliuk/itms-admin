@@ -8,7 +8,7 @@ const { Random } = Mock;
 const data = Mock.mock({
   'list|55': [
     {
-      'id|+1': 1,
+      'id|+8': 8,
       'user_id|+1': 1,
       'nick_name': '@cname',
       'order_no': /[A-Z][a-z][-][0-9]/,
@@ -22,7 +22,7 @@ const data = Mock.mock({
       'refundable_time': '@datetime',
       'pay_type|1': /[0-1]/,
       'source_type': null,
-      'order_status|1': /[0-5]/,
+      'order_status|1': () => Mock.Random.pick([-1, 0, 1, 2, 3, 4]),
       // 'order_status|1': ['待付款', '代发货', '已发货', '已完成', '已取消'],
       'process_status': 0,
       'logistics_id|+1': 1,
