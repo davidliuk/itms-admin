@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css';
 
-import { lspRoutes } from '@/router/lsp-self-router';
 import { appRoutes } from './routes';
 import { REDIRECT_MAIN, NOT_FOUND_ROUTE } from './routes/base';
 import createRouteGuard from './guard';
@@ -24,7 +23,6 @@ const router = createRouter({
         requiresAuth: false,
       },
     },
-    ...lspRoutes,
     ...appRoutes,
     REDIRECT_MAIN,
     NOT_FOUND_ROUTE,

@@ -56,6 +56,7 @@ export default {
   'CheckOrder.columns.status': '状态',
   'CheckOrder.columns.operations': '操作',
   'CheckOrder.columns.operations.view': '查看商品详情',
+  'CheckOrder.columns.operations.delete': '删除',
 
   'CheckOrder.columns.skuId': '商品编号',
   'CheckOrder.columns.skuImg': '商品图片',

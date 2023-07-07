@@ -229,26 +229,48 @@
 
         <!-- table里 -->
         <!-- 查看 -->
-        <template #operations>
-          <!--                      <a-button>view</a-button>-->
+        <template #operations="{ record }">
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="SkuDetail"
+            @click="SkuDetail(record.orderId)"
           >
             {{ $t('CheckOrder.columns.operations.view') }}
           </a-button>
-
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
             @cancel="handleCancel"
           >
             <template #title> 验收单商品详情 </template>
-            <!--            :data="data"-->
-            <a-table :columns="Skucolumns" />
+            <a-table
+              row-key="id"
+              :loading="loading"
+              :columns="(Skucolumns as TableColumnData[])"
+              :data="orderItemData"
+              :bordered="false"
+              :size="size"
+              @page-change="onPageChange"
+            >
+              <template #imgUrl="{ record }">
+                <img
+                  :src="record.imgUrl"
+                  alt="Product Image"
+                  style="width: 100px; height: 100px"
+                />
+              </template>
+            </a-table>
           </a-modal>
+
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteCheckOrderById(record.id)"
+          >
+            {{ $t('CheckOrder.columns.operations.delete') }}
+          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -260,7 +282,13 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryCheckOrderList, CheckOrder } from '@/api/center';
+  import {
+    queryCheckOrderList,
+    CheckOrder,
+    queryOrderInfo,
+    OrderItem,
+    deleteCheckOrder,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -277,10 +305,10 @@
       inTime: null,
       orderId: '',
       outTime: null,
-      skuId: '',
-      skuName: '',
-      skuNum: '',
-      skuPrice: '',
+      // skuId: '',
+      // skuName: '',
+      // skuNum: '',
+      // skuPrice: '',
       stationId: '',
       status: '',
       // 0:未分发,1:已分发,2:已入库
@@ -289,10 +317,16 @@
       wareId: '',
     };
   };
+  const generateorderItemModel = () => {
+    return {
+      orderItemList: [],
+    };
+  };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<CheckOrder[]>([]);
-  const formModel = ref(generateFormModel());
+  const orderItemData = ref<OrderItem[]>([]);
+  const formModel = ref(generateFormModel()); // 输入框要用的
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
@@ -305,6 +339,8 @@
   const pagination = reactive({
     ...basePagination,
   });
+
+  // 密度选择
   const densityList = computed(() => [
     {
       name: t('CheckOrder.size.mini'),
@@ -324,6 +360,7 @@
     },
   ]);
 
+  // 展示分发单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('CheckOrder.columns.index'),
@@ -344,19 +381,6 @@
       slotName: 'stationId',
     },
     {
-      title: t('CheckOrder.columns.skuId'),
-      dataIndex: 'skuId',
-    },
-    {
-      title: t('CheckOrder.columns.skuName'),
-      dataIndex: 'skuName',
-      slotName: 'skuName',
-    },
-    {
-      title: t('CheckOrder.columns.skuNum'),
-      dataIndex: 'skuNum',
-    },
-    {
       title: t('CheckOrder.columns.createTime'),
       dataIndex: 'createTime',
     },
@@ -371,6 +395,7 @@
       slotName: 'operations',
     },
   ]);
+  // 搜索状态输入框下拉列表
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('CheckOrder.form.status.no_distribute'),
@@ -385,31 +410,62 @@
       value: 'stocked',
     },
   ]);
-  // 展示商品的表格内容
 
+  // 展示商品的表格内容
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
-      title: '商品编号',
+      title: t('CheckOrder.columns.skuId'),
       dataIndex: 'skuId',
     },
     {
-      title: '商品名称',
+      title: t('CheckOrder.columns.skuName'),
       dataIndex: 'skuName',
+      slotName: 'skuName',
     },
     {
-      title: '商品价格',
-      dataIndex: 'skuPrice',
+      title: t('CheckOrder.columns.skuImg'),
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
     },
     {
-      title: '商品数量',
+      title: t('CheckOrder.columns.skuNum'),
       dataIndex: 'skuNum',
+    },
+    {
+      title: t('CheckOrder.columns.skuPrice'),
+      dataIndex: 'skuPrice',
     },
   ]);
 
+  // 删除分发单
+  const deleteCheckOrderById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteCheckOrder(id);
+      fetchData(pagination.current, pagination.pageSize, formModel.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // 展示商品详细信息
   const visible = ref(false);
-
-  const SkuDetail = () => {
+  const findOrderItemData = async (orderId: number) => {
+    setLoading(true);
+    try {
+      const { data } = await queryOrderInfo(orderId);
+      console.log(data);
+      orderItemData.value = data.orderItemList; // data里的一个字段
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  const SkuDetail = (orderId: number) => {
+    findOrderItemData(orderId, generateorderItemModel.value);
     visible.value = true;
   };
   const handleOk = () => {
@@ -429,7 +485,7 @@
     try {
       const { data } = await queryCheckOrderList(current, pageSize, params);
       console.log(data);
-      renderData.value = data.records;
+      renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
       pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
@@ -447,11 +503,11 @@
   };
 
   fetchData(pagination.current, pagination.pageSize, formModel.value);
-
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
   };
+
   // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
@@ -459,6 +515,7 @@
   ) => {
     size.value = val as SizeProps;
   };
+
   // 改变内容
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
