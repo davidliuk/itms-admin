@@ -26,6 +26,10 @@ import locale500 from '@/views/exception/500/locale/zh-CN';
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 
+import localeInvoice from '@/views/finance/invoice/locale/zh-CN';
+import localeSettlement from '@/views/finance/settlement/locale/zh-CN';
+import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
+
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
 import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN';
 import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
@@ -42,6 +46,7 @@ export default {
   'menu.server.dashboard': '仪表盘-服务端',
   'menu.server.workplace': '工作台-服务端',
   'menu.server.monitor': '实时监控-服务端',
+  'menu.finance': '财务管理',
   'menu.list': '列表页',
   'menu.result': '结果页',
   'menu.exception': '异常页',
@@ -74,6 +79,10 @@ export default {
   ...locale404,
   ...locale500,
   ...localeUserInfo,
+
+  ...localeSettlement,
+  ...localeSupplier,
+  ...localeInvoice,
 
   ...localeUserSetting,
   ...localeeSearchTable,

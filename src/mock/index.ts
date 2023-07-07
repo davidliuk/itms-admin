@@ -8,6 +8,11 @@ import '@/views/dashboard/workplace/mock';
 import '@/views/dashboard/monitor/mock';
 
 import '@/views/list/card/mock';
+
+import '@/views/finance/invoice/mock';
+import '@/views/finance/settlement/mock';
+import '@/views/finance/supplier/supplier-mock';
+
 import '@/views/list/search-table/mock';
 
 import '@/views/form/step/mock';
