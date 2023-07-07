@@ -387,11 +387,7 @@
     isCreating.value = true;
   };
   const handleUpdateClick = (admin: Admin) => {
-    console.log(admin);
-    console.log('-----------');
-    console.log(form);
     copy(admin, form);
-    // form = admin;
     isUpdating.value = true;
   };
   const handleBeforeOk = (done) => {
@@ -408,7 +404,9 @@
     } else {
       doAssign(selectedAdmin.id, selectedOptions.value);
     }
+    done();
     handleClose();
+    search();
   };
   const handleClose = () => {
     isCreating.value = false;

@@ -93,6 +93,26 @@
           </a-tooltip>
         </a-col>
       </a-row>
+      <a-modal
+        :visible="isCreating || isUpdating"
+        :title="$t(`permission.form.title.${isCreating ? 'create' : 'update'}`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`permission.form.${key}`)"
+          >
+            <a-input
+              v-model="form[key]"
+              :placeholder="$t(`permission.form.${key}.placeholder`)"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
 
       <!-- 表格 -->
       <a-table
@@ -136,8 +156,32 @@
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
+          <!-- <a-button v-permission="['admin']" type="text" size="small">
             {{ $t('permission.columns.operations.view') }}
+          </a-button> -->
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleCreateClick(record)"
+          >
+            {{ $t('permission.columns.operations.create') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteById(record.id)"
+          >
+            {{ $t('permission.columns.operations.delete') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
+          >
+            {{ $t('permission.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -155,6 +199,7 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+import copy from '@/utils/objects';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -164,6 +209,54 @@
   const renderData = ref<Permission[]>([]);
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
+
+  const generateFormModel = () => {
+    return {
+      id: '',
+      username: '',
+      name: '',
+      password: '',
+      phone: '',
+      email: '',
+      wareId: '',
+      stationId: '',
+      // createTime: null,
+      // updateTime: null,
+    };
+  };
+
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+  let form = reactive(generateFormModel());
+
+  const handleCreateClick = () => {
+    isCreating.value = true;
+  };
+  const handleUpdateClick = (admin: Permission) => {
+    copy(admin, form);
+    isUpdating.value = true;
+  };
+  const handleBeforeOk = (done) => {
+    // window.setTimeout(() => {
+    //   done();
+    //   // prevent close
+    //   // done(false)
+    //   handleClose();
+    // }, 3000);
+    if (isCreating.value) {
+      add(form as unknown as Permission);
+    } else {
+      update(form as unknown as Permission);
+    }
+    done();
+    handleClose();
+    search();
+  };
+  const handleClose = () => {
+    isCreating.value = false;
+    isUpdating.value = false;
+    form = reactive(generateFormModel());
+  };
 
   const size = ref<SizeProps>('medium');
 

@@ -26,6 +26,7 @@
         </a-input>
       </a-form-item>
       <a-form-item
+        v-if="!isCode"
         field="password"
         :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
         :validate-trigger="['change', 'blur']"
@@ -35,14 +36,39 @@
           v-model="userInfo.password"
           :placeholder="$t('login.form.password.placeholder')"
           allow-clear
+          search-button
         >
           <template #prefix>
             <icon-lock />
           </template>
+          <template #suffix>
+            <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
+          </template>
         </a-input-password>
       </a-form-item>
+      <a-form-item
+        v-else
+        field="code"
+        :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
+        :validate-trigger="['change', 'blur']"
+        hide-label
+      >
+        <a-input
+          v-model="userInfo.code"
+          :placeholder="$t('login.form.code.placeholder')"
+          allow-clear
+          search-button
+        >
+          <template #prefix>
+            <icon-send />
+          </template>
+          <template #suffix>
+            <a-link>{{ $t('login.form.sendCode') }}</a-link>
+          </template>
+        </a-input>
+      </a-form-item>
       <a-space :size="16" direction="vertical">
-        <div class="login-form-password-actions">
+        <div v-if="!isCode" class="login-form-password-actions">
           <a-checkbox
             checked="rememberPassword"
             :model-value="loginConfig.rememberPassword"
@@ -50,7 +76,11 @@
           >
             {{ $t('login.form.rememberPassword') }}
           </a-checkbox>
-          <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
+          <a-link @click="switchCode">{{ $t('login.form.code') }}</a-link>
+        </div>
+        <div v-else class="login-form-password-actions">
+          <div />
+          <a-link @click="switchCode">{{ $t('login.form.password') }}</a-link>
         </div>
         <a-button type="primary" html-type="submit" long :loading="loading">
           {{ $t('login.form.login') }}
@@ -64,7 +94,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, Ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
@@ -80,14 +110,22 @@
   const { loading, setLoading } = useLoading();
   const userStore = useUserStore();
 
+  const isCode: Ref<boolean> = ref(false);
+
+  const switchCode = () => {
+    isCode.value = !isCode.value;
+  };
+
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,
     username: 'admin', // 演示默认值
     password: 'admin', // demo default value
+    code: '123456', // demo default value
   });
   const userInfo = reactive({
     username: loginConfig.value.username,
     password: loginConfig.value.password,
+    code: loginConfig.value.code,
   });
 
   const handleSubmit = async ({
