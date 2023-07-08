@@ -7,11 +7,13 @@ export interface LoginData {
   username: string;
   email: string;
   password: string;
+  code: string;
 }
 
 export interface LoginRes {
   // 定义了一个接口，包含 token 字段，用于表示登录响应的数据。
   token: string;
+  user: UserState;
 }
 // export function login(data: LoginData) {
 //   return axios.post<LoginRes>('/api/user/login', data);
@@ -25,11 +27,22 @@ export function login(data: LoginData) {
 }
 
 export function logout() {
-  return axios.post<LoginRes>('/api/user/logout');
+  return axios.post<LoginRes>('/admin/acl/index/logout');
 }
 
+export function sendCode(loginData: LoginData) {
+  return axios.post<any>('/admin/acl/index/email/send', loginData);
+}
+
+export function codeLogin(loginData: LoginData) {
+  return axios.post<LoginRes>('/admin/acl/index/login/email', loginData);
+}
+
+// export function getUserInfo() {
+//   return axios.post<UserState>('/api/user/info');
+// }
 export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
+  return axios.get<UserState>('/admin/acl/index/info');
 }
 
 export function getMenuList() {

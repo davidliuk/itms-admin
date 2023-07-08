@@ -26,7 +26,9 @@ axios.interceptors.request.use(
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${token}`;
+      // config.headers.Authorization = `Bearer ${token}`;
+      // config.headers.Authorization = `Bearer ${token}`;
+      config.headers.satoken = token;
     }
     return config;
   },
@@ -39,7 +41,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
     const res = response.data;
-    console.log(res);
+    // console.log(res);
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000 && res.code !== 200) {
       Message.error({

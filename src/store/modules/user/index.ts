@@ -4,6 +4,7 @@ import {
   logout as userLogout,
   getUserInfo,
   LoginData,
+  codeLogin,
 } from '@/api/user';
 import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
@@ -12,7 +13,9 @@ import useAppStore from '../app';
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
+    id: undefined,
     name: undefined,
+    username: undefined,
     avatar: undefined,
     job: undefined,
     organization: undefined,
@@ -27,7 +30,9 @@ const useUserStore = defineStore('user', {
     registrationDate: undefined,
     accountId: undefined,
     certification: undefined,
-    role: '',
+    role: 'admin',
+    roles: [],
+    permissions: [],
   }),
 
   getters: {
@@ -75,6 +80,17 @@ const useUserStore = defineStore('user', {
       try {
         const res = await userLogin(loginForm);
         setToken(res.data.token);
+        this.setInfo(res.data.user);
+      } catch (err) {
+        clearToken();
+        throw err;
+      }
+    },
+    async loginCode(loginForm: LoginData) {
+      try {
+        const res = await codeLogin(loginForm);
+        setToken(res.data.token);
+        this.setInfo(res.data.user);
       } catch (err) {
         clearToken();
         throw err;

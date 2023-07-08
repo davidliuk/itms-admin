@@ -243,11 +243,11 @@ import copy from '@/utils/objects';
     //   // done(false)
     //   handleClose();
     // }, 3000);
-    if (isCreating.value) {
-      add(form as unknown as Permission);
-    } else {
-      update(form as unknown as Permission);
-    }
+    // if (isCreating.value) {
+    //   add(form as unknown as Permission);
+    // } else {
+    //   update(form as unknown as Permission);
+    // }
     done();
     handleClose();
     search();
