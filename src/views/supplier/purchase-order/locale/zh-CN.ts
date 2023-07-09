@@ -1,5 +1,5 @@
 export default {
-  'menu.center.PurchaseOrder': '购货单表格',
+  'menu.supplier.PurchaseOrder': '购货单表格',
   'PurchaseOrder.form.id': '购货单编号',
   'PurchaseOrder.form.id.placeholder': '请输入购货单编号',
   'PurchaseOrder.form.wareId': '中心库房标识',
@@ -9,11 +9,17 @@ export default {
   'PurchaseOrder.form.skuId.placeholder': '请输入商品标识',
   'PurchaseOrder.form.skuName': '商品名称',
   'PurchaseOrder.form.skuName.placeholder': '请输入商品名称',
+  'PurchaseOrder.form.imgUrl': '商品图片',
+  'PurchaseOrder.form.imgUrl.placeholder': '请输入商品图片',
+  'PurchaseOrder.form.skuNum': '商品数量',
+  'PurchaseOrder.form.skuNum.placeholder': '请输入商品数量',
+  'PurchaseOrder.form.skuPrice': '商品价格',
+  'PurchaseOrder.form.skuPrice.placeholder': '请输入商品价格',
 
   'PurchaseOrder.form.supplierId': '供应商标识',
   'PurchaseOrder.form.supplierId.placeholder': '请输入供应商标识',
   'PurchaseOrder.form.supplierName': '供应商名称',
-  'PurchaseOrder.formsupplierName.placeholder': '请输入供应商名称',
+  'PurchaseOrder.form.supplierName.placeholder': '请输入供应商名称',
 
   'PurchaseOrder.form.createTime': '创建时间',
   'PurchaseOrder.form.updateTime': '更新时间',
