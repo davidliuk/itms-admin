@@ -81,10 +81,7 @@
     StepData,
   } from '@/utils/lsp-utils/order_state_to_string';
   import { Pagination } from '@/types/global';
-  import {
-    queryCheckOrder,
-    queryTransferOrder,
-  } from '@/api/orderInfo';
+  import { queryCheckOrder, queryTransferOrder } from '@/api/orderInfo';
   import OperationLog from './components/operation-log.vue';
   import ProfileItem from './components/profile-item.vue';
 

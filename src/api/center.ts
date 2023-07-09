@@ -1,14 +1,46 @@
 import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-import { Admin } from '@/api/acl';
 
 export interface PageRes<T> {
   records: T[];
   total: number;
 }
 
+export interface StorageOrder {
+  id: string;
+  wareId: number;
+  orderId: number;
+  skuId: number;
+  skuName: string;
+  stationId: number;
+  stationName: string;
+  supplierId: number;
+  supplierName: string; // 供货商
+  storageType: string;
+  // IN(0, "入库"),
+  // OUT(1, "出库"),
+  // RETURN_IN(2, "退货入库"),
+  // RETURN_OUT(3, "退货出库");
+  startTime: string;
+  endTime: string;
+}
+
+export function queryStorageOrderList(
+  current: number,
+  limit: number,
+  params: Partial<StorageOrder>
+) {
+  return axios.post<PageRes<StorageOrder>>(
+    `/admin/sys/storageOrder/${current}/${limit}`,
+    {
+      params,
+    }
+  );
+}
+
 export interface SkuWare {
+  // 中心库房库存
   // 定义类型
   id: string;
   skuId: number;
@@ -123,22 +155,6 @@ export interface TransferOrder {
   outTime: Date; // 出库时间
   createTime: Date; // 创建时间
   updateTime: Date; // 更新时间
-
-  // id: number;
-  // imgUrl: string;
-  // inTime: string;
-  // orderId: number;
-  // wareId: number;
-  // outTime: string;
-  // skuId: number;
-  // skuName: string;
-  // skuNum: number;
-  // skuPrice: number;
-  // stationId: number;
-  // status: number;
-  // // 0:未分发,1:已分发,2:已入库
-  // updateTime: string;
-  // createTime: string;
 }
 
 export function queryTransferOrderList(
@@ -152,6 +168,59 @@ export function queryTransferOrderList(
       params,
     }
   );
+}
+
+export interface WorkStatus {
+  code: number;
+  comment: string;
+}
+export interface WorkType {
+  code: number;
+  comment: string;
+}
+// 任务单
+export interface WorkOrder {
+  // 内容不影响
+  id: number;
+  stationId: number; // 分站
+  name: string; // 收货人
+  userId: number; // 用户
+  courierId: number; // 配送员
+  orderId: number; // 订单id
+  wareId: number; // 中心库房
+  // 状态DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_COURIER_TAKE,WAITING_USER_TAKE,FINISHED,CANCEL
+  workStatus:
+    | 'DISPATCH'
+    | 'OUT'
+    | 'IN'
+    | 'WAITING_ASSIGN'
+    | 'ASSIGN'
+    | 'WAITING_COURIER_TAKE'
+    | 'WAITING_USER_TAKE'
+    | 'FINISHED'
+    | 'CANCEL';
+  // workType: 'DELIVERY' | 'EXCHANGE' | 'RETURN'; // 类型DELIVERY,EXCHANGE,RETURN
+  workType: string; // 类型DELIVERY,EXCHANGE,RETURN
+  // startTime: Date; // 开始时间
+  // endTime: Date; // 结束时间
+}
+
+export function queryWorkOrderList(
+  current: number,
+  limit: number,
+  params: Partial<WorkOrder>
+) {
+  return axios.post<PageRes<WorkOrder>>(
+    `/admin/sys/workOrder/${current}/${limit}`,
+    {
+      params,
+    }
+  );
+}
+
+// 中心库房根据orderid 订单id 调拨出库
+export function transferOutWareByOrderId(orderId: number) {
+  return axios.get<any>(`/admin/sys/ware/out/${orderId}`);
 }
 
 export interface PolicyRecord {

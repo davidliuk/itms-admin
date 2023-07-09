@@ -242,8 +242,15 @@
               :bordered="false"
               :size="size"
               @page-change="onPageChange"
-            ></a-table>
-            <!--            <a-table :columns="Skucolumns" />-->
+            >
+              <template #imgUrl="{ record }">
+                <img
+                  :src="record.imgUrl"
+                  alt="Product Image"
+                  style="width: 100px; height: 100px"
+                />
+              </template>
+            </a-table>
           </a-modal>
         </template>
         <!-- 查看 -->
@@ -436,8 +443,8 @@
     },
     {
       title: t('TransferOrder.columns.skuImg'),
-      dataIndex: 'skuImg',
-      slotName: 'skuImg',
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
     },
     {
       title: t('TransferOrder.columns.skuNum'),

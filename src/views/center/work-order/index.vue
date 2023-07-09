@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.CheckOrder']" />
-    <a-card class="general-card" :title="$t('menu.center.CheckOrder')">
+    <Breadcrumb :items="['menu.center', 'menu.center.WorkOrder']" />
+    <a-card class="general-card" :title="$t('menu.center.WorkOrder')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,68 +13,67 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('CheckOrder.form.id')">
+                <a-form-item field="id" :label="$t('WorkOrder.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('CheckOrder.form.id.placeholder')"
+                    :placeholder="$t('WorkOrder.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('CheckOrder.form.wareId')"
+                  :label="$t('WorkOrder.form.wareId')"
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('CheckOrder.form.wareId.placeholder')"
+                    :placeholder="$t('WorkOrder.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="stationId"
-                  :label="$t('CheckOrder.form.stationId')"
+                  :label="$t('WorkOrder.form.stationId')"
                 >
                   <a-input
                     v-model="formModel.stationId"
-                    :placeholder="$t('CheckOrder.form.stationId.placeholder')"
+                    :placeholder="$t('WorkOrder.form.stationId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <!--              <a-col :span="8">-->
-              <!--                <a-form-item field="skuId" :label="$t('CheckOrder.form.skuId')">-->
-              <!--                  <a-input-->
-              <!--                    v-model="formModel.skuId"-->
-              <!--                    :placeholder="$t('CheckOrder.form.skuId.placeholder')"-->
+              <!--                <a-form-item-->
+              <!--                  field="startTime"-->
+              <!--                  :label="$t('WorkOrder.form.startTime')"-->
+              <!--                >-->
+              <!--                  <a-range-picker-->
+              <!--                    v-model="formModel.startTime"-->
+              <!--                    style="width: 100%"-->
               <!--                  />-->
-              <!--                  &lt;!&ndash; <a-select-->
-              <!--                    v-model="formModel.skuId"-->
-              <!--                    :options="filterTypeOptions"-->
-              <!--                    :placeholder="$t('CheckOrder.form.selectDefault')"-->
-              <!--                  /> &ndash;&gt;-->
               <!--                </a-form-item>-->
               <!--              </a-col>-->
               <a-col :span="8">
                 <a-form-item
-                  field="createTime"
-                  :label="$t('CheckOrder.form.createTime')"
+                  field="workType"
+                  :label="$t('WorkOrder.form.workType')"
                 >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
+                  <a-select
+                    v-model="formModel.workType"
+                    :options="workTypeOptions"
+                    :placeholder="$t('WorkOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="status"
-                  :label="$t('CheckOrder.form.status')"
+                  field="workStatus"
+                  :label="$t('WorkOrder.form.workStatus')"
                 >
                   <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                    v-model="formModel.workStatus"
+                    :options="workStatusOptions"
+                    :placeholder="$t('WorkOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
@@ -91,13 +90,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('CheckOrder.form.search') }}
+              {{ $t('WorkOrder.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('CheckOrder.form.reset') }}
+              {{ $t('WorkOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -113,12 +112,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('CheckOrder.operation.create') }}
+              {{ $t('WorkOrder.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('CheckOrder.operation.import') }}
+                  {{ $t('WorkOrder.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -133,16 +132,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('CheckOrder.operation.download') }}
+            {{ $t('WorkOrder.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('CheckOrder.actions.refresh')">
+          <a-tooltip :content="$t('WorkOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('CheckOrder.actions.density')">
+            <a-tooltip :content="$t('WorkOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -158,7 +157,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('CheckOrder.actions.columnSetting')">
+          <a-tooltip :content="$t('WorkOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -213,37 +212,53 @@
 
         <!-- 表格form里 -->
         <!-- 状态 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'no_distribute'" class="circle"></span>
-          <span
-            v-else-if="record.status === 'distributed'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
-            class="circle pass"
-          ></span>
-          {{ $t(`CheckOrder.form.status.${record.status}`) }}
+        <template #workStatus="{ record }">
+          <span class="circle"></span>
+          {{ $t(`WorkOrder.form.workStatus.${record.workStatus}`) }}
+        </template>
+        <template #workType="{ record }">
+          <span class="circle"></span>
+          {{ $t(`WorkOrder.form.workType.${record.workType}`) }}
         </template>
         <!-- 表格form里 -->
 
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
+          <a-popconfirm
+            content="是否确认出库?"
+            type="warning"
+            @ok="transferOutWare(record.orderId)"
+            @cancel="handleCancelOutWare"
+          >
+            <a-button v-permission="['admin']" type="text" size="small">
+              出库
+            </a-button>
+          </a-popconfirm>
+
+          <!--          <a-button-->
+          <!--              v-permission="['admin']"-->
+          <!--              type="text"-->
+          <!--              size="small"-->
+          <!--              @click="transferOutWare(record.orderId)"-->
+          <!--          >-->
+          <!--            &lt;!&ndash;            根据调拨单的调拨，把订单的状态改为中心库房调拨出库&ndash;&gt;-->
+          <!--            出库-->
+          <!--          </a-button>-->
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            {{ $t('CheckOrder.columns.operations.view') }}
+            {{ $t('WorkOrder.columns.operations.view') }}
           </a-button>
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
             @cancel="handleCancel"
           >
-            <template #title> 验收单商品详情 </template>
+            <template #title> 任务单商品详情 </template>
             <a-table
               row-key="id"
               :loading="loading"
@@ -262,15 +277,6 @@
               </template>
             </a-table>
           </a-modal>
-
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteCheckOrderById(record.id)"
-          >
-            {{ $t('CheckOrder.columns.operations.delete') }}
-          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -283,11 +289,11 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryCheckOrderList,
-    CheckOrder,
+    queryWorkOrderList,
+    WorkOrder,
     queryOrderInfo,
     OrderItem,
-    deleteCheckOrder,
+    transferOutWareByOrderId,
   } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -301,20 +307,17 @@
   const generateFormModel = () => {
     return {
       id: '',
-      imgUrl: '',
-      inTime: null,
-      orderId: '',
-      outTime: null,
-      // skuId: '',
-      // skuName: '',
-      // skuNum: '',
-      // skuPrice: '',
-      stationId: '',
-      status: '',
-      // 0:未分发,1:已分发,2:已入库
-      updateTime: null,
-      createTime: null,
-      wareId: '',
+      stationId: '', // 分站
+      name: '', // 收货人
+      userId: '', // 用户
+      courierId: '', // 配送员
+      orderId: '', // 订单id
+      wareId: '', // 中心库房
+      // 状态DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_COURIER_TAKE,WAITING_USER_TAKE,FINISHED,CANCEL
+      workStatus: 'DISPATCH',
+      workType: 'DELIVERY', // 类型DELIVERY,EXCHANGE,RETURN
+      // startTime: null, // 开始时间
+      // endTime: null, // 结束时间
     };
   };
   const generateorderItemModel = () => {
@@ -324,130 +327,35 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<CheckOrder[]>([]);
+  const renderData = ref<WorkOrder[]>([]);
   const orderItemData = ref<OrderItem[]>([]);
   const formModel = ref(generateFormModel()); // 输入框要用的
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
+  const isOutWare = ref(false);
 
-  const size = ref<SizeProps>('medium');
+  // 调拨出库
+  const visibleOutWare = ref(false);
 
-  const basePagination: Pagination = {
-    current: 1,
-    pageSize: 20,
-  };
-  const pagination = reactive({
-    ...basePagination,
-  });
-
-  // 密度选择
-  const densityList = computed(() => [
-    {
-      name: t('CheckOrder.size.mini'),
-      value: 'mini',
-    },
-    {
-      name: t('CheckOrder.size.small'),
-      value: 'small',
-    },
-    {
-      name: t('CheckOrder.size.medium'),
-      value: 'medium',
-    },
-    {
-      name: t('CheckOrder.size.large'),
-      value: 'large',
-    },
-  ]);
-
-  // 展示分发单信息表格
-  const columns = computed<TableColumnData[]>(() => [
-    {
-      title: t('CheckOrder.columns.index'),
-      dataIndex: 'index',
-      slotName: 'index',
-    },
-    {
-      title: t('CheckOrder.columns.id'),
-      dataIndex: 'id',
-    },
-    {
-      title: t('CheckOrder.columns.wareId'),
-      dataIndex: 'wareId',
-    },
-    {
-      title: t('CheckOrder.columns.stationId'),
-      dataIndex: 'stationId',
-      slotName: 'stationId',
-    },
-    {
-      title: t('CheckOrder.columns.createTime'),
-      dataIndex: 'createTime',
-    },
-    {
-      title: t('CheckOrder.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
-    {
-      title: t('CheckOrder.columns.operations'),
-      dataIndex: 'operations',
-      slotName: 'operations',
-    },
-  ]);
-  // 搜索状态输入框下拉列表
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('CheckOrder.form.status.no_distribute'),
-      value: 'no_distribute',
-    },
-    {
-      label: t('CheckOrder.form.status.distributed'),
-      value: 'distributed',
-    },
-    {
-      label: t('CheckOrder.form.status.stocked'),
-      value: 'stocked',
-    },
-  ]);
-
-  // 展示商品的表格内容
-  const Skucolumns = computed<TableColumnData[]>(() => [
-    {
-      title: t('CheckOrder.columns.skuId'),
-      dataIndex: 'skuId',
-    },
-    {
-      title: t('CheckOrder.columns.skuName'),
-      dataIndex: 'skuName',
-      slotName: 'skuName',
-    },
-    {
-      title: t('CheckOrder.columns.skuImg'),
-      dataIndex: 'imgUrl',
-      slotName: 'imgUrl',
-    },
-    {
-      title: t('CheckOrder.columns.skuNum'),
-      dataIndex: 'skuNum',
-    },
-    {
-      title: t('CheckOrder.columns.skuPrice'),
-      dataIndex: 'skuPrice',
-    },
-  ]);
-
-  // 删除分发单
-  const deleteCheckOrderById = async (id: number) => {
+  const transferOutWare = async (orderId: number) => {
     setLoading(true);
     try {
-      await deleteCheckOrder(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
+      const { data } = await transferOutWareByOrderId(orderId);
+      visibleOutWare.value = false;
+      console.log(data);
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
+      fetchData(
+        basePagination.current,
+        basePagination.pageSize,
+        formModel.value
+      );
       setLoading(false);
     }
+  };
+  const handleCancelOutWare = () => {
+    visibleOutWare.value = false;
   };
 
   // 展示商品详细信息
@@ -464,6 +372,7 @@
       setLoading(false);
     }
   };
+
   const SkuDetail = (orderId: number) => {
     findOrderItemData(orderId, generateorderItemModel.value);
     visible.value = true;
@@ -475,15 +384,167 @@
     visible.value = false;
   };
 
+  const size = ref<SizeProps>('medium');
+
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 20,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
+
+  // 密度选择
+  const densityList = computed(() => [
+    {
+      name: t('WorkOrder.size.mini'),
+      value: 'mini',
+    },
+    {
+      name: t('WorkOrder.size.small'),
+      value: 'small',
+    },
+    {
+      name: t('WorkOrder.size.medium'),
+      value: 'medium',
+    },
+    {
+      name: t('WorkOrder.size.large'),
+      value: 'large',
+    },
+  ]);
+
+  // 展示分发单信息表格
+  const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('WorkOrder.columns.index'),
+      dataIndex: 'index',
+      slotName: 'index',
+    },
+    {
+      title: t('WorkOrder.columns.id'),
+      dataIndex: 'id',
+    },
+    {
+      title: t('WorkOrder.columns.wareId'),
+      dataIndex: 'wareId',
+    },
+    {
+      title: t('WorkOrder.columns.stationId'),
+      dataIndex: 'stationId',
+      slotName: 'stationId',
+    },
+    {
+      title: t('WorkOrder.columns.startTime'),
+      dataIndex: 'startTime',
+    },
+    {
+      title: t('WorkOrder.columns.workStatus'),
+      dataIndex: 'workStatus',
+      slotName: 'workStatus',
+    },
+    {
+      title: t('WorkOrder.columns.workType'),
+      dataIndex: 'workType',
+      slotName: 'workType',
+    },
+    {
+      title: t('WorkOrder.columns.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+    },
+  ]);
+
+  const workTypeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('WorkOrder.form.workType.0'),
+      value: 'DELIVERY',
+    },
+    {
+      label: t('WorkOrder.form.workType.1'),
+      value: 'EXCHANGE',
+    },
+    {
+      label: t('WorkOrder.form.workType.2'),
+      value: 'RETURN',
+    },
+  ]);
+
+  // 搜索状态输入框下拉列表
+  const workStatusOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('WorkOrder.form.workStatus.0'),
+      value: 'DISPATCH',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.1'),
+      value: 'OUT',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.2'),
+      value: 'IN',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.3'),
+      value: 'WATING_ASSIGN',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.4'),
+      value: 'ASSIGN',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.5'),
+      value: 'WAITING_COURIER_TAKE',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.6'),
+      value: 'WAITING_USER_TAKE',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.7'),
+      value: 'FINISHED',
+    },
+    {
+      label: t('WorkOrder.form.workStatus.-1'),
+      value: 'CANCEL',
+    },
+  ]);
+
+  // 展示商品的表格内容
+  const Skucolumns = computed<TableColumnData[]>(() => [
+    {
+      title: t('WorkOrder.columns.skuId'),
+      dataIndex: 'skuId',
+    },
+    {
+      title: t('WorkOrder.columns.skuName'),
+      dataIndex: 'skuName',
+      slotName: 'skuName',
+    },
+    {
+      title: t('WorkOrder.columns.skuImg'),
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
+    },
+    {
+      title: t('WorkOrder.columns.skuNum'),
+      dataIndex: 'skuNum',
+    },
+    {
+      title: t('WorkOrder.columns.skuPrice'),
+      dataIndex: 'skuPrice',
+    },
+  ]);
+
   // 分页
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<CheckOrder>
+    params: Partial<WorkOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryCheckOrderList(current, pageSize, params);
+      const { data } = await queryWorkOrderList(current, pageSize, params);
       console.log(data);
       renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
       pagination.current = current;
@@ -579,7 +640,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CheckOrder',
+    name: 'WorkOrder',
   };
 </script>
 

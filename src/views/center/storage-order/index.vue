@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.CheckOrder']" />
-    <a-card class="general-card" :title="$t('menu.center.CheckOrder')">
+    <Breadcrumb :items="['menu.center', 'menu.center.StorageOrder']" />
+    <a-card class="general-card" :title="$t('menu.center.StorageOrder')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,68 +13,44 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('CheckOrder.form.id')">
+                <a-form-item field="id" :label="$t('StorageOrder.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('CheckOrder.form.id.placeholder')"
+                    :placeholder="$t('StorageOrder.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('CheckOrder.form.wareId')"
+                  :label="$t('StorageOrder.form.wareId')"
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('CheckOrder.form.wareId.placeholder')"
+                    :placeholder="$t('StorageOrder.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="stationId"
-                  :label="$t('CheckOrder.form.stationId')"
+                  :label="$t('StorageOrder.form.stationId')"
                 >
                   <a-input
                     v-model="formModel.stationId"
-                    :placeholder="$t('CheckOrder.form.stationId.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <!--              <a-col :span="8">-->
-              <!--                <a-form-item field="skuId" :label="$t('CheckOrder.form.skuId')">-->
-              <!--                  <a-input-->
-              <!--                    v-model="formModel.skuId"-->
-              <!--                    :placeholder="$t('CheckOrder.form.skuId.placeholder')"-->
-              <!--                  />-->
-              <!--                  &lt;!&ndash; <a-select-->
-              <!--                    v-model="formModel.skuId"-->
-              <!--                    :options="filterTypeOptions"-->
-              <!--                    :placeholder="$t('CheckOrder.form.selectDefault')"-->
-              <!--                  /> &ndash;&gt;-->
-              <!--                </a-form-item>-->
-              <!--              </a-col>-->
-              <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('CheckOrder.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
+                    :placeholder="$t('StorageOrder.form.stationId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('CheckOrder.form.status')"
+                  :label="$t('StorageOrder.form.storageType')"
                 >
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formModel.storageType"
                     :options="statusOptions"
-                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                    :placeholder="$t('StorageOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
@@ -91,13 +67,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('CheckOrder.form.search') }}
+              {{ $t('StorageOrder.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('CheckOrder.form.reset') }}
+              {{ $t('StorageOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -113,12 +89,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('CheckOrder.operation.create') }}
+              {{ $t('StorageOrder.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('CheckOrder.operation.import') }}
+                  {{ $t('StorageOrder.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -133,16 +109,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('CheckOrder.operation.download') }}
+            {{ $t('StorageOrder.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('CheckOrder.actions.refresh')">
+          <a-tooltip :content="$t('StorageOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('CheckOrder.actions.density')">
+            <a-tooltip :content="$t('StorageOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -158,7 +134,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('CheckOrder.actions.columnSetting')">
+          <a-tooltip :content="$t('StorageOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -213,17 +189,22 @@
 
         <!-- 表格form里 -->
         <!-- 状态 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'no_distribute'" class="circle"></span>
+        <template #storageType="{ record }">
+          <span v-if="record.storageType === 'IN'" class="circle"></span>
           <span
-            v-else-if="record.status === 'distributed'"
+            v-else-if="record.storageType === 'OUT'"
             class="circle pass"
           ></span>
           <span
-            v-else-if="record.status === 'stocked'"
+            v-else-if="record.storageType === 'RETURN_IN'"
             class="circle pass"
           ></span>
-          {{ $t(`CheckOrder.form.status.${record.status}`) }}
+          <span
+            v-else-if="record.storageType === 'RETURN_OUT'"
+            class="circle pass"
+          ></span>
+          {{ $t(`StorageOrder.form.storageType.${record.storageType}`) }}
+          <!--           123-->
         </template>
         <!-- 表格form里 -->
 
@@ -236,7 +217,7 @@
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            {{ $t('CheckOrder.columns.operations.view') }}
+            {{ $t('StorageOrder.columns.operations.view') }}
           </a-button>
           <a-modal
             v-model:visible="visible"
@@ -262,15 +243,6 @@
               </template>
             </a-table>
           </a-modal>
-
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteCheckOrderById(record.id)"
-          >
-            {{ $t('CheckOrder.columns.operations.delete') }}
-          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -283,11 +255,10 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryCheckOrderList,
-    CheckOrder,
+    queryStorageOrderList,
+    StorageOrder,
     queryOrderInfo,
     OrderItem,
-    deleteCheckOrder,
   } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -301,20 +272,17 @@
   const generateFormModel = () => {
     return {
       id: '',
-      imgUrl: '',
-      inTime: null,
-      orderId: '',
-      outTime: null,
-      // skuId: '',
-      // skuName: '',
-      // skuNum: '',
-      // skuPrice: '',
-      stationId: '',
-      status: '',
-      // 0:未分发,1:已分发,2:已入库
-      updateTime: null,
-      createTime: null,
       wareId: '',
+      orderId: '',
+      skuId: '',
+      skuName: '',
+      stationId: '',
+      stationName: '',
+      supplierId: '',
+      supplierName: '', // 供货商
+      storageType: '',
+      startTime: '',
+      endTime: '',
     };
   };
   const generateorderItemModel = () => {
@@ -324,7 +292,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<CheckOrder[]>([]);
+  const renderData = ref<StorageOrder[]>([]);
   const orderItemData = ref<OrderItem[]>([]);
   const formModel = ref(generateFormModel()); // 输入框要用的
   const cloneColumns = ref<Column[]>([]);
@@ -343,112 +311,133 @@
   // 密度选择
   const densityList = computed(() => [
     {
-      name: t('CheckOrder.size.mini'),
+      name: t('StorageOrder.size.mini'),
       value: 'mini',
     },
     {
-      name: t('CheckOrder.size.small'),
+      name: t('StorageOrder.size.small'),
       value: 'small',
     },
     {
-      name: t('CheckOrder.size.medium'),
+      name: t('StorageOrder.size.medium'),
       value: 'medium',
     },
     {
-      name: t('CheckOrder.size.large'),
+      name: t('StorageOrder.size.large'),
       value: 'large',
     },
   ]);
-
-  // 展示分发单信息表格
+  // id: '',
+  //     wareId: '',
+  //     orderId: '',
+  //     skuId:'',
+  //     skuName: '',
+  //     stationId: '',
+  //     stationName:'',
+  //     supplierId: '',
+  //     supplierName: '',// 供货商
+  //     storageType: '',
+  //     startTime: '',
+  //     endTime: '',
+  // 展示出库单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('CheckOrder.columns.index'),
+      title: t('StorageOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('CheckOrder.columns.id'),
+      title: t('StorageOrder.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('CheckOrder.columns.wareId'),
+      title: t('StorageOrder.columns.wareId'),
       dataIndex: 'wareId',
     },
     {
-      title: t('CheckOrder.columns.stationId'),
+      title: t('StorageOrder.columns.orderId'),
+      dataIndex: 'orderId',
+    },
+    {
+      title: t('StorageOrder.columns.stationId'),
       dataIndex: 'stationId',
       slotName: 'stationId',
     },
     {
-      title: t('CheckOrder.columns.createTime'),
-      dataIndex: 'createTime',
+      title: t('StorageOrder.columns.supplierId'),
+      dataIndex: 'supplierId',
+      slotName: 'supplierId',
     },
     {
-      title: t('CheckOrder.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
+      title: t('StorageOrder.columns.supplierName'),
+      dataIndex: 'stationName',
+      slotName: 'stationName',
     },
     {
-      title: t('CheckOrder.columns.operations'),
+      title: t('StorageOrder.columns.storageType'),
+      dataIndex: 'storageType',
+      slotName: 'storageType',
+    },
+    {
+      title: t('StorageOrder.columns.startTime'),
+      dataIndex: 'startTime',
+    },
+    {
+      title: t('StorageOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
   // 搜索状态输入框下拉列表
+
+  //   IN(0, "入库"),
+  //  OUT(1, "出库"),
+  //     RETURN_IN(2, "退货入库"),
+  //     RETURN_OUT(3, "退货出库");
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('CheckOrder.form.status.no_distribute'),
-      value: 'no_distribute',
+      label: t('StorageOrder.form.storageType.IN'),
+      value: 'IN',
     },
     {
-      label: t('CheckOrder.form.status.distributed'),
-      value: 'distributed',
+      label: t('StorageOrder.form.storageType.OUT'),
+      value: 'OUT',
     },
     {
-      label: t('CheckOrder.form.status.stocked'),
-      value: 'stocked',
+      label: t('StorageOrder.form.storageType.RETURN_IN'),
+      value: 'RETURN_IN',
+    },
+    {
+      label: t('StorageOrder.form.storageType.RETURN_OUT'),
+      value: 'RETURN_OUT',
     },
   ]);
 
   // 展示商品的表格内容
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
-      title: t('CheckOrder.columns.skuId'),
+      title: t('StorageOrder.columns.skuId'),
       dataIndex: 'skuId',
     },
     {
-      title: t('CheckOrder.columns.skuName'),
+      title: t('StorageOrder.columns.skuName'),
       dataIndex: 'skuName',
       slotName: 'skuName',
     },
     {
-      title: t('CheckOrder.columns.skuImg'),
+      title: t('StorageOrder.columns.skuImg'),
       dataIndex: 'imgUrl',
       slotName: 'imgUrl',
     },
     {
-      title: t('CheckOrder.columns.skuNum'),
+      title: t('StorageOrder.columns.skuNum'),
       dataIndex: 'skuNum',
     },
     {
-      title: t('CheckOrder.columns.skuPrice'),
+      title: t('StorageOrder.columns.skuPrice'),
       dataIndex: 'skuPrice',
     },
   ]);
-
-  // 删除分发单
-  const deleteCheckOrderById = async (id: number) => {
-    setLoading(true);
-    try {
-      await deleteCheckOrder(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // 展示商品详细信息
   const visible = ref(false);
@@ -479,11 +468,11 @@
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<CheckOrder>
+    params: Partial<StorageOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryCheckOrderList(current, pageSize, params);
+      const { data } = await queryStorageOrderList(current, pageSize, params);
       console.log(data);
       renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
       pagination.current = current;
@@ -579,7 +568,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CheckOrder',
+    name: 'StorageOrder',
   };
 </script>
 

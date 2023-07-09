@@ -60,7 +60,9 @@
             <icon-send />
           </template>
           <template #suffix>
-            <a-link @click="sendEmailCode">{{ $t('login.form.sendCode') }}</a-link>
+            <a-link @click="sendEmailCode">{{
+              $t('login.form.sendCode')
+            }}</a-link>
           </template>
         </a-input>
       </a-form-item>
@@ -108,7 +110,6 @@
   const userStore = useUserStore();
 
   const isCode: Ref<boolean> = ref(false);
-
 
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,

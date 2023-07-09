@@ -66,6 +66,28 @@ const LIST: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'workOrder',
+      name: 'centerWorkOrder',
+      component: () => import('@/views/center/work-order/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.WorkOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'storageOrder',
+      name: 'centerStorageOrder',
+      component: () => import('@/views/center/storage-order/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.StorageOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

@@ -353,11 +353,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryPolicyList,
-    PolicyRecord,
-    deletePolicyList,
-  } from '@/api/list';
+  import { queryPolicyList, PolicyRecord, deletePolicyList } from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -367,7 +363,7 @@
   import router from '@/router';
   import { useOrderInfoStore } from '@/store';
   import OrderInfo from './order_info/index.vue';
-  import {OrderStateGetString} from "../../../utils/lsp-utils/order_state_to_string";
+  import { OrderStateGetString } from '../../../utils/lsp-utils/order_state_to_string';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

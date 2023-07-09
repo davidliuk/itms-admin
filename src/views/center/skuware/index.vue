@@ -431,7 +431,7 @@
   };
 
   const search = () => {
-    console.log(formModel);
+    console.log(formModel.value);
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
