@@ -7,9 +7,9 @@
       fullscreen
       ok-text="手工调度"
       cancel-text="返回"
+      unmount-on-close
       @ok="handleTask"
       @cancel="handleBack"
-      unmount-on-close
     >
       <template #title> 订单详情 </template>
       <div><OrderInfo /></div>
@@ -260,13 +260,13 @@
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          {{ rowIndex + 1 + (pagination.current - 1) * pagination.limit }}
         </template>
         <!--        <template #order_status="{ record }">-->
         <!--          {{ console.log(OrderStateGetString(record.order_status)) }}-->
         <!--        </template>-->
         <template #order_status="{ record }">
-          {{ OrderStateGetString(record.order_status).value }}
+          {{ OrderStateGetString(record.orderStatus).value }}
         </template>
         <!--<template #order_status="{ record }">
           <a-space>
@@ -356,7 +356,6 @@
   import {
     queryPolicyList,
     PolicyRecord,
-    PolicyParams,
     deletePolicyList,
   } from '@/api/list';
   import { Pagination } from '@/types/global';
@@ -367,8 +366,8 @@
   import { Modal } from '@arco-design/web-vue';
   import router from '@/router';
   import { useOrderInfoStore } from '@/store';
-  import { OrderStateGetString } from '@/utils/lsp-utils/order_state_to_string';
   import OrderInfo from './order_info/index.vue';
+  import {OrderStateGetString} from "../../../utils/lsp-utils/order_state_to_string";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -401,7 +400,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    limit: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -440,38 +439,38 @@
     },
     {
       title: t('searchTable.columns.order_no'),
-      dataIndex: 'order_no',
+      dataIndex: 'orderNo',
     },
     {
       title: t('searchTable.columns.nick_name'),
-      dataIndex: 'nick_name',
+      dataIndex: 'nickName',
     },
     {
       title: t('searchTable.columns.receiver_name'),
-      dataIndex: 'receiver_name',
+      dataIndex: 'receiverName',
       slotName: 'receiver_name',
     },
     {
       title: t('searchTable.columns.order_status'),
-      dataIndex: 'order_status',
+      dataIndex: 'orderStatus',
       slotName: 'order_status',
     },
     {
       title: t('searchTable.columns.payment_time'),
-      dataIndex: 'payment_time',
+      dataIndex: 'paymentTime',
     },
     {
-      title: t('searchTable.columns.take_name'),
-      dataIndex: 'take_name',
+      title: t('searchTable.columns.receiverAddress'),
+      dataIndex: 'receiverAddress',
     },
     {
       title: t('searchTable.columns.total_amount'),
-      dataIndex: 'total_amount',
+      dataIndex: 'totalAmount',
       slotName: 'total_amount',
     },
     {
       title: t('searchTable.columns.courier_name'),
-      dataIndex: 'courier_name',
+      dataIndex: 'courierName',
       slotName: 'courier_name',
     },
     {
@@ -530,13 +529,20 @@
   ]);
   // 从后端获取各种数据，我们把查询条件也传过去，让后端处理处数据来
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    pageSetting: Pagination,
+    params: PolicyRecord | null
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      const { data } = await queryPolicyList(
+        pageSetting.current,
+        pageSetting.limit,
+        params
+      );
+      // console.log(data);
+      renderData.value = data.records;
+      // console.log(renderData.value);
+      pagination.current = data.current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -546,10 +552,7 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as PolicyParams);
+    fetchData(basePagination, formModel.value as unknown as PolicyRecord);
     // 传入和数据结构就是两个字典拼在一起，仅此而已
     // console.log({
     //     ...basePagination,
@@ -557,10 +560,11 @@
     // })
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    basePagination.current = current;
+    fetchData(basePagination, null);
   };
 
-  fetchData();
+  fetchData(basePagination, null);
 
   // 这个是清空，也就是清空搜索条件，仅此而已
   const reset = () => {
@@ -635,7 +639,7 @@
     { deep: true, immediate: true }
   );
 
-  // lsp custom functions
+  // lsp custom functions ----------------------------------------------
   const handleDeleteOrder = async (index: any) => {
     setLoading(true);
     try {
@@ -645,7 +649,7 @@
       } else {
         renderData.value.splice(index, 1); // 只有这个的话,前端的就会直接减少一列
       }
-      fetchData(); // 获取数组,  todo 不过这个可以直接让后端返回一个处理好的数组
+      fetchData(pagination, null); // 获取数组,  todo 不过这个可以直接让后端返回一个处理好的数组
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -657,9 +661,8 @@
   const visible = ref(false);
   const handleSeeOrder = (index: any) => {
     setLoading(true);
-    const dateToshow = renderData.value[index];
-    // todo 转到一个新页面去， 有什么操作？有OK操作（手动调度），有cancle操作（修改订单地址）
-    orderStore.setInfo(dateToshow);
+    const dataToShow = renderData.value[index];
+    orderStore.setInfo(dataToShow);
     // await router.push({ name: 'order_info' });
     visibleModal.value = true;
     setLoading(false);
