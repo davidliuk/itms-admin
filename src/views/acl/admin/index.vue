@@ -235,57 +235,35 @@
               :placeholder="$t(`admin.form.${key}.placeholder`)"
             />
           </a-form-item>
-          <!-- <a-form-item field="username" :label="$t('admin.form.username')">
-            <a-input
-              v-model="form.username"
-              :placeholder="$t('admin.form.id.placeholder')"
-            />
-          </a-form-item>
-          <a-form-item field="name" :label="$t('admin.form.name')">
-            <a-input
-              v-model="form.name"
-              :placeholder="$t('admin.form.name.placeholder')"
-            />
-          </a-form-item>
-          <a-form-item field="password" :label="$t('admin.form.password')">
-            <a-input
-              v-model="form.password"
-              :placeholder="$t('admin.form.password.placeholder')"
-            />
-          </a-form-item>
-          <a-form-item field="phone" :label="$t('admin.form.phone')">
-            <a-input
-              v-model="form.phone"
-              :placeholder="$t('admin.form.phone.placeholder')"
-            />
-          </a-form-item>
-          <a-form-item field="email" :label="$t('admin.form.email')">
-            <a-input
-              v-model="form.email"
-              :placeholder="$t('admin.form.email.placeholder')"
-            />
-          </a-form-item>
-          <a-form-item field="wareId" :label="$t('admin.form.wareId')">
-            <a-input
-              v-model="form.wareId"
-              :placeholder="$t('admin.form.wareId.placeholder')"
-            />
-          </a-form-item>
-          <a-form-item field="stationId" :label="$t('admin.form.stationId')">
-            <a-input
-              v-model="form.stationId"
-              :placeholder="$t('admin.form.stationId.placeholder')"
-            />
-          </a-form-item> -->
-          <!-- <a-form-item field="post" label="Post">
-            <a-select v-model="form.post">
-              <a-option value="post1">Post1</a-option>
-              <a-option value="post2">Post2</a-option>
-              <a-option value="post3">Post3</a-option>
-              <a-option value="post4">Post4</a-option>
-            </a-select>
-          </a-form-item> -->
         </a-form>
+      </a-modal>
+      <a-modal
+        :visible="isAssigning"
+        :title="$t('admin.form.title.assign')"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-space direction="vertical" size="large">
+          <a-select
+            v-if="!isAssignListFinished"
+            :options="[]"
+            :style="{ width: '480px' }"
+            placeholder="Please select ..."
+            loading
+          />
+          <a-select
+            v-else
+            v-model="selectedOptions"
+            :options="options"
+            :style="{ width: '480px' }"
+            :field-names="fieldNames"
+            placeholder="Please select ..."
+            multiple
+            allow-search
+            allow-clear
+          >
+          </a-select>
+        </a-space>
       </a-modal>
       <!-- 表格 -->
       <a-table
@@ -302,7 +280,6 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
@@ -329,6 +306,14 @@
             v-permission="['admin']"
             type="text"
             size="small"
+            @click="assignAdmin(record)"
+          >
+            {{ $t('admin.columns.operations.assign') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
             @click="deleteAdminById(record.id)"
           >
             {{ $t('admin.columns.operations.delete') }}
@@ -341,14 +326,6 @@
           >
             {{ $t('admin.columns.operations.update') }}
           </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteAdminById(record.id)"
-          >
-            {{ $t('admin.columns.operations.assign') }}
-          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -357,7 +334,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, reactive, watch, nextTick, Ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -366,6 +343,10 @@
     updateAdmin,
     deleteAdmin,
     Admin,
+    findAllList,
+    Role,
+    toAssign,
+    doAssign,
   } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -375,6 +356,11 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const fieldNames = { value: 'id', label: 'name' };
+  let options: Ref<Role[]>;
+  let selectedOptions: Ref<string[]>;
+  let selectedAdmin: Admin;
 
   const generateFormModel = () => {
     return {
@@ -393,15 +379,8 @@
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
-  // const form = reactive({
-  //   username: '',
-  //   name: '',
-  //   password: '',
-  //   phone: '',
-  //   email: '',
-  //   wareId: '',
-  //   stationId: '',
-  // });
+  const isAssigning = ref(false);
+  const isAssignListFinished = ref(false);
   let form = reactive(generateFormModel());
 
   const handleCreateClick = () => {
@@ -409,11 +388,9 @@
   };
   const handleUpdateClick = (admin: Admin) => {
     copy(admin, form);
-    // form = admin;
     isUpdating.value = true;
   };
   const handleBeforeOk = (done) => {
-    console.log(form);
     // window.setTimeout(() => {
     //   done();
     //   // prevent close
@@ -422,15 +399,29 @@
     // }, 3000);
     if (isCreating.value) {
       addAdmin(form as unknown as Admin);
-    } else {
+    } else if (isUpdating.value) {
       updateAdmin(form as unknown as Admin);
+    } else {
+      doAssign(selectedAdmin.id, selectedOptions.value);
     }
+    done();
     handleClose();
+    search();
   };
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
+    isAssigning.value = false;
     form = reactive(generateFormModel());
+  };
+  const assignAdmin = async (admin: Admin) => {
+    isAssignListFinished.value = false;
+    isAssigning.value = true;
+    selectedAdmin = admin;
+    const { data } = await toAssign(admin.id);
+    options = ref(data.allRolesList);
+    selectedOptions = ref(data.assignRoles.map((role: Role) => role.id));
+    isAssignListFinished.value = true;
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();

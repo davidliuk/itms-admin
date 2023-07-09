@@ -2,39 +2,108 @@ import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 import { LoginRes } from '@/api/user';
+import { PageRes, Role } from '@/api/acl';
 
 export interface PolicyRecord {
-  // order_no
-  // nick_name
-  // receiver_name
-  // order_status
-  // payment_time
-  // take_name
-  // total_amount
-  // courier_name
   id: string;
-  order_no: number;
-  nick_name: string;
-  receiver_name: string;
-  order_status: '待付款' | '待发货' | '已发货' | '已完成' | '已取消';
-  payment_time: string;
-  take_name: string;
-  total_amount: number;
-  courier_name: string;
+  userId: number;
+  nickName: string;
+  orderNo: string;
+  couponId: number;
+  totalAmount: number;
+  activityAmount: number;
+  couponAmount: number;
+  originalTotalAmount: number;
+  freightFee: number;
+  freightFeeReduce: number;
+  refundableTime: string;
+  payType: number;
+// payType: '微信' | '支付宝';
+  sourceType: number;
+  orderStatus: number;
+// orderStatus: '待付款' | '代发货' | '已发货' | '待收货' | '已完成' | '已取消';
+  processStatus: number;
+  logisticsId: number;
+  logisticsName: string;
+  logisticsPhone: string;
+  courierId: number;
+  courierName: string;
+  courierPhone: string;
+  takeName: string;
+  receiverName: string;
+  receiverPhone: string;
+  receiverPostCode: string;
+  receiverProvince: number;
+  receiverCity: number;
+  receiverDistrict: number;
+  receiverAddress: string;
+  paymentTime: string;
+  deliveryTime: string;
+  takeTime: string;
+  receiveTime: string;
+  remark: string;
+  cancelTime: string;
+  cancelReason: string;
+  wareId: number;
+  stationId: number;
+  commissionAmount: number;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
 }
 
-export interface PolicyParams extends Partial<PolicyRecord> {
-  current: number;
-  pageSize: number;
-}
+// export interface PolicyParams extends Partial<PolicyRecord> {
+//   current: number;
+//   limit: number;
+// }
 
 export interface PolicyListRes {
-  list: PolicyRecord[];
+  records: PolicyRecord[];
+  current: number;
   total: number;
 }
+export function queryPolicyList(
+  current: number,
+  limit: number,
+  params: PolicyRecord | null
+) {
+  return axios.post<PolicyListRes>(`/admin/order/${current}/${limit}`, {
+    params,
+    // paramsSerializer: (obj) => {
+    //   return qs.stringify(obj);
+    // },
+  });
+}
 
-export function queryPolicyList(params: PolicyParams) {
-  return axios.post<PolicyListRes>('/api/list/policy', params);
+// export function queryPolicyList(params: PolicyParams) {
+//   console.log(params);
+//   return axios.post<PolicyListRes>(
+//     `http://localhost:8209/admin/order/${params.current}/${params.limit}`,
+//     params
+//   );
+// return axios.get<PolicyListRes>(
+//   '/api/order/auth/findUserOrderPage/{page}/{limit}',
+//   {
+//     params,
+//     paramsSerializer: (obj) => {
+//       return qs.stringify(obj);
+//     },
+//   }
+// );
+// return axios.post<PolicyListRes>(
+//   'http://localhost:8209/admin/order/{page}/{limit}',
+//   {
+//     params,
+//     paramsSerializer: (obj: Record<string, any>) => {
+//       console.log(qs.stringify(obj));
+//       return qs.stringify(obj);
+//     },
+//   }
+// );
+// }
+
+export function deletePolicyList(id: string) {
+  return axios.delete('/api/list/policy', { params: { id } });
   // return axios.get<PolicyListRes>('/api/list/policy', {
   //   params,
   //   paramsSerializer: (obj) => {
@@ -42,6 +111,17 @@ export function queryPolicyList(params: PolicyParams) {
   //   },
   // });
 }
+
+// 该函数用于获取订单详情，介于PolicyListRes已经足够详细，该函数于2023/6/29 16:15 废止
+// export function queryOrderInfo(id: string) {
+//   return axios.get<PolicyListRes>('/api/list/policy', { params: { id } });
+//   // return axios.get<PolicyListRes>('/api/list/policy', {
+//   //   params,
+//   //   paramsSerializer: (obj) => {
+//   //     return qs.stringify(obj);
+//   //   },
+//   // });
+// }
 
 export interface ServiceRecord {
   id: number;

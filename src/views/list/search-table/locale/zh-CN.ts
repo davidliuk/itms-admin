@@ -27,11 +27,12 @@ export default {
   'searchTable.columns.receiver_name': '收货人',
   'searchTable.columns.order_status': '订单状态',
   'searchTable.columns.payment_time': '支付时间',
-  'searchTable.columns.take_name': '取件地',
+  'searchTable.columns.receiverAddress': '取件地',
   'searchTable.columns.total_amount': '订单总量',
   'searchTable.columns.courier_name': '配送员',
   'searchTable.columns.operations': '操作',
   'searchTable.columns.operations.view': '查看',
+  'searchTable.columns.operations.delete': '删除',
 
   // size
   'searchTable.size.mini': '迷你',

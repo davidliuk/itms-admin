@@ -2,6 +2,18 @@
   <!--    该模板为查询界面模板  -->
   <div class="container">
     <Breadcrumb :items="['menu.list', 'menu.list.searchTable']" />
+    <a-modal
+      v-model:visible="visibleModal"
+      fullscreen
+      ok-text="手工调度"
+      cancel-text="返回"
+      unmount-on-close
+      @ok="handleTask"
+      @cancel="handleBack"
+    >
+      <template #title> 订单详情 </template>
+      <div><OrderInfo /></div>
+    </a-modal>
     <a-card class="general-card" :title="$t('menu.list.searchTable')">
       <a-row>
         <a-col :flex="1">
@@ -66,7 +78,7 @@
                   :label="$t('searchTable.form.receiver_name')"
                 >
                   <a-input
-                    v-model="formModel.nick_name"
+                    v-model="formModel.receiver_name"
                     :placeholder="
                       $t('searchTable.form.receiver_name.placeholder')
                     "
@@ -248,9 +260,15 @@
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          {{ rowIndex + 1 + (pagination.current - 1) * pagination.limit }}
         </template>
+        <!--        <template #order_status="{ record }">-->
+        <!--          {{ console.log(OrderStateGetString(record.order_status)) }}-->
+        <!--        </template>-->
         <template #order_status="{ record }">
+          {{ OrderStateGetString(record.orderStatus).value }}
+        </template>
+        <!--<template #order_status="{ record }">
           <a-space>
             <a-avatar
               v-if="record.order_status === '待付款'"
@@ -300,16 +318,30 @@
             </a-avatar>
             {{ $t(`searchTable.form.order_status.${record.order_status}`) }}
           </a-space>
-        </template>
+        </template>-->
         <!-- <template #payment_time="{ record }">
           {{ $t(`searchTable.form.order_status.${record.payment_time}`) }}
         </template> -->
         <template #take_name="{ record }">
           {{ $t(`searchTable.form.order_status.${record.take_name}`) }}
         </template>
-        <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
+        <template #operations="{ rowIndex }">
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleSeeOrder(rowIndex)"
+          >
             {{ $t('searchTable.columns.operations.view') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            status="danger"
+            @click="handleDeleteOrder(rowIndex)"
+          >
+            {{ $t('searchTable.columns.operations.delete') }}
           </a-button>
         </template>
       </a-table>
@@ -321,12 +353,21 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/list';
+  import {
+    queryPolicyList,
+    PolicyRecord,
+    deletePolicyList,
+  } from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { Modal } from '@arco-design/web-vue';
+  import router from '@/router';
+  import { useOrderInfoStore } from '@/store';
+  import OrderInfo from './order_info/index.vue';
+  import {OrderStateGetString} from "../../../utils/lsp-utils/order_state_to_string";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -359,7 +400,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    limit: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -398,37 +439,38 @@
     },
     {
       title: t('searchTable.columns.order_no'),
-      dataIndex: 'order_no',
+      dataIndex: 'orderNo',
     },
     {
       title: t('searchTable.columns.nick_name'),
-      dataIndex: 'nick_name',
+      dataIndex: 'nickName',
     },
     {
       title: t('searchTable.columns.receiver_name'),
-      dataIndex: 'receiver_name',
+      dataIndex: 'receiverName',
       slotName: 'receiver_name',
     },
     {
       title: t('searchTable.columns.order_status'),
-      dataIndex: 'order_status',
+      dataIndex: 'orderStatus',
+      slotName: 'order_status',
     },
     {
       title: t('searchTable.columns.payment_time'),
-      dataIndex: 'payment_time',
+      dataIndex: 'paymentTime',
     },
     {
-      title: t('searchTable.columns.take_name'),
-      dataIndex: 'take_name',
+      title: t('searchTable.columns.receiverAddress'),
+      dataIndex: 'receiverAddress',
     },
     {
       title: t('searchTable.columns.total_amount'),
-      dataIndex: 'total_amount',
+      dataIndex: 'totalAmount',
       slotName: 'total_amount',
     },
     {
       title: t('searchTable.columns.courier_name'),
-      dataIndex: 'courier_name',
+      dataIndex: 'courierName',
       slotName: 'courier_name',
     },
     {
@@ -487,13 +529,20 @@
   ]);
   // 从后端获取各种数据，我们把查询条件也传过去，让后端处理处数据来
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    pageSetting: Pagination,
+    params: PolicyRecord | null
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      const { data } = await queryPolicyList(
+        pageSetting.current,
+        pageSetting.limit,
+        params
+      );
+      // console.log(data);
+      renderData.value = data.records;
+      // console.log(renderData.value);
+      pagination.current = data.current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -503,10 +552,7 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as PolicyParams);
+    fetchData(basePagination, formModel.value as unknown as PolicyRecord);
     // 传入和数据结构就是两个字典拼在一起，仅此而已
     // console.log({
     //     ...basePagination,
@@ -514,10 +560,11 @@
     // })
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    basePagination.current = current;
+    fetchData(basePagination, null);
   };
 
-  fetchData();
+  fetchData(basePagination, null);
 
   // 这个是清空，也就是清空搜索条件，仅此而已
   const reset = () => {
@@ -591,6 +638,46 @@
     },
     { deep: true, immediate: true }
   );
+
+  // lsp custom functions ----------------------------------------------
+  const handleDeleteOrder = async (index: any) => {
+    setLoading(true);
+    try {
+      const { data } = await deletePolicyList(renderData.value[index].id); // 这里收集返回信息,如果失败 todo 要提醒
+      if (false) {
+        // todo 如果失败 弹框提示
+      } else {
+        renderData.value.splice(index, 1); // 只有这个的话,前端的就会直接减少一列
+      }
+      fetchData(pagination, null); // 获取数组,  todo 不过这个可以直接让后端返回一个处理好的数组
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const orderStore = useOrderInfoStore();
+  const visible = ref(false);
+  const handleSeeOrder = (index: any) => {
+    setLoading(true);
+    const dataToShow = renderData.value[index];
+    orderStore.setInfo(dataToShow);
+    // await router.push({ name: 'order_info' });
+    visibleModal.value = true;
+    setLoading(false);
+  };
+
+  // render的时间全部都是一个时间,这个无所谓
+  // console.log(renderData);
+
+  const visibleModal = ref(false);
+  const handleTask = () => {
+    visible.value = false;
+  };
+  const handleBack = () => {
+    visible.value = false;
+  };
 </script>
 
 <script lang="ts">

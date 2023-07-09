@@ -50,13 +50,13 @@ const theServiceList: ServiceRecord[] = [
 setupMock({
   setup() {
     // the service
-    Mock.mock(new RegExp('/api/center/the-service'), () => {
-      return successResponseWrap(
-        theServiceList.map((_, index) => ({
-          ...theServiceList[index % theServiceList.length],
-          id: Mock.Random.guid(),
-        }))
-      );
-    });
+    // Mock.mock(new RegExp('/api/center/the-service'), () => {
+    //   return successResponseWrap(
+    //     theServiceList.map((_, index) => ({
+    //       ...theServiceList[index % theServiceList.length],
+    //       id: Mock.Random.guid(),
+    //     }))
+    //   );
+    // });
   },
 });

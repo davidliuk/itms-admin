@@ -23,27 +23,27 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'project_stock', // The midline path complies with SEO specifications
-      name: 'centerProjectStock',
+      path: 'skuWare', // The midline path complies with SEO specifications
+      name: 'centerSkuWare',
       component: () => import('@/views/center/skuware/index.vue'),
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
-        locale: 'menu.center.centerStock',
+        locale: 'menu.center.skuWare',
         requiresAuth: true,
         roles: ['*'],
       },
     },
-    {
-      path: 'transfer_order', // The midline path complies with SEO specifications
-      name: 'centerTransferOrder',
-      component: () => import('@/views/center/transfer_order/index.vue'),
-      meta: {
-        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
-        locale: 'menu.center.transferOrder',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
+    // {
+    //   path: 'transfer_order', // The midline path complies with SEO specifications
+    //   name: 'centerTransferOrder',
+    //   component: () => import('@/views/center/transfer_order/index.vue'),
+    //   meta: {
+    //     // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+    //     locale: 'menu.center.transferOrder',
+    //     requiresAuth: true,
+    //     roles: ['*'],
+    //   },
+    // },
     {
       path: 'check_order', // The midline path complies with SEO specifications
       name: 'centerCheckOrder',
@@ -51,6 +51,17 @@ const LIST: AppRouteRecordRaw = {
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
         locale: 'menu.center.CheckOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'transfer_order',
+      name: 'centerTransferOrder',
+      component: () => import('@/views/center/transfer-order/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.TransferOrder',
         requiresAuth: true,
         roles: ['*'],
       },

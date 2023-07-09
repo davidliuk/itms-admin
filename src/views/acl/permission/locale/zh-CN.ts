@@ -1,6 +1,7 @@
 export default {
   'menu.acl.permission': '权限管理',
 
+  // form
   'permission.form.id': '编号',
   'permission.form.id.placeholder': '请输入角色编号',
   'permission.form.name': '名称',
@@ -14,6 +15,8 @@ export default {
   'permission.form.search': '查询',
   'permission.form.reset': '重置',
   'permission.form.selectDefault': '全部',
+
+  // operation
   'permission.operation.create': '新建',
   'permission.operation.import': '批量导入',
   'permission.operation.download': '下载',
@@ -30,6 +33,9 @@ export default {
   'permission.columns.updateTime': '修改时间',
   'permission.columns.operations': '操作',
   'permission.columns.operations.view': '查看',
+  'permission.columns.operations.create': '新建',
+  'permission.columns.operations.update': '修改',
+  'permission.columns.operations.delete': '删除',
 
   'permission.form.type.1': '菜单',
   'permission.form.type.2': '按钮',
@@ -42,6 +48,7 @@ export default {
   'permission.size.small': '偏小',
   'permission.size.medium': '中等',
   'permission.size.large': '偏大',
+
   // actions
   'permission.actions.refresh': '刷新',
   'permission.actions.density': '密度',

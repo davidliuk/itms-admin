@@ -93,7 +93,6 @@
   import { ref } from 'vue';
   import { useToggle } from '@vueuse/core';
   import axios from 'axios';
-  import { Admin, queryAdminList } from '@/api/acl';
 
   const props = defineProps({
     loading: {

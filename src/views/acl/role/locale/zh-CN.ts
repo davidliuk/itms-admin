@@ -2,6 +2,9 @@ export default {
   'menu.acl.role': '角色管理',
 
   // form
+  'role.form.title.create': '新建人员',
+  'role.form.title.update': '修改人员',
+  'role.form.title.assign': '授权角色',
   'role.form.id': '编号',
   'role.form.id.placeholder': '请输入角色编号',
   'role.form.name': '名称',
@@ -11,7 +14,9 @@ export default {
   'role.form.remark': '备注',
   'role.form.remark.placeholder': '请输入角色备注',
   'role.form.createTime': '创建时间',
+  'role.form.createTime.placeholder': '请输入创建时间',
   'role.form.updateTime': '修改时间',
+  'role.form.updateTime.placeholder': '请输入创建时间',
   'role.form.search': '查询',
   'role.form.reset': '重置',
   'role.form.selectDefault': '全部',

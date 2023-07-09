@@ -5,6 +5,7 @@ import { UserState } from '@/store/modules/user/types';
 
 export interface LoginData {
   username: string;
+  email: string;
   password: string;
 }
 
@@ -12,8 +13,13 @@ export interface LoginRes {
   // 定义了一个接口，包含 token 字段，用于表示登录响应的数据。
   token: string;
 }
+// export function login(data: LoginData) {
+//   return axios.post<LoginRes>('/api/user/login', data);
+//   // 接受一个 LoginData 类型的参数 data，发送一个 POST 请求到 /api/user/login 接口，
+//   // 并期望返回一个 LoginRes 类型的响应。
+// }
 export function login(data: LoginData) {
-  return axios.post<LoginRes>('/api/user/login', data);
+  return axios.post<LoginRes>('/admin/acl/index/login', data);
   // 接受一个 LoginData 类型的参数 data，发送一个 POST 请求到 /api/user/login 接口，
   // 并期望返回一个 LoginRes 类型的响应。
 }
