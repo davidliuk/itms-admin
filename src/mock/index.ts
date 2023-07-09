@@ -8,7 +8,6 @@ import '@/views/dashboard/workplace/mock';
 import '@/views/dashboard/monitor/mock';
 
 import '@/views/list/card/mock';
-import '@/views/list/search-table/mock';
 
 import '@/views/form/step/mock';
 
@@ -32,6 +31,9 @@ import '@/views/station/station-table/mock';
 // import '@/views/acl/role/mock';
 // import '@/views/acl/admin/mock';
 // import '@/views/acl/permission/mock';
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+// (Mock.mock as Function)(/\.*/, 'passthrough');
 
 Mock.setup({
   timeout: '600-1000',

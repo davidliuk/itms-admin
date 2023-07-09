@@ -16,10 +16,7 @@
         :validate-trigger="['change', 'blur']"
         hide-label
       >
-        <a-input
-          v-model="userInfo.username"
-          :placeholder="$t('login.form.userName.placeholder')"
-        >
+        <a-input v-model="userInfo.username" placeholder="david">
           <template #prefix>
             <icon-user />
           </template>
@@ -34,7 +31,7 @@
       >
         <a-input-password
           v-model="userInfo.password"
-          :placeholder="$t('login.form.password.placeholder')"
+          placeholder="david"
           allow-clear
           search-button
         >
@@ -115,8 +112,8 @@
 
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,
-    username: 'admin', // 演示默认值
-    password: 'admin', // demo default value
+    username: 'david', // 演示默认值
+    password: 'david', // demo default value
     code: '123456', // demo default value
   });
   const userInfo = reactive({
