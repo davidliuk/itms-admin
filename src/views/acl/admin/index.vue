@@ -267,7 +267,9 @@
       </a-modal>
       <!-- 表格 -->
       <a-table
+        v-model:selected-keys="selectedKeys"
         row-key="id"
+        :row-selection="rowSelection"
         :loading="loading"
         :pagination="pagination"
         :columns="(cloneColumns as TableColumnData[])"
@@ -277,9 +279,9 @@
         @page-change="onPageChange"
       >
         <!-- 分页 -->
-        <template #index="{ rowIndex }">
+        <!-- <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
-        </template>
+        </template> -->
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
@@ -376,6 +378,14 @@
     };
   };
 
+  const selectedKeys = ref([]);
+
+  const rowSelection = reactive({
+    type: 'checkbox',
+    showCheckedAll: true,
+    onlyCurrent: false,
+  });
+
   const isCreating = ref(false);
   const isUpdating = ref(false);
   const isAssigning = ref(false);
@@ -458,11 +468,11 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
-    {
-      title: t('admin.columns.index'),
-      dataIndex: 'index',
-      slotName: 'index',
-    },
+    // {
+    //   title: t('admin.columns.index'),
+    //   dataIndex: 'index',
+    //   slotName: 'index',
+    // },
     {
       title: t('admin.columns.id'),
       dataIndex: 'id',
