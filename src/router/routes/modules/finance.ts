@@ -11,6 +11,7 @@ const LIST: AppRouteRecordRaw = {
     icon: 'icon-list',
     order: 8,
   },
+
   children: [
     {
       path: 'invoice', // The midline path complies with SEO specifications

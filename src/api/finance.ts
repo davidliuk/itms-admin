@@ -3,6 +3,7 @@ import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
 
+
 export interface PageRes<T> {
   records: T[];
   total: number;
@@ -17,6 +18,7 @@ export interface Invoice {
   userName: string;
   stationId: string;
   totalAmount:string;
+  status:string,
 }
 
 export function addInvoice(invoice: Invoice) {
@@ -34,45 +36,79 @@ export function updateInvoice(invoice: Invoice) {
 
 
 export function queryInvoiceList(
-  page: number,
-  limit: number,
-  params: Partial<Invoice>
+    page: number,
+    limit: number,
+    params: Partial<Invoice>
 ) {
   return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
     params,
   });
 }
 
-export interface PolicyRecord {
-  id: string;
-  number: number;
-  name: string;
-  contentType: 'img' | 'horizontalVideo' | 'verticalVideo';
-  filterType: 'artificial' | 'rules';
-  count: number;
-  status: 'online' | 'offline';
-  createdTime: string;
-}
-
-export interface PolicyParams extends Partial<PolicyRecord> {
-  current: number;
-  pageSize: number;
-}
-
-export interface PolicyListRes {
-  list: PolicyRecord[];
-  total: number;
-}
-
-export function queryPolicyList(params: PolicyParams) {
-  return axios.get<PolicyListRes>('/api/finance/policy', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
+export function queryInvoiceListById(
+    page: number,
+    limit: number,
+    id: number
+) {
+  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
+    id,
   });
 }
 
+export function searchInvoiceList(
+    page: number,
+    limit: number,
+    id: string,
+    userId: string,
+) {
+  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
+    id,userId,
+  });
+}
+
+export interface Supplier {
+  // 定义类型
+  id: string;
+  skuId: string;
+  skuName: string;
+  skuNum: string;
+  skuPrice: string;
+  supplierId: string;
+  supplierName: string;
+  wareId: string;
+}
+export function querySupplierList(
+    page: number,
+    limit: number,
+    params: Partial<Supplier>
+) {
+  return axios.post<PageRes<Supplier>>(`/admin/sys/purchaseOrder/${page}/${limit}`, {
+    params,
+  });
+}
+export function searchSupplierList(
+    page: number,
+    limit: number,
+    id: string,
+    supplierName: string,
+) {
+  return axios.post<PageRes<Supplier>>(`/admin/sys/purchaseOrder/${page}/${limit}`, {
+    id,supplierName,
+  });
+}
+
+export function querySupplierListById(
+    page: number,
+    limit: number,
+    id: number
+) {
+  return axios.post<PageRes<Supplier>>(`/admin/sys/purchaseOrder/${page}/${limit}`, {
+    id,
+  });
+}
+export function addSupplier(supplier: Supplier) {
+  return axios.post<any>('/admin/sys/purchaseOrder', supplier);
+}
 export interface ServiceRecord {
   id: number;
   title: string;
@@ -83,6 +119,36 @@ export interface ServiceRecord {
   data?: DescData[];
   enable?: boolean;
   expires?: boolean;
+}
+export interface Settlement {
+  // 定义类型
+  id: string;
+  orderId: string;
+  courierId: string;
+  userId: string;
+  userName: string;
+  stationId: string;
+  totalAmount:string;
+}
+
+export function querySettlementList(
+    page: number,
+    limit: number,
+    params: Partial<Invoice>
+) {
+  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
+    params,
+  });
+}
+export function searchSettlementList(
+    page: number,
+    limit: number,
+    id: string,
+    userName: string,
+) {
+  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
+    id,userName,
+  });
 }
 
 export function querList() {

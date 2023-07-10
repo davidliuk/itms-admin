@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.finance.invoice']" />
-    <a-card class="general-card" :title="$t('menu.finance.invoice')">
+    <Breadcrumb :items="['menu.list', 'menu.dispatch.goods.supply']" />
+    <a-card class="general-card" :title="$t('menu.dispatch.goods.supply')">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -14,34 +14,33 @@
               <a-col :span="8">
                 <a-form-item
                   field="number"
-                  :label="$t('invoice.form.number')"
+                  :label="$t('supply.form.number')"
                 >
                   <a-input
                     v-model=formModel.id
-                    :placeholder="$t('invoice.form.number.placeholder')"
+                    :placeholder="$t('supply.form.number.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                    field="userId"
-                    :label="$t('invoice.form.userId')"
+                    field="name"
+                    :label="$t('supply.form.name')"
                 >
                   <a-input
-                      v-model=formModel.userId
-                      :placeholder="$t('invoice.form.userId.placeholder')"
+                      v-model=formModel.name
+                      :placeholder="$t('supply.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="status"
-                  :label="$t('invoice.form.status')"
+                    field="province"
+                    :label="$t('supply.form.province')"
                 >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('invoice.form.selectDefault')"
+                  <a-input
+                      v-model=formModel.province
+                      :placeholder="$t('supply.form.province.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -51,17 +50,17 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="searchInvoiceBy(formModel.id,formModel.userId)">
+            <a-button type="primary" @click="searchSupplyBy(formModel.id,formModel.name,formModel.province)">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('invoice.form.search') }}
+              {{ $t('supply.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('invoice.form.reset') }}
+              {{ $t('supply.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -74,12 +73,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('invoice.operation.create') }}
+              {{ $t('supply.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('invoice.operation.import') }}
+                  {{ $t('supply.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -93,15 +92,15 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('invoice.operation.download') }}
+            {{ $t('supply.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('invoice.actions.refresh')">
+          <a-tooltip :content="$t('supply.actions.refresh')">
             <div class="action-icon" @click="fresh"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('invoice.actions.density')">
+            <a-tooltip :content="$t('supply.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -115,7 +114,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('invoice.actions.columnSetting')">
+          <a-tooltip :content="$t('supply.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -154,7 +153,7 @@
 
       <a-modal
           :visible="isCreating || isUpdating"
-          :title="$t(`invoice.form.title.${isCreating ? 'create' : 'update'}`)"
+          :title="$t(`supply.form.title.${isCreating ? 'create' : 'update'}`)"
           @cancel="handleClose"
           @before-ok="handleBeforeOk"
       >
@@ -163,11 +162,11 @@
               v-for="(val, key) in form"
               :key="key"
               :field="key"
-              :label="$t(`invoice.form.${key}`)"
+              :label="$t(`supply.form.${key}`)"
           >
             <a-input
                 v-model="form[key]"
-                :placeholder="$t(`invoice.form.${key}.placeholder`)"
+                :placeholder="$t(`supply.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
@@ -191,12 +190,12 @@
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.status === 1" class="circle"></span>
+          <span v-if="record.status === 'waste'" class="circle"></span>
           <span
-              v-else-if="record.status === 0"
+              v-else-if="record.status === 'using'"
               class="circle pass"
           ></span>
-          {{ $t(`invoice.form.status.${record.status}`) }}
+          {{ $t(`supply.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
@@ -207,9 +206,9 @@
               v-permission="['admin']"
               type="text"
               size="small"
-              @click="deleteInvoiceById(record.id)"
+              @click="deleteSupplyById(record.id)"
           >
-            {{ $t('invoice.columns.operations.delete') }}
+            {{ $t('supply.columns.operations.delete') }}
           </a-button>
           <a-button
               v-permission="['admin']"
@@ -217,15 +216,7 @@
               size="small"
               @click="handleUpdateClick(record)"
           >
-            {{ $t('invoice.columns.operations.update') }}
-          </a-button>
-          <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="deleteInvoiceById(record.id)"
-          >
-            {{ $t('invoice.columns.operations.waste') }}
+            {{ $t('supply.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -238,22 +229,12 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryInvoiceList,
-    addInvoice,
-    deleteInvoice,
-    updateInvoice,
-    Invoice,
-    getInvoiceById,
-    queryInvoiceListById, searchInvoiceList
-  } from '@/api/finance';
-
+  import {addSupply,deleteSupply,updateSupply,querySupplyList,searchSupplyList,Supply} from "@/api/dispatch";
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import {addAdmin, Admin, deleteAdmin, updateAdmin} from "@/api/acl";
   import copy from "@/utils/objects";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -262,13 +243,12 @@
   const generateFormModel = () => {
     return {
       id: '',
-      orderId: '',
-      courierId: '',
-      userName: '',
-      userId: '',
-      stationId: '',
-      totalAmount: '',
-      status:'',
+      name: '',
+      phone:'',
+      postCode:'',
+      province:'',
+      city:'',
+      detailAddress:'',
     };
   };
 
@@ -281,16 +261,16 @@
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (invoice: Invoice) => {
-    copy(invoice, form);
+  const handleUpdateClick = (supply: Supply) => {
+    copy(supply, form);
     isUpdating.value = true;
   };
   const handleBeforeOk = (done: any) => {
     console.log(form);
     if (isCreating.value) {
-      addInvoice(form as unknown as Invoice);
+      addSupply(form as unknown as Supply);
     } else {
-      updateInvoice(form as unknown as Invoice);
+      updateSupply(form as unknown as Supply);
     }
     handleClose();
   };
@@ -302,12 +282,10 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Invoice[]>([]);
+  const renderData = ref<Supply[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
-
 
   const size = ref<SizeProps>('medium');
 
@@ -320,106 +298,101 @@
   });
   const densitylist = computed(() => [
     {
-      name: t('invoice.size.mini'),
+      name: t('supply.size.mini'),
       value: 'mini',
     },
     {
-      name: t('invoice.size.small'),
+      name: t('supply.size.small'),
       value: 'small',
     },
     {
-      name: t('invoice.size.medium'),
+      name: t('supply.size.medium'),
       value: 'medium',
     },
     {
-      name: t('invoice.size.large'),
+      name: t('supply.size.large'),
       value: 'large',
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('invoice.columns.index'),
+      title: t('supply.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('invoice.columns.number'),
+      title: t('supply.columns.number'),
       dataIndex: 'id',
     },
     {
-      title: t('invoice.columns.stationId'),
-      dataIndex: 'stationId',
+      title: t('supply.columns.name'),
+      dataIndex: 'name',
     },
 
     {
-      title: t('invoice.columns.courierId'),
-      dataIndex: 'courierId',
+      title: t('supply.columns.phone'),
+      dataIndex: 'phone',
     },
     {
-      title: t('invoice.columns.userId'),
-      dataIndex: 'userId',
+      title: t('supply.columns.province'),
+      dataIndex: 'province',
     },
     {
-      title: t('invoice.columns.userName'),
-      dataIndex: 'userName',
+      title: t('supply.columns.detailAddress'),
+      dataIndex: 'detailAddress',
     },
     {
-      title: t('invoice.columns.totalAmount'),
-      dataIndex: 'totalAmount',
+      title: t('supply.columns.postCode'),
+      dataIndex: 'postCode',
     },
     {
-      title: t('invoice.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
-    {
-      title: t('invoice.columns.operations'),
+      title: t('supply.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('invoice.form.contentType.img'),
+      label: t('supply.form.contentType.img'),
       value: 'img',
     },
     {
-      label: t('invoice.form.contentType.horizontalVideo'),
+      label: t('supply.form.contentType.horizontalVideo'),
       value: 'horizontalVideo',
     },
     {
-      label: t('invoice.form.contentType.verticalVideo'),
+      label: t('supply.form.contentType.verticalVideo'),
       value: 'verticalVideo',
     },
   ]);
   const filterTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('invoice.form.filterType.artificial'),
+      label: t('supply.form.filterType.artificial'),
       value: 'artificial',
     },
     {
-      label: t('invoice.form.filterType.rules'),
+      label: t('supply.form.filterType.rules'),
       value: 'rules',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('invoice.form.status.using'),
+      label: t('supply.form.status.using'),
       value: 'using',
     },
     {
-      label: t('invoice.form.status.waste'),
+      label: t('supply.form.status.waste'),
       value: 'waste',
     },
   ]);
   const fetchData = async (
       page: number,
       pageSize: number,
-      params: Partial<Invoice>
+      params: Partial<Supply>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryInvoiceList(page, pageSize, params);
+      const { data } = await querySupplyList(page, pageSize, params);
       renderData.value = data.records;
       pagination.current = page;
       pagination.total = data.total;
@@ -429,18 +402,22 @@
       setLoading(false);
     }
   };
+  const searchSupplyBy = (id:string,name:string,province:string) => {
 
+    searchData(pagination.current, pagination.pageSize,id,name,province);
 
-  const searchInvoice = async (
+  };
+  const searchData = async (
       page: number,
       pageSize: number,
       id: string,
-      userId:string,
+      name:string,
+      province:string,
   ) => {
     setLoading(true);
-
+alert(id+name+province);
     try {
-      const { data } = await searchInvoiceList(page, pageSize,id,userId);
+      const { data } = await searchSupplyList(page, pageSize,id,name,province);
       renderData.value = data.records;
       pagination.current = page;
       pagination.total = data.total;
@@ -450,6 +427,7 @@
       setLoading(false);
     }
   };
+
 
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
@@ -475,16 +453,10 @@
   };
 
 
-
-  const searchInvoiceBy = (id:string,userId:string) => {
-
-    searchInvoice(pagination.current, pagination.pageSize, id,userId);
-
-  };
-  const deleteInvoiceById = async (id: number) => {
+  const deleteSupplyById = async (id: number) => {
     setLoading(true);
     try {
-      await deleteInvoice(id);
+      await deleteSupply(id);
       fetchData(pagination.current, pagination.pageSize, formModel.value);
     } catch (err) {
       // you can report use errorHandler or other
@@ -554,7 +526,7 @@
 
 <script lang="ts">
   export default {
-    name: 'invoice',
+    name: 'supply',
   };
 </script>
 

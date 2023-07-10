@@ -24,15 +24,16 @@ export default {
   'invoice.form.name.placeholder': '请输入分站名称',
   'invoice.form.createdTime': '创建时间',
   'invoice.form.status': '状态',
-  'invoice.form.status.online': '已领用',
-  'invoice.form.status.offline': '已作废',
+  'invoice.form.status.placeholder': '请输入用户状态',
+  'invoice.form.status.using': '已领用',
+  'invoice.form.status.waste': '已作废',
   'invoice.form.search': '查询',
   'invoice.form.reset': '重置',
   'invoice.form.selectDefault': '全部',
   'invoice.operation.create': '登记',
   'invoice.operation.import': '批量导入',
   'invoice.operation.download': '下载',
-
+  'invoice.columns.operations.waste':'作废',
   'invoice.columns.operations.delete': '删除',
   'invoice.columns.operations.update': '修改',
   // columns
@@ -45,8 +46,8 @@ export default {
 
   'invoice.columns.stationId': '分站名称',
   'invoice.columns.totalAmount':'金额',
-  'invoice.columns.courierId': '配送员id',
-  'invoice.columns.userId': '用户id',
+  'invoice.columns.courierId': '配送员编号',
+  'invoice.columns.userId': '用户编号',
   'invoice.columns.userName': '用户名称',
   'invoice.columns.courierName': '配送员名称',
   'invoice.columns.contentType': '内容体裁',
@@ -57,7 +58,7 @@ export default {
   'invoice.columns.status': '状态',
   'invoice.columns.operations': '操作',
   'invoice.columns.operations.view': '查看',
-  'invoice.columns.operations.waste': '作废',
+
   // size
   'invoice.size.mini': '迷你',
   'invoice.size.small': '偏小',

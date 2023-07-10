@@ -13,7 +13,7 @@ import '@/views/finance/invoice/mock';
 import '@/views/finance/settlement/mock';
 import '@/views/finance/supplier/supplier-mock';
 
-import '@/views/list/search-table/mock';
+
 
 import '@/views/form/step/mock';
 

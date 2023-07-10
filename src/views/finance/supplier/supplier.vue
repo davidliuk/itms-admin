@@ -14,39 +14,31 @@
               <a-col :span="8">
                 <a-form-item
                   field="number"
-                  :label="$t('supplier.form.supplier')"
+                  :label="$t('supplier.columns.id')"
                 >
                   <a-input
-                    v-model="formModel.number"
-                    :placeholder="$t('supplier.form.supplier.placeholder')"
+                    v-model="formModel.id"
+                    :placeholder="$t('supplier.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('supplier.form.name')">
+                <a-form-item field="name" :label="$t('supplier.form.supplierName')">
                   <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('supplier.form.name.placeholder')"
+                    v-model="formModel.supplierName"
+                    :placeholder="$t('supplier.form.supplierName.placeholder')"
                   />
                 </a-form-item>
-              </a-col>
-              <a-col :span="8">
-
-                <a-range-picker
-                    @change="onChange"
-                    @select="onSelect"
-                    style="width: 254px; marginBottom: 20px;"
-                />
               </a-col>
               <!--              <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('searchTable.form.status')"
+                  :label="$t('supplier.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    :placeholder="$t('supplier.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>-->
@@ -56,17 +48,17 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
+            <a-button type="primary" @click="searchSupplierBy(formModel.id,formModel.supplierName)">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('searchTable.form.search') }}
+              {{ $t('supplier.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('searchTable.form.reset') }}
+              {{ $t('supplier.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -79,22 +71,16 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('searchTable.operation.create') }}
+              {{ $t('supplier.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('searchTable.operation.import') }}
+                  {{ $t('supplier.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
           </a-space>-->
-          <a-space size="large">
-            <a-statistic :title="$t('supplier.columns.paymentSum')"
-                         :value="6232" show-group-separator />
-            <a-statistic :title="$t('supplier.columns.returnPaymentSum')"
-                         :value="299" show-group-separator />
-          </a-space>
         </a-col>
         <a-col
           :span="12"
@@ -104,15 +90,15 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('searchTable.operation.download') }}
+            {{ $t('supplier.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
+          <a-tooltip :content="$t('supplier.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('searchTable.actions.density')">
+            <a-tooltip :content="$t('supplier.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -126,7 +112,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+          <a-tooltip :content="$t('supplier.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -162,6 +148,10 @@
           </a-tooltip>
         </a-col>
       </a-row>
+
+
+
+
       <a-table
         row-key="id"
         :loading="loading"
@@ -175,6 +165,10 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
+
+
+        <!-- 表格form里 -->
+        <!-- 状态 -->
         <template #contentType="{ record }">
           <a-space>
             <a-avatar
@@ -203,23 +197,23 @@
                 src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
               />
             </a-avatar>
-            {{ $t(`searchTable.form.contentType.${record.contentType}`) }}
+            {{ $t(`supplier.form.contentType.${record.contentType}`) }}
           </a-space>
         </template>
         <template #filterType="{ record }">
-          {{ $t(`searchTable.form.filterType.${record.filterType}`) }}
+          {{ $t(`supplier.form.filterType.${record.filterType}`) }}
         </template>
         <!--        <template #status="{ record }">
           <span v-if="record.status === 'offline'" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`searchTable.form.status.${record.status}`) }}
+          {{ $t(`supplier.form.status.${record.status}`) }}
         </template>-->
         <!--        <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('searchTable.columns.operations.view') }}
+            {{ $t('supplier.columns.operations.view') }}
           </a-button>
           <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('searchTable.columns.operations.waste') }}
+            {{ $t('supplier.columns.operations.waste') }}
           </a-button>
         </template>-->
       </a-table>
@@ -231,29 +225,69 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/finance';
+  import {
+    addInvoice,
+    Invoice,
+    querySupplierListById,
+    querySupplierList,
+    Supplier,
+    updateInvoice, searchSupplierList
+  } from "@/api/finance";
   import { Pagination } from '@/types/global';
-  // import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import copy from "@/utils/objects";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
   const generateFormModel = () => {
     return {
-      number: '',
-      name: '',
-      contentType: '',
-      filterType: '',
-      createdTime: [],
-      status: '',
+      id: '',
+      skuId: '',
+      skuName: '',
+      skuNum: '',
+      skuPrice: '',
+      supplierId: '',
+      supplierName: '',
+      wareId: '',
     };
   };
+
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+
+  let form = reactive(generateFormModel());
+
+  const handleCreateClick = () => {
+    isCreating.value = true;
+  };
+  const handleUpdateClick = (invoice: Invoice) => {
+    copy(invoice, form);
+    isUpdating.value = true;
+  };
+  const handleBeforeOk = (done: any) => {
+    console.log(form);
+    if (isCreating.value) {
+      addInvoice(form as unknown as Invoice);
+    } else {
+      updateInvoice(form as unknown as Invoice);
+    }
+    handleClose();
+  };
+  const handleClose = () => {
+    isCreating.value = false;
+    isUpdating.value = false;
+    form = reactive(generateFormModel());
+  };
+
+
+
+
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<PolicyRecord[]>([]);
+  const renderData = ref<Supplier[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -269,113 +303,74 @@
   });
   const densityList = computed(() => [
     {
-      name: t('searchTable.size.mini'),
+      name: t('supplier.size.mini'),
       value: 'mini',
     },
     {
-      name: t('searchTable.size.small'),
+      name: t('supplier.size.small'),
       value: 'small',
     },
     {
-      name: t('searchTable.size.medium'),
+      name: t('supplier.size.medium'),
       value: 'medium',
     },
     {
-      name: t('searchTable.size.large'),
+      name: t('supplier.size.large'),
       value: 'large',
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('searchTable.columns.index'),
+      title: t('supplier.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
+    },
+    {
+      title: t('supplier.columns.id'),
+      dataIndex: 'id',
     },
     {
       title: t('supplier.columns.supplierName'),
       dataIndex: 'supplierName',
     },
     {
-      title: t('supplier.columns.name'),
-      dataIndex: 'productName',
+      title: t('supplier.columns.supplierId'),
+      dataIndex: 'supplierId',
     },
     {
-      title: t('supplier.columns.price'),
-      dataIndex: 'price',
+      title: t('supplier.columns.skuId'),
+      dataIndex: 'skuId',
     },
     {
-      title: t('supplier.columns.saleCount'),
-      dataIndex: 'saleCount',
+      title: t('supplier.columns.skuName'),
+      dataIndex: 'skuName',
     },
     {
-      title: t('supplier.columns.returnCount'),
-      dataIndex: 'returnCount',
+      title: t('supplier.columns.skuNum'),
+      dataIndex: 'skuNum',
     },
     {
-      title: t('supplier.columns.payment'),
-      dataIndex: 'money',
+      title: t('supplier.columns.skuPrice'),
+      dataIndex: 'skuPrice',
     },
     {
-      title: t('supplier.columns.returnPayment'),
-      dataIndex: 'count',
-    },
-    {
-      title: t('supplier.columns.date'),
-      dataIndex: 'date',
-    },
-    /*    {
-      title: t('searchTable.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    }, */
-    /*     {
-      title: t('searchTable.columns.operations'),
-      dataIndex: 'operations',
-      slotName: 'operations',
-    }, */
-  ]);
-  /*  const contentTypeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('searchTable.form.contentType.img'),
-      value: 'img',
-    },
-    {
-      label: t('searchTable.form.contentType.horizontalVideo'),
-      value: 'horizontalVideo',
-    },
-    {
-      label: t('searchTable.form.contentType.verticalVideo'),
-      value: 'verticalVideo',
+      title: t('supplier.columns.wareId'),
+      dataIndex: 'wareId',
     },
   ]);
-  const filterTypeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('searchTable.form.filterType.artificial'),
-      value: 'artificial',
-    },
-    {
-      label: t('searchTable.form.filterType.rules'),
-      value: 'rules',
-    },
-  ]); */
-  /*  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('searchTable.form.status.online'),
-      value: 'online',
-    },
-    {
-      label: t('searchTable.form.status.offline'),
-      value: 'offline',
-    },
-  ]); */
-  const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+  const search = () => {
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+
+  const fetchData =  async (
+      page: number,
+      pageSize: number,
+      params: Partial<Supplier>
   ) => {
-    setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      const { data } = await querySupplierList(page, pageSize, params);
+      renderData.value = data.records;
+      pagination.current = page;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -383,18 +378,34 @@
       setLoading(false);
     }
   };
+  const searchData = async (
+      page: number,
+      pageSize: number,
+      id: string,
+      supplierName: string,
+  ) => {
+    setLoading(true);
 
-  const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as PolicyParams);
+    try {
+      const { data } = await searchSupplierList(page, pageSize,id,supplierName);
+      renderData.value = data.records;
+      pagination.current = page;
+      pagination.total = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
+  const searchSupplierBy = (id:string,supplierName:string) => {
+
+    searchData(pagination.current, pagination.pageSize, id,supplierName);
+
+  };
+
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData(current, basePagination.pageSize, formModel.value);
   };
-
-  fetchData();
   const reset = () => {
     formModel.value = generateFormModel();
   };
@@ -419,6 +430,10 @@
       cloneColumns.value.splice(index, 0, column);
     }
   };
+  const fresh = () => {
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+
 
   const exchangeArray = <T extends Array<any>>(
     array: T,
@@ -468,7 +483,7 @@
 
 <script lang="ts">
   export default {
-    name: 'SearchTable',
+    name: 'supplier',
   };
 </script>
 

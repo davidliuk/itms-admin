@@ -4,7 +4,7 @@ import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 import { GetParams } from '@/types/global';
 
 const data = Mock.mock({
-  'invoice|55': [
+  'supply|55': [
     {
       'stationId': /[0-9]/,
       'id|2-3': /[0-9]/,
