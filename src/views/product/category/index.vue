@@ -513,7 +513,11 @@
   //   ]);
 
   // 分页
-  const fetchData = async (current: number, pageSize: number, params: Category) => {
+  const fetchData = async (
+    current: number,
+    pageSize: number,
+    params: Category
+  ) => {
     setLoading(true);
     try {
       const { data } = await queryCategoryList(current, pageSize, params);

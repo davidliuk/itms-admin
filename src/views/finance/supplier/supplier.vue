@@ -12,10 +12,7 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('supplier.columns.id')"
-                >
+                <a-form-item field="number" :label="$t('supplier.columns.id')">
                   <a-input
                     v-model="formModel.id"
                     :placeholder="$t('supplier.form.id.placeholder')"
@@ -23,7 +20,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('supplier.form.supplierName')">
+                <a-form-item
+                  field="name"
+                  :label="$t('supplier.form.supplierName')"
+                >
                   <a-input
                     v-model="formModel.supplierName"
                     :placeholder="$t('supplier.form.supplierName.placeholder')"
@@ -48,7 +48,10 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="searchSupplierBy(formModel.id,formModel.supplierName)">
+            <a-button
+              type="primary"
+              @click="searchSupplierBy(formModel.id, formModel.supplierName)"
+            >
               <template #icon>
                 <icon-search />
               </template>
@@ -149,9 +152,6 @@
         </a-col>
       </a-row>
 
-
-
-
       <a-table
         row-key="id"
         :loading="loading"
@@ -165,7 +165,6 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-
 
         <!-- 表格form里 -->
         <!-- 状态 -->
@@ -231,13 +230,14 @@
     querySupplierListById,
     querySupplierList,
     Supplier,
-    updateInvoice, searchSupplierList
-  } from "@/api/finance";
+    updateInvoice,
+    searchSupplierList,
+  } from '@/api/finance';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import copy from "@/utils/objects";
+  import copy from '@/utils/objects';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -281,9 +281,6 @@
     isUpdating.value = false;
     form = reactive(generateFormModel());
   };
-
-
-
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
@@ -362,10 +359,10 @@
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
-  const fetchData =  async (
-      page: number,
-      pageSize: number,
-      params: Partial<Supplier>
+  const fetchData = async (
+    page: number,
+    pageSize: number,
+    params: Partial<Supplier>
   ) => {
     try {
       const { data } = await querySupplierList(page, pageSize, params);
@@ -379,15 +376,20 @@
     }
   };
   const searchData = async (
-      page: number,
-      pageSize: number,
-      id: string,
-      supplierName: string,
+    page: number,
+    pageSize: number,
+    id: string,
+    supplierName: string
   ) => {
     setLoading(true);
 
     try {
-      const { data } = await searchSupplierList(page, pageSize,id,supplierName);
+      const { data } = await searchSupplierList(
+        page,
+        pageSize,
+        id,
+        supplierName
+      );
       renderData.value = data.records;
       pagination.current = page;
       pagination.total = data.total;
@@ -397,10 +399,8 @@
       setLoading(false);
     }
   };
-  const searchSupplierBy = (id:string,supplierName:string) => {
-
-    searchData(pagination.current, pagination.pageSize, id,supplierName);
-
+  const searchSupplierBy = (id: string, supplierName: string) => {
+    searchData(pagination.current, pagination.pageSize, id, supplierName);
   };
 
   const onPageChange = (current: number) => {
@@ -433,7 +433,6 @@
   const fresh = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
-
 
   const exchangeArray = <T extends Array<any>>(
     array: T,
@@ -483,7 +482,7 @@
 
 <script lang="ts">
   export default {
-    name: 'supplier',
+    name: 'Supplier',
   };
 </script>
 

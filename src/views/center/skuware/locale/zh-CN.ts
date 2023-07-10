@@ -51,8 +51,6 @@ export default {
   'skuWare.operation.import': '批量导入',
   'skuWare.operation.download': '下载',
 
-
-
   'skuWare.columns.index': '#',
   'skuWare.columns.id': 'id',
   'skuWare.columns.skuId': '商品编号',

@@ -3,7 +3,6 @@ import qs from 'query-string';
 import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 import { GetParams } from '@/types/global';
 
-
 const data = Mock.mock({
   'supply|55': [
     {

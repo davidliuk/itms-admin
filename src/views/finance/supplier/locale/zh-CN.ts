@@ -22,16 +22,15 @@ export default {
   'supplier.columns.returnPaymentSum': '退款小计',
   'supplier.columns.date': '日期',
 
-
   'supplier.columns.operations.view': '查看',
   'supplier.columns.operations.delete': '删除',
-  'supplier.columns.id':'订单编号',
-  'supplier.columns.supplierId':'供应商编号',
-  'supplier.columns.skuId':'商品编号',
-  'supplier.columns.skuName':'商品名称',
-  'supplier.columns.skuNum':'商品数量',
-  'supplier.columns.skuPrice':'商品价格',
-  'supplier.columns.wareId':'库房编号',
+  'supplier.columns.id': '订单编号',
+  'supplier.columns.supplierId': '供应商编号',
+  'supplier.columns.skuId': '商品编号',
+  'supplier.columns.skuName': '商品名称',
+  'supplier.columns.skuNum': '商品数量',
+  'supplier.columns.skuPrice': '商品价格',
+  'supplier.columns.wareId': '库房编号',
   // size
   'supplier.size.mini': '迷你',
   'supplier.size.small': '偏小',

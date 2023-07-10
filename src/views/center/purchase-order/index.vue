@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.supplier', 'menu.supplier.PurchaseOrder']" />
-    <a-card class="general-card" :title="$t('menu.supplier.PurchaseOrder')">
+    <Breadcrumb :items="['menu.center', 'menu.center.PurchaseOrder']" />
+    <a-card class="general-card" :title="$t('menu.center.PurchaseOrder')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -130,11 +130,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="downloadPurchaseOrderList">
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('PurchaseOrder.operation.download') }}
+            {{ $t('PurchaseOrder.operation.download') }}列表
           </a-button>
           <a-tooltip :content="$t('PurchaseOrder.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -198,6 +198,7 @@
 
       <!-- 表格 -->
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -223,8 +224,11 @@
 
         <!-- 查看 -->
         <template #operations="{ record }">
-          <a-button @click="printClick(record)">详情</a-button>
+          <a-button type="text" size="small" @click="printClick(record)"
+            >下载预览</a-button
+          >
           <a-modal
+            ok-text="打印"
             :visible="printVisible"
             title="购货单详情"
             @cancel="printCancel"
@@ -241,7 +245,7 @@
               style="margin-top: 20px"
               :data="data"
               :size="pdfSize"
-              title="User Info"
+              title="购货单详情"
               :column="1"
             >
               >
@@ -308,7 +312,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPurchaseOrderList, PurchaseOrder } from '@/api/supplier';
+  import { queryPurchaseOrderList, PurchaseOrder } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -425,6 +429,14 @@
   const printCancel = () => {
     printVisible.value = false;
   };
+
+  // 整个分发单列表打印
+  const downloadPurchaseOrderList = () => {
+    const text = '所有分发单信息';
+    // text:文件标题
+    htmlToPdf(text, '#printTable');
+  };
+  // 整个分发单列表打印
   // 描述列表展示打印信息
 
   // 表单展示打印信息
@@ -462,10 +474,10 @@
       title: t('PurchaseOrder.columns.id'),
       dataIndex: 'id',
     },
-    {
-      title: t('PurchaseOrder.columns.wareId'),
-      dataIndex: 'wareId',
-    },
+    // {
+    //   title: t('PurchaseOrder.columns.wareId'),
+    //   dataIndex: 'wareId',
+    // },
     {
       title: t('PurchaseOrder.columns.skuId'),
       dataIndex: 'skuId',

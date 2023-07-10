@@ -197,6 +197,7 @@
       </a-modal>
 
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -204,7 +205,6 @@
         :data="renderData"
         :bordered="false"
         :size="size"
-        id="printTable"
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">

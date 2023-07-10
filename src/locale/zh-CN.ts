@@ -30,7 +30,7 @@ import localeInvoice from '@/views/finance/invoice/locale/zh-CN';
 import localeSettlement from '@/views/finance/settlement/locale/zh-CN';
 import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
 
-import localeSupply from '@/views/dispatch/goods/supply/locale/zh-CN'
+import localeSupply from '@/views/dispatch/goods/supply/locale/zh-CN';
 
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
@@ -47,7 +47,7 @@ import localeCheckOrder from '@/views/center/check-order/locale/zh-CN'; // 分�
 import localeTransferOrder from '@/views/center/transfer-order/locale/zh-CN'; // 调拨单->中心库房
 import localeWorkOrder from '@/views/center/work-order/locale/zh-CN';
 import localeStorageOrder from '@/views/center/storage-order/locale/zh-CN';
-import localPurchaseOrder from '@/views/supplier/purchase-order/locale/zh-CN';
+import localPurchaseOrder from '@/views/center/purchase-order/locale/zh-CN';
 // @ts-ignore
 import localeLogisticsCheckOrder from '@/views/logistics/logistics-check-order/locale/zh-CN';
 // 运输公司接收的验货单

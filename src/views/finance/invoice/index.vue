@@ -12,32 +12,23 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('invoice.form.number')"
-                >
+                <a-form-item field="number" :label="$t('invoice.form.number')">
                   <a-input
-                    v-model=formModel.id
+                    v-model="formModel.id"
                     :placeholder="$t('invoice.form.number.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                    field="userId"
-                    :label="$t('invoice.form.userId')"
-                >
+                <a-form-item field="userId" :label="$t('invoice.form.userId')">
                   <a-input
-                      v-model=formModel.userId
-                      :placeholder="$t('invoice.form.userId.placeholder')"
+                    v-model="formModel.userId"
+                    :placeholder="$t('invoice.form.userId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('invoice.form.status')"
-                >
+                <a-form-item field="status" :label="$t('invoice.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
@@ -51,7 +42,10 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="searchInvoiceBy(formModel.id,formModel.userId)">
+            <a-button
+              type="primary"
+              @click="searchInvoiceBy(formModel.id, formModel.userId)"
+            >
               <template #icon>
                 <icon-search />
               </template>
@@ -153,21 +147,21 @@
       </a-row>
 
       <a-modal
-          :visible="isCreating || isUpdating"
-          :title="$t(`invoice.form.title.${isCreating ? 'create' : 'update'}`)"
-          @cancel="handleClose"
-          @before-ok="handleBeforeOk"
+        :visible="isCreating || isUpdating"
+        :title="$t(`invoice.form.title.${isCreating ? 'create' : 'update'}`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
       >
         <a-form :model="form">
           <a-form-item
-              v-for="(val, key) in form"
-              :key="key"
-              :field="key"
-              :label="$t(`invoice.form.${key}`)"
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`invoice.form.${key}`)"
           >
             <a-input
-                v-model="form[key]"
-                :placeholder="$t(`invoice.form.${key}.placeholder`)"
+              v-model="form[key]"
+              :placeholder="$t(`invoice.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
@@ -192,10 +186,7 @@
         <!-- 状态 -->
         <template #status="{ record }">
           <span v-if="record.status === 1" class="circle"></span>
-          <span
-              v-else-if="record.status === 0"
-              class="circle pass"
-          ></span>
+          <span v-else-if="record.status === 0" class="circle pass"></span>
           {{ $t(`invoice.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
@@ -204,26 +195,26 @@
         <!-- 删改 -->
         <template #operations="{ record }">
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="deleteInvoiceById(record.id)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteInvoiceById(record.id)"
           >
             {{ $t('invoice.columns.operations.delete') }}
           </a-button>
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="handleUpdateClick(record)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
           >
             {{ $t('invoice.columns.operations.update') }}
           </a-button>
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="deleteInvoiceById(record.id)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteInvoiceById(record.id)"
           >
             {{ $t('invoice.columns.operations.waste') }}
           </a-button>
@@ -245,7 +236,8 @@
     updateInvoice,
     Invoice,
     getInvoiceById,
-    queryInvoiceListById, searchInvoiceList
+    queryInvoiceListById,
+    searchInvoiceList,
   } from '@/api/finance';
 
   import { Pagination } from '@/types/global';
@@ -253,8 +245,8 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import {addAdmin, Admin, deleteAdmin, updateAdmin} from "@/api/acl";
-  import copy from "@/utils/objects";
+  import { addAdmin, Admin, deleteAdmin, updateAdmin } from '@/api/acl';
+  import copy from '@/utils/objects';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -268,10 +260,9 @@
       userId: '',
       stationId: '',
       totalAmount: '',
-      status:'',
+      status: '',
     };
   };
-
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
@@ -306,8 +297,6 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
-
 
   const size = ref<SizeProps>('medium');
 
@@ -413,9 +402,9 @@
     },
   ]);
   const fetchData = async (
-      page: number,
-      pageSize: number,
-      params: Partial<Invoice>
+    page: number,
+    pageSize: number,
+    params: Partial<Invoice>
   ) => {
     setLoading(true);
     try {
@@ -430,17 +419,16 @@
     }
   };
 
-
   const searchInvoice = async (
-      page: number,
-      pageSize: number,
-      id: string,
-      userId:string,
+    page: number,
+    pageSize: number,
+    id: string,
+    userId: string
   ) => {
     setLoading(true);
 
     try {
-      const { data } = await searchInvoiceList(page, pageSize,id,userId);
+      const { data } = await searchInvoiceList(page, pageSize, id, userId);
       renderData.value = data.records;
       pagination.current = page;
       pagination.total = data.total;
@@ -474,12 +462,8 @@
     size.value = val as SizeProps;
   };
 
-
-
-  const searchInvoiceBy = (id:string,userId:string) => {
-
-    searchInvoice(pagination.current, pagination.pageSize, id,userId);
-
+  const searchInvoiceBy = (id: string, userId: string) => {
+    searchInvoice(pagination.current, pagination.pageSize, id, userId);
   };
   const deleteInvoiceById = async (id: number) => {
     setLoading(true);
@@ -554,7 +538,7 @@
 
 <script lang="ts">
   export default {
-    name: 'invoice',
+    name: 'Invoice',
   };
 </script>
 

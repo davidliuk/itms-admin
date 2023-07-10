@@ -2,8 +2,6 @@ import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
-
-
 export interface PageRes<T> {
   records: T[];
   total: number;
@@ -17,8 +15,8 @@ export interface Invoice {
   userId: string;
   userName: string;
   stationId: string;
-  totalAmount:string;
-  status:string,
+  totalAmount: string;
+  status: string;
 }
 
 export function addInvoice(invoice: Invoice) {
@@ -34,35 +32,31 @@ export function updateInvoice(invoice: Invoice) {
   return axios.put<any>('/admin/sys/invoice', invoice);
 }
 
-
 export function queryInvoiceList(
-    page: number,
-    limit: number,
-    params: Partial<Invoice>
+  page: number,
+  limit: number,
+  params: Partial<Invoice>
 ) {
   return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
     params,
   });
 }
 
-export function queryInvoiceListById(
-    page: number,
-    limit: number,
-    id: number
-) {
+export function queryInvoiceListById(page: number, limit: number, id: number) {
   return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
     id,
   });
 }
 
 export function searchInvoiceList(
-    page: number,
-    limit: number,
-    id: string,
-    userId: string,
+  page: number,
+  limit: number,
+  id: string,
+  userId: string
 ) {
   return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
-    id,userId,
+    id,
+    userId,
   });
 }
 
@@ -78,33 +72,39 @@ export interface Supplier {
   wareId: string;
 }
 export function querySupplierList(
-    page: number,
-    limit: number,
-    params: Partial<Supplier>
+  page: number,
+  limit: number,
+  params: Partial<Supplier>
 ) {
-  return axios.post<PageRes<Supplier>>(`/admin/sys/purchaseOrder/${page}/${limit}`, {
-    params,
-  });
+  return axios.post<PageRes<Supplier>>(
+    `/admin/sys/purchaseOrder/${page}/${limit}`,
+    {
+      params,
+    }
+  );
 }
 export function searchSupplierList(
-    page: number,
-    limit: number,
-    id: string,
-    supplierName: string,
+  page: number,
+  limit: number,
+  id: string,
+  supplierName: string
 ) {
-  return axios.post<PageRes<Supplier>>(`/admin/sys/purchaseOrder/${page}/${limit}`, {
-    id,supplierName,
-  });
+  return axios.post<PageRes<Supplier>>(
+    `/admin/sys/purchaseOrder/${page}/${limit}`,
+    {
+      id,
+      supplierName,
+    }
+  );
 }
 
-export function querySupplierListById(
-    page: number,
-    limit: number,
-    id: number
-) {
-  return axios.post<PageRes<Supplier>>(`/admin/sys/purchaseOrder/${page}/${limit}`, {
-    id,
-  });
+export function querySupplierListById(page: number, limit: number, id: number) {
+  return axios.post<PageRes<Supplier>>(
+    `/admin/sys/purchaseOrder/${page}/${limit}`,
+    {
+      id,
+    }
+  );
 }
 export function addSupplier(supplier: Supplier) {
   return axios.post<any>('/admin/sys/purchaseOrder', supplier);
@@ -128,26 +128,27 @@ export interface Settlement {
   userId: string;
   userName: string;
   stationId: string;
-  totalAmount:string;
+  totalAmount: string;
 }
 
 export function querySettlementList(
-    page: number,
-    limit: number,
-    params: Partial<Invoice>
+  page: number,
+  limit: number,
+  params: Partial<Invoice>
 ) {
   return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
     params,
   });
 }
 export function searchSettlementList(
-    page: number,
-    limit: number,
-    id: string,
-    userName: string,
+  page: number,
+  limit: number,
+  id: string,
+  userName: string
 ) {
   return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
-    id,userName,
+    id,
+    userName,
   });
 }
 

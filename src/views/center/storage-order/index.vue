@@ -112,15 +112,9 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('StorageOrder.operation.create') }}
-            </a-button>
             <a-upload action="/">
               <template #upload-button>
-                <a-button>
+                <a-button type="primary">
                   {{ $t('StorageOrder.operation.import') }}
                 </a-button>
               </template>
@@ -238,10 +232,38 @@
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
+          <!--          打印-->
 
-<!--          打印-->
-
-<!--          查看 商品详情-->
+          <!--          查看 商品详情-->
+          <!-- 打印 -->
+          <a-button type="text" size="small" @click="printClick(record)"
+            >打印出库单</a-button
+          >
+          <a-modal
+            ok-text="打印"
+            :visible="printVisible"
+            title="出库单详情"
+            width="700px"
+            @cancel="printCancel"
+            @before-ok="printBeforeOk"
+            >间距
+            <a-radio-group v-model="pdfSize" type="button">
+              <a-radio value="mini">mini</a-radio>
+              <a-radio value="small">small</a-radio>
+              <a-radio value="medium">medium</a-radio>
+              <a-radio value="large">large</a-radio>
+            </a-radio-group>
+            <a-descriptions
+              id="capture"
+              style="margin-top: 20px"
+              :data="data"
+              :size="pdfSize"
+              title="User Info"
+              :column="1"
+            ></a-descriptions>
+          </a-modal>
+          <!--            打印结束-->
+          <!--          查看 商品详情-->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -289,14 +311,15 @@
     queryStorageOrderList,
     StorageOrder,
     queryOrderInfo,
-    OrderItem, CheckOrder
-  } from "@/api/center";
+    OrderItem,
+    CheckOrder,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import htmlToPdf from "@/utils/pdf";
+  import htmlToPdf from '@/utils/pdf';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -328,7 +351,7 @@
 
   // 描述列表展示打印信息
   const pdfSize = ref('medium');
-  const data = [
+  let data = [
     { label: '分发单标识', value: '' },
     { label: '区域中心库房编号', value: '' },
     { label: '订单编号', value: '' },
@@ -343,8 +366,47 @@
     { label: '更新时间', value: '' },
   ];
 
+  const printVisible = ref(false);
+  const printClick = (storageOrder: StorageOrder) => {
+    data = [
+      { label: '出库单标识', value: storageOrder.id },
+      { label: '区域中心库房编号', value: storageOrder.wareId.toString() },
+      { label: '订单编号', value: storageOrder.orderId.toString() },
+      { label: '商品编号', value: storageOrder.skuId.toString() },
+      { label: '商品名称', value: storageOrder.skuName.valueOf() },
+      { label: '分站编号', value: storageOrder.stationId.toString() },
+      { label: '分站名称', value: storageOrder.stationName },
+      { label: '供应商编号', value: storageOrder.supplierId.toString() },
+      { label: '供货商名称', value: storageOrder.supplierName },
+      {
+        label: '库存单类型',
+        value: t(`StorageOrder.form.storageType.${storageOrder.storageType}`),
+      },
+      { label: '创建时间', value: storageOrder.createTime },
+      { label: '更新时间', value: storageOrder.updateTime },
+    ];
+    setTimeout(() => {
+      printVisible.value = true;
+    }, 500);
+  };
+  const printBeforeOk = () => {
+    console.log('打印');
+    const text = '分发单详情';
+    // text:文件标题
+    htmlToPdf(text, '#capture');
+  };
+  const printCancel = () => {
+    printVisible.value = false;
+  };
   // 描述列表展示打印信息
 
+  // 打印出库单列表
+  const downloadStorageOrderList = () => {
+    const text = '所有出库单信息';
+    // text:文件标题
+    htmlToPdf(text, '#printTable');
+  };
+  // 打印出库单列表
 
   // 密度选择
   const densityList = computed(() => [

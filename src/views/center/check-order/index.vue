@@ -115,12 +115,12 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-<!--            <a-button type="primary">-->
-<!--              <template #icon>-->
-<!--                <icon-plus />-->
-<!--              </template>-->
-<!--              {{ $t('CheckOrder.operation.create') }}-->
-<!--            </a-button>-->
+            <!--            <a-button type="primary">-->
+            <!--              <template #icon>-->
+            <!--                <icon-plus />-->
+            <!--              </template>-->
+            <!--              {{ $t('CheckOrder.operation.create') }}-->
+            <!--            </a-button>-->
             <a-upload action="/">
               <template #upload-button>
                 <a-button type="primary">
@@ -241,9 +241,11 @@
 
         <!-- 打印 -->
         <template #operations="{ record }">
-          <a-button type="text" size="small"
-                    @click="printClick(record)">打印分发单</a-button>
+          <a-button type="text" size="small" @click="printClick(record)"
+            >打印分发单</a-button
+          >
           <a-modal
+            ok-text="打印"
             :visible="printVisible"
             title="分发单详情"
             width="700px"
@@ -299,7 +301,6 @@
             </a-table>
           </a-modal>
         </template>
-
       </a-table>
     </a-card>
   </div>
@@ -347,10 +348,14 @@
       { label: '仓库标识', value: checkOrder.wareId.toString() },
       { label: '任务单标识', value: checkOrder.workOrderId.toString() },
       { label: '分站标识', value: checkOrder.stationId.toString() },
-      { label: '分发单状态',
-        value: t(`CheckOrder.form.status.${checkOrder.status}`)},
-      { label: '分发单类型',
-        value: t(`CheckOrder.form.type.${checkOrder.type}`) },
+      {
+        label: '分发单状态',
+        value: t(`CheckOrder.form.status.${checkOrder.status}`),
+      },
+      {
+        label: '分发单类型',
+        value: t(`CheckOrder.form.type.${checkOrder.type}`),
+      },
       { label: '更新时间', value: checkOrder.inTime },
       { label: '创建时间', value: checkOrder.outTime },
     ];
@@ -370,11 +375,11 @@
   // 描述列表展示打印信息
 
   // 整个分发单列表打印
-  const downloadCheckOrderList = () =>{
+  const downloadCheckOrderList = () => {
     const text = '所有分发单信息';
     // text:文件标题
     htmlToPdf(text, '#printTable');
-  }
+  };
   // 整个分发单列表打印
 
   const generateFormModel = () => {

@@ -287,7 +287,7 @@
     LogCheckOrder,
     queryOrderInfo,
     OrderItem,
-    deleteLogCheckOrder
+    deleteLogCheckOrder,
   } from '@/api/logistics';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';

@@ -44,21 +44,34 @@ export default {
   'WorkOrder.form.workStatus.4': '待收货',
   'WorkOrder.form.workStatus.5': '完成',
   'WorkOrder.form.workStatus.-1': '取消',
-  //   DISPATCH(0, "已调度"),
-  //   OUT(1, "已出库"),
-  //   IN(2, "已入库"),
-  //   ASSIGN(3, "已分配"),
-  //   TAKE(4, "待收货"),
-  //   RECEIVE(5, "完成"),
+
+  //   DISPATCH(2, "已调度"), // 区域中心库房出库
+  //   OUT(3, "已出库"), // 分站库房出库
+  //   IN(4, "已入库"),
+  //   ASSIGN(5, "已分配"),
+  //   TAKE(6, "已领货"), // 待收货
+  //   RECEIVE(7, "完成"), //
+  //   RETURN_UNASSIGNED(8, "退货未分配"), //
+  //   RETURN_ASSIGN(9, "退货分配"), //
+  //   RETURN_STATION(10, "退货入站"), //
+  //   RETURN_OUT(11, "货物出库"), //
+  //   RETURN_IN(12, "货物入库"), //
   //   CANCEL(-1, "取消");
+
   'WorkOrder.form.workStatus': '状态',
   'WorkOrder.form.workStatus.DISPATCH': '已调度',
   'WorkOrder.form.workStatus.OUT': '已出库',
   'WorkOrder.form.workStatus.IN': '已入库',
   'WorkOrder.form.workStatus.ASSIGN': '已分配',
-  'WorkOrder.form.workStatus.WAITING_USER_TAKE': '待收货',
-  'WorkOrder.form.workStatus.FINISHED': '完成',
+  'WorkOrder.form.workStatus.TAKE': '已领货', // 待收货
+  'WorkOrder.form.workStatus.RECEIVE': '完成',
+  'WorkOrder.form.workStatus.RETURN_UNASSIGNED': '退货未分配',
+  'WorkOrder.form.workStatus.RETURN_ASSIGN': '退货分配',
+  'WorkOrder.form.workStatus.RETURN_STATION': '退货入站',
+  'WorkOrder.form.workStatus.RETURN_OUT': '退货出库',
+  'WorkOrder.form.workStatus.RETURN_IN': '退货出库',
   'WorkOrder.form.workStatus.CANCEL': '取消',
+
   'WorkOrder.form.search': '查询',
   'WorkOrder.form.reset': '重置',
   'WorkOrder.form.selectDefault': '全部',

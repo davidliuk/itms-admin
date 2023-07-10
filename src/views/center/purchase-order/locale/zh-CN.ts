@@ -6,7 +6,7 @@ export default {
   // Long supplierId = purchaseOrder.getSupplierId();
   // String supplierName = purchaseOrder.getSupplierName();
 
-  'menu.supplier.PurchaseOrder': '购货单表格',
+  'menu.center.PurchaseOrder': '购货单表格',
   'PurchaseOrder.form.id': '购货单编号',
   'PurchaseOrder.form.id.placeholder': '请输入购货单编号',
   'PurchaseOrder.form.wareId': '中心库房标识',

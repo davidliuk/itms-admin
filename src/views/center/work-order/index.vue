@@ -237,16 +237,6 @@
               出库
             </a-button>
           </a-popconfirm>
-
-          <!--          <a-button-->
-          <!--              v-permission="['admin']"-->
-          <!--              type="text"-->
-          <!--              size="small"-->
-          <!--              @click="transferOutWare(record.orderId)"-->
-          <!--          >-->
-          <!--            &lt;!&ndash;            根据调拨单的调拨，把订单的状态改为中心库房调拨出库&ndash;&gt;-->
-          <!--            出库-->
-          <!--          </a-button>-->
           <a-button
             v-permission="['admin']"
             type="text"

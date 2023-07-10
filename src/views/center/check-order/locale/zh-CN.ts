@@ -1,8 +1,4 @@
 export default {
-
-
-
-
   'menu.center.CheckOrder': '验货(分发)单表格',
   'CheckOrder.form.id': '分发单编号',
   'CheckOrder.form.id.placeholder': '请输入分发单编号',
@@ -53,7 +49,6 @@ export default {
   // createTime:string
   // wareId:number
 
-
   // id	integer(int64)	id
   // orderId	integer(int64)	订单ID
   // wareId	integer(int64)	仓库ID
@@ -64,7 +59,6 @@ export default {
   // outTime	string(date-time)	出库时间
   // createTime	string(date-time)	创建时间
   // updateTime	string(date-time)	更新时间
-
 
   // 分发单号、分站库房名称、出库时间、状态、
   // 商品代码、商品名称、计量单位，商品信息

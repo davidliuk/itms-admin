@@ -44,14 +44,13 @@ export function queryLogCheckOrderList(
 ) {
   return axios.post<PageRes<LogCheckOrder>>(
     `/admin/sys/checkOrder/${current}/${limit}`,
-      params,
+    params
   );
 }
 
 export function deleteLogCheckOrder(id: number) {
   return axios.delete<any>(`/admin/sys/checkOrder/${id}`);
 }
-
 
 export interface OrderItem {
   categoryId: number;

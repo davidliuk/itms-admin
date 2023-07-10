@@ -12,35 +12,29 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('supply.form.number')"
-                >
+                <a-form-item field="number" :label="$t('supply.form.number')">
                   <a-input
-                    v-model=formModel.id
+                    v-model="formModel.id"
                     :placeholder="$t('supply.form.number.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                    field="name"
-                    :label="$t('supply.form.name')"
-                >
+                <a-form-item field="name" :label="$t('supply.form.name')">
                   <a-input
-                      v-model=formModel.name
-                      :placeholder="$t('supply.form.name.placeholder')"
+                    v-model="formModel.name"
+                    :placeholder="$t('supply.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                    field="province"
-                    :label="$t('supply.form.province')"
+                  field="province"
+                  :label="$t('supply.form.province')"
                 >
                   <a-input
-                      v-model=formModel.province
-                      :placeholder="$t('supply.form.province.placeholder')"
+                    v-model="formModel.province"
+                    :placeholder="$t('supply.form.province.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -50,7 +44,12 @@
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="searchSupplyBy(formModel.id,formModel.name,formModel.province)">
+            <a-button
+              type="primary"
+              @click="
+                searchSupplyBy(formModel.id, formModel.name, formModel.province)
+              "
+            >
               <template #icon>
                 <icon-search />
               </template>
@@ -108,7 +107,7 @@
                 v-for="item in densitylist"
                 :key="item.value"
                 :value="item.value"
-                :class="{ active: item.value === size}"
+                :class="{ active: item.value === size }"
               >
                 <span>{{ item.name }}</span>
               </a-doption>
@@ -152,21 +151,21 @@
       </a-row>
 
       <a-modal
-          :visible="isCreating || isUpdating"
-          :title="$t(`supply.form.title.${isCreating ? 'create' : 'update'}`)"
-          @cancel="handleClose"
-          @before-ok="handleBeforeOk"
+        :visible="isCreating || isUpdating"
+        :title="$t(`supply.form.title.${isCreating ? 'create' : 'update'}`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
       >
         <a-form :model="form">
           <a-form-item
-              v-for="(val, key) in form"
-              :key="key"
-              :field="key"
-              :label="$t(`supply.form.${key}`)"
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`supply.form.${key}`)"
           >
             <a-input
-                v-model="form[key]"
-                :placeholder="$t(`supply.form.${key}.placeholder`)"
+              v-model="form[key]"
+              :placeholder="$t(`supply.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
@@ -192,8 +191,8 @@
         <template #status="{ record }">
           <span v-if="record.status === 'waste'" class="circle"></span>
           <span
-              v-else-if="record.status === 'using'"
-              class="circle pass"
+            v-else-if="record.status === 'using'"
+            class="circle pass"
           ></span>
           {{ $t(`supply.form.status.${record.status}`) }}
         </template>
@@ -203,18 +202,18 @@
         <!-- 删改 -->
         <template #operations="{ record }">
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="deleteSupplyById(record.id)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteSupplyById(record.id)"
           >
             {{ $t('supply.columns.operations.delete') }}
           </a-button>
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="handleUpdateClick(record)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
           >
             {{ $t('supply.columns.operations.update') }}
           </a-button>
@@ -229,13 +228,20 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {addSupply,deleteSupply,updateSupply,querySupplyList,searchSupplyList,Supply} from "@/api/dispatch";
+  import {
+    addSupply,
+    deleteSupply,
+    updateSupply,
+    querySupplyList,
+    searchSupplyList,
+    Supply,
+  } from '@/api/dispatch';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import copy from "@/utils/objects";
+  import copy from '@/utils/objects';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -244,14 +250,13 @@
     return {
       id: '',
       name: '',
-      phone:'',
-      postCode:'',
-      province:'',
-      city:'',
-      detailAddress:'',
+      phone: '',
+      postCode: '',
+      province: '',
+      city: '',
+      detailAddress: '',
     };
   };
-
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
@@ -386,9 +391,9 @@
     },
   ]);
   const fetchData = async (
-      page: number,
-      pageSize: number,
-      params: Partial<Supply>
+    page: number,
+    pageSize: number,
+    params: Partial<Supply>
   ) => {
     setLoading(true);
     try {
@@ -402,22 +407,26 @@
       setLoading(false);
     }
   };
-  const searchSupplyBy = (id:string,name:string,province:string) => {
-
-    searchData(pagination.current, pagination.pageSize,id,name,province);
-
+  const searchSupplyBy = (id: string, name: string, province: string) => {
+    searchData(pagination.current, pagination.pageSize, id, name, province);
   };
   const searchData = async (
-      page: number,
-      pageSize: number,
-      id: string,
-      name:string,
-      province:string,
+    page: number,
+    pageSize: number,
+    id: string,
+    name: string,
+    province: string
   ) => {
     setLoading(true);
-alert(id+name+province);
+    alert(id + name + province);
     try {
-      const { data } = await searchSupplyList(page, pageSize,id,name,province);
+      const { data } = await searchSupplyList(
+        page,
+        pageSize,
+        id,
+        name,
+        province
+      );
       renderData.value = data.records;
       pagination.current = page;
       pagination.total = data.total;
@@ -427,7 +436,6 @@ alert(id+name+province);
       setLoading(false);
     }
   };
-
 
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
@@ -451,7 +459,6 @@ alert(id+name+province);
   ) => {
     size.value = val as SizeProps;
   };
-
 
   const deleteSupplyById = async (id: number) => {
     setLoading(true);
@@ -526,7 +533,7 @@ alert(id+name+province);
 
 <script lang="ts">
   export default {
-    name: 'supply',
+    name: 'Supply',
   };
 </script>
 

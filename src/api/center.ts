@@ -7,6 +7,32 @@ export interface PageRes<T> {
   total: number;
 }
 
+export interface PurchaseOrder {
+  // 接口文档匹配 7.11
+  id: number; //	id
+  wareId: number;
+  imgUrl: string; // 商品sku图片
+  skuId: number; // 商品sku编号
+  skuName: string; // 商品sku名字
+  skuNum: number; //	商品购买的数量
+  skuPrice: number; // 商品sku价格
+  supplierId: number; // 供应商ID
+  supplierName: string; // 供应商名称
+  createTime: string; // 创建时间
+  updateTime: string; //	更新时间
+}
+
+export function queryPurchaseOrderList(
+  current: number,
+  limit: number,
+  params: Partial<PurchaseOrder>
+) {
+  return axios.post<PageRes<PurchaseOrder>>(
+    `/admin/sys/purchaseOrder/${current}/${limit}`,
+    params
+  );
+}
+
 export interface StorageOrder {
   id: string; // 出库单编号
   wareId: number; // 区域中心库房编号
@@ -130,7 +156,7 @@ export function queryOrderInfo(orderId: number) {
 }
 
 export interface TransferOrder {
-  // 定义调拨单类型
+  // 定义调拨单类型,接口的都更新完了
   id: number; // 调拨单id
   orderId: number; // 订单ID
   wareId: number; // 仓库ID
@@ -140,7 +166,8 @@ export interface TransferOrder {
   logisticsId: number; // 物流公司id
   logisticsName: string; // 物流公司名称
   logisticsPhone: string; // 物流公司电话
-  status: number; // 状态
+  status: string; // 状态
+  type: string;
   inTime: Date; // 入库时间
   outTime: Date; // 出库时间
   createTime: Date; // 创建时间
@@ -158,14 +185,6 @@ export function queryTransferOrderList(
   );
 }
 
-export interface WorkStatus {
-  code: number;
-  comment: string;
-}
-export interface WorkType {
-  code: number;
-  comment: string;
-}
 // 任务单
 export interface WorkOrder {
   // 内容不影响
