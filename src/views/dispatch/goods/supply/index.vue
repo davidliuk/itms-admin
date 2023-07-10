@@ -108,7 +108,7 @@
                 v-for="item in densitylist"
                 :key="item.value"
                 :value="item.value"
-                :class="{ active: item.value === size }"
+                :class="{ active: item.value === size}"
               >
                 <span>{{ item.name }}</span>
               </a-doption>
