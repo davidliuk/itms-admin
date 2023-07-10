@@ -343,7 +343,6 @@
     updateAdmin,
     deleteAdmin,
     Admin,
-    findAllList,
     Role,
     toAssign,
     doAssign,

@@ -41,7 +41,9 @@ import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN'; // �
 import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
 import localeCheckOrder from '@/views/center/check-order/locale/zh-CN'; // 分发单->分站，验货单->运输公司
 import localeTransferOrder from '@/views/center/transfer-order/locale/zh-CN'; // 调拨单->中心库房
-
+import localeWorkOrder from '@/views/center/work-order/locale/zh-CN';
+import localeStorageOrder from '@/views/center/storage-order/locale/zh-CN';
+import localPurchaseOrder from '@/views/supplier/purchase-order/locale/zh-CN';
 // @ts-ignore
 import localeLogisticsCheckOrder from '@/views/logistics/logistics-check-order/locale/zh-CN';
 // 运输公司接收的验货单
@@ -75,6 +77,7 @@ export default {
   'menu.center': '区域中心仓库',
   'menu.logistics': '运输公司',
   'menu.acl': '权限管理',
+  'menu.supplier': '供应商管理',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
@@ -118,4 +121,7 @@ export default {
   ...localeCheckOrder,
   ...localeTransferOrder,
   ...localeLogisticsCheckOrder,
+  ...localeWorkOrder,
+  ...localeStorageOrder,
+  ...localPurchaseOrder,
 };

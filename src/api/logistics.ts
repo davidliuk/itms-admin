@@ -11,20 +11,30 @@ export interface PageRes<T> {
 export interface LogCheckOrder {
   // 定义类型
   id: number;
-  imgUrl: string;
-  inTime: string;
   orderId: number;
-  outTime: string;
-  skuId: number;
-  skuName: string;
-  skuNum: number;
-  skuPrice: number;
+  userId: number; //	用户ID
+  wareId: number; // 仓库ID
+  courierId: number;
   stationId: number;
-  status: number;
+  stationName: string;
+  workStatus: string; //	状态,
+  workType: string; // 配送类型
   // 0:未分发,1:已分发,2:已入库
   updateTime: string;
   createTime: string;
-  wareId: number;
+  // orderInfo
+  // 个人信息
+  name: string; //	姓名
+  phone: string; // 电话号码
+  postCode: string; //	邮编
+  province: string; // 省
+  city: string; // 市
+  district: string; // 区
+  detailAddress: string; //	详细地址
+  // 物流
+  logisticsId: number; //	物流公司id
+  logisticsName: string; //	物流公司名称
+  logisticsPhone: string; //	物流公司电话
 }
 
 export function queryLogCheckOrderList(
@@ -34,11 +44,14 @@ export function queryLogCheckOrderList(
 ) {
   return axios.post<PageRes<LogCheckOrder>>(
     `/admin/sys/checkOrder/${current}/${limit}`,
-    {
       params,
-    }
   );
 }
+
+export function deleteLogCheckOrder(id: number) {
+  return axios.delete<any>(`/admin/sys/checkOrder/${id}`);
+}
+
 
 export interface OrderItem {
   categoryId: number;

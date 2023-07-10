@@ -60,7 +60,9 @@
             <icon-send />
           </template>
           <template #suffix>
-            <a-link>{{ $t('login.form.sendCode') }}</a-link>
+            <a-link @click="sendEmailCode">{{
+              $t('login.form.sendCode')
+            }}</a-link>
           </template>
         </a-input>
       </a-form-item>
@@ -99,7 +101,7 @@
   import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
-  import type { LoginData } from '@/api/user';
+  import { sendCode, type LoginData } from '@/api/user';
 
   const router = useRouter();
   const { t } = useI18n();
@@ -108,10 +110,6 @@
   const userStore = useUserStore();
 
   const isCode: Ref<boolean> = ref(false);
-
-  const switchCode = () => {
-    isCode.value = !isCode.value;
-  };
 
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,
@@ -122,9 +120,16 @@
   const userInfo = reactive({
     username: loginConfig.value.username,
     password: loginConfig.value.password,
+    email: '',
     code: loginConfig.value.code,
   });
-
+  const switchCode = () => {
+    isCode.value = !isCode.value;
+  };
+  const sendEmailCode = async () => {
+    userInfo.email = userInfo.username;
+    await sendCode(userInfo);
+  };
   const handleSubmit = async ({
     errors,
     values,
@@ -136,7 +141,12 @@
     if (!errors) {
       setLoading(true);
       try {
-        await userStore.login(values as LoginData);
+        if (isCode.value) {
+          userInfo.email = userInfo.username;
+          await userStore.loginCode(values as LoginData);
+        } else {
+          await userStore.login(values as LoginData);
+        }
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Workplace',

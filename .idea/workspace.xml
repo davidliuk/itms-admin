@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7e62a3cc-f6db-4005-9b4d-f3a6a30832e8" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/center.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/center.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/logistics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/logistics.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/supplier.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/supplier.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/aprint.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/aprint.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/check-order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/check-order/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/check-order/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/check-order/locale/zh-CN.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/search-table/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/search-table/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/skuware/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/skuware/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/skuware/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/skuware/locale/zh-CN.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/storage-order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/storage-order/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/storage-order/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/storage-order/locale/zh-CN.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/transfer-order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/transfer-order/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/transfer-order/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/transfer-order/locale/zh-CN.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/work-order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/work-order/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/center/work-order/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/center/work-order/locale/zh-CN.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/logistics/logistics-check-order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/logistics/logistics-check-order/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/logistics/logistics-check-order/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/logistics/logistics-check-order/locale/zh-CN.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/supplier/purchase-order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supplier/purchase-order/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/supplier/purchase-order/locale/zh-CN.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supplier/purchase-order/locale/zh-CN.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SJn8KdPpuGmvcTY1R3fsnuL8IM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="D:\IntelliJ IDEA 2021.2.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\intellij idea\arco_backend\itms-admin\src\assets\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\intellij idea\arco_backend\itms-admin\src\utils" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="7e62a3cc-f6db-4005-9b4d-f3a6a30832e8" name="更改" comment="" />
+      <created>1688873392423</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688873392423</updated>
+      <workItem from="1688873394569" duration="6963000" />
+      <workItem from="1688884340856" duration="25050000" />
+      <workItem from="1688911065933" duration="8355000" />
+      <workItem from="1688952448875" duration="26248000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

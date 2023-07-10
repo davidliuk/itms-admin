@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.CheckOrder']" />
-    <a-card class="general-card" :title="$t('menu.center.CheckOrder')">
+    <Breadcrumb :items="['menu.supplier', 'menu.supplier.PurchaseOrder']" />
+    <a-card class="general-card" :title="$t('menu.supplier.PurchaseOrder')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,74 +13,69 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('CheckOrder.form.id')">
+                <a-form-item field="id" :label="$t('PurchaseOrder.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('CheckOrder.form.id.placeholder')"
+                    :placeholder="$t('PurchaseOrder.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('CheckOrder.form.wareId')"
+                  :label="$t('PurchaseOrder.form.wareId')"
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('CheckOrder.form.wareId.placeholder')"
+                    :placeholder="$t('PurchaseOrder.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="stationId"
-                  :label="$t('CheckOrder.form.stationId')"
+                  field="skuId"
+                  :label="$t('PurchaseOrder.form.skuId')"
                 >
                   <a-input
-                    v-model="formModel.stationId"
-                    :placeholder="$t('CheckOrder.form.stationId.placeholder')"
+                    v-model="formModel.skuId"
+                    :placeholder="$t('PurchaseOrder.form.skuId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="status"
-                  :label="$t('CheckOrder.form.status')"
+                  field="skuName"
+                  :label="$t('PurchaseOrder.form.skuName')"
                 >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('CheckOrder.form.selectDefault')"
+                  <a-input
+                    v-model="formModel.skuName"
+                    :placeholder="$t('PurchaseOrder.form.skuName.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="inTime"
-                  :label="$t('CheckOrder.form.inTime')"
+                  field="supplierId"
+                  :label="$t('PurchaseOrder.form.supplierId')"
                 >
-                  <a-date-picker
-                    v-model="formModel.inTime"
-                    style="width: 100%"
-                    show-time
-                    :time-picker-props="{ defaultValue: '00:00:00' }"
-                    format="YYYY-MM-DD HH:mm:ss"
-                    :placeholder="$t('CheckOrder.form.inTime.placeholder')"
+                  <a-input
+                    v-model="formModel.supplierId"
+                    :placeholder="
+                      $t('PurchaseOrder.form.supplierId.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="outTime"
-                  :label="$t('CheckOrder.form.outTime')"
+                  field="supplierName"
+                  :label="$t('PurchaseOrder.form.supplierName')"
                 >
-                  <a-date-picker
-                    v-model="formModel.outTime"
-                    style="width: 100%"
-                    show-time
-                    :time-picker-props="{ defaultValue: '00:00:00' }"
-                    format="YYYY-MM-DD HH:mm:ss"
-                    :placeholder="$t('CheckOrder.form.outTime.placeholder')"
+                  <a-input
+                    v-model="formModel.supplierName"
+                    :placeholder="
+                      $t('PurchaseOrder.form.supplierName.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
@@ -97,13 +92,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('CheckOrder.form.search') }}
+              {{ $t('PurchaseOrder.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('CheckOrder.form.reset') }}
+              {{ $t('PurchaseOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -115,16 +110,16 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-<!--            <a-button type="primary">-->
-<!--              <template #icon>-->
-<!--                <icon-plus />-->
-<!--              </template>-->
-<!--              {{ $t('CheckOrder.operation.create') }}-->
-<!--            </a-button>-->
+            <a-button type="primary">
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('PurchaseOrder.operation.create') }}
+            </a-button>
             <a-upload action="/">
               <template #upload-button>
-                <a-button type="primary">
-                  {{ $t('CheckOrder.operation.import') }}
+                <a-button>
+                  {{ $t('PurchaseOrder.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -135,20 +130,20 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="downloadCheckOrderList">
+          <a-button>
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('CheckOrder.operation.download') }}
+            {{ $t('PurchaseOrder.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('CheckOrder.actions.refresh')">
+          <a-tooltip :content="$t('PurchaseOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('CheckOrder.actions.density')">
+            <a-tooltip :content="$t('PurchaseOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -164,7 +159,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('CheckOrder.actions.columnSetting')">
+          <a-tooltip :content="$t('PurchaseOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -203,7 +198,6 @@
 
       <!-- 表格 -->
       <a-table
-        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -213,40 +207,26 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- # -->
+        <!-- 分页 -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
 
-        <!-- 状态类型 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'OUT'" class="circle"></span>
-          <span v-else-if="record.status === 'IN'" class="circle pass"></span>
-          <span
-            v-else-if="record.status === 'CANCEL'"
-            class="circle pass"
-          ></span>
-          {{ $t(`CheckOrder.form.status.${record.status}`) }}
+        <!-- table里 -->
+        <template #imgUrl="{ record }">
+          <img
+            :src="record.imgUrl"
+            alt="Product Image"
+            style="width: 100px; height: 100px"
+          />
         </template>
-        <template #type="{ record }">
-          <span v-if="record.type === 'DELIVERY'" class="circle"></span>
-          <span
-            v-else-if="record.type === 'EXCHANGE'"
-            class="circle pass"
-          ></span>
-          <span v-else-if="record.type === 'RETURN'" class="circle pass"></span>
-          {{ $t(`CheckOrder.form.type.${record.type}`) }}
-        </template>
-        <!-- 状态类型  -->
 
-        <!-- 打印 -->
+        <!-- 查看 -->
         <template #operations="{ record }">
-          <a-button type="text" size="small"
-                    @click="printClick(record)">打印分发单</a-button>
+          <a-button @click="printClick(record)">详情</a-button>
           <a-modal
             :visible="printVisible"
-            title="分发单详情"
-            width="700px"
+            title="购货单详情"
             @cancel="printCancel"
             @before-ok="printBeforeOk"
             >间距
@@ -263,43 +243,62 @@
               :size="pdfSize"
               title="User Info"
               :column="1"
-            ></a-descriptions>
-          </a-modal>
-          <!--  分发单商品详情 -->
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="SkuDetail(record.orderId)"
-          >
-            {{ $t('CheckOrder.columns.operations.view') }}
-          </a-button>
-          <a-modal
-            v-model:visible="visible"
-            @ok="handleOk"
-            @cancel="handleCancel"
-          >
-            <template #title> 分发单商品详情 </template>
-            <a-table
-              row-key="id"
-              :loading="loading"
-              :columns="(Skucolumns as TableColumnData[])"
-              :data="orderItemData"
-              :bordered="false"
-              :size="size"
-              @page-change="onPageChange"
             >
-              <template #imgUrl="{ record }">
+              >
+              <a-descriptions-item
+                v-for="item of data"
+                :key="item.value"
+                :label="item.label"
+              >
+                <span v-if="item.label !== '商品图片'">{{ item.value }}</span>
                 <img
-                  :src="record.imgUrl"
-                  alt="Product Image"
-                  style="width: 100px; height: 100px"
+                  v-else-if="item.label === '商品图片'"
+                  src="@/assets/images/qiao.jpg"
+                  alt="商品图片"
+                  style="width: 200px; height: 200px"
                 />
-              </template>
-            </a-table>
+              </a-descriptions-item>
+            </a-descriptions>
           </a-modal>
-        </template>
 
+          <!--                    <a-button @click="handleClick(record)">Open Modal</a-button>-->
+          <!--                    <a-modal-->
+          <!--                      :visible="visible"-->
+          <!--                      title="购货单详情"-->
+          <!--                      @cancel="handleCancel"-->
+          <!--                      @before-ok="handleBeforeOk"-->
+          <!--                    >-->
+          <!--                      <a-form id="capture" :model="form">-->
+          <!--                        <a-form-item-->
+          <!--                          v-for="(val, key) in form"-->
+          <!--                          :key="key"-->
+          <!--                          :field="key"-->
+          <!--                          :label="$t(`PurchaseOrder.form.${key}`)"-->
+          <!--                        >-->
+          <!--                          <a-input-->
+          <!--                            v-if="key !== 'createTime' && key !== 'updateTime'&& key!=='imgUrl'"-->
+          <!--                            v-model="form[key]"-->
+          <!--                            :placeholder="$t(`PurchaseOrder.form.${key}.placeholder`)"-->
+          <!--                          />-->
+          <!--                          <img-->
+          <!--                              v-else-if="key==='imgUrl'"-->
+          <!--                              :src="form[key]"-->
+          <!--                              :alt="form[key]"-->
+          <!--                              style="width: 100px; height: 100px"-->
+          <!--                          />-->
+          <!--                          <a-date-picker-->
+          <!--                            v-else-->
+          <!--                            v-model="form[key]"-->
+          <!--                            style="width: 100%"-->
+          <!--                            show-time-->
+          <!--                            :time-picker-props="{ defaultValue: '09:09:06' }"-->
+          <!--                            format="YYYY-MM-DD HH:mm:ss"-->
+          <!--                          />-->
+          <!--                        </a-form-item>-->
+          <!--                      </a-form>-->
+          <!--                    </a-modal>-->
+        </template>
+        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -309,99 +308,35 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryCheckOrderList,
-    CheckOrder,
-    queryOrderInfo,
-    OrderItem,
-  } from '@/api/center';
+  import { queryPurchaseOrderList, PurchaseOrder } from '@/api/supplier';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import htmlToPdf from '@/utils/pdf';
-
-  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
-  type Column = TableColumnData & { checked?: true };
-
-  // 描述列表展示打印信息
-  const pdfSize = ref('medium');
-  let data = [
-    { label: '分发单标识', value: '' },
-    { label: '订单标识', value: '' },
-    { label: '任务单标识', value: '' },
-    { label: '区域中心仓库标识', value: '' },
-    { label: '分站标识', value: '' },
-    { label: '分发单状态', value: '' },
-    { label: '分发单类型', value: '' },
-    { label: '出站时间', value: '' },
-    { label: '入站时间', value: '' },
-  ];
-
-  const printVisible = ref(false);
-  const printClick = (checkOrder: CheckOrder) => {
-    data = [
-      { label: '分发单标识', value: checkOrder.id.toString() },
-      { label: '订单标识', value: checkOrder.orderId.toString() },
-      { label: '仓库标识', value: checkOrder.wareId.toString() },
-      { label: '任务单标识', value: checkOrder.workOrderId.toString() },
-      { label: '分站标识', value: checkOrder.stationId.toString() },
-      { label: '分发单状态',
-        value: t(`CheckOrder.form.status.${checkOrder.status}`)},
-      { label: '分发单类型',
-        value: t(`CheckOrder.form.type.${checkOrder.type}`) },
-      { label: '更新时间', value: checkOrder.inTime },
-      { label: '创建时间', value: checkOrder.outTime },
-    ];
-    setTimeout(() => {
-      printVisible.value = true;
-    }, 500);
-  };
-  const printBeforeOk = () => {
-    console.log('打印');
-    const text = '分发单详情';
-    // text:文件标题
-    htmlToPdf(text, '#capture');
-  };
-  const printCancel = () => {
-    printVisible.value = false;
-  };
-  // 描述列表展示打印信息
-
-  // 整个分发单列表打印
-  const downloadCheckOrderList = () =>{
-    const text = '所有分发单信息';
-    // text:文件标题
-    htmlToPdf(text, '#printTable');
-  }
-  // 整个分发单列表打印
+  import copy from '@/utils/objects';
 
   const generateFormModel = () => {
     return {
       id: '',
       wareId: '',
-      stationId: '',
-      status: null,
-      // 0:未分发,1:已分发,2:已入库
-      inTime: null,
-      outTime: null,
-    };
-  };
-  const generateorderItemModel = () => {
-    return {
-      orderItemList: [],
-    };
-  };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
-  const renderData = ref<CheckOrder[]>([]);
-  const orderItemData = ref<OrderItem[]>([]);
-  const formModel = ref(generateFormModel()); // 输入框要用的
-  const cloneColumns = ref<Column[]>([]);
-  const showColumns = ref<Column[]>([]);
 
-  const size = ref<SizeProps>('medium');
+      skuId: '',
+      skuName: '',
+      skuNum: '',
+      imgUrl: '',
+      skuPrice: '',
+
+      supplierId: '',
+      supplierName: '',
+      updateTime: null,
+      createTime: null,
+    };
+  };
+
+  const renderData = ref<PurchaseOrder[]>([]);
+  const formModel = ref(generateFormModel()); // 输入框要用的
+  const form = reactive(generateFormModel());
 
   const basePagination: Pagination = {
     current: 1,
@@ -411,157 +346,181 @@
     ...basePagination,
   });
 
-  // 密度选择
-  const densityList = computed(() => [
-    {
-      name: t('CheckOrder.size.mini'),
-      value: 'mini',
-    },
-    {
-      name: t('CheckOrder.size.small'),
-      value: 'small',
-    },
-    {
-      name: t('CheckOrder.size.medium'),
-      value: 'medium',
-    },
-    {
-      name: t('CheckOrder.size.large'),
-      value: 'large',
-    },
-  ]);
+  // 描述列表展示打印信息
+  const pdfSize = ref('medium');
+  const pdfData = reactive(generateFormModel());
+  let data = [
+    { label: '商品名称', value: formModel.value.skuName },
+    { label: '商品图片', value: formModel.value.imgUrl },
+    { label: '供应商名称', value: formModel.value.supplierName },
+    { label: '供应商ID', value: formModel.value.supplierId },
+    { label: '仓库ID', value: formModel.value.wareId },
+    { label: '创建时间', value: formModel.value.createTime },
+    { label: '商品价格', value: formModel.value.skuPrice },
+    { label: '更新时间', value: formModel.value.updateTime },
+    { label: '购货单ID', value: formModel.value.id },
+    { label: '商品ID', value: formModel.value.skuId },
+    { label: '商品数量', value: formModel.value.skuNum },
+  ];
 
+  const printVisible = ref(false);
+  const printClick = (purchaseOrder: PurchaseOrder) => {
+    copy(purchaseOrder, pdfData);
+    data = [
+      {
+        label: '购货单标识',
+        value: pdfData.id,
+      },
+      {
+        label: '区域中心仓库标识',
+        value: pdfData.wareId,
+      },
+      {
+        label: '供应商标识',
+        value: pdfData.supplierId,
+      },
+      {
+        label: '供应商名称',
+        value: pdfData.supplierName,
+      },
+      {
+        label: '创建时间',
+        value: pdfData.createTime,
+      },
+      {
+        label: '更新时间',
+        value: pdfData.updateTime,
+      },
+      {
+        label: '商品编号',
+        value: pdfData.skuId,
+      },
+      {
+        label: '商品数量',
+        value: pdfData.skuNum,
+      },
+      {
+        label: '商品名称',
+        value: pdfData.skuName,
+      },
+      {
+        label: '商品价格',
+        value: pdfData.skuPrice,
+      },
+      {
+        label: '商品图片',
+        value: pdfData.imgUrl,
+      },
+    ];
+    setTimeout(() => {
+      printVisible.value = true;
+    }, 20);
+  };
+  const printBeforeOk = () => {
+    console.log('打印');
+    const text = '购货单详情';
+    // text:文件标题
+    htmlToPdf(text, '#capture');
+  };
+  const printCancel = () => {
+    printVisible.value = false;
+  };
+  // 描述列表展示打印信息
+
+  // 表单展示打印信息
+  // const visible = ref(false);
+  // const handleClick = (purchaseOrder: PurchaseOrder) => {
+  //   console.log('~~~~~~~purchaseOrder:');
+  //   console.log(purchaseOrder);
+  //   copy(purchaseOrder, form);
+  //   visible.value = true;
+  // };
+  // const handleBeforeOk = async () => {
+  //   await console.log('ok');
+  //   visible.value = false;
+  // };
+  // const handleCancel = () => {
+  //   visible.value = false;
+  // };
+  // 表单展示打印信息
+
+  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
+  type Column = TableColumnData & { checked?: true };
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
+  const cloneColumns = ref<Column[]>([]);
+  const showColumns = ref<Column[]>([]);
+  const size = ref<SizeProps>('medium');
   // 展示分发单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('CheckOrder.columns.index'),
+      title: t('PurchaseOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('CheckOrder.columns.id'),
+      title: t('PurchaseOrder.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('CheckOrder.columns.orderId'),
-      dataIndex: 'orderId',
-    },
-    {
-      title: t('CheckOrder.columns.wareId'),
+      title: t('PurchaseOrder.columns.wareId'),
       dataIndex: 'wareId',
     },
     {
-      title: t('CheckOrder.columns.stationId'),
-      dataIndex: 'stationId',
-      slotName: 'stationId',
-    },
-    {
-      title: t('CheckOrder.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
-    {
-      title: t('CheckOrder.columns.type'),
-      dataIndex: 'type',
-      slotName: 'type',
-    },
-    {
-      title: t('CheckOrder.columns.inTime'),
-      dataIndex: 'inTime',
-    },
-    {
-      title: t('CheckOrder.columns.outTime'),
-      dataIndex: 'outTime',
-    },
-    // {
-    //   title: t('CheckOrder.columns.createTime'),
-    //   dataIndex: 'createTime',
-    // },{
-    //   title: t('CheckOrder.columns.updateTime'),
-    //   dataIndex: 'updateTime',
-    // },
-    {
-      title: t('CheckOrder.columns.operations'),
-      dataIndex: 'operations',
-      slotName: 'operations',
-    },
-  ]);
-  // 搜索状态输入框下拉列表
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('CheckOrder.form.status.OUT'),
-      value: 'OUT',
-    },
-    {
-      label: t('CheckOrder.form.status.IN'),
-      value: 'IN',
-    },
-    {
-      label: t('CheckOrder.form.status.CANCEL'),
-      value: 'CANCEL',
-    },
-  ]);
-
-  // 展示商品的表格内容
-  const Skucolumns = computed<TableColumnData[]>(() => [
-    {
-      title: t('CheckOrder.columns.skuId'),
+      title: t('PurchaseOrder.columns.skuId'),
       dataIndex: 'skuId',
     },
     {
-      title: t('CheckOrder.columns.skuName'),
+      title: t('PurchaseOrder.columns.skuName'),
       dataIndex: 'skuName',
       slotName: 'skuName',
     },
     {
-      title: t('CheckOrder.columns.skuImg'),
+      title: t('PurchaseOrder.columns.skuImg'),
       dataIndex: 'imgUrl',
       slotName: 'imgUrl',
     },
     {
-      title: t('CheckOrder.columns.skuNum'),
+      title: t('PurchaseOrder.columns.skuNum'),
       dataIndex: 'skuNum',
     },
     {
-      title: t('CheckOrder.columns.skuPrice'),
+      title: t('PurchaseOrder.columns.skuPrice'),
       dataIndex: 'skuPrice',
     },
+    {
+      title: t('PurchaseOrder.columns.supplierId'),
+      dataIndex: 'supplierId',
+    },
+    {
+      title: t('PurchaseOrder.columns.supplierName'),
+      dataIndex: 'supplierName',
+      slotName: 'supplierName',
+    },
+    {
+      title: t('PurchaseOrder.columns.createTime'),
+      dataIndex: 'createTime',
+    },
+    {
+      title: t('PurchaseOrder.columns.updateTime'),
+      dataIndex: 'updateTime',
+    },
+    {
+      title: t('PurchaseOrder.columns.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+    },
   ]);
-
-  // 展示商品详细信息
-  const visible = ref(false);
-  const findOrderItemData = async (orderId: number) => {
-    setLoading(true);
-    try {
-      const { data } = await queryOrderInfo(orderId);
-      console.log(data);
-      orderItemData.value = data.orderItemList; // data里的一个字段
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  const SkuDetail = (orderId: number) => {
-    findOrderItemData(orderId, generateorderItemModel.value);
-    visible.value = true;
-  };
-  const handleOk = () => {
-    visible.value = false;
-  };
-  const handleCancel = () => {
-    visible.value = false;
-  };
 
   // 分页
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<CheckOrder>
+    params: Partial<PurchaseOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryCheckOrderList(current, pageSize, params);
+      const { data } = await queryPurchaseOrderList(current, pageSize, params);
       console.log(data);
       renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
       pagination.current = current;
@@ -587,6 +546,25 @@
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
+  // 密度选择
+  const densityList = computed(() => [
+    {
+      name: t('PurchaseOrder.size.mini'),
+      value: 'mini',
+    },
+    {
+      name: t('PurchaseOrder.size.small'),
+      value: 'small',
+    },
+    {
+      name: t('PurchaseOrder.size.medium'),
+      value: 'medium',
+    },
+    {
+      name: t('PurchaseOrder.size.large'),
+      value: 'large',
+    },
+  ]);
   // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
@@ -658,7 +636,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CheckOrder',
+    name: 'PurchaseOrder',
   };
 </script>
 

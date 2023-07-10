@@ -502,11 +502,7 @@
   //   ]);
 
   // 分页
-  const fetchData = async (
-    current: number,
-    pageSize: number,
-    params: Partial<Role>
-  ) => {
+  const fetchData = async (current: number, pageSize: number, params: Role) => {
     setLoading(true);
     try {
       const { data } = await queryRoleList(current, pageSize, params);

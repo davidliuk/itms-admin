@@ -15,17 +15,11 @@ export interface PageRes<T> {
   total: number;
 }
 
-export function queryRoleList(
-  current: number,
-  limit: number,
-  params: Partial<Role>
-) {
-  return axios.post<PageRes<Role>>(`/admin/acl/role/${current}/${limit}`, {
-    params,
-    // paramsSerializer: (obj) => {
-    //   return qs.stringify(obj);
-    // },
-  });
+export function queryRoleList(current: number, limit: number, params: Role) {
+  return axios.post<PageRes<Role>>(
+    `/admin/acl/role/${current}/${limit}`,
+    params
+  );
 }
 
 export function toAssign(adminId: string) {

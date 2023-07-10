@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.LogCheckOrder']" />
-    <a-card class="general-card" :title="$t('menu.center.LogCheckOrder')">
+    <Breadcrumb :items="['menu.center', 'menu.center.StorageOrder']" />
+    <a-card class="general-card" :title="$t('menu.center.StorageOrder')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,68 +13,71 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('LogCheckOrder.form.id')">
-                  <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('LogCheckOrder.form.id.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('LogCheckOrder.form.wareId')"
+                  :label="$t('StorageOrder.form.wareId')"
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('LogCheckOrder.form.wareId.placeholder')"
+                    :placeholder="$t('StorageOrder.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="stationId"
-                  :label="$t('LogCheckOrder.form.stationId')"
+                  :label="$t('StorageOrder.form.stationId')"
                 >
                   <a-input
                     v-model="formModel.stationId"
+                    :placeholder="$t('StorageOrder.form.stationId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="supplierId"
+                  :label="$t('StorageOrder.form.supplierId')"
+                >
+                  <a-input
+                    v-model="formModel.supplierId"
                     :placeholder="
-                      $t('LogCheckOrder.form.stationId.placeholder')
+                      $t('StorageOrder.form.supplierId.placeholder')
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
+                  field="skuId"
+                  :label="$t('StorageOrder.form.skuId')"
+                >
+                  <a-input
+                    v-model="formModel.skuId"
+                    :placeholder="$t('StorageOrder.form.skuId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="skuName"
+                  :label="$t('StorageOrder.form.skuName')"
+                >
+                  <a-input
+                    v-model="formModel.skuName"
+                    :placeholder="$t('StorageOrder.form.skuName.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
                   field="status"
-                  :label="$t('LogCheckOrder.form.status')"
+                  :label="$t('StorageOrder.form.storageType')"
                 >
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formModel.storageType"
                     :options="statusOptions"
-                    :placeholder="$t('LogCheckOrder.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="inTime"
-                  :label="$t('LogCheckOrder.form.inTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.inTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="outTime"
-                  :label="$t('LogCheckOrder.form.outTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.outTime"
-                    style="width: 100%"
+                    :placeholder="$t('StorageOrder.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
@@ -91,13 +94,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('LogCheckOrder.form.search') }}
+              {{ $t('StorageOrder.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('LogCheckOrder.form.reset') }}
+              {{ $t('StorageOrder.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -113,12 +116,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('LogCheckOrder.operation.create') }}
+              {{ $t('StorageOrder.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('LogCheckOrder.operation.import') }}
+                  {{ $t('StorageOrder.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -129,20 +132,20 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="downloadStorageOrderList">
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('LogCheckOrder.operation.download') }}
+            {{ $t('StorageOrder.operation.download') }}列表
           </a-button>
-          <a-tooltip :content="$t('LogCheckOrder.actions.refresh')">
+          <a-tooltip :content="$t('StorageOrder.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('LogCheckOrder.actions.density')">
+            <a-tooltip :content="$t('StorageOrder.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -158,7 +161,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('LogCheckOrder.actions.columnSetting')">
+          <a-tooltip :content="$t('StorageOrder.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -197,6 +200,7 @@
 
       <!-- 表格 -->
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -212,38 +216,46 @@
         </template>
 
         <!-- 表格form里 -->
-        <!-- 状态 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'no_distribute'" class="circle"></span>
+        <!-- 类型 -->
+        <template #storageType="{ record }">
+          <span v-if="record.storageType === 'IN'" class="circle"></span>
           <span
-            v-else-if="record.status === 'distributed'"
+            v-else-if="record.storageType === 'OUT'"
             class="circle pass"
           ></span>
           <span
-            v-else-if="record.status === 'stocked'"
+            v-else-if="record.storageType === 'RETURN_IN'"
             class="circle pass"
           ></span>
-          {{ $t(`LogCheckOrder.form.status.${record.status}`) }}
+          <span
+            v-else-if="record.storageType === 'RETURN_OUT'"
+            class="circle pass"
+          ></span>
+          {{ $t(`StorageOrder.form.storageType.${record.storageType}`) }}
         </template>
         <!-- 表格form里 -->
 
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
+
+<!--          打印-->
+
+<!--          查看 商品详情-->
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            {{ $t('LogCheckOrder.columns.operations.view') }}
+            {{ $t('StorageOrder.columns.operations.view') }}
           </a-button>
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
             @cancel="handleCancel"
           >
-            <template #title> 验收单商品详情 </template>
+            <template #title> 出库单商品详情 </template>
             <a-table
               row-key="id"
               :loading="loading"
@@ -262,15 +274,6 @@
               </template>
             </a-table>
           </a-modal>
-
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteLogCheckOrderById(record.id)"
-          >
-            {{ $t('LogCheckOrder.columns.operations.delete') }}
-          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -283,41 +286,29 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryLogCheckOrderList,
-    LogCheckOrder,
+    queryStorageOrderList,
+    StorageOrder,
     queryOrderInfo,
-    OrderItem,
-    deleteLogCheckOrder,
-  } from '@/api/center';
+    OrderItem, CheckOrder
+  } from "@/api/center";
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import htmlToPdf from "@/utils/pdf";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  // Long id = LogCheckOrder.getId();
-  // Long wareId = LogCheckOrder.getWareId();
-  // Long stationId = LogCheckOrder.getStationId();
-  // CheckStatus status = LogCheckOrder.getStatus();
-  // Date inTime = LogCheckOrder.getInTime();
-  // Date outTime = LogCheckOrder.getOutTime();
-
   const generateFormModel = () => {
     return {
-      id: '',
       wareId: '',
+      skuId: '',
+      skuName: '',
       stationId: '',
-      status: null,
-      // 0:未分发,1:已分发,2:已入库
-      inTime: null,
-      outTime: null,
-      // skuId: '',
-      // skuName: '',
-      // skuNum: '',
-      // skuPrice: '',
+      supplierId: '',
+      storageType: null,
     };
   };
   const generateorderItemModel = () => {
@@ -327,7 +318,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<LogCheckOrder[]>([]);
+  const renderData = ref<StorageOrder[]>([]);
   const orderItemData = ref<OrderItem[]>([]);
   const formModel = ref(generateFormModel()); // 输入框要用的
   const cloneColumns = ref<Column[]>([]);
@@ -335,123 +326,144 @@
 
   const size = ref<SizeProps>('medium');
 
-  const basePagination: Pagination = {
-    current: 1,
-    pageSize: 20,
-  };
-  const pagination = reactive({
-    ...basePagination,
-  });
+  // 描述列表展示打印信息
+  const pdfSize = ref('medium');
+  const data = [
+    { label: '分发单标识', value: '' },
+    { label: '区域中心库房编号', value: '' },
+    { label: '订单编号', value: '' },
+    { label: '商品编号', value: '' },
+    { label: '商品名称', value: '' },
+    { label: '分站编号', value: '' },
+    { label: '分站名称', value: '' },
+    { label: '供应商编号', value: '' },
+    { label: '供货商名称', value: '' },
+    { label: '库存单类型', value: '' },
+    { label: '创建时间', value: '' },
+    { label: '更新时间', value: '' },
+  ];
+
+  // 描述列表展示打印信息
+
 
   // 密度选择
   const densityList = computed(() => [
     {
-      name: t('LogCheckOrder.size.mini'),
+      name: t('StorageOrder.size.mini'),
       value: 'mini',
     },
     {
-      name: t('LogCheckOrder.size.small'),
+      name: t('StorageOrder.size.small'),
       value: 'small',
     },
     {
-      name: t('LogCheckOrder.size.medium'),
+      name: t('StorageOrder.size.medium'),
       value: 'medium',
     },
     {
-      name: t('LogCheckOrder.size.large'),
+      name: t('StorageOrder.size.large'),
       value: 'large',
     },
   ]);
-
-  // 展示分发单信息表格
+  // 展示出库单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('LogCheckOrder.columns.index'),
+      title: t('StorageOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('LogCheckOrder.columns.id'),
+      title: t('StorageOrder.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('LogCheckOrder.columns.wareId'),
+      title: t('StorageOrder.columns.wareId'),
       dataIndex: 'wareId',
     },
     {
-      title: t('LogCheckOrder.columns.stationId'),
+      title: t('StorageOrder.columns.stationId'),
       dataIndex: 'stationId',
       slotName: 'stationId',
     },
     {
-      title: t('LogCheckOrder.columns.createTime'),
+      title: t('StorageOrder.columns.supplierName'),
+      dataIndex: 'stationName',
+      slotName: 'stationName',
+    },
+    {
+      title: t('StorageOrder.columns.supplierId'),
+      dataIndex: 'supplierId',
+      slotName: 'supplierId',
+    },
+    {
+      title: t('StorageOrder.columns.supplierId'),
+      dataIndex: 'supplierName',
+      slotName: 'supplierName',
+    },
+    {
+      title: t('StorageOrder.columns.storageType'),
+      dataIndex: 'storageType',
+      slotName: 'storageType',
+    },
+    {
+      title: t('StorageOrder.columns.createTime'),
       dataIndex: 'createTime',
     },
     {
-      title: t('LogCheckOrder.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
+      title: t('StorageOrder.columns.updateTime'),
+      dataIndex: 'updateTime',
     },
     {
-      title: t('LogCheckOrder.columns.operations'),
+      title: t('StorageOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-  // 搜索状态输入框下拉列表
+  // 搜索类型输入框下拉列表
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('LogCheckOrder.form.status.OUT'),
-      value: 'OUT',
-    },
-    {
-      label: t('LogCheckOrder.form.status.IN'),
+      label: t('StorageOrder.form.storageType.IN'),
       value: 'IN',
     },
     {
-      label: t('LogCheckOrder.form.status.CANCEL'),
-      value: 'CANCEL',
+      label: t('StorageOrder.form.storageType.OUT'),
+      value: 'OUT',
+    },
+    {
+      label: t('StorageOrder.form.storageType.RETURN_IN'),
+      value: 'RETURN_IN',
+    },
+    {
+      label: t('StorageOrder.form.storageType.RETURN_OUT'),
+      value: 'RETURN_OUT',
     },
   ]);
 
   // 展示商品的表格内容
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
-      title: t('LogCheckOrder.columns.skuId'),
+      title: t('StorageOrder.columns.skuId'),
       dataIndex: 'skuId',
     },
     {
-      title: t('LogCheckOrder.columns.skuName'),
+      title: t('StorageOrder.columns.skuName'),
       dataIndex: 'skuName',
       slotName: 'skuName',
     },
     {
-      title: t('LogCheckOrder.columns.skuImg'),
+      title: t('StorageOrder.columns.skuImg'),
       dataIndex: 'imgUrl',
       slotName: 'imgUrl',
     },
     {
-      title: t('LogCheckOrder.columns.skuNum'),
+      title: t('StorageOrder.columns.skuNum'),
       dataIndex: 'skuNum',
     },
     {
-      title: t('LogCheckOrder.columns.skuPrice'),
+      title: t('StorageOrder.columns.skuPrice'),
       dataIndex: 'skuPrice',
     },
   ]);
-
-  // 删除分发单
-  const deleteLogCheckOrderById = async (id: number) => {
-    setLoading(true);
-    try {
-      await deleteLogCheckOrder(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // 展示商品详细信息
   const visible = ref(false);
@@ -479,14 +491,23 @@
   };
 
   // 分页
+
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 20,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
+
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<LogCheckOrder>
+    params: Partial<StorageOrder>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryLogCheckOrderList(current, pageSize, params);
+      const { data } = await queryStorageOrderList(current, pageSize, params);
       console.log(data);
       renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
       pagination.current = current;
@@ -583,7 +604,7 @@
 
 <script lang="ts">
   export default {
-    name: 'LogCheckOrder',
+    name: 'StorageOrder',
   };
 </script>
 
