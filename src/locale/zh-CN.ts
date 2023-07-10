@@ -56,6 +56,10 @@ import localeMissionTable from '@/views/station/mission-table/locale/zh-CN';
 import localeCourierTable from '@/views/station/courier-table/locale/zh-CN';
 import localeStationInfo from '@/views/station/station-info/locale/zh-CN';
 import localeStationTable from '@/views/station/station-table/locale/zh-CN';
+import localeStationCheckOrder from '@/views/station/checkorder-table/locale/zh-CN';
+import localeReceiptTable from '@/views/station/receipt-table/locale/zh-CN';
+import localeTransferTable from '@/views/station/transfer-table/locale/zh-CN';
+import localeStorageTable from '@/views/station/storage-table/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -126,6 +130,11 @@ export default {
   ...localeCourierTable,
   ...localeStationInfo,
   ...localeStationTable,
+  ...localeStationCheckOrder,
+  ...localeReceiptTable,
+  ...localeTransferTable,
+  ...localeStorageTable,
+
 
   ...localeCheckOrder,
   ...localeTransferOrder,
@@ -133,4 +142,5 @@ export default {
   ...localeWorkOrder,
   ...localeStorageOrder,
   ...localPurchaseOrder,
+
 };

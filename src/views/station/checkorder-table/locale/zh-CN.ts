@@ -1,0 +1,63 @@
+export default {
+  'menu.station.CheckOrderTable': '分发单列表',
+  'CheckOrderTable.form.id': '分发单编号',
+  'CheckOrderTable.form.id.placeholder': '请输入分发单编号',
+  'CheckOrderTable.form.wareId': '中心库房编号',
+  'CheckOrderTable.form.wareId.placeholder': '请输入中心库房编号',
+  'CheckOrderTable.form.stationId': '分站编号',
+  'CheckOrderTable.form.stationId.placeholder': '请输入分站库房编号',
+  'CheckOrderTable.form.workOrderId': '任务单编号',
+  'CheckOrderTable.form.workOrderId.placeholder': '请输入任务单编号',
+  'CheckOrderTable.form.orderId': '分站编号',
+  'CheckOrderTable.form.orderId.placeholder': '请输入分站库房编号',
+  'CheckOrderTable.form.skuId': '商品编号',
+  'CheckOrderTable.form.skuId.placeholder': '请输入商品编号',
+  'CheckOrderTable.form.type': '类型',
+  'CheckOrderTable.form.type.DELIVERY': '送货',
+  'CheckOrderTable.form.type.RETURN': '退货',
+  'CheckOrderTable.form.type.EXCHANGE': '换货',
+  'CheckOrderTable.form.status': '状态',
+  'CheckOrderTable.form.status.OUT': '已出库',
+  'CheckOrderTable.form.status.IN': '已入库',
+  'CheckOrderTable.form.status.CANCEL': '取消',
+  'CheckOrderTable.form.search': '查询',
+  'CheckOrderTable.form.reset': '重置',
+  'CheckOrderTable.form.selectDefault': '全部',
+  'CheckOrderTable.operation.download': '下载',
+  'CheckOrderTable.form.createTime': '创建时间',
+
+  // 分发单号、分站库房名称、出库时间、状态、
+  // 商品代码、商品名称、计量单位，商品信息
+
+  'CheckOrderTable.columns.index': '#',
+  'CheckOrderTable.columns.id': '分发单编号',
+  'CheckOrderTable.columns.orderId': '所属订单编号',
+  'CheckOrderTable.columns.wareId': '中心库房编号',
+  'CheckOrderTable.columns.stationId': '分站编号',
+  'CheckOrderTable.columns.inTime': '入库时间',
+  'CheckOrderTable.columns.outTime': '出库时间',
+  'CheckOrderTable.columns.createTime': '创建时间',
+  'CheckOrderTable.columns.updateTime': '更新时间',
+
+  'CheckOrderTable.columns.status': '状态',
+  'CheckOrderTable.columns.type': '类型',
+  'CheckOrderTable.columns.operations': '操作',
+  'CheckOrderTable.columns.operations.view': '查看商品详情',
+  'CheckOrderTable.columns.operations.in': '订单入库',
+
+  'CheckOrderTable.columns.skuId': '商品编号',
+  'CheckOrderTable.columns.skuImg': '商品图片',
+  'CheckOrderTable.columns.skuNum': '商品数量',
+  'CheckOrderTable.columns.skuName': '商品名称',
+  'CheckOrderTable.columns.skuPrice': '商品价格',
+
+  // size
+  'CheckOrderTable.size.mini': '迷你',
+  'CheckOrderTable.size.small': '偏小',
+  'CheckOrderTable.size.medium': '中等',
+  'CheckOrderTable.size.large': '偏大',
+  // actions
+  'CheckOrderTable.actions.refresh': '刷新',
+  'CheckOrderTable.actions.density': '密度',
+  'CheckOrderTable.actions.columnSetting': '列设置',
+};
