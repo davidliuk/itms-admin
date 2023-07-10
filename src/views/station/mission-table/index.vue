@@ -271,7 +271,7 @@
               v-permission="['admin']"
               type="text"
               size="small"
-              @click="returnAssignById(record.id,record.stationId)"
+              @click="returnAssignById(record.id, record.stationId)"
             >
               {{ $t('missionTable.columns.operations.returnAssign') }}
             </a-button>
@@ -686,9 +686,9 @@
     console.log(assignWorkOrderId.value);
     console.log(assignCourierId.value);
     console.log('++++++++++++++++++++++++++');
-    if(deliverOrReturn.value){
-      returnAssign(assignWorkOrderId.value, assignCourierId.value)
-    }else{
+    if (deliverOrReturn.value) {
+      returnAssign(assignWorkOrderId.value, assignCourierId.value);
+    } else {
       assign(assignWorkOrderId.value, assignCourierId.value);
     }
     handleClose();
@@ -741,7 +741,6 @@
     };
     fetchCourierData(pagination.current, pagination.pageSize, params);
   };
-
 
   // 删除
   const deleteById = async (id: number) => {

@@ -76,7 +76,6 @@ export function returnAssign(workOrderId: number, courierId: number) {
   );
 }
 
-
 // 分站
 export interface Station {
   // 内容不影响
@@ -221,7 +220,7 @@ export function queryReceiptList(
 ) {
   return axios.post<PageRes<Receipt>>(
     `/admin/sys/receipt/${current}/${limit}`,
-      params,
+    params
   );
 }
 

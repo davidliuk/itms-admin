@@ -135,12 +135,10 @@ export default {
   ...localeTransferTable,
   ...localeStorageTable,
 
-
   ...localeCheckOrder,
   ...localeTransferOrder,
   ...localeLogisticsCheckOrder,
   ...localeWorkOrder,
   ...localeStorageOrder,
   ...localPurchaseOrder,
-
 };

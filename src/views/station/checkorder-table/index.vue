@@ -13,9 +13,7 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="id"
-                  :label="$t('CheckOrderTable.form.id')">
+                <a-form-item field="id" :label="$t('CheckOrderTable.form.id')">
                   <a-input
                     v-model="formModel.id"
                     :placeholder="$t('CheckOrderTable.form.id.placeholder')"
@@ -55,22 +53,24 @@
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('CheckOrderTable.form.orderId.placeholder')"
+                    :placeholder="
+                      $t('CheckOrderTable.form.orderId.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
-<!--              <a-col :span="8">-->
-<!--              <a-form-item-->
-<!--                field="type"-->
-<!--                :label="$t('CheckOrderTable.form.type')"-->
-<!--              >-->
-<!--                <a-select-->
-<!--                  v-model="formModel.type"-->
-<!--                  :options="typeOptions"-->
-<!--                  :placeholder="$t('CheckOrderTable.form.selectDefault')"-->
-<!--                />-->
-<!--              </a-form-item>-->
-<!--            </a-col>-->
+              <!--              <a-col :span="8">-->
+              <!--              <a-form-item-->
+              <!--                field="type"-->
+              <!--                :label="$t('CheckOrderTable.form.type')"-->
+              <!--              >-->
+              <!--                <a-select-->
+              <!--                  v-model="formModel.type"-->
+              <!--                  :options="typeOptions"-->
+              <!--                  :placeholder="$t('CheckOrderTable.form.selectDefault')"-->
+              <!--                />-->
+              <!--              </a-form-item>-->
+              <!--            </a-col>-->
               <a-col :span="8">
                 <a-form-item
                   field="status"
@@ -83,7 +83,6 @@
                   />
                 </a-form-item>
               </a-col>
-
             </a-row>
           </a-form>
         </a-col>
@@ -270,7 +269,7 @@
     return {
       id: '',
       orderId: '',
-      workOrderId:'',
+      workOrderId: '',
       stationId: '',
       status: null,
       // type:null,

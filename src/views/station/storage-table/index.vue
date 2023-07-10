@@ -13,10 +13,7 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="id"
-                  :label="$t('StorageTable.form.id')"
-                >
+                <a-form-item field="id" :label="$t('StorageTable.form.id')">
                   <a-input
                     v-model="formModel.id"
                     :placeholder="$t('StorageTable.form.id.placeholder')"
@@ -80,7 +77,7 @@
       <a-row style="margin-bottom: 16px">
         <!-- 查找重置按钮 -->
         <a-col :span="12">
-          <a-space >
+          <a-space>
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
@@ -108,7 +105,7 @@
           </a-button>
           <a-tooltip :content="$t('StorageTable.actions.refresh')">
             <div class="action-icon" @click="search"
-            ><icon-refresh size="18"
+              ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
@@ -249,353 +246,353 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, reactive, watch, nextTick } from 'vue';
-import { useI18n } from 'vue-i18n';
-import useLoading from '@/hooks/loading';
-import {
-  queryStorageOrderList,
-  StorageOrder,
-  queryOrderInfo,
-  OrderItem,
-} from '@/api/center';
-import { Pagination } from '@/types/global';
-import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
-import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-import cloneDeep from 'lodash/cloneDeep';
-import Sortable from 'sortablejs';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import useLoading from '@/hooks/loading';
+  import {
+    queryStorageOrderList,
+    StorageOrder,
+    queryOrderInfo,
+    OrderItem,
+  } from '@/api/center';
+  import { Pagination } from '@/types/global';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import cloneDeep from 'lodash/cloneDeep';
+  import Sortable from 'sortablejs';
 
-type SizeProps = 'mini' | 'small' | 'medium' | 'large';
-type Column = TableColumnData & { checked?: true };
+  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
+  type Column = TableColumnData & { checked?: true };
 
-const generateFormModel = () => {
-  return {
-    wareId: '',
-    skuId: '',
-    skuName: '',
-    stationId: '',
-    storageType: null,
+  const generateFormModel = () => {
+    return {
+      wareId: '',
+      skuId: '',
+      skuName: '',
+      stationId: '',
+      storageType: null,
+    };
   };
-};
-const generateorderItemModel = () => {
-  return {
-    orderItemList: [],
+  const generateorderItemModel = () => {
+    return {
+      orderItemList: [],
+    };
   };
-};
-const { loading, setLoading } = useLoading(true);
-const { t } = useI18n();
-const renderData = ref<StorageOrder[]>([]);
-const orderItemData = ref<OrderItem[]>([]);
-const formModel = ref(generateFormModel()); // 输入框要用的
-const cloneColumns = ref<Column[]>([]);
-const showColumns = ref<Column[]>([]);
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
+  const renderData = ref<StorageOrder[]>([]);
+  const orderItemData = ref<OrderItem[]>([]);
+  const formModel = ref(generateFormModel()); // 输入框要用的
+  const cloneColumns = ref<Column[]>([]);
+  const showColumns = ref<Column[]>([]);
 
-const size = ref<SizeProps>('medium');
+  const size = ref<SizeProps>('medium');
 
-// 描述列表展示打印信息
-const pdfSize = ref('medium');
-const data = [
-  { label: '分发单标识', value: '' },
-  { label: '区域中心库房编号', value: '' },
-  { label: '订单编号', value: '' },
-  { label: '商品编号', value: '' },
-  { label: '商品名称', value: '' },
-  { label: '分站编号', value: '' },
-  { label: '分站名称', value: '' },
-  { label: '供应商编号', value: '' },
-  { label: '供货商名称', value: '' },
-  { label: '库存单类型', value: '' },
-  { label: '创建时间', value: '' },
-  { label: '更新时间', value: '' },
-];
+  // 描述列表展示打印信息
+  const pdfSize = ref('medium');
+  const data = [
+    { label: '分发单标识', value: '' },
+    { label: '区域中心库房编号', value: '' },
+    { label: '订单编号', value: '' },
+    { label: '商品编号', value: '' },
+    { label: '商品名称', value: '' },
+    { label: '分站编号', value: '' },
+    { label: '分站名称', value: '' },
+    { label: '供应商编号', value: '' },
+    { label: '供货商名称', value: '' },
+    { label: '库存单类型', value: '' },
+    { label: '创建时间', value: '' },
+    { label: '更新时间', value: '' },
+  ];
 
-// 描述列表展示打印信息
+  // 描述列表展示打印信息
 
-// 密度选择
-const densityList = computed(() => [
-  {
-    name: t('StorageTable.size.mini'),
-    value: 'mini',
-  },
-  {
-    name: t('StorageTable.size.small'),
-    value: 'small',
-  },
-  {
-    name: t('StorageTable.size.medium'),
-    value: 'medium',
-  },
-  {
-    name: t('StorageTable.size.large'),
-    value: 'large',
-  },
-]);
-// 展示出库单信息表格
-const columns = computed<TableColumnData[]>(() => [
-  {
-    title: t('StorageTable.columns.index'),
-    dataIndex: 'index',
-    slotName: 'index',
-  },
-  {
-    title: t('StorageTable.columns.id'),
-    dataIndex: 'id',
-  },
-  {
-    title: t('StorageTable.columns.wareId'),
-    dataIndex: 'wareId',
-  },
-  {
-    title: t('StorageTable.columns.stationId'),
-    dataIndex: 'stationId',
-  },
-  {
-    title: t('StorageTable.columns.stationName'),
-    dataIndex: 'stationName',
-  },
-  {
-    title: t('StorageTable.columns.storageType'),
-    dataIndex: 'storageType',
-    slotName: 'storageType',
-  },
-  // {
-  //   title: t('StorageTable.columns.supplierId'),
-  //   dataIndex: 'supplierId',
-  //   slotName: 'supplierId',
-  // },
-  // {
-  //   title: t('StorageTable.columns.supplierId'),
-  //   dataIndex: 'supplierName',
-  //   slotName: 'supplierName',
-  // },
-  // {
-  //   title: t('StorageTable.columns.createTime'),
-  //   dataIndex: 'createTime',
-  // },
-  // {
-  //   title: t('StorageTable.columns.updateTime'),
-  //   dataIndex: 'updateTime',
-  // },
-  {
-    title: t('StorageTable.columns.operations'),
-    dataIndex: 'operations',
-    slotName: 'operations',
-  },
-]);
-// 搜索类型输入框下拉列表
-const statusOptions = computed<SelectOptionData[]>(() => [
-  {
-    label: t('StorageTable.form.storageType.IN'),
-    value: 'IN',
-  },
-  {
-    label: t('StorageTable.form.storageType.OUT'),
-    value: 'OUT',
-  },
-  {
-    label: t('StorageTable.form.storageType.RETURN_IN'),
-    value: 'RETURN_IN',
-  },
-  {
-    label: t('StorageTable.form.storageType.RETURN_OUT'),
-    value: 'RETURN_OUT',
-  },
-]);
+  // 密度选择
+  const densityList = computed(() => [
+    {
+      name: t('StorageTable.size.mini'),
+      value: 'mini',
+    },
+    {
+      name: t('StorageTable.size.small'),
+      value: 'small',
+    },
+    {
+      name: t('StorageTable.size.medium'),
+      value: 'medium',
+    },
+    {
+      name: t('StorageTable.size.large'),
+      value: 'large',
+    },
+  ]);
+  // 展示出库单信息表格
+  const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('StorageTable.columns.index'),
+      dataIndex: 'index',
+      slotName: 'index',
+    },
+    {
+      title: t('StorageTable.columns.id'),
+      dataIndex: 'id',
+    },
+    {
+      title: t('StorageTable.columns.wareId'),
+      dataIndex: 'wareId',
+    },
+    {
+      title: t('StorageTable.columns.stationId'),
+      dataIndex: 'stationId',
+    },
+    {
+      title: t('StorageTable.columns.stationName'),
+      dataIndex: 'stationName',
+    },
+    {
+      title: t('StorageTable.columns.storageType'),
+      dataIndex: 'storageType',
+      slotName: 'storageType',
+    },
+    // {
+    //   title: t('StorageTable.columns.supplierId'),
+    //   dataIndex: 'supplierId',
+    //   slotName: 'supplierId',
+    // },
+    // {
+    //   title: t('StorageTable.columns.supplierId'),
+    //   dataIndex: 'supplierName',
+    //   slotName: 'supplierName',
+    // },
+    // {
+    //   title: t('StorageTable.columns.createTime'),
+    //   dataIndex: 'createTime',
+    // },
+    // {
+    //   title: t('StorageTable.columns.updateTime'),
+    //   dataIndex: 'updateTime',
+    // },
+    {
+      title: t('StorageTable.columns.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+    },
+  ]);
+  // 搜索类型输入框下拉列表
+  const statusOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('StorageTable.form.storageType.IN'),
+      value: 'IN',
+    },
+    {
+      label: t('StorageTable.form.storageType.OUT'),
+      value: 'OUT',
+    },
+    {
+      label: t('StorageTable.form.storageType.RETURN_IN'),
+      value: 'RETURN_IN',
+    },
+    {
+      label: t('StorageTable.form.storageType.RETURN_OUT'),
+      value: 'RETURN_OUT',
+    },
+  ]);
 
-// 展示商品的表格内容
-const Skucolumns = computed<TableColumnData[]>(() => [
-  {
-    title: t('StorageTable.columns.skuId'),
-    dataIndex: 'skuId',
-  },
-  {
-    title: t('StorageTable.columns.skuName'),
-    dataIndex: 'skuName',
-    slotName: 'skuName',
-  },
-  {
-    title: t('StorageTable.columns.skuImg'),
-    dataIndex: 'imgUrl',
-    slotName: 'imgUrl',
-  },
-  {
-    title: t('StorageTable.columns.skuNum'),
-    dataIndex: 'skuNum',
-  },
-  {
-    title: t('StorageTable.columns.skuPrice'),
-    dataIndex: 'skuPrice',
-  },
-]);
+  // 展示商品的表格内容
+  const Skucolumns = computed<TableColumnData[]>(() => [
+    {
+      title: t('StorageTable.columns.skuId'),
+      dataIndex: 'skuId',
+    },
+    {
+      title: t('StorageTable.columns.skuName'),
+      dataIndex: 'skuName',
+      slotName: 'skuName',
+    },
+    {
+      title: t('StorageTable.columns.skuImg'),
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
+    },
+    {
+      title: t('StorageTable.columns.skuNum'),
+      dataIndex: 'skuNum',
+    },
+    {
+      title: t('StorageTable.columns.skuPrice'),
+      dataIndex: 'skuPrice',
+    },
+  ]);
 
-// 展示商品详细信息
-const visible = ref(false);
-const findOrderItemData = async (orderId: number) => {
-  setLoading(true);
-  try {
-    const { data } = await queryOrderInfo(orderId);
-    console.log(data);
-    orderItemData.value = data.orderItemList; // data里的一个字段
-  } catch (err) {
-    // you can report use errorHandler or other
-  } finally {
-    setLoading(false);
-  }
-};
-const SkuDetail = (orderId: number) => {
-  findOrderItemData(orderId, generateorderItemModel.value);
-  visible.value = true;
-};
-const handleOk = () => {
-  visible.value = false;
-};
-const handleCancel = () => {
-  visible.value = false;
-};
+  // 展示商品详细信息
+  const visible = ref(false);
+  const findOrderItemData = async (orderId: number) => {
+    setLoading(true);
+    try {
+      const { data } = await queryOrderInfo(orderId);
+      console.log(data);
+      orderItemData.value = data.orderItemList; // data里的一个字段
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  const SkuDetail = (orderId: number) => {
+    findOrderItemData(orderId, generateorderItemModel.value);
+    visible.value = true;
+  };
+  const handleOk = () => {
+    visible.value = false;
+  };
+  const handleCancel = () => {
+    visible.value = false;
+  };
 
-// 分页
+  // 分页
 
-const basePagination: Pagination = {
-  current: 1,
-  pageSize: 10,
-};
-const pagination = reactive({
-  ...basePagination,
-});
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 10,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
 
-const fetchData = async (
-  current: number,
-  pageSize: number,
-  params: Partial<StorageOrder>
-) => {
-  setLoading(true);
-  try {
-    const { data } = await queryStorageOrderList(current, pageSize, params);
-    console.log(data);
-    renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
-    pagination.current = current;
-    pagination.total = data.total;
-  } catch (err) {
-    // you can report use errorHandler or other
-  } finally {
-    setLoading(false);
-  }
-};
+  const fetchData = async (
+    current: number,
+    pageSize: number,
+    params: Partial<StorageOrder>
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryStorageOrderList(current, pageSize, params);
+      console.log(data);
+      renderData.value = data.records; // 整个列表，上面ref的也是整个列表，
+      pagination.current = current;
+      pagination.total = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const search = () => {
-  fetchData(basePagination.current, basePagination.pageSize, formModel.value);
-};
-const onPageChange = (current: number) => {
-  fetchData(current, basePagination.pageSize, formModel.value);
-};
+  const search = () => {
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+  const onPageChange = (current: number) => {
+    fetchData(current, basePagination.pageSize, formModel.value);
+  };
 
-fetchData(pagination.current, pagination.pageSize, formModel.value);
-// 重置
-const reset = () => {
-  formModel.value = generateFormModel();
-  fetchData(basePagination.current, basePagination.pageSize, formModel.value);
-};
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
+  // 重置
+  const reset = () => {
+    formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
 
-// 设置密度
-const handleSelectDensity = (
-  val: string | number | Record<string, any> | undefined,
-  e: Event
-) => {
-  size.value = val as SizeProps;
-};
+  // 设置密度
+  const handleSelectDensity = (
+    val: string | number | Record<string, any> | undefined,
+    e: Event
+  ) => {
+    size.value = val as SizeProps;
+  };
 
-// 改变内容
-const handleChange = (
-  checked: boolean | (string | boolean | number)[],
-  column: Column,
-  index: number
-) => {
-  if (!checked) {
-    cloneColumns.value = showColumns.value.filter(
-      (item) => item.dataIndex !== column.dataIndex
-    );
-  } else {
-    cloneColumns.value.splice(index, 0, column);
-  }
-};
+  // 改变内容
+  const handleChange = (
+    checked: boolean | (string | boolean | number)[],
+    column: Column,
+    index: number
+  ) => {
+    if (!checked) {
+      cloneColumns.value = showColumns.value.filter(
+        (item) => item.dataIndex !== column.dataIndex
+      );
+    } else {
+      cloneColumns.value.splice(index, 0, column);
+    }
+  };
 
-const exchangeArray = <T extends Array<any>>(
-  array: T,
-  beforeIdx: number,
-  newIdx: number,
-  isDeep = false
-): T => {
-  const newArray = isDeep ? cloneDeep(array) : array;
-  if (beforeIdx > -1 && newIdx > -1) {
-    // 先替换后面的，然后拿到替换的结果替换前面的
-    newArray.splice(
-      beforeIdx,
-      1,
-      newArray.splice(newIdx, 1, newArray[beforeIdx]).pop()
-    );
-  }
-  return newArray;
-};
+  const exchangeArray = <T extends Array<any>>(
+    array: T,
+    beforeIdx: number,
+    newIdx: number,
+    isDeep = false
+  ): T => {
+    const newArray = isDeep ? cloneDeep(array) : array;
+    if (beforeIdx > -1 && newIdx > -1) {
+      // 先替换后面的，然后拿到替换的结果替换前面的
+      newArray.splice(
+        beforeIdx,
+        1,
+        newArray.splice(newIdx, 1, newArray[beforeIdx]).pop()
+      );
+    }
+    return newArray;
+  };
 
-const popupVisibleChange = (val: boolean) => {
-  if (val) {
-    nextTick(() => {
-      const el = document.getElementById('tableSetting') as HTMLElement;
-      const sortable = new Sortable(el, {
-        onEnd(e: any) {
-          const { oldIndex, newIndex } = e;
-          exchangeArray(cloneColumns.value, oldIndex, newIndex);
-          exchangeArray(showColumns.value, oldIndex, newIndex);
-        },
+  const popupVisibleChange = (val: boolean) => {
+    if (val) {
+      nextTick(() => {
+        const el = document.getElementById('tableSetting') as HTMLElement;
+        const sortable = new Sortable(el, {
+          onEnd(e: any) {
+            const { oldIndex, newIndex } = e;
+            exchangeArray(cloneColumns.value, oldIndex, newIndex);
+            exchangeArray(showColumns.value, oldIndex, newIndex);
+          },
+        });
       });
-    });
-  }
-};
+    }
+  };
 
-watch(
-  () => columns.value,
-  (val) => {
-    cloneColumns.value = cloneDeep(val);
-    cloneColumns.value.forEach((item, index) => {
-      item.checked = true;
-    });
-    showColumns.value = cloneDeep(cloneColumns.value);
-  },
-  { deep: true, immediate: true }
-);
+  watch(
+    () => columns.value,
+    (val) => {
+      cloneColumns.value = cloneDeep(val);
+      cloneColumns.value.forEach((item, index) => {
+        item.checked = true;
+      });
+      showColumns.value = cloneDeep(cloneColumns.value);
+    },
+    { deep: true, immediate: true }
+  );
 </script>
 
 <script lang="ts">
-export default {
-  name: 'StorageTable',
-};
+  export default {
+    name: 'StorageTable',
+  };
 </script>
 
 <style scoped lang="less">
-.container {
-  padding: 0 20px 20px 20px;
-}
-:deep(.arco-table-th) {
-  &:last-child {
-    .arco-table-th-item-title {
-      margin-left: 16px;
+  .container {
+    padding: 0 20px 20px 20px;
+  }
+  :deep(.arco-table-th) {
+    &:last-child {
+      .arco-table-th-item-title {
+        margin-left: 16px;
+      }
     }
   }
-}
-.action-icon {
-  margin-left: 12px;
-  cursor: pointer;
-}
-.active {
-  color: #0960bd;
-  background-color: #e3f4fc;
-}
-.setting {
-  display: flex;
-  align-items: center;
-  width: 200px;
-  .title {
+  .action-icon {
     margin-left: 12px;
     cursor: pointer;
   }
-}
+  .active {
+    color: #0960bd;
+    background-color: #e3f4fc;
+  }
+  .setting {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    .title {
+      margin-left: 12px;
+      cursor: pointer;
+    }
+  }
 </style>
