@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.acl', 'menu.acl.role']" />
-    <a-card class="general-card" :title="$t('menu.acl.role')">
+    <Breadcrumb :items="['menu.product', 'menu.product.category']" />
+    <a-card class="general-card" :title="$t('menu.product.category')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
@@ -13,46 +13,46 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('role.form.id')">
+                <a-form-item field="id" :label="$t('category.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('role.form.id.placeholder')"
+                    :placeholder="$t('category.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('role.form.name')">
+                <a-form-item field="name" :label="$t('category.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('role.form.name.placeholder')"
+                    :placeholder="$t('category.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="code" :label="$t('role.form.code')">
+                <a-form-item field="code" :label="$t('category.form.code')">
                   <a-input
                     v-model="formModel.code"
-                    :placeholder="$t('role.form.code.placeholder')"
+                    :placeholder="$t('category.form.code.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('role.form.remark')">
+                <a-form-item field="remark" :label="$t('category.form.remark')">
                   <a-input
                     v-model="formModel.remark"
-                    :placeholder="$t('role.form.remark.placeholder')"
+                    :placeholder="$t('category.form.remark.placeholder')"
                   />
                   <!-- <a-select
                     v-model="formModel.remark"
                     :options="filterTypeOptions"
-                    :placeholder="$t('role.form.selectDefault')"
+                    :placeholder="$t('category.form.selectDefault')"
                   /> -->
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="createTime"
-                  :label="$t('role.form.createTime')"
+                  :label="$t('category.form.createTime')"
                 >
                   <a-range-picker
                     v-model="formModel.createTime"
@@ -63,7 +63,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="updateTime"
-                  :label="$t('role.form.updateTime')"
+                  :label="$t('category.form.updateTime')"
                 >
                   <a-range-picker
                     v-model="formModel.updateTime"
@@ -74,12 +74,12 @@
               <!-- <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('role.form.status')"
+                  :label="$t('category.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('role.form.selectDefault')"
+                    :placeholder="$t('category.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col> -->
@@ -96,13 +96,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('role.form.search') }}
+              {{ $t('category.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('role.form.reset') }}
+              {{ $t('category.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -118,12 +118,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('role.operation.create') }}
+              {{ $t('category.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('role.operation.import') }}
+                  {{ $t('category.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -138,16 +138,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('role.operation.download') }}
+            {{ $t('category.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('role.actions.refresh')">
+          <a-tooltip :content="$t('category.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('role.actions.density')">
+            <a-tooltip :content="$t('category.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -163,7 +163,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('role.actions.columnSetting')">
+          <a-tooltip :content="$t('category.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -202,7 +202,7 @@
 
       <a-modal
         :visible="isCreating || isUpdating"
-        :title="$t(`role.form.title.${isCreating ? 'create' : 'update'}`)"
+        :title="$t(`category.form.title.${isCreating ? 'create' : 'update'}`)"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
       >
@@ -211,18 +211,18 @@
             v-for="(val, key) in form"
             :key="key"
             :field="key"
-            :label="$t(`role.form.${key}`)"
+            :label="$t(`category.form.${key}`)"
           >
             <a-input
               v-model="form[key]"
-              :placeholder="$t(`role.form.${key}.placeholder`)"
+              :placeholder="$t(`category.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
       </a-modal>
       <a-modal
         :visible="isAssigning"
-        :title="$t('role.form.title.assign')"
+        :title="$t('category.form.title.assign')"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
       >
@@ -265,7 +265,13 @@
         <!-- <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template> -->
-
+        <template #imgUrl="{ record }">
+          <img
+            :src="record.imgUrl"
+            alt="Category Image"
+            style="width: 100px; height: 100px"
+          />
+        </template>
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
@@ -278,31 +284,20 @@
             v-else-if="record.status === 'stocked'"
             class="circle pass"
           ></span>
-          {{ $t(`role.form.status.${record.status}`) }}
+          {{ $t(`category.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
-          <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('role.columns.operations.view') }}
-          </a-button>
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="assignRole(record)"
+            @click="deleteCategoryById(record.id)"
           >
-            {{ $t('role.columns.operations.assign') }}
-          </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteARoleById(record.id)"
-          >
-            {{ $t('role.columns.operations.delete') }}
+            {{ $t('category.columns.operations.delete') }}
           </a-button>
           <a-button
             v-permission="['admin']"
@@ -310,7 +305,7 @@
             size="small"
             @click="handleUpdateClick(record)"
           >
-            {{ $t('role.columns.operations.update') }}
+            {{ $t('category.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -326,9 +321,9 @@
   import {
     Permission,
     queryPermissionList,
-    queryRoleList,
-    Role,
-  } from '@/api/acl';
+    queryCategoryList,
+    Category,
+  } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -343,8 +338,9 @@
     return {
       id: '',
       name: '',
-      code: '',
-      remark: '',
+      imgUrl: '',
+      status: 0,
+      sort: 0,
       createTime: null,
       updateTime: null,
     };
@@ -376,8 +372,8 @@
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (role: Role) => {
-    copy(role, form);
+  const handleUpdateClick = (category: Category) => {
+    copy(category, form);
     // form = admin;
     isUpdating.value = true;
   };
@@ -389,9 +385,9 @@
     //   handleClose();
     // }, 3000);
     if (isCreating.value) {
-      //   addRole(form as unknown as Role);
+      //   addCategory(form as unknown as Category);
       // } else {
-      //   updateRole(form as unknown as Role);
+      //   updateCategory(form as unknown as Category);
     }
     handleClose();
   };
@@ -401,7 +397,7 @@
     isAssigning.value = false;
     form = reactive(generateFormModel());
   };
-  const assignRole = async (role: Role) => {
+  const assignCategory = async (category: Category) => {
     isAssignListFinished.value = false;
     isAssigning.value = true;
     const { data } = await queryPermissionList();
@@ -410,7 +406,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Role[]>([]);
+  const renderData = ref<Category[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -426,74 +422,79 @@
   });
   const densityList = computed(() => [
     {
-      name: t('role.size.mini'),
+      name: t('category.size.mini'),
       value: 'mini',
     },
     {
-      name: t('role.size.small'),
+      name: t('category.size.small'),
       value: 'small',
     },
     {
-      name: t('role.size.medium'),
+      name: t('category.size.medium'),
       value: 'medium',
     },
     {
-      name: t('role.size.large'),
+      name: t('category.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     // {
-    //   title: t('role.columns.index'),
+    //   title: t('category.columns.index'),
     //   dataIndex: 'index',
     //   slotName: 'index',
     // },
     {
-      title: t('role.columns.id'),
+      title: t('category.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('role.columns.name'),
+      title: t('category.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('role.columns.code'),
-      dataIndex: 'code',
+      title: t('category.columns.imgUrl'),
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
     },
     {
-      title: t('role.columns.remark'),
-      dataIndex: 'remark',
+      title: t('category.columns.status'),
+      dataIndex: 'status',
     },
     {
-      title: t('role.columns.createTime'),
+      title: t('category.columns.sort'),
+      dataIndex: 'sort',
+    },
+    {
+      title: t('category.columns.createTime'),
       dataIndex: 'createTime',
     },
     {
-      title: t('role.columns.updateTime'),
+      title: t('category.columns.updateTime'),
       dataIndex: 'updateTime',
     },
     // {
-    //   title: t('role.columns.code'),
+    //   title: t('category.columns.code'),
     //   dataIndex: 'code',
     //   slotName: 'code',
     // },
     // {
-    //   title: t('role.columns.sku_name'),
+    //   title: t('category.columns.sku_name'),
     //   dataIndex: 'sku_name',
     //   slotName: 'sku_name',
     // },
     // {
-    //   title: t('role.columns.sku_num'),
+    //   title: t('category.columns.sku_num'),
     //   dataIndex: 'sku_num',
     // },
     // {
-    //   title: t('role.columns.status'),
+    //   title: t('category.columns.status'),
     //   dataIndex: 'status',
     //   slotName: 'status',
     // },
     {
-      title: t('role.columns.operations'),
+      title: t('category.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
@@ -502,20 +503,20 @@
   // //过滤器
   //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
   //     {
-  //       label: t('role.form.filterType.artificial'),
+  //       label: t('category.form.filterType.artificial'),
   //       value: 'artificial',
   //     },
   //     {
-  //       label: t('role.form.filterType.rules'),
+  //       label: t('category.form.filterType.rules'),
   //       value: 'rules',
   //     },
   //   ]);
 
   // 分页
-  const fetchData = async (current: number, pageSize: number, params: Role) => {
+  const fetchData = async (current: number, pageSize: number, params: Category) => {
     setLoading(true);
     try {
-      const { data } = await queryRoleList(current, pageSize, params);
+      const { data } = await queryCategoryList(current, pageSize, params);
       renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
@@ -608,7 +609,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Role',
+    name: 'Category',
   };
 </script>
 

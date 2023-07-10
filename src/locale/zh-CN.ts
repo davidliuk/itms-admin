@@ -36,6 +36,10 @@ import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
 import localePermission from '@/views/acl/permission/locale/zh-CN';
 
+import localeCategory from '@/views/product/category/locale/zh-CN';
+import localeAttrGroup from '@/views/product/attr-group/locale/zh-CN';
+import localeSku from '@/views/product/sku/locale/zh-CN';
+
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
 import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN'; // 库存
 import localeCenterTransferOrder from '@/views/center/transfer_order/locale/zh-CN';
@@ -77,6 +81,7 @@ export default {
   'menu.center': '区域中心仓库',
   'menu.logistics': '运输公司',
   'menu.acl': '权限管理',
+  'menu.product': '商品管理',
   'menu.supplier': '供应商管理',
   ...localeSettings,
   ...localeMessageBox,
@@ -112,6 +117,10 @@ export default {
   ...localeAdmin,
   ...localeRole,
   ...localePermission,
+
+  ...localeCategory,
+  ...localeAttrGroup,
+  ...localeSku,
 
   ...localeMissionTable,
   ...localeCourierTable,
