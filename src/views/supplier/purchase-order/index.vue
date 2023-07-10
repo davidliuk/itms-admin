@@ -223,14 +223,13 @@
 
         <!-- 查看 -->
         <template #operations="{ record }">
-          <a-button @click="handleClick(record)">Open Modal</a-button>
+          <a-button @click="printClick(record)">详情</a-button>
           <a-modal
-            :visible="visible"
+            :visible="printVisible"
             title="购货单详情"
-            @cancel="handleCancel"
-            @before-ok="handleBeforeOk"
-
-          >
+            @cancel="printCancel"
+            @before-ok="printBeforeOk"
+            >间距
             <a-radio-group v-model="pdfSize" type="button">
               <a-radio value="mini">mini</a-radio>
               <a-radio value="small">small</a-radio>
@@ -244,8 +243,8 @@
               :size="pdfSize"
               title="User Info"
               :column="1"
-              >
             >
+              >
               <a-descriptions-item
                 v-for="item of data"
                 :key="item.value"
@@ -253,10 +252,10 @@
               >
                 <span v-if="item.label !== '商品图片'">{{ item.value }}</span>
                 <img
-                    v-else-if="item.label === '商品图片'"
-                    src="@/assets/images/qiao.jpg"
-                    alt="商品图片"
-                    style="width: 200px; height: 200px"
+                  v-else-if="item.label === '商品图片'"
+                  src="@/assets/images/qiao.jpg"
+                  alt="商品图片"
+                  style="width: 200px; height: 200px"
                 />
               </a-descriptions-item>
             </a-descriptions>
@@ -364,8 +363,8 @@
     { label: '商品数量', value: formModel.value.skuNum },
   ];
 
-  const visible = ref(false);
-  const handleClick = (purchaseOrder: PurchaseOrder) => {
+  const printVisible = ref(false);
+  const printClick = (purchaseOrder: PurchaseOrder) => {
     copy(purchaseOrder, pdfData);
     data = [
       {
@@ -414,17 +413,17 @@
       },
     ];
     setTimeout(() => {
-      visible.value = true;
+      printVisible.value = true;
     }, 20);
   };
-  const handleBeforeOk = () => {
+  const printBeforeOk = () => {
     console.log('打印');
-    const text = '购货单详情'
-      // text:文件标题
+    const text = '购货单详情';
+    // text:文件标题
     htmlToPdf(text, '#capture');
   };
-  const handleCancel = () => {
-    visible.value = false;
+  const printCancel = () => {
+    printVisible.value = false;
   };
   // 描述列表展示打印信息
 
@@ -544,6 +543,7 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 密度选择

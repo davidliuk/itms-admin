@@ -11,8 +11,13 @@ export default {
   // createTime: null,
   // updateTime: null,
 
+  // Long id = skuWare.getId();
+  // Long wareId = skuWare.getWareId();
+  // Long skuId = skuWare.getSkuId();
+  // String skuName = skuWare.getSkuName();
+
   'menu.center.skuWare': '货物库存表格',
-  'skuWare.form.id': '请输入id',
+  'skuWare.form.id': 'id',
   'skuWare.form.id.placeholder': '请输入id',
   'skuWare.form.skuId': '商品编号',
   'skuWare.form.skuId.placeholder': '请输入商品编号',
@@ -37,6 +42,7 @@ export default {
   'skuWare.form.status.offline': '已下线',
   'skuWare.form.title.create': '新建商品',
   'skuWare.form.title.update': '更新商品',
+  'skuWare.form.title.addsku': '手动补货',
 
   'skuWare.form.search': '查询',
   'skuWare.form.reset': '重置',
@@ -45,7 +51,10 @@ export default {
   'skuWare.operation.import': '批量导入',
   'skuWare.operation.download': '下载',
 
+
+
   'skuWare.columns.index': '#',
+  'skuWare.columns.id': 'id',
   'skuWare.columns.skuId': '商品编号',
   'skuWare.columns.skuName': '商品名称',
   'skuWare.columns.wareId': '区域中心库房编号',
@@ -54,7 +63,7 @@ export default {
   'skuWare.columns.lowStock': '预警销量',
   'skuWare.columns.sale': '销量',
   'skuWare.columns.createTime': '创建时间',
-  'skuWare.columns.updateTime': '更新时间',
+  'skuWare.columns.updateTime': '上次进货时间',
   'skuWare.columns.operations': '操作',
   'skuWare.columns.operations.view': '查看',
   'skuWare.columns.operations.create': '新增',

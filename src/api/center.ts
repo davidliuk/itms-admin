@@ -8,22 +8,22 @@ export interface PageRes<T> {
 }
 
 export interface StorageOrder {
-  id: string;
-  wareId: number;
-  orderId: number;
-  skuId: number;
-  skuName: string;
-  stationId: number;
-  stationName: string;
-  supplierId: number;
-  supplierName: string; // 供货商
-  storageType: string;
+  id: string; // 出库单编号
+  wareId: number; // 区域中心库房编号
+  orderId: number; // 订单编号
+  skuId: number; //  商品编号
+  skuName: string; // 商品名称
+  stationId: number; // 分站编号
+  stationName: string; // 分站名称
+  supplierId: number; // 供应商编号
+  supplierName: string; // 供货商名称
+  storageType: string; // 库存单类型
   // IN(0, "入库"),
   // OUT(1, "出库"),
   // RETURN_IN(2, "退货入库"),
   // RETURN_OUT(3, "退货出库");
-  startTime: string;
-  endTime: string;
+  createTime: string; // 创建时间;
+  updateTime: string; // 更新时间
 }
 
 export function queryStorageOrderList(
@@ -33,9 +33,7 @@ export function queryStorageOrderList(
 ) {
   return axios.post<PageRes<StorageOrder>>(
     `/admin/sys/storageOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 
@@ -61,9 +59,7 @@ export function querySkuWareList(
 ) {
   return axios.post<PageRes<SkuWare>>(
     `/admin/product/skuWare/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 
@@ -76,20 +72,16 @@ export function addSkuWare(skuWare: SkuWare) {
 export interface CheckOrder {
   // 定义类型
   id: number;
-  imgUrl: string;
-  inTime: string;
-  orderId: number;
-  outTime: string;
-  skuId: number;
-  skuName: string;
-  skuNum: number;
-  skuPrice: number;
-  stationId: number;
-  status: number;
-  // 0:未分发,1:已分发,2:已入库
-  updateTime: string;
-  createTime: string;
-  wareId: number;
+  wareId: number; //	仓库ID
+  orderId: number; //	订单ID
+  stationId: number; //	分站ID
+  status: string; //	状态,可用值:OUT,IN,CANCEL
+  type: string; //	类型,可用值:DELIVERY,EXCHANGE,RETURN
+  workOrderId: number; //	任务单ID
+  inTime: string; //	入库时间
+  outTime: string; //	出库时间
+  createTime: string; //	创建时间
+  updateTime: string; //	更新时间
 }
 
 export function queryCheckOrderList(
@@ -99,9 +91,7 @@ export function queryCheckOrderList(
 ) {
   return axios.post<PageRes<CheckOrder>>(
     `/admin/sys/checkOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 
@@ -164,9 +154,7 @@ export function queryTransferOrderList(
 ) {
   return axios.post<PageRes<TransferOrder>>(
     `/admin/sys/transferOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 
@@ -182,13 +170,12 @@ export interface WorkType {
 export interface WorkOrder {
   // 内容不影响
   id: number;
-  stationId: number; // 分站
-  name: string; // 收货人
-  userId: number; // 用户
-  courierId: number; // 配送员
-  orderId: number; // 订单id
-  wareId: number; // 中心库房
-  // 状态DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_COURIER_TAKE,WAITING_USER_TAKE,FINISHED,CANCEL
+  orderId: number;
+  userId: number; //	用户ID
+  wareId: number; // 仓库ID
+  courierId: number;
+  stationId: number;
+  stationName: string;
   workStatus:
     | 'DISPATCH'
     | 'OUT'
@@ -198,11 +185,26 @@ export interface WorkOrder {
     | 'WAITING_COURIER_TAKE'
     | 'WAITING_USER_TAKE'
     | 'FINISHED'
-    | 'CANCEL';
-  // workType: 'DELIVERY' | 'EXCHANGE' | 'RETURN'; // 类型DELIVERY,EXCHANGE,RETURN
-  workType: string; // 类型DELIVERY,EXCHANGE,RETURN
-  // startTime: Date; // 开始时间
-  // endTime: Date; // 结束时间
+    | 'CANCEL'; //	状态,=>那些状态
+  workType: string; // 配送类型
+  // DELIVERY(0, "送货"),
+  // EXCHANGE(1, "换货"),
+  // RETURN(2, "退货");
+  updateTime: string;
+  createTime: string;
+  // orderInfo
+  // 个人信息
+  name: string; //	姓名
+  phone: string; // 电话号码
+  postCode: string; //	邮编
+  province: string; // 省
+  city: string; // 市
+  district: string; // 区
+  detailAddress: string; //	详细地址
+  // 物流
+  logisticsId: number; //	物流公司id
+  logisticsName: string; //	物流公司名称
+  logisticsPhone: string; //	物流公司电话
 }
 
 export function queryWorkOrderList(
@@ -212,9 +214,7 @@ export function queryWorkOrderList(
 ) {
   return axios.post<PageRes<WorkOrder>>(
     `/admin/sys/workOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 

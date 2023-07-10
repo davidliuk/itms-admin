@@ -4,6 +4,7 @@
     <a-card class="general-card" :title="$t('menu.center.WorkOrder')">
       <a-row>
         <!-- 6个输入框 -->
+        <!--        任务单id查找-->
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -20,17 +21,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="wareId"
-                  :label="$t('WorkOrder.form.wareId')"
-                >
-                  <a-input
-                    v-model="formModel.wareId"
-                    :placeholder="$t('WorkOrder.form.wareId.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
+              <!--              分站id查找-->
               <a-col :span="8">
                 <a-form-item
                   field="stationId"
@@ -42,17 +33,28 @@
                   />
                 </a-form-item>
               </a-col>
-              <!--              <a-col :span="8">-->
-              <!--                <a-form-item-->
-              <!--                  field="startTime"-->
-              <!--                  :label="$t('WorkOrder.form.startTime')"-->
-              <!--                >-->
-              <!--                  <a-range-picker-->
-              <!--                    v-model="formModel.startTime"-->
-              <!--                    style="width: 100%"-->
-              <!--                  />-->
-              <!--                </a-form-item>-->
-              <!--              </a-col>-->
+              <a-col :span="8">
+                <a-form-item
+                  field="startTime"
+                  :label="$t('WorkOrder.form.startTime')"
+                >
+                  <a-date-picker
+                    v-model="formModel.startTime"
+                    style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="endTime"
+                  :label="$t('WorkOrder.form.endTime')"
+                >
+                  <a-date-picker
+                    v-model="formModel.endTime"
+                    style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="workType"
@@ -307,17 +309,12 @@
   const generateFormModel = () => {
     return {
       id: '',
-      stationId: '', // 分站
-      name: '', // 收货人
-      userId: '', // 用户
-      courierId: '', // 配送员
-      orderId: '', // 订单id
-      wareId: '', // 中心库房
+      stationId: '', // 配送员
       // 状态DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_COURIER_TAKE,WAITING_USER_TAKE,FINISHED,CANCEL
-      workStatus: 'DISPATCH',
-      workType: 'DELIVERY', // 类型DELIVERY,EXCHANGE,RETURN
-      // startTime: null, // 开始时间
-      // endTime: null, // 结束时间
+      workStatus: null,
+      workType: null, // 类型DELIVERY,EXCHANGE,RETURN
+      startTime: null, // 开始时间
+      endTime: null, // 结束时间
     };
   };
   const generateorderItemModel = () => {
@@ -486,23 +483,15 @@
     },
     {
       label: t('WorkOrder.form.workStatus.3'),
-      value: 'WATING_ASSIGN',
-    },
-    {
-      label: t('WorkOrder.form.workStatus.4'),
       value: 'ASSIGN',
     },
     {
+      label: t('WorkOrder.form.workStatus.4'),
+      value: 'TAKE',
+    },
+    {
       label: t('WorkOrder.form.workStatus.5'),
-      value: 'WAITING_COURIER_TAKE',
-    },
-    {
-      label: t('WorkOrder.form.workStatus.6'),
-      value: 'WAITING_USER_TAKE',
-    },
-    {
-      label: t('WorkOrder.form.workStatus.7'),
-      value: 'FINISHED',
+      value: 'RECEIVE',
     },
     {
       label: t('WorkOrder.form.workStatus.-1'),
@@ -567,6 +556,7 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 设置密度

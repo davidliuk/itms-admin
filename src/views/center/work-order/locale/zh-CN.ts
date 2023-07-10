@@ -1,4 +1,14 @@
 export default {
+  // String name = workOrderQueryVo.getName();
+  // Long courierId = workOrderQueryVo.getCourierId();
+  // Long userId = workOrderQueryVo.getUserId();
+  // Long wareId = workOrderQueryVo.getWareId();
+  // Long stationId = workOrderQueryVo.getStationId();
+  // Long orderId = workOrderQueryVo.getOrderId();
+  // WorkStatus status = workOrderQueryVo.getWorkStatus();
+  // WorkType type = workOrderQueryVo.getWorkType();
+  // Date startTime = workOrderQueryVo.getStartTime();
+  // Date endTime = workOrderQueryVo.getEndTime();
   'menu.center.WorkOrder': '任务单表格',
   'WorkOrder.form.id': '任务单编号',
   'WorkOrder.form.id.placeholder': '请输入任务单编号',
@@ -8,18 +18,14 @@ export default {
   'WorkOrder.form.wareId.placeholder': '请输入中心库房标识',
   'WorkOrder.form.stationId': '分站标识',
   'WorkOrder.form.stationId.placeholder': '请输入分站库房标识',
-  // 'WorkOrder.form.skuId': '商品标识',
-  // 'WorkOrder.form.skuId.placeholder': '请输入商品标识',
   'WorkOrder.form.courierId': '配送员标识',
   'WorkOrder.form.courierId.placeholder': '请输入配送员标识',
   'WorkOrder.form.orderId': '订单标识',
   'WorkOrder.form.orderId.placeholder': '请输入订单标识',
   'WorkOrder.form.startTime': '创建时间',
   'WorkOrder.form.endTime': '结束时间',
-  'WorkOrder.form.name': '收货人',
-  'WorkOrder.form.name.placeholder': '请输入收货人',
 
-  'WorkOrder.form.workType': '任务单类型标识',
+  'WorkOrder.form.workType': '任务单类型',
   'WorkOrder.form.workType.placeholder': '请输入任务单类型',
   'WorkOrder.form.workType.0': '送货',
   'WorkOrder.form.workType.1': '换货',
@@ -34,32 +40,25 @@ export default {
   'WorkOrder.form.workStatus.0': '已调度',
   'WorkOrder.form.workStatus.1': '已出库',
   'WorkOrder.form.workStatus.2': '已入库',
-  'WorkOrder.form.workStatus.3': '待分配',
-  'WorkOrder.form.workStatus.4': '已分配',
-  'WorkOrder.form.workStatus.5': '待领货',
-  'WorkOrder.form.workStatus.6': '待收货',
-  'WorkOrder.form.workStatus.7': '完成',
+  'WorkOrder.form.workStatus.3': '已分配',
+  'WorkOrder.form.workStatus.4': '待收货',
+  'WorkOrder.form.workStatus.5': '完成',
   'WorkOrder.form.workStatus.-1': '取消',
-
+  //   DISPATCH(0, "已调度"),
+  //   OUT(1, "已出库"),
+  //   IN(2, "已入库"),
+  //   ASSIGN(3, "已分配"),
+  //   TAKE(4, "待收货"),
+  //   RECEIVE(5, "完成"),
+  //   CANCEL(-1, "取消");
   'WorkOrder.form.workStatus': '状态',
   'WorkOrder.form.workStatus.DISPATCH': '已调度',
   'WorkOrder.form.workStatus.OUT': '已出库',
   'WorkOrder.form.workStatus.IN': '已入库',
-  'WorkOrder.form.workStatus.WAITING_ASSIGN': '待分配',
   'WorkOrder.form.workStatus.ASSIGN': '已分配',
-  'WorkOrder.form.workStatus.WAITING_COURIER_TAKE': '待领货',
   'WorkOrder.form.workStatus.WAITING_USER_TAKE': '待收货',
   'WorkOrder.form.workStatus.FINISHED': '完成',
   'WorkOrder.form.workStatus.CANCEL': '取消',
-  // DISPATCH(0, "已调度"),
-  //     OUT(1, "已出库"),
-  //     IN(2, "已入库"),
-  //     WAITING_ASSIGN(3, "待分配"),
-  //     ASSIGN(4, "已分配"),
-  //     WAITING_COURIER_TAKE(5, "待领货"),
-  //     WAITING_USER_TAKE(6, "待收货"),
-  //     FINISHED(7, "完成"),
-  //     CANCEL(-1, "取消");
   'WorkOrder.form.search': '查询',
   'WorkOrder.form.reset': '重置',
   'WorkOrder.form.selectDefault': '全部',
@@ -67,14 +66,39 @@ export default {
   'WorkOrder.operation.import': '批量导入',
   'WorkOrder.operation.download': '下载',
 
+  // city	string	市
+  // courierId	integer(int64)	配送员ID
+  // createTime	string(date-time)	创建时间
+  // detailAddress	string	详细地址
+  // district	string	区
+  // id	integer(int64)	id
+  // logisticsId	integer(int64)	物流公司id
+  // logisticsName	string	物流公司名称
+  // logisticsPhone	string	物流公司电话
+  // name	string	姓名
+  // orderId	integer(int64)	订单ID
+  // orderInfo	OrderInfo	订单	OrderInfo
+  // param	object	其他参数
+  // phone	string	电话号码
+  // postCode	string	邮编
+  // province	string	省
+  // stationId	integer(int64)	分站ID
+  // stationName	string	姓名
+  // updateTime	string(date-time)	更新时间
+  // userId	integer(int64)	用户ID
+  // wareId	integer(int64)	仓库ID
+  // workStatus	string	状态,可用值:DISPATCH,OUT,IN,ASSIGN,TAKE,RECEIVE,CANCEL
+  // workType	string	配送类型,可用值:DELIVERY,EXCHANGE,RETURN
   'WorkOrder.columns.index': '#',
   'WorkOrder.columns.id': '任务单标识',
   'WorkOrder.columns.orderId': '任务单所属订单',
   'WorkOrder.columns.wareId': '仓库标识',
-  'WorkOrder.columns.userId': '用户标识',
   'WorkOrder.columns.stationId': '分站标识',
-  'WorkOrder.columns.courierId': '配送员标识',
-  'WorkOrder.columns.name': '收货人',
+  'WorkOrder.columns.stationName': '分站名称',
+  'WorkOrder.columns.userId': '用户标识',
+
+  'WorkOrder.columns.logisticsID': '物流公司ID',
+  'WorkOrder.columns.logisticsName': '物流公司名称',
   'WorkOrder.columns.workType': '任务单类型',
   'WorkOrder.columns.workStatus': '任务单状态',
   'WorkOrder.columns.startTime': '开始时间',

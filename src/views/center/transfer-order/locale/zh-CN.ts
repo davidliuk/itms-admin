@@ -8,14 +8,21 @@ export default {
   'TransferOrder.form.wareId.placeholder': '请输入中心库房标识',
   'TransferOrder.form.stationId': '分站标识',
   'TransferOrder.form.stationId.placeholder': '请输入分站库房标识',
-  'TransferOrder.form.createTime': '创建时间',
+  'TransferOrder.form.stationName': '分站名称',
+  'TransferOrder.form.stationName.placeholder': '请输入分站库房名称',
+  'TransferOrder.form.logisticsId': '运输公司标识',
+  'TransferOrder.form.logisticsId.placeholder': '请输入运输公司标识',
+  'TransferOrder.form.logisticsName': '运输公司名称',
+  'TransferOrder.form.logisticsName.placeholder': '请输入运输公司名称',
   'TransferOrder.form.status': '状态',
-  'TransferOrder.form.status.in_warehouse': '未出库',
-  'TransferOrder.form.status.out_warehouse': '已出库',
-  'TransferOrder.form.status.in_stationhouse': '已入分站库',
-  'TransferOrder.form.status.0': '未出库',
-  'TransferOrder.form.status.1': '已出库',
-  'TransferOrder.form.status.2': '已入分站库',
+  'TransferOrder.form.status.DISPATCH': '已调度待出库',
+  'TransferOrder.form.status.OUT': '已出库',
+  'TransferOrder.form.status.IN': '已入分站库',
+  'TransferOrder.form.status.CANCEL': '取消',
+  'TransferOrder.form.status.2': '已调度待出库',
+  'TransferOrder.form.status.3': '已出库',
+  'TransferOrder.form.status.4': '已入分站库',
+  'TransferOrder.form.status.-1': '取消',
   'TransferOrder.form.search': '查询',
   'TransferOrder.form.reset': '重置',
   'TransferOrder.form.selectDefault': '全部',
@@ -35,8 +42,6 @@ export default {
   // status: number; // 状态
   // inTime: Date; // 入库时间
   // outTime: Date; // 出库时间
-  // createTime: Date; // 创建时间
-  // updateTime: Date; // 更新时间
 
   'TransferOrder.columns.index': '#',
   'TransferOrder.columns.id': '调拨单标识',
@@ -47,8 +52,6 @@ export default {
   'TransferOrder.columns.workOrderId': '任务单标识',
   'TransferOrder.columns.inTime': '入库时间',
   'TransferOrder.columns.outTime': '出库时间',
-  'TransferOrder.columns.createTime': '创建时间',
-  'TransferOrder.columns.updateTime': '更新时间',
   'TransferOrder.columns.logisticsId': '物流公司id',
   'TransferOrder.columns.logisticsName': '物流公司名称',
   'TransferOrder.columns.logisticsPhone': '物流公司电话',

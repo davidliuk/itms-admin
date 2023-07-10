@@ -28,8 +28,6 @@ export function queryPurchaseOrderList(
 ) {
   return axios.post<PageRes<PurchaseOrder>>(
     `/admin/sys/purchaseOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }

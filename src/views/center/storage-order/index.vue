@@ -13,14 +13,6 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('StorageOrder.form.id')">
-                  <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('StorageOrder.form.id.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item
                   field="wareId"
                   :label="$t('StorageOrder.form.wareId')"
@@ -39,6 +31,41 @@
                   <a-input
                     v-model="formModel.stationId"
                     :placeholder="$t('StorageOrder.form.stationId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="supplierId"
+                  :label="$t('StorageOrder.form.supplierId')"
+                >
+                  <a-input
+                    v-model="formModel.supplierId"
+                    :placeholder="
+                      $t('StorageOrder.form.supplierId.placeholder')
+                    "
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="skuId"
+                  :label="$t('StorageOrder.form.skuId')"
+                >
+                  <a-input
+                    v-model="formModel.skuId"
+                    :placeholder="$t('StorageOrder.form.skuId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="skuName"
+                  :label="$t('StorageOrder.form.skuName')"
+                >
+                  <a-input
+                    v-model="formModel.skuName"
+                    :placeholder="$t('StorageOrder.form.skuName.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -105,11 +132,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="downloadStorageOrderList">
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('StorageOrder.operation.download') }}
+            {{ $t('StorageOrder.operation.download') }}列表
           </a-button>
           <a-tooltip :content="$t('StorageOrder.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -173,6 +200,7 @@
 
       <!-- 表格 -->
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -188,7 +216,7 @@
         </template>
 
         <!-- 表格form里 -->
-        <!-- 状态 -->
+        <!-- 类型 -->
         <template #storageType="{ record }">
           <span v-if="record.storageType === 'IN'" class="circle"></span>
           <span
@@ -204,13 +232,16 @@
             class="circle pass"
           ></span>
           {{ $t(`StorageOrder.form.storageType.${record.storageType}`) }}
-          <!--           123-->
         </template>
         <!-- 表格form里 -->
 
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
+
+<!--          打印-->
+
+<!--          查看 商品详情-->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -224,7 +255,7 @@
             @ok="handleOk"
             @cancel="handleCancel"
           >
-            <template #title> 验收单商品详情 </template>
+            <template #title> 出库单商品详情 </template>
             <a-table
               row-key="id"
               :loading="loading"
@@ -258,31 +289,26 @@
     queryStorageOrderList,
     StorageOrder,
     queryOrderInfo,
-    OrderItem,
-  } from '@/api/center';
+    OrderItem, CheckOrder
+  } from "@/api/center";
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import htmlToPdf from "@/utils/pdf";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
   const generateFormModel = () => {
     return {
-      id: '',
       wareId: '',
-      orderId: '',
       skuId: '',
       skuName: '',
       stationId: '',
-      stationName: '',
       supplierId: '',
-      supplierName: '', // 供货商
-      storageType: '',
-      startTime: '',
-      endTime: '',
+      storageType: null,
     };
   };
   const generateorderItemModel = () => {
@@ -300,13 +326,25 @@
 
   const size = ref<SizeProps>('medium');
 
-  const basePagination: Pagination = {
-    current: 1,
-    pageSize: 20,
-  };
-  const pagination = reactive({
-    ...basePagination,
-  });
+  // 描述列表展示打印信息
+  const pdfSize = ref('medium');
+  const data = [
+    { label: '分发单标识', value: '' },
+    { label: '区域中心库房编号', value: '' },
+    { label: '订单编号', value: '' },
+    { label: '商品编号', value: '' },
+    { label: '商品名称', value: '' },
+    { label: '分站编号', value: '' },
+    { label: '分站名称', value: '' },
+    { label: '供应商编号', value: '' },
+    { label: '供货商名称', value: '' },
+    { label: '库存单类型', value: '' },
+    { label: '创建时间', value: '' },
+    { label: '更新时间', value: '' },
+  ];
+
+  // 描述列表展示打印信息
+
 
   // 密度选择
   const densityList = computed(() => [
@@ -327,18 +365,6 @@
       value: 'large',
     },
   ]);
-  // id: '',
-  //     wareId: '',
-  //     orderId: '',
-  //     skuId:'',
-  //     skuName: '',
-  //     stationId: '',
-  //     stationName:'',
-  //     supplierId: '',
-  //     supplierName: '',// 供货商
-  //     storageType: '',
-  //     startTime: '',
-  //     endTime: '',
   // 展示出库单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
@@ -355,18 +381,9 @@
       dataIndex: 'wareId',
     },
     {
-      title: t('StorageOrder.columns.orderId'),
-      dataIndex: 'orderId',
-    },
-    {
       title: t('StorageOrder.columns.stationId'),
       dataIndex: 'stationId',
       slotName: 'stationId',
-    },
-    {
-      title: t('StorageOrder.columns.supplierId'),
-      dataIndex: 'supplierId',
-      slotName: 'supplierId',
     },
     {
       title: t('StorageOrder.columns.supplierName'),
@@ -374,13 +391,27 @@
       slotName: 'stationName',
     },
     {
+      title: t('StorageOrder.columns.supplierId'),
+      dataIndex: 'supplierId',
+      slotName: 'supplierId',
+    },
+    {
+      title: t('StorageOrder.columns.supplierId'),
+      dataIndex: 'supplierName',
+      slotName: 'supplierName',
+    },
+    {
       title: t('StorageOrder.columns.storageType'),
       dataIndex: 'storageType',
       slotName: 'storageType',
     },
     {
-      title: t('StorageOrder.columns.startTime'),
-      dataIndex: 'startTime',
+      title: t('StorageOrder.columns.createTime'),
+      dataIndex: 'createTime',
+    },
+    {
+      title: t('StorageOrder.columns.updateTime'),
+      dataIndex: 'updateTime',
     },
     {
       title: t('StorageOrder.columns.operations'),
@@ -388,12 +419,7 @@
       slotName: 'operations',
     },
   ]);
-  // 搜索状态输入框下拉列表
-
-  //   IN(0, "入库"),
-  //  OUT(1, "出库"),
-  //     RETURN_IN(2, "退货入库"),
-  //     RETURN_OUT(3, "退货出库");
+  // 搜索类型输入框下拉列表
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('StorageOrder.form.storageType.IN'),
@@ -465,6 +491,15 @@
   };
 
   // 分页
+
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 20,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
+
   const fetchData = async (
     current: number,
     pageSize: number,
@@ -495,6 +530,7 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 设置密度

@@ -1,5 +1,5 @@
 export default {
-  'menu.logistics.LogCheckOrder': '验货单表格',
+  'menu.logistics.LogCheckOrder': '验货(分发)单表格',
   'LogCheckOrder.form.id': '分发单编号',
   'LogCheckOrder.form.id.placeholder': '请输入分发单编号',
   'LogCheckOrder.form.wareId': '中心库房标识',
@@ -8,14 +8,17 @@ export default {
   'LogCheckOrder.form.stationId.placeholder': '请输入分站库房标识',
   'LogCheckOrder.form.skuId': '商品标识',
   'LogCheckOrder.form.skuId.placeholder': '请输入商品标识',
-  'LogCheckOrder.form.createdTime': '创建时间',
+
   'LogCheckOrder.form.status': '状态',
-  'LogCheckOrder.form.status.no_distribute': '未分发',
-  'LogCheckOrder.form.status.distributed': '已分发',
-  'LogCheckOrder.form.status.stocked': '已入分站库',
-  'LogCheckOrder.form.status.0': '未分发',
-  'LogCheckOrder.form.status.1': '已分发',
-  'LogCheckOrder.form.status.2': '已入分站库',
+  'LogCheckOrder.form.status.OUT': '已出库', // 中心库房出库
+  'LogCheckOrder.form.status.IN': '已入库',
+  'LogCheckOrder.form.status.CANCEL': '取消',
+  'LogCheckOrder.form.status.3': '已出库',
+  'LogCheckOrder.form.status.4': '已入库',
+  'LogCheckOrder.form.status.-1': '取消',
+
+  'LogCheckOrder.form.inTime': '入库时间',
+  'LogCheckOrder.form.outTime': '出库时间',
   'LogCheckOrder.form.search': '查询',
   'LogCheckOrder.form.reset': '重置',
   'LogCheckOrder.form.selectDefault': '全部',
@@ -56,6 +59,7 @@ export default {
   'LogCheckOrder.columns.status': '状态',
   'LogCheckOrder.columns.operations': '操作',
   'LogCheckOrder.columns.operations.view': '查看商品详情',
+  'LogCheckOrder.columns.operations.delete': '删除',
 
   'LogCheckOrder.columns.skuId': '商品编号',
   'LogCheckOrder.columns.skuImg': '商品图片',
