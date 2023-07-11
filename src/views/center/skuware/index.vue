@@ -12,6 +12,25 @@
             label-align="left"
           >
             <a-row :gutter="16">
+              <!--              <a-col :span="8">-->
+              <!--                <a-form-item-->
+              <!--                  field="id"-->
+              <!--                  :label="$t('skuWare.form.id')"-->
+              <!--                >-->
+              <!--                  <a-input-->
+              <!--                    v-model="formModel.id"-->
+              <!--                    :placeholder="$t('skuWare.form.id.placeholder')"-->
+              <!--                  />-->
+              <!--                </a-form-item>-->
+              <!--              </a-col>-->
+              <a-col :span="8">
+                <a-form-item field="wareId" :label="$t('skuWare.form.wareId')">
+                  <a-input
+                    v-model="formModel.wareId"
+                    :placeholder="$t('skuWare.form.wareId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
               <a-col :span="8">
                 <a-form-item field="skuId" :label="$t('skuWare.form.skuId')">
                   <a-input
@@ -28,17 +47,6 @@
                   <a-input
                     v-model="formModel.skuName"
                     :placeholder="$t('skuWare.form.skuName.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('skuWare.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
@@ -91,17 +99,20 @@
           style="display: flex; align-items: center; justify-content: end"
         >
           <!--右边的四个操作-->
-          <a-button>
+          <!--下载-->
+          <a-button @click="downloadSkuWareList">
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('skuWare.operation.download') }}
+            下载列表
           </a-button>
+          <!-- 刷新-->
           <a-tooltip :content="$t('skuWare.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
+          <!--密度选择-->
           <a-dropdown @select="handleSelectDensity">
             <a-tooltip :content="$t('skuWare.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
@@ -117,8 +128,8 @@
               </a-doption>
             </template>
           </a-dropdown>
+          <!--列設置-->
           <a-tooltip :content="$t('skuWare.actions.columnSetting')">
-            <!--列設置-->
             <a-popover
               trigger="click"
               position="bl"
@@ -178,7 +189,7 @@
               v-model="form[key]"
               style="width: 100%"
               show-time
-              :time-picker-props="{ defaultValue: '09:09:06' }"
+              :time-picker-props="{ defaultValue: '00:00:00' }"
               format="YYYY-MM-DD HH:mm:ss"
             />
           </a-form-item>
@@ -186,6 +197,7 @@
       </a-modal>
 
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -198,68 +210,25 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <template #contentType="{ record }">
-          <a-space>
-            <a-avatar
-              v-if="record.contentType === 'img'"
-              :size="16"
-              shape="square"
-            >
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/581b17753093199839f2e327e726b157.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            <a-avatar
-              v-else-if="record.contentType === 'horizontalVideo'"
-              :size="16"
-              shape="square"
-            >
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            <a-avatar v-else :size="16" shape="square">
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            {{ $t(`skuWare.form.contentType.${record.contentType}`) }}
-          </a-space>
-        </template>
-        <template #filterType="{ record }">
-          {{ $t(`skuWare.form.filterType.${record.filterType}`) }}
-        </template>
-        <template #status="{ record }">
-          <span v-if="record.status === 'offline'" class="circle"></span>
-          <span v-else class="circle pass"></span>
-          {{ $t(`skuWare.form.status.${record.status}`) }}
-        </template>
         <template #operations="{ record }">
-          <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('skuWare.columns.operations.view') }}
-          </a-button>
-
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="handleUpdateClick(record)"
           >
-            {{ $t('skuWare.columns.operations.update') }}
+            {{ $t('skuWare.form.title.addsku') }}
           </a-button>
-
-          <!--          库存为0的时候可以删除-->
-          <!--          <a-button-->
-          <!--              v-permission="['admin']"-->
-          <!--              type="text"-->
-          <!--              size="small"-->
-          <!--              @click="deleteSkuWareById(record.id)"-->
-          <!--          >-->
-          <!--            {{ $t('SkuWare.columns.operations.assign') }}-->
-          <!--          </a-button>-->
+          <!--                    库存为0的时候可以删除-->
+          <!--                    <a-button-->
+          <!--                      v-if="record.stock===0"-->
+          <!--                        v-permission="['admin']"-->
+          <!--                        type="text"-->
+          <!--                        size="small"-->
+          <!--                        @click="deleteSkuWareById(record.id)"-->
+          <!--                    >-->
+          <!--                      {{ $t('SkuWare.columns.operations.assign') }}-->
+          <!--                    </a-button>-->
         </template>
       </a-table>
     </a-card>
@@ -276,10 +245,11 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
+  import htmlToPdf from '@/utils/pdf';
 
   const generateFormModel = () => {
     return {
-      id: '',
+      // id: '',
       skuId: '',
       skuName: '',
       wareId: '',
@@ -296,6 +266,13 @@
   const isUpdating = ref(false);
   let form = reactive(generateFormModel());
 
+  // 下载整个库存列表
+  const downloadSkuWareList = () => {
+    const text = '所有库存信息';
+    // text:文件标题
+    htmlToPdf(text, '#printTable');
+  };
+
   // 库存信息展示
   const columns = computed<TableColumnData[]>(() => [
     {
@@ -303,14 +280,22 @@
       dataIndex: 'index',
       slotName: 'index',
     },
-    {
-      title: t('skuWare.columns.skuName'),
-      dataIndex: 'skuName',
-    },
+    // {
+    //   title: t('skuWare.columns.id'),
+    //   dataIndex: 'id',
+    // },
     {
       title: t('skuWare.columns.wareId'),
       dataIndex: 'wareId',
       slotName: 'wareId',
+    },
+    {
+      title: t('skuWare.columns.skuId'),
+      dataIndex: 'skuId',
+    },
+    {
+      title: t('skuWare.columns.skuName'),
+      dataIndex: 'skuName',
     },
     {
       title: t('skuWare.columns.stock'),
@@ -324,14 +309,19 @@
       title: t('skuWare.columns.lowStock'),
       dataIndex: 'lowStock',
     },
-
     {
-      title: t('skuWare.columns.createTime'),
-      dataIndex: 'createTime',
+      title: t('skuWare.columns.sale'),
+      dataIndex: 'sale',
     },
+    // {
+    //   title: t('skuWare.columns.createTime'),
+    //   dataIndex: 'createTime',
+    //   slotName:'createTime',
+    // },
     {
       title: t('skuWare.columns.updateTime'),
       dataIndex: 'updateTime',
+      slotName: 'updateTime',
     },
     {
       title: t('skuWare.columns.operations'),
@@ -361,12 +351,6 @@
     isCreating.value = false;
     isUpdating.value = false;
     form = reactive(generateFormModel());
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
@@ -386,9 +370,7 @@
     current: 1,
     pageSize: 20,
   };
-  const pagination = reactive({
-    ...basePagination,
-  });
+
   const densityList = computed(() => [
     {
       name: t('skuWare.size.mini'),
@@ -410,8 +392,13 @@
 
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
+  // 分页查询。条件查询
+  const pagination = reactive({
+    ...basePagination,
+  });
   const fetchData = async (
     current: number,
     pageSize: number,
@@ -429,9 +416,8 @@
       setLoading(false);
     }
   };
-
   const search = () => {
-    console.log(formModel);
+    console.log(formModel.value);
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {

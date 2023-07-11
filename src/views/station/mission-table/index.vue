@@ -66,7 +66,7 @@
                   <a-select
                     v-model="formModel.workType"
                     :options="typeOptions"
-                    :placeholder="$t('missionTable.form.selectDefault')"
+                    :placeholder="$t('missionTable.form.workType.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -79,30 +79,21 @@
                   <a-select
                     v-model="formModel.workStatus"
                     :options="statusOptions"
-                    :placeholder="$t('missionTable.form.selectDefault')"
+                    :placeholder="
+                      $t('missionTable.form.workStatus.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
-              <!--              &lt;!&ndash;开始时间&ndash;&gt;-->
-              <!--              <a-col :span="8">-->
-              <!--                <a-form-item-->
-              <!--                  field="createdTime"-->
-              <!--                  :label="$t('missionTable.form.createdTime')"-->
-              <!--                >-->
-              <!--                  <a-range-picker-->
-              <!--                    v-model="formModel.createdTime"-->
-              <!--                    style="width: 100%"-->
-              <!--                  />-->
-              <!--                </a-form-item>-->
-              <!--              </a-col>-->
             </a-row>
           </a-form>
         </a-col>
-        <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
+      </a-row>
+      <a-divider style="margin-top: 0" />
+      <a-row style="margin-bottom: 16px">
         <!-- 查找重置按钮 -->
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
+        <a-col :span="12">
+          <a-space>
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
@@ -115,27 +106,6 @@
               </template>
               {{ $t('missionTable.form.reset') }}
             </a-button>
-          </a-space>
-        </a-col>
-      </a-row>
-      <a-divider style="margin-top: 0" />
-      <a-row style="margin-bottom: 16px">
-        <!--创建和批量导入-->
-        <a-col :span="12">
-          <a-space>
-            <a-button type="primary" @click="handleCreateClick">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('missionTable.operation.create') }}
-            </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ $t('missionTable.operation.import') }}
-                </a-button>
-              </template>
-            </a-upload>
           </a-space>
         </a-col>
         <!--右侧四个小icon--下载，刷新，密度,列设置-->
@@ -205,6 +175,32 @@
           </a-tooltip>
         </a-col>
       </a-row>
+      <!--详情展示-->
+      <a-modal
+        :visible="isDetailing"
+        :title="$t(`missionTable.form.title.detail`)"
+        draggable
+        fullscreen
+        hide-cancel
+        @ok="handleDetailClose"
+        @cancel="handleDetailClose"
+      >
+        <a-form id="capture" :model="formShow">
+          <a-form-item
+            v-for="(val, key) in formShow"
+            :key="key"
+            :field="key"
+            :label="$t(`missionTable.form.${key}`)"
+          >
+            <a-input
+              v-model="formShow[key]"
+              :placeholder="$t(`missionTable.form.default.placeholder`)"
+              style="width: 80%"
+              disabled
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
       <!--数据表格-->
       <a-table
         row-key="id"
@@ -220,70 +216,167 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <!--任务单编号-->
-        <template #id="{ record }">
-          {{ $t(`missionTable.form.id.${record.id}`) }}
-        </template>
-        <!--分站编号-->
-        <template #stationId="{ record }">
-          {{ $t(`missionTable.form.stationId.${record.stationId}`) }}
-        </template>
-        <!--收货人-->
-        <template #name="{ record }">
-          {{ $t(`missionTable.form.name.${record.name}`) }}
-        </template>
-        <!--用户-->
-        <template #userId="{ record }">
-          {{ $t(`missionTable.form.userId.${record.userId}`) }}
-        </template>
-        <!--配送员-->
-        <template #courierId="{ record }">
-          {{ $t(`missionTable.form.courierId.${record.courierId}`) }}
-        </template>
-        <!--订单编号-->
-        <template #orderId="{ record }">
-          {{ $t(`missionTable.form.orderId.${record.orderId}`) }}
-        </template>
-        <!--库房编号-->
-        <template #wareId="{ record }">
-          {{ $t(`missionTable.form.wareId.${record.wareId}`) }}
-        </template>
-        <!--类型-->
-        <template #workType="{ record }">
-          {{ $t(`missionTable.form.workType.${record.workType}`) }}
-        </template>
-        <!--状态-->
-        <template #workStatus="{ record }">
-          {{ $t(`missionTable.form.workStatus.${record.workStatus}`) }}
-        </template>
-        <!--开始时间-->
-        <template #startTime="{ record }">
-          {{ $t(`missionTable.form.startTime.${record.startTime}`) }}
-        </template>
-        <!--结束时间-->
-        <template #endTime="{ record }">
-          {{ $t(`missionTable.form.endTime.${record.endTime}`) }}
-        </template>
         <!--操作-->
         <template #operations="{ record }">
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="getWorkOrderById(record.id)"
+            @click="getWorkOrder(record)"
           >
             {{ $t('missionTable.columns.operations.view') }}
           </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="outline"
-            size="small"
-            @click="assignById(record.id)"
-          >
-            {{ $t('missionTable.columns.operations.assign') }}
-          </a-button>
+          <template v-if="record.workStatus === 'IN'">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="assignById(record.id, record.stationId)"
+            >
+              {{ $t('missionTable.columns.operations.assign') }}
+            </a-button>
+          </template>
+          <template v-else-if="record.workStatus === 'CANCEL'">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="deleteById(record.id)"
+            >
+              {{ $t('missionTable.columns.operations.delete') }}
+            </a-button>
+          </template>
+          <template v-else-if="record.workStatus === 'RECEIVE'">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="returnWorkOrder(record)"
+            >
+              {{ $t('missionTable.columns.operations.return') }}
+            </a-button>
+          </template>
+          <template v-else-if="record.workStatus === 'ASSIGN'">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="printWorkOrder(record)"
+            >
+              {{ $t('missionTable.columns.operations.print') }}
+            </a-button>
+          </template>
+          <template v-else-if="record.workStatus === 'RETURN_UNASSIGNED'">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="returnAssignById(record.id, record.stationId)"
+            >
+              {{ $t('missionTable.columns.operations.returnAssign') }}
+            </a-button>
+          </template>
         </template>
       </a-table>
+      <!--分配-->
+      <a-modal
+        :visible="isAssigning"
+        :title="$t(`missionTable.form.title.assign`)"
+        draggable
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-table
+          row-key="id"
+          :loading="loading"
+          :columns="(courierColumns as TableColumnData[])"
+          :data="courierData"
+          :bordered="false"
+          :size="size"
+          @page-change="onPageChange"
+        >
+          <!--编号-->
+          <template #index="{ rowIndex }">
+            {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          </template>
+          <template #operations="{ record }">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="setCourier(record.id)"
+            >
+              {{ $t('missionTable.columns.operations.select') }}
+            </a-button>
+          </template>
+        </a-table>
+      </a-modal>
+      <!--详情展示-->
+      <a-modal
+        :visible="isReturning"
+        :title="$t(`missionTable.form.title.return`)"
+        draggable
+        @ok="handleReturnBeforeOk"
+        @cancel="handleReturnClose"
+      >
+        <a-form :model="formReturn">
+          <a-form-item :field="'id'" :label="$t('missionTable.form.id')">
+            <a-input
+              v-model="formReturn.id"
+              :placeholder="$t('missionTable.form.default.placeholder')"
+              disabled
+            />
+          </a-form-item>
+
+          <a-form-item :field="'name'" :label="$t('missionTable.form.name')">
+            <a-input
+              v-model="formReturn.name"
+              :placeholder="$t('missionTable.form.default.placeholder')"
+              disabled
+            />
+          </a-form-item>
+
+          <a-form-item
+            :field="'stationName'"
+            :label="$t('missionTable.form.stationName')"
+          >
+            <a-input
+              v-model="formReturn.stationName"
+              :placeholder="$t('missionTable.form.default.placeholder')"
+              disabled
+            />
+          </a-form-item>
+
+          <a-form-item
+            :field="'remark'"
+            :label="$t('missionTable.form.remark')"
+          >
+            <a-textarea
+              v-model="formReturn.remark"
+              :placeholder="$t('missionTable.form.default.placeholder')"
+              style="width: 80%"
+            />
+          </a-form-item>
+
+          <a-form-item :field="'mark'" :label="$t('missionTable.form.mark')">
+            <a-textarea
+              v-model="formReturn.mark"
+              :placeholder="$t('missionTable.form.default.placeholder')"
+              style="width: 80%"
+            />
+          </a-form-item>
+          <a-form-item
+            :field="'feedback'"
+            :label="$t('missionTable.form.feedback')"
+          >
+            <a-textarea
+              v-model="formReturn.feedback"
+              :placeholder="$t('missionTable.form.default.placeholder')"
+              style="width: 80%"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -292,62 +385,86 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryWorkOrderList, WorkOrder } from '@/api/station';
+  import {
+    queryWorkOrderList,
+    WorkOrder,
+    Courier,
+    queryCourierList,
+    deleteWorkOrder,
+    changeWorkOrder,
+    assign,
+    returnAssign,
+  } from '@/api/station';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import copy from '@/utils/objects';
+  import htmlToPdf from '@/utils/pdf';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-  // const DELIVERY = 'DELIVERY';
 
-  // 全部
   const generateFormModel = () => {
     return {
       id: '',
-      stationId: '',
-      name: '',
-      userId: '',
-      courierId: '',
-      orderId: '',
-      wareId: '',
+      stationId: '', // 分站
+      stationName: '', // 分站名称
+      name: '', // 收货人姓名电话
+      phone: '', // 收货人
+      postCode: '', // 收货人邮编
+      userId: '', // 用户
+      courierId: '', // 配送员
+      orderId: '', // 订单id
+      wareId: '', // 中心库房
+      // 状态DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_COURIER_TAKE,WAITING_USER_TAKE,FINISHED,CANCEL
       workStatus: '',
-      workType: '',
-      startTime: null,
-      endTime: null,
+      workType: '', // 类型DELIVERY,EXCHANGE,RETURN
+      logisticsId: '', // 物流公司编号
+      logisticsName: '', // 物流公司名称
+      logisticsPhone: '', // 物流公司联系方式
+      province: '', // 省
+      city: '', // 市
+      district: '', // 区
+      detailAddress: '', // 详细地址
+      remark: '', // 备注
+      mark: '', // 满意度
+      feedback: '', // 反馈
+      createTime: null, // 开始时间
+      updateTime: null, // 结束时间
     };
   };
-  // // 查询
-  // const searchFormModel = () => {
-  //   return {
-  //     id: '',
-  //     stationId: '',
-  //     name: '',
-  //     userId: '',
-  //     courierId: '',
-  //     orderId: '',
-  //     wareId: '',
-  //     // workStatus: '',
-  //     // workType: DELIVERY,
-  //     startTime: null,
-  //     endTime: null,
-  //   };
-  // };
-  // const searchModel = ref(searchFormModel());
+  const serachFormModel = () => {
+    return {
+      stationId: '', // 分站
+      name: '', // 收货人姓名
+      courierId: '', // 配送员
+      wareId: '', // 中心库房
+      // 状态DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_COURIER_TAKE,WAITING_USER_TAKE,FINISHED,CANCEL
+      workStatus: null,
+      workType: null, // 类型DELIVERY,EXCHANGE,RETURN
+    };
+  };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<WorkOrder[]>([]);
-  const formModel = ref(generateFormModel());
+  const courierData = ref<Courier[]>([]); // 配送员表格
+  const formModel = ref(serachFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
+  const isDetailing = ref(false);
+  const isAssigning = ref(false);
+  const isReturning = ref(false);
+  const deliverOrReturn = ref(false);
 
   const size = ref<SizeProps>('medium');
+  let formShow = reactive(generateFormModel());
+  let formReturn = reactive(generateFormModel());
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -403,21 +520,19 @@
     {
       title: t('missionTable.columns.workType'),
       dataIndex: 'workType',
-      slotName: 'type',
     },
     {
       title: t('missionTable.columns.workStatus'),
       dataIndex: 'workStatus',
-      slotName: 'status',
     },
-    {
-      title: t('missionTable.columns.startTime'),
-      dataIndex: 'startTime',
-    },
-    {
-      title: t('missionTable.columns.endTime'),
-      dataIndex: 'endTime',
-    },
+    // {
+    //   title: t('missionTable.columns.createTime'),
+    //   dataIndex: 'createTime',
+    // },
+    // {
+    //   title: t('missionTable.columns.updateTime'),
+    //   dataIndex: 'updateTime',
+    // },
     {
       title: t('missionTable.columns.operations'),
       dataIndex: 'operations',
@@ -426,71 +541,98 @@
   ]);
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('missionTable.form.workType.deliver'),
+      label: t('missionTable.form.workType.DELIVERY'),
       value: 'DELIVERY',
     },
     {
-      label: t('missionTable.form.workType.exchange'),
+      label: t('missionTable.form.workType.EXCHANGE'),
       value: 'EXCHANGE',
     },
     {
-      label: t('missionTable.form.workType.return'),
+      label: t('missionTable.form.workType.RETURN'),
       value: 'RETURN',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('missionTable.form.workStatus.dispatched'),
+      label: t('missionTable.form.workStatus.DISPATCH'),
       value: 'DISPATCH',
     },
     {
-      label: t('missionTable.form.workStatus.out'),
+      label: t('missionTable.form.workStatus.OUT'),
       value: 'OUT',
     },
     {
-      label: t('missionTable.form.workStatus.in'),
+      label: t('missionTable.form.workStatus.IN'),
       value: 'IN',
     },
     {
-      label: t('missionTable.form.workStatus.assignable'),
-      value: 'WAITING_ASSIGN',
-    },
-    {
-      label: t('missionTable.form.workStatus.assigned'),
+      label: t('missionTable.form.workStatus.ASSIGN'),
       value: 'ASSIGN',
     },
     {
-      label: t('missionTable.form.workStatus.waitCourierTake'),
-      value: 'WAITING_COURIER_TAKE',
+      label: t('missionTable.form.workStatus.TAKE'),
+      value: 'TAKE',
     },
     {
-      label: t('missionTable.form.workStatus.waitUserTake'),
-      value: 'WAITING_USER_TAKE',
+      label: t('missionTable.form.workStatus.RECEIVE'),
+      value: 'RECEIVE',
     },
     {
-      label: t('missionTable.form.workStatus.finished'),
-      value: 'FINISHED',
+      label: t('missionTable.form.workStatus.RETURN_UNASSIGNED'),
+      value: 'RETURN_UNASSIGNED',
     },
     {
-      label: t('missionTable.form.workStatus.cancel'),
+      label: t('missionTable.form.workStatus.RETURN_ASSIGN'),
+      value: 'RETURN_ASSIGN',
+    },
+    {
+      label: t('missionTable.form.workStatus.RETURN_STATION'),
+      value: 'RETURN_STATION',
+    },
+    {
+      label: t('missionTable.form.workStatus.RETURN_OUT'),
+      value: 'RETURN_OUT',
+    },
+    {
+      label: t('missionTable.form.workStatus.RETURN_IN'),
+      value: 'RETURN_IN',
+    },
+    {
+      label: t('missionTable.form.workStatus.CANCEL'),
       value: 'CANCEL',
     },
   ]);
-  // const fetchData = async (
-  //   params: MissionParams = { current: 1, pageSize: 20 }
-  // ) => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await queryMissionList(params);
-  //     renderData.value = data.list;
-  //     pagination.current = params.current;
-  //     pagination.total = data.total;
-  //   } catch (err) {
-  //     // you can report use errorHandler or other
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const courierColumns = computed<TableColumnData[]>(() => [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      slotName: 'index',
+    },
+    {
+      title: '配送员所在分站',
+      dataIndex: 'stationId',
+    },
+    {
+      title: '配送员编号',
+      dataIndex: 'id',
+    },
+    {
+      title: '配送员姓名',
+      dataIndex: 'name',
+    },
+    {
+      title: '配送员联系电话',
+      dataIndex: 'phone',
+    },
+    {
+      title: t('missionTable.columns.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+    },
+  ]);
+
+  // 分页查询
   const fetchData = async (
     current: number,
     pageSize: number,
@@ -501,6 +643,73 @@
     try {
       const { data } = await queryWorkOrderList(current, pageSize, params);
       renderData.value = data.records;
+      console.log(renderData.value);
+      pagination.current = current;
+      pagination.total = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
+  const onPageChange = (current: number) => {
+    fetchData(current, basePagination.pageSize, formModel.value);
+  };
+
+  // 详情
+  const getWorkOrder = (workOrder: WorkOrder) => {
+    // 查看当前任务单详情
+    copy(workOrder, formShow);
+    isDetailing.value = true;
+  };
+  const handleDetailClose = () => {
+    formShow = reactive(generateFormModel());
+    isDetailing.value = false;
+  };
+
+  // 分配
+
+  const rowSelection = {
+    type: 'radio',
+  };
+
+  const selectCourier = ref('');
+  const assignCourierId = ref();
+  const assignWorkOrderId = ref();
+  const setCourier = (id: number) => {
+    console.log('_________________________');
+    console.log(id);
+    assignCourierId.value = id;
+  };
+  const handleBeforeOk = () => {
+    console.log(assignWorkOrderId.value);
+    console.log(assignCourierId.value);
+    console.log('++++++++++++++++++++++++++');
+    if (deliverOrReturn.value) {
+      returnAssign(assignWorkOrderId.value, assignCourierId.value);
+    } else {
+      assign(assignWorkOrderId.value, assignCourierId.value);
+    }
+    handleClose();
+  };
+  const handleClose = () => {
+    isAssigning.value = false;
+    deliverOrReturn.value = false;
+    assignCourierId.value = null;
+    assignWorkOrderId.value = null;
+    search();
+  };
+  const fetchCourierData = async (
+    current: number,
+    pageSize: number,
+    params: Partial<Courier>
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryCourierList(current, pageSize, params);
+      courierData.value = data.records;
+      console.log(courierData.value);
       pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
@@ -510,12 +719,64 @@
     }
   };
 
-  const getWorkOrderById = (id: number) => {
-    // 根据id或许任务单详情
+  const assignById = (id: number, staId: number) => {
+    // 根据任务单id分配任务
+
+    isAssigning.value = true;
+    assignWorkOrderId.value = id;
+    const params: Partial<Courier> = {
+      stationId: staId,
+    };
+    fetchCourierData(pagination.current, pagination.pageSize, params);
   };
 
-  const assignById = (id: number) => {
+  // 退货分配
+  const returnAssignById = (id: number, staId: number) => {
     // 根据任务单id分配任务
+    deliverOrReturn.value = true;
+    isAssigning.value = true;
+    assignWorkOrderId.value = id;
+    const params: Partial<Courier> = {
+      stationId: staId,
+    };
+    fetchCourierData(pagination.current, pagination.pageSize, params);
+  };
+
+  // 删除
+  const deleteById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteWorkOrder(id);
+      fetchData(pagination.current, pagination.pageSize, formModel.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 回执录入
+  const returnWorkOrder = (workOrder: WorkOrder) => {
+    copy(workOrder, formReturn);
+    isReturning.value = true;
+  };
+  const handleReturnBeforeOk = () => {
+    changeWorkOrder(formReturn as unknown as WorkOrder);
+    handleReturnClose();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+  const handleReturnClose = () => {
+    isReturning.value = false;
+    formReturn = reactive(generateFormModel());
+  };
+  // 打印任务单
+  const printWorkOrder = (workOrder: WorkOrder) => {
+    const text = '任务单详情';
+    getWorkOrder(workOrder);
+    // text:文件标题
+    setTimeout(() => {
+      htmlToPdf(text, '#capture');
+    }, 200);
   };
 
   // 查询重置
@@ -523,15 +784,9 @@
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
     console.log(formModel.value);
   };
-
-  const onPageChange = (current: number) => {
-    fetchData(current, basePagination.pageSize, formModel.value);
-  };
-
-  fetchData(pagination.current, pagination.pageSize, formModel.value);
-
   const reset = () => {
-    formModel.value = generateFormModel();
+    formModel.value = serachFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 小图标

@@ -46,33 +46,6 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="skuId"
-                  :label="$t('LogCheckOrder.form.skuId')"
-                >
-                  <a-input
-                    v-model="formModel.skuId"
-                    :placeholder="$t('LogCheckOrder.form.skuId.placeholder')"
-                  />
-                  <!-- <a-select
-                    v-model="formModel.skuId"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('LogCheckOrder.form.selectDefault')"
-                  /> -->
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('LogCheckOrder.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
                   field="status"
                   :label="$t('LogCheckOrder.form.status')"
                 >
@@ -80,6 +53,28 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('LogCheckOrder.form.selectDefault')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="inTime"
+                  :label="$t('LogCheckOrder.form.inTime')"
+                >
+                  <a-range-picker
+                    v-model="formModel.inTime"
+                    style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="outTime"
+                  :label="$t('LogCheckOrder.form.outTime')"
+                >
+                  <a-range-picker
+                    v-model="formModel.outTime"
+                    style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
@@ -235,7 +230,6 @@
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
-          <!--                      <a-button>view</a-button>-->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -244,7 +238,6 @@
           >
             {{ $t('LogCheckOrder.columns.operations.view') }}
           </a-button>
-
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
@@ -259,9 +252,25 @@
               :bordered="false"
               :size="size"
               @page-change="onPageChange"
-            ></a-table>
-            <!--            <a-table :columns="Skucolumns" />-->
+            >
+              <template #imgUrl="{ record }">
+                <img
+                  :src="record.imgUrl"
+                  alt="Product Image"
+                  style="width: 100px; height: 100px"
+                />
+              </template>
+            </a-table>
           </a-modal>
+
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteLogCheckOrderById(record.id)"
+          >
+            {{ $t('LogCheckOrder.columns.operations.delete') }}
+          </a-button>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -277,8 +286,8 @@
     queryLogCheckOrderList,
     LogCheckOrder,
     queryOrderInfo,
-    OrderInfo,
     OrderItem,
+    deleteLogCheckOrder,
   } from '@/api/logistics';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -289,28 +298,30 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  // Long id = LogCheckOrder.getId();
+  // Long wareId = LogCheckOrder.getWareId();
+  // Long stationId = LogCheckOrder.getStationId();
+  // CheckStatus status = LogCheckOrder.getStatus();
+  // Date inTime = LogCheckOrder.getInTime();
+  // Date outTime = LogCheckOrder.getOutTime();
+
   const generateFormModel = () => {
     return {
       id: '',
-      imgUrl: '',
-      inTime: null,
-      orderId: '',
-      outTime: null,
-      skuId: '',
-      skuName: '',
-      skuNum: '',
-      skuPrice: '',
-      stationId: '',
-      status: '',
-      // 0:未分发,1:已分发,2:已入库
-      updateTime: null,
-      createTime: null,
       wareId: '',
+      stationId: '',
+      status: null,
+      // 0:未分发,1:已分发,2:已入库
+      inTime: null,
+      outTime: null,
+      // skuId: '',
+      // skuName: '',
+      // skuNum: '',
+      // skuPrice: '',
     };
   };
   const generateorderItemModel = () => {
     return {
-      // 定义类型
       orderItemList: [],
     };
   };
@@ -331,6 +342,8 @@
   const pagination = reactive({
     ...basePagination,
   });
+
+  // 密度选择
   const densityList = computed(() => [
     {
       name: t('LogCheckOrder.size.mini'),
@@ -350,6 +363,7 @@
     },
   ]);
 
+  // 展示分发单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('LogCheckOrder.columns.index'),
@@ -384,22 +398,23 @@
       slotName: 'operations',
     },
   ]);
+  // 搜索状态输入框下拉列表
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('LogCheckOrder.form.status.no_distribute'),
-      value: 'no_distribute',
+      label: t('LogCheckOrder.form.status.OUT'),
+      value: 'OUT',
     },
     {
-      label: t('LogCheckOrder.form.status.distributed'),
-      value: 'distributed',
+      label: t('LogCheckOrder.form.status.IN'),
+      value: 'IN',
     },
     {
-      label: t('LogCheckOrder.form.status.stocked'),
-      value: 'stocked',
+      label: t('LogCheckOrder.form.status.CANCEL'),
+      value: 'CANCEL',
     },
   ]);
-  // 展示商品的表格内容
 
+  // 展示商品的表格内容
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
       title: t('LogCheckOrder.columns.skuId'),
@@ -411,9 +426,9 @@
       slotName: 'skuName',
     },
     {
-      title: t('TransferOrder.columns.skuImg'),
-      dataIndex: 'skuImg',
-      slotName: 'skuImg',
+      title: t('LogCheckOrder.columns.skuImg'),
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
     },
     {
       title: t('LogCheckOrder.columns.skuNum'),
@@ -425,9 +440,21 @@
     },
   ]);
 
+  // 删除分发单
+  const deleteLogCheckOrderById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteLogCheckOrder(id);
+      fetchData(pagination.current, pagination.pageSize, formModel.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // 展示商品详细信息
   const visible = ref(false);
-
   const findOrderItemData = async (orderId: number) => {
     setLoading(true);
     try {
@@ -440,7 +467,6 @@
       setLoading(false);
     }
   };
-
   const SkuDetail = (orderId: number) => {
     findOrderItemData(orderId, generateorderItemModel.value);
     visible.value = true;
@@ -483,6 +509,7 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 设置密度

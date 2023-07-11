@@ -1,14 +1,70 @@
 import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-import { Admin } from '@/api/acl';
 
 export interface PageRes<T> {
   records: T[];
   total: number;
 }
 
+export interface PurchaseOrder {
+  // 接口文档匹配 7.11
+  id: number; //	id
+  wareId: number;
+  imgUrl: string; // 商品sku图片
+  skuId: number; // 商品sku编号
+  skuName: string; // 商品sku名字
+  skuNum: number; //	商品购买的数量
+  skuPrice: number; // 商品sku价格
+  supplierId: number; // 供应商ID
+  supplierName: string; // 供应商名称
+  createTime: string; // 创建时间
+  updateTime: string; //	更新时间
+}
+
+export function queryPurchaseOrderList(
+  current: number,
+  limit: number,
+  params: Partial<PurchaseOrder>
+) {
+  return axios.post<PageRes<PurchaseOrder>>(
+    `/admin/sys/purchaseOrder/${current}/${limit}`,
+    params
+  );
+}
+
+export interface StorageOrder {
+  id: string; // 出库单编号
+  wareId: number; // 区域中心库房编号
+  orderId: number; // 订单编号
+  skuId: number; //  商品编号
+  skuName: string; // 商品名称
+  stationId: number; // 分站编号
+  stationName: string; // 分站名称
+  supplierId: number; // 供应商编号
+  supplierName: string; // 供货商名称
+  storageType: string; // 库存单类型
+  // IN(0, "入库"),
+  // OUT(1, "出库"),
+  // RETURN_IN(2, "退货入库"),
+  // RETURN_OUT(3, "退货出库");
+  createTime: string; // 创建时间;
+  updateTime: string; // 更新时间
+}
+
+export function queryStorageOrderList(
+  current: number,
+  limit: number,
+  params: Partial<StorageOrder>
+) {
+  return axios.post<PageRes<StorageOrder>>(
+    `/admin/sys/storageOrder/${current}/${limit}`,
+    params
+  );
+}
+
 export interface SkuWare {
+  // 中心库房库存
   // 定义类型
   id: string;
   skuId: number;
@@ -29,9 +85,7 @@ export function querySkuWareList(
 ) {
   return axios.post<PageRes<SkuWare>>(
     `/admin/product/skuWare/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 
@@ -44,20 +98,16 @@ export function addSkuWare(skuWare: SkuWare) {
 export interface CheckOrder {
   // 定义类型
   id: number;
-  imgUrl: string;
-  inTime: string;
-  orderId: number;
-  outTime: string;
-  skuId: number;
-  skuName: string;
-  skuNum: number;
-  skuPrice: number;
-  stationId: number;
-  status: number;
-  // 0:未分发,1:已分发,2:已入库
-  updateTime: string;
-  createTime: string;
-  wareId: number;
+  wareId: number; //	仓库ID
+  orderId: number; //	订单ID
+  stationId: number; //	分站ID
+  status: string; //	状态,可用值:OUT,IN,CANCEL
+  type: string; //	类型,可用值:DELIVERY,EXCHANGE,RETURN
+  workOrderId: number; //	任务单ID
+  inTime: string; //	入库时间
+  outTime: string; //	出库时间
+  createTime: string; //	创建时间
+  updateTime: string; //	更新时间
 }
 
 export function queryCheckOrderList(
@@ -67,9 +117,7 @@ export function queryCheckOrderList(
 ) {
   return axios.post<PageRes<CheckOrder>>(
     `/admin/sys/checkOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
 }
 
@@ -108,7 +156,7 @@ export function queryOrderInfo(orderId: number) {
 }
 
 export interface TransferOrder {
-  // 定义调拨单类型
+  // 定义调拨单类型,接口的都更新完了
   id: number; // 调拨单id
   orderId: number; // 订单ID
   wareId: number; // 仓库ID
@@ -118,27 +166,12 @@ export interface TransferOrder {
   logisticsId: number; // 物流公司id
   logisticsName: string; // 物流公司名称
   logisticsPhone: string; // 物流公司电话
-  status: number; // 状态
+  status: string; // 状态
+  type: string;
   inTime: Date; // 入库时间
   outTime: Date; // 出库时间
   createTime: Date; // 创建时间
   updateTime: Date; // 更新时间
-
-  // id: number;
-  // imgUrl: string;
-  // inTime: string;
-  // orderId: number;
-  // wareId: number;
-  // outTime: string;
-  // skuId: number;
-  // skuName: string;
-  // skuNum: number;
-  // skuPrice: number;
-  // stationId: number;
-  // status: number;
-  // // 0:未分发,1:已分发,2:已入库
-  // updateTime: string;
-  // createTime: string;
 }
 
 export function queryTransferOrderList(
@@ -148,10 +181,65 @@ export function queryTransferOrderList(
 ) {
   return axios.post<PageRes<TransferOrder>>(
     `/admin/sys/transferOrder/${current}/${limit}`,
-    {
-      params,
-    }
+    params
   );
+}
+
+// 任务单
+export interface WorkOrder {
+  // 内容不影响
+  id: number;
+  orderId: number;
+  userId: number; //	用户ID
+  wareId: number; // 仓库ID
+  courierId: number;
+  stationId: number;
+  stationName: string;
+  workStatus:
+    | 'DISPATCH'
+    | 'OUT'
+    | 'IN'
+    | 'WAITING_ASSIGN'
+    | 'ASSIGN'
+    | 'WAITING_COURIER_TAKE'
+    | 'WAITING_USER_TAKE'
+    | 'FINISHED'
+    | 'CANCEL'; //	状态,=>那些状态
+  workType: string; // 配送类型
+  // DELIVERY(0, "送货"),
+  // EXCHANGE(1, "换货"),
+  // RETURN(2, "退货");
+  updateTime: string;
+  createTime: string;
+  // orderInfo
+  // 个人信息
+  name: string; //	姓名
+  phone: string; // 电话号码
+  postCode: string; //	邮编
+  province: string; // 省
+  city: string; // 市
+  district: string; // 区
+  detailAddress: string; //	详细地址
+  // 物流
+  logisticsId: number; //	物流公司id
+  logisticsName: string; //	物流公司名称
+  logisticsPhone: string; //	物流公司电话
+}
+
+export function queryWorkOrderList(
+  current: number,
+  limit: number,
+  params: Partial<WorkOrder>
+) {
+  return axios.post<PageRes<WorkOrder>>(
+    `/admin/sys/workOrder/${current}/${limit}`,
+    params
+  );
+}
+
+// 中心库房根据orderid 订单id 调拨出库
+export function transferOutWareByOrderId(orderId: number) {
+  return axios.get<any>(`/admin/sys/ware/out/${orderId}`);
 }
 
 export interface PolicyRecord {

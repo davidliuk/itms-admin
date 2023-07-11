@@ -22,12 +22,12 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="wareId"
-                  :label="$t('TransferOrder.form.wareId')"
+                  field="orderId"
+                  :label="$t('TransferOrder.form.orderId')"
                 >
                   <a-input
-                    v-model="formModel.wareId"
-                    :placeholder="$t('TransferOrder.form.wareId.placeholder')"
+                    v-model="formModel.orderId"
+                    :placeholder="$t('TransferOrder.form.orderId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -46,24 +46,41 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="createTime"
-                  :label="$t('TransferOrder.form.createTime')"
+                  field="stationName"
+                  :label="$t('TransferOrder.form.stationName')"
                 >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
+                  <a-input
+                    v-model="formModel.stationName"
+                    :placeholder="
+                      $t('TransferOrder.form.stationName.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="status"
-                  :label="$t('TransferOrder.form.status')"
+                  field="logisticsId"
+                  :label="$t('TransferOrder.form.logisticsId')"
                 >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('TransferOrder.form.selectDefault')"
+                  <a-input
+                    v-model="formModel.logisticsId"
+                    :placeholder="
+                      $t('TransferOrder.form.logisticsId.placeholder')
+                    "
+                  />
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="8">
+                <a-form-item
+                  field="logisticsName"
+                  :label="$t('TransferOrder.form.logisticsName')"
+                >
+                  <a-input
+                    v-model="formModel.logisticsName"
+                    :placeholder="
+                      $t('TransferOrder.form.logisticsName.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
@@ -98,15 +115,9 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('TransferOrder.operation.create') }}
-            </a-button>
             <a-upload action="/">
               <template #upload-button>
-                <a-button>
+                <a-button type="primary">
                   {{ $t('TransferOrder.operation.import') }}
                 </a-button>
               </template>
@@ -118,11 +129,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="downloadTransferOrderList">
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('TransferOrder.operation.download') }}
+            {{ $t('TransferOrder.operation.download') }}列表
           </a-button>
           <a-tooltip :content="$t('TransferOrder.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -186,6 +197,7 @@
 
       <!-- 表格 -->
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -200,25 +212,41 @@
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
 
-        <!-- 表格form里 -->
+        <!-- table里 -->
         <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.status === 'no_distribute'" class="circle"></span>
+          <span v-if="record.status === 'DISPATCH'" class="circle"></span>
+          <span v-else-if="record.status === 'OUT'" class="circle pass"></span>
+          <span v-else-if="record.status === 'IN'" class="circle pass"></span>
           <span
-            v-else-if="record.status === 'distributed'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
+            v-else-if="record.status === 'CANCEL'"
             class="circle pass"
           ></span>
           {{ $t(`TransferOrder.form.status.${record.status}`) }}
         </template>
-        <!-- 表格form里 -->
+        <template #type="{ record }">
+          <span v-if="record.type === 'DELIVERY'" class="circle"></span>
+          <span
+            v-else-if="record.type === 'EXCHANGE'"
+            class="circle pass"
+          ></span>
+          <span v-else-if="record.type === 'RETURN'" class="circle pass"></span>
+          {{ $t(`TransferOrder.form.type.${record.type}`) }}
+        </template>
 
-        <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
+          <a-popconfirm
+            content="是否确认出库?"
+            type="warning"
+            @ok="transferOutWare(record.orderId)"
+            @cancel="handleCancelOutWare"
+          >
+            <a-button v-permission="['admin']" type="text" size="small">
+              出库
+            </a-button>
+          </a-popconfirm>
+          <!--          查看商品详情-->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -227,13 +255,12 @@
           >
             {{ $t('TransferOrder.columns.operations.view') }}
           </a-button>
-
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
             @cancel="handleCancel"
           >
-            <template #title> 调拨单商品详情</template>
+            <template #title> 验收单商品详情 </template>
             <a-table
               row-key="id"
               :loading="loading"
@@ -242,8 +269,15 @@
               :bordered="false"
               :size="size"
               @page-change="onPageChange"
-            ></a-table>
-            <!--            <a-table :columns="Skucolumns" />-->
+            >
+              <template #imgUrl="{ record }">
+                <img
+                  :src="record.imgUrl"
+                  alt="Product Image"
+                  style="width: 100px; height: 100px"
+                />
+              </template>
+            </a-table>
           </a-modal>
         </template>
         <!-- 查看 -->
@@ -260,39 +294,33 @@
     queryTransferOrderList,
     TransferOrder,
     queryOrderInfo,
-    OrderInfo,
     OrderItem,
+    transferOutWareByOrderId,
   } from '@/api/center';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import htmlToPdf from '@/utils/pdf';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
   const generateFormModel = () => {
     return {
-      id: '', // 调拨单id
-      orderId: '', // 订单ID
-      wareId: '', // 仓库ID
-      workOrderId: '', // 任务单ID
-      stationId: '', // 分站ID，生成分发单之后
-      stationName: '', // 分站名称
-      logisticsId: '', // 物流公司id
-      logisticsName: '', // 物流公司名称
-      logisticsPhone: '', // 物流公司电话
-      status: '', // 状态
-      inTime: null, // 入库时间
-      outTime: null, // 出库时间
-      createTime: null, // 创建时间
-      updateTime: null, // 更新时间
+      // 后端所有的查询条件
+      id: '',
+      wareId: '',
+      stationId: '',
+      stationName: '',
+      orderId: '',
+      workOrderId: '',
+      logisticsId: '',
+      logisticsName: '',
     };
   };
   const generateorderItemModel = () => {
     return {
-      // 定义类型
       orderItemList: [],
     };
   };
@@ -304,15 +332,40 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
-  const size = ref<SizeProps>('medium');
+  // 调拨出库
+  const visibleOutWare = ref(false);
 
-  const basePagination: Pagination = {
-    current: 1,
-    pageSize: 20,
+  const transferOutWare = async (orderId: number) => {
+    setLoading(true);
+    try {
+      const { data } = await transferOutWareByOrderId(orderId);
+      visibleOutWare.value = false;
+      console.log(data);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      fetchData(
+        basePagination.current,
+        basePagination.pageSize,
+        formModel.value
+      );
+      setLoading(false);
+    }
   };
-  const pagination = reactive({
-    ...basePagination,
-  });
+  const handleCancelOutWare = () => {
+    visibleOutWare.value = false;
+  };
+  // 调拨出库
+
+  // 打印出库单列表
+  const downloadTransferOrderList = () => {
+    const text = '所有调拨单信息';
+    // text:文件标题
+    htmlToPdf(text, '#printTable');
+  };
+  // 打印出库单列表
+
+  // 密度选择
   const densityList = computed(() => [
     {
       name: t('TransferOrder.size.mini'),
@@ -332,6 +385,7 @@
     },
   ]);
 
+  // 展示分发单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('TransferOrder.columns.index'),
@@ -345,16 +399,11 @@
     {
       title: t('TransferOrder.columns.orderId'),
       dataIndex: 'orderId',
-      slotName: 'orderId',
     },
-    {
-      title: t('TransferOrder.columns.wareId'),
-      dataIndex: 'wareId',
-    },
-    {
-      title: t('TransferOrder.columns.workOrderId'),
-      dataIndex: 'workOrderId',
-    },
+    // {
+    //   title: t('TransferOrder.columns.wareId'),
+    //   dataIndex: 'wareId',
+    // },
     {
       title: t('TransferOrder.columns.stationId'),
       dataIndex: 'stationId',
@@ -363,31 +412,30 @@
     {
       title: t('TransferOrder.columns.stationName'),
       dataIndex: 'stationName',
-      slotName: 'stationName',
     },
-    // {
-    //   title: t('TransferOrder.columns.logisticsId'),
-    //   dataIndex: 'logisticsId',
-    //   slotName: 'logisticsId',
-    // },
-    // {
-    //   title: t('TransferOrder.columns.logisticsName'),
-    //   dataIndex: 'logisticsName',
-    //   slotName: 'logisticsName',
-    // },
+    {
+      title: t('TransferOrder.columns.status'),
+      dataIndex: 'status',
+      slotName: 'status',
+    },
+    {
+      title: t('TransferOrder.columns.type'),
+      dataIndex: 'type',
+      slotName: 'type',
+    },
+    {
+      title: t('TransferOrder.columns.logisticsId'),
+      dataIndex: 'logisticsId',
+      slotName: 'logisticsId',
+    },
+    {
+      title: t('TransferOrder.columns.logisticsName'),
+      dataIndex: 'logisticsName',
+    },
     // {
     //   title: t('TransferOrder.columns.logisticsPhone'),
     //   dataIndex: 'logisticsPhone',
-    //   slotName: 'logisticsPhone',
     // },
-    {
-      title: t('TransferOrder.columns.createTime'),
-      dataIndex: 'createTime',
-    },
-    {
-      title: t('TransferOrder.columns.updateTime'),
-      dataIndex: 'updateTime',
-    },
     {
       title: t('TransferOrder.columns.inTime'),
       dataIndex: 'inTime',
@@ -397,33 +445,13 @@
       dataIndex: 'outTime',
     },
     {
-      title: t('TransferOrder.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
-    {
       title: t('TransferOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
 
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('TransferOrder.form.status.in_warehouse'),
-      value: 'in_warehouse',
-    },
-    {
-      label: t('TransferOrder.form.status.out_warehouse'),
-      value: 'out_warehouse',
-    },
-    {
-      label: t('TransferOrder.form.status.in_stationhouse'),
-      value: 'in_stationhouse',
-    },
-  ]);
-
-  // 展示商品的表格内容,展示商品详细信息---begin
+  // 展示商品的表格内容
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
       title: t('TransferOrder.columns.skuId'),
@@ -436,8 +464,8 @@
     },
     {
       title: t('TransferOrder.columns.skuImg'),
-      dataIndex: 'skuImg',
-      slotName: 'skuImg',
+      dataIndex: 'imgUrl',
+      slotName: 'imgUrl',
     },
     {
       title: t('TransferOrder.columns.skuNum'),
@@ -448,12 +476,13 @@
       dataIndex: 'skuPrice',
     },
   ]);
+
+  // 展示商品详细信息
   const visible = ref(false);
   const findOrderItemData = async (orderId: number) => {
     setLoading(true);
     try {
       const { data } = await queryOrderInfo(orderId);
-      console.log('调拨单内容');
       console.log(data);
       orderItemData.value = data.orderItemList; // data里的一个字段
     } catch (err) {
@@ -462,7 +491,6 @@
       setLoading(false);
     }
   };
-
   const SkuDetail = (orderId: number) => {
     findOrderItemData(orderId, generateorderItemModel.value);
     visible.value = true;
@@ -473,9 +501,15 @@
   const handleCancel = () => {
     visible.value = false;
   };
-  // 展示商品的表格内容,展示商品详细信息-end
 
-  // 分页---begin
+  // 分页
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 20,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
   const fetchData = async (
     current: number,
     pageSize: number,
@@ -506,9 +540,11 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 设置密度
+  const size = ref<SizeProps>('medium');
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event

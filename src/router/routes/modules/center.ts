@@ -12,16 +12,16 @@ const LIST: AppRouteRecordRaw = {
     order: 10, // 排序路由菜单项。如果设置该值，值越高，越靠前
   },
   children: [
-    {
-      path: 'search-table', // The midline path complies with SEO specifications
-      name: 'centerSearchTable',
-      component: () => import('@/views/center/search-table/index.vue'),
-      meta: {
-        locale: 'menu.center.searchTable',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
+    // {
+    //   path: 'search-table', // The midline path complies with SEO specifications
+    //   name: 'centerSearchTable',
+    //   component: () => import('@/views/center/search-table/index.vue'),
+    //   meta: {
+    //     locale: 'menu.center.searchTable',
+    //     requiresAuth: true,
+    //     roles: ['*'],
+    //   },
+    // },
     {
       path: 'skuWare', // The midline path complies with SEO specifications
       name: 'centerSkuWare',
@@ -45,7 +45,7 @@ const LIST: AppRouteRecordRaw = {
     //   },
     // },
     {
-      path: 'check_order', // The midline path complies with SEO specifications
+      path: 'checkOrder', // The midline path complies with SEO specifications
       name: 'centerCheckOrder',
       component: () => import('@/views/center/check-order/index.vue'),
       meta: {
@@ -56,12 +56,45 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'transfer_order',
+      path: 'transferOrder',
       name: 'centerTransferOrder',
       component: () => import('@/views/center/transfer-order/index.vue'),
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
         locale: 'menu.center.TransferOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    // {
+    //   path: 'workOrder',
+    //   name: 'centerWorkOrder',
+    //   component: () => import('@/views/center/work-order/index.vue'),
+    //   meta: {
+    //     // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+    //     locale: 'menu.center.WorkOrder',
+    //     requiresAuth: true,
+    //     roles: ['*'],
+    //   },
+    // },
+    {
+      path: 'storageOrder',
+      name: 'centerStorageOrder',
+      component: () => import('@/views/center/storage-order/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.StorageOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'purchaseOrder',
+      name: 'centerPurChaseOrder',
+      component: () => import('@/views/center/purchase-order/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.PurchaseOrder',
         requiresAuth: true,
         roles: ['*'],
       },

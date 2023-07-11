@@ -414,6 +414,7 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   // 设置密度
   const handleSelectDensity = (

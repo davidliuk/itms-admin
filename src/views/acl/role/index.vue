@@ -250,9 +250,11 @@
 
       <!-- 表格 -->
       <a-table
+        v-model:selectedKeys="selectedKeys"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
+        :row-selection="rowSelection"
         :columns="(cloneColumns as TableColumnData[])"
         :data="renderData"
         :bordered="false"
@@ -260,9 +262,9 @@
         @page-change="onPageChange"
       >
         <!-- 分页 -->
-        <template #index="{ rowIndex }">
+        <!-- <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
-        </template>
+        </template> -->
 
         <!-- 表格form里 -->
         <!-- 状态 -->
@@ -298,7 +300,7 @@
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="deleteAdminById(record.id)"
+            @click="deleteARoleById(record.id)"
           >
             {{ $t('role.columns.operations.delete') }}
           </a-button>
@@ -347,6 +349,14 @@
       updateTime: null,
     };
   };
+
+  const selectedKeys = ref([]);
+
+  const rowSelection = reactive({
+    type: 'checkbox',
+    showCheckedAll: true,
+    onlyCurrent: false,
+  });
 
   let options: Permission[];
 
@@ -434,11 +444,11 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
-    {
-      title: t('role.columns.index'),
-      dataIndex: 'index',
-      slotName: 'index',
-    },
+    // {
+    //   title: t('role.columns.index'),
+    //   dataIndex: 'index',
+    //   slotName: 'index',
+    // },
     {
       title: t('role.columns.id'),
       dataIndex: 'id',
@@ -502,11 +512,7 @@
   //   ]);
 
   // 分页
-  const fetchData = async (
-    current: number,
-    pageSize: number,
-    params: Partial<Role>
-  ) => {
+  const fetchData = async (current: number, pageSize: number, params: Role) => {
     setLoading(true);
     try {
       const { data } = await queryRoleList(current, pageSize, params);

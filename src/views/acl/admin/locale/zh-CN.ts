@@ -29,6 +29,7 @@ export default {
   'admin.operation.create': '新建',
   'admin.operation.import': '批量导入',
   'admin.operation.download': '下载',
+  'admin.operation.batchDelete': '批量删除',
 
   // columns
   'admin.columns.index': '#',

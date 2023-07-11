@@ -1,0 +1,57 @@
+export default {
+  'menu.product.attr-group': '平台属性管理',
+
+  'attrGroup.form.title.create': '新建平台属性',
+  'attrGroup.form.title.update': '修改平台属性',
+  'attrGroup.form.title.assign': '授权角色',
+  'attrGroup.form.id': '编号',
+  'attrGroup.form.id.placeholder': '请输入编号',
+  'attrGroup.form.username': '账户',
+  'attrGroup.form.username.placeholder': '请输入账户',
+  'attrGroup.form.password': '密码',
+  'attrGroup.form.password.placeholder': '请输入密码',
+  'attrGroup.form.name': '名称',
+  'attrGroup.form.name.placeholder': '请输入名称',
+  'attrGroup.form.remark': '备注',
+  'attrGroup.form.remark.placeholder': '请输入备注',
+  'attrGroup.form.sort': '排序',
+  'attrGroup.form.sort.placeholder': '请输入排序',
+  'attrGroup.form.wareId': '仓库ID',
+  'attrGroup.form.wareId.placeholder': '请输入仓库ID',
+  'attrGroup.form.stationId': '分站ID',
+  'attrGroup.form.stationId.placeholder': '请输入分站ID',
+  'attrGroup.form.createdTime': '创建时间',
+  'attrGroup.form.search': '查询',
+  'attrGroup.form.reset': '重置',
+  'attrGroup.form.selectDefault': '全部',
+
+  // operation
+  'attrGroup.operation.create': '新建',
+  'attrGroup.operation.import': '批量导入',
+  'attrGroup.operation.download': '下载',
+
+  // columns
+  'attrGroup.columns.index': '#',
+  'attrGroup.columns.id': '编号',
+  'attrGroup.columns.username': '账户',
+  'attrGroup.columns.name': '名称',
+  'attrGroup.columns.remark': '备注',
+  'attrGroup.columns.sort': '排序',
+  'attrGroup.columns.createTime': '创建时间',
+  'attrGroup.columns.updateTime': '修改时间',
+  'attrGroup.columns.operations': '操作',
+  'attrGroup.columns.operations.view': '查看',
+  'attrGroup.columns.operations.delete': '删除',
+  'attrGroup.columns.operations.update': '修改',
+  'attrGroup.columns.operations.assign': '授权',
+
+  // size
+  'attrGroup.size.mini': '迷你',
+  'attrGroup.size.small': '偏小',
+  'attrGroup.size.medium': '中等',
+  'attrGroup.size.large': '偏大',
+  // actions
+  'attrGroup.actions.refresh': '刷新',
+  'attrGroup.actions.density': '密度',
+  'attrGroup.actions.columnSetting': '列设置',
+};

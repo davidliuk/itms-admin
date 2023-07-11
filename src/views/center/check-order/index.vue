@@ -43,30 +43,6 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="skuId" :label="$t('CheckOrder.form.skuId')">
-                  <a-input
-                    v-model="formModel.skuId"
-                    :placeholder="$t('CheckOrder.form.skuId.placeholder')"
-                  />
-                  <!-- <a-select
-                    v-model="formModel.skuId"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('CheckOrder.form.selectDefault')"
-                  /> -->
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('CheckOrder.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item
                   field="status"
                   :label="$t('CheckOrder.form.status')"
@@ -75,6 +51,36 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('CheckOrder.form.selectDefault')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="inTime"
+                  :label="$t('CheckOrder.form.inTime')"
+                >
+                  <a-date-picker
+                    v-model="formModel.inTime"
+                    style="width: 100%"
+                    show-time
+                    :time-picker-props="{ defaultValue: '00:00:00' }"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    :placeholder="$t('CheckOrder.form.inTime.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="outTime"
+                  :label="$t('CheckOrder.form.outTime')"
+                >
+                  <a-date-picker
+                    v-model="formModel.outTime"
+                    style="width: 100%"
+                    show-time
+                    :time-picker-props="{ defaultValue: '00:00:00' }"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    :placeholder="$t('CheckOrder.form.outTime.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -109,15 +115,15 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('CheckOrder.operation.create') }}
-            </a-button>
+            <!--            <a-button type="primary">-->
+            <!--              <template #icon>-->
+            <!--                <icon-plus />-->
+            <!--              </template>-->
+            <!--              {{ $t('CheckOrder.operation.create') }}-->
+            <!--            </a-button>-->
             <a-upload action="/">
               <template #upload-button>
-                <a-button>
+                <a-button type="primary">
                   {{ $t('CheckOrder.operation.import') }}
                 </a-button>
               </template>
@@ -129,7 +135,7 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="downloadCheckOrderList">
             <template #icon>
               <icon-download />
             </template>
@@ -197,6 +203,7 @@
 
       <!-- 表格 -->
       <a-table
+        id="printTable"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -206,30 +213,61 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- 分页 -->
+        <!-- # -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
 
-        <!-- 表格form里 -->
-        <!-- 状态 -->
+        <!-- 状态类型 -->
         <template #status="{ record }">
-          <span v-if="record.status === 'no_distribute'" class="circle"></span>
+          <span v-if="record.status === 'OUT'" class="circle"></span>
+          <span v-else-if="record.status === 'IN'" class="circle pass"></span>
           <span
-            v-else-if="record.status === 'distributed'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
+            v-else-if="record.status === 'CANCEL'"
             class="circle pass"
           ></span>
           {{ $t(`CheckOrder.form.status.${record.status}`) }}
         </template>
-        <!-- 表格form里 -->
+        <template #type="{ record }">
+          <span v-if="record.type === 'DELIVERY'" class="circle"></span>
+          <span
+            v-else-if="record.type === 'EXCHANGE'"
+            class="circle pass"
+          ></span>
+          <span v-else-if="record.type === 'RETURN'" class="circle pass"></span>
+          {{ $t(`CheckOrder.form.type.${record.type}`) }}
+        </template>
+        <!-- 状态类型  -->
 
-        <!-- table里 -->
-        <!-- 查看 -->
+        <!-- 打印 -->
         <template #operations="{ record }">
+          <a-button type="text" size="small" @click="printClick(record)"
+            >打印分发单</a-button
+          >
+          <a-modal
+            ok-text="打印"
+            :visible="printVisible"
+            title="分发单详情"
+            width="700px"
+            @cancel="printCancel"
+            @before-ok="printBeforeOk"
+            >间距
+            <a-radio-group v-model="pdfSize" type="button">
+              <a-radio value="mini">mini</a-radio>
+              <a-radio value="small">small</a-radio>
+              <a-radio value="medium">medium</a-radio>
+              <a-radio value="large">large</a-radio>
+            </a-radio-group>
+            <a-descriptions
+              id="capture"
+              style="margin-top: 20px"
+              :data="data"
+              :size="pdfSize"
+              title="User Info"
+              :column="1"
+            ></a-descriptions>
+          </a-modal>
+          <!--  分发单商品详情 -->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -243,7 +281,7 @@
             @ok="handleOk"
             @cancel="handleCancel"
           >
-            <template #title> 验收单商品详情 </template>
+            <template #title> 分发单商品详情 </template>
             <a-table
               row-key="id"
               :loading="loading"
@@ -262,17 +300,7 @@
               </template>
             </a-table>
           </a-modal>
-
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteCheckOrderById(record.id)"
-          >
-            {{ $t('CheckOrder.columns.operations.delete') }}
-          </a-button>
         </template>
-        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -287,34 +315,82 @@
     CheckOrder,
     queryOrderInfo,
     OrderItem,
-    deleteCheckOrder,
   } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import htmlToPdf from '@/utils/pdf';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  // 描述列表展示打印信息
+  const pdfSize = ref('medium');
+  let data = [
+    { label: '分发单标识', value: '' },
+    { label: '订单标识', value: '' },
+    { label: '任务单标识', value: '' },
+    { label: '区域中心仓库标识', value: '' },
+    { label: '分站标识', value: '' },
+    { label: '分发单状态', value: '' },
+    { label: '分发单类型', value: '' },
+    { label: '出站时间', value: '' },
+    { label: '入站时间', value: '' },
+  ];
+
+  const printVisible = ref(false);
+  const printClick = (checkOrder: CheckOrder) => {
+    data = [
+      { label: '分发单标识', value: checkOrder.id.toString() },
+      { label: '订单标识', value: checkOrder.orderId.toString() },
+      { label: '仓库标识', value: checkOrder.wareId.toString() },
+      { label: '任务单标识', value: checkOrder.workOrderId.toString() },
+      { label: '分站标识', value: checkOrder.stationId.toString() },
+      {
+        label: '分发单状态',
+        value: t(`CheckOrder.form.status.${checkOrder.status}`),
+      },
+      {
+        label: '分发单类型',
+        value: t(`CheckOrder.form.type.${checkOrder.type}`),
+      },
+      { label: '更新时间', value: checkOrder.inTime },
+      { label: '创建时间', value: checkOrder.outTime },
+    ];
+    setTimeout(() => {
+      printVisible.value = true;
+    }, 500);
+  };
+  const printBeforeOk = () => {
+    console.log('打印');
+    const text = '分发单详情';
+    // text:文件标题
+    htmlToPdf(text, '#capture');
+  };
+  const printCancel = () => {
+    printVisible.value = false;
+  };
+  // 描述列表展示打印信息
+
+  // 整个分发单列表打印
+  const downloadCheckOrderList = () => {
+    const text = '所有分发单信息';
+    // text:文件标题
+    htmlToPdf(text, '#printTable');
+  };
+  // 整个分发单列表打印
+
   const generateFormModel = () => {
     return {
       id: '',
-      imgUrl: '',
-      inTime: null,
-      orderId: '',
-      outTime: null,
-      // skuId: '',
-      // skuName: '',
-      // skuNum: '',
-      // skuPrice: '',
-      stationId: '',
-      status: '',
-      // 0:未分发,1:已分发,2:已入库
-      updateTime: null,
-      createTime: null,
       wareId: '',
+      stationId: '',
+      status: null,
+      // 0:未分发,1:已分发,2:已入库
+      inTime: null,
+      outTime: null,
     };
   };
   const generateorderItemModel = () => {
@@ -372,6 +448,10 @@
       dataIndex: 'id',
     },
     {
+      title: t('CheckOrder.columns.orderId'),
+      dataIndex: 'orderId',
+    },
+    {
       title: t('CheckOrder.columns.wareId'),
       dataIndex: 'wareId',
     },
@@ -381,14 +461,30 @@
       slotName: 'stationId',
     },
     {
-      title: t('CheckOrder.columns.createTime'),
-      dataIndex: 'createTime',
-    },
-    {
       title: t('CheckOrder.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
+    {
+      title: t('CheckOrder.columns.type'),
+      dataIndex: 'type',
+      slotName: 'type',
+    },
+    {
+      title: t('CheckOrder.columns.inTime'),
+      dataIndex: 'inTime',
+    },
+    {
+      title: t('CheckOrder.columns.outTime'),
+      dataIndex: 'outTime',
+    },
+    // {
+    //   title: t('CheckOrder.columns.createTime'),
+    //   dataIndex: 'createTime',
+    // },{
+    //   title: t('CheckOrder.columns.updateTime'),
+    //   dataIndex: 'updateTime',
+    // },
     {
       title: t('CheckOrder.columns.operations'),
       dataIndex: 'operations',
@@ -398,16 +494,16 @@
   // 搜索状态输入框下拉列表
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('CheckOrder.form.status.no_distribute'),
-      value: 'no_distribute',
+      label: t('CheckOrder.form.status.OUT'),
+      value: 'OUT',
     },
     {
-      label: t('CheckOrder.form.status.distributed'),
-      value: 'distributed',
+      label: t('CheckOrder.form.status.IN'),
+      value: 'IN',
     },
     {
-      label: t('CheckOrder.form.status.stocked'),
-      value: 'stocked',
+      label: t('CheckOrder.form.status.CANCEL'),
+      value: 'CANCEL',
     },
   ]);
 
@@ -436,19 +532,6 @@
       dataIndex: 'skuPrice',
     },
   ]);
-
-  // 删除分发单
-  const deleteCheckOrderById = async (id: number) => {
-    setLoading(true);
-    try {
-      await deleteCheckOrder(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // 展示商品详细信息
   const visible = ref(false);
@@ -506,6 +589,7 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 设置密度
