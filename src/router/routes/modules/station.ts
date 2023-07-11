@@ -52,6 +52,46 @@ const STATION: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'checkOrder-table', // The midline path complies with SEO specifications
+      name: 'CheckOrderTable',
+      component: () => import('@/views/station/checkorder-table/index.vue'),
+      meta: {
+        locale: 'menu.station.CheckOrderTable',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'receipt-table', // The midline path complies with SEO specifications
+      name: 'ReceiptTable',
+      component: () => import('@/views/station/receipt-table/index.vue'),
+      meta: {
+        locale: 'menu.station.receiptTable',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'transfer-table', // The midline path complies with SEO specifications
+      name: 'TransferOrder',
+      component: () => import('@/views/station/transfer-table/index.vue'),
+      meta: {
+        locale: 'menu.station.TransferOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'storage-table', // The midline path complies with SEO specifications
+      name: 'StorageTable',
+      component: () => import('@/views/station/storage-table/index.vue'),
+      meta: {
+        locale: 'menu.station.StorageTable',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

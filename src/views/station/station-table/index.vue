@@ -81,11 +81,11 @@
               <!--              &lt;!&ndash;开始时间&ndash;&gt;-->
               <!--              <a-col :span="8">-->
               <!--                <a-form-item-->
-              <!--                  field="createdTime"-->
-              <!--                  :label="$t('stationTable.form.createdTime')"-->
+              <!--                  field="createTime"-->
+              <!--                  :label="$t('stationTable.form.createTime')"-->
               <!--                >-->
               <!--                  <a-range-picker-->
-              <!--                    v-model="formModel.createdTime"-->
+              <!--                    v-model="formModel.createTime"-->
               <!--                    style="width: 100%"-->
               <!--                  />-->
               <!--                </a-form-item>-->
@@ -204,6 +204,7 @@
           </a-tooltip>
         </a-col>
       </a-row>
+      <!-- 增改-->
       <a-modal
         :visible="isCreating || isUpdating"
         :title="
@@ -219,7 +220,14 @@
             :field="key"
             :label="$t(`stationTable.form.${key}`)"
           >
-            <template v-if="key === 'workStatus'">
+            <template v-if="key === 'id'">
+              <a-input
+                v-model="form[key]"
+                :placeholder="$t(`stationTable.form.${key}.placeholder`)"
+                disabled
+              />
+            </template>
+            <template v-else-if="key === 'workStatus'">
               <a-select
                 v-model="form[key]"
                 :options="statusOptions"
@@ -232,20 +240,50 @@
                 :placeholder="$t(`stationTable.form.${key}.placeholder`)"
               />
             </template>
-            <!--            <a-input-->
-            <!--              v-model="form[key]"-->
-            <!--              :placeholder="$t(`stationTable.form.${key}.placeholder`)"-->
-            <!--            />-->
-            <!--          </a-form-item>-->
-            <!--          <a-form-item-->
-            <!--            field="workStatus"-->
-            <!--            :label="$t('stationTable.form.workStatus')"-->
-            <!--          >-->
-            <!--            <a-select-->
-            <!--              v-model="formModel.workType"-->
-            <!--              :options="statusOptions"-->
-            <!--              :placeholder="$t('stationTable.form.workStatus.placeholder')"-->
-            <!--            />-->
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <!-- 详情-->
+      <a-modal
+        :visible="isDetailing"
+        :title="$t(`stationTable.form.title.detail`)"
+        draggable
+        fullscreen
+        hide-cancel
+        @ok="handleDetailClose"
+        @cancel="handleDetailClose"
+      >
+        <a-form :model="formShow">
+          <a-form-item
+            v-for="(val, key) in formShow"
+            :key="key"
+            :field="key"
+            :label="$t(`stationTable.form.${key}`)"
+          >
+            <template v-if="key === 'workStatus'">
+              <template v-if="formShow[key] === 0">
+                <a-textarea
+                  :placeholder="$t(`stationTable.form.workStatus.inBusiness`)"
+                  style="width: 80%"
+                  disabled
+                />
+              </template>
+              <template v-else>
+                <a-textarea
+                  :placeholder="$t(`stationTable.form.workStatus.outBusiness`)"
+                  style="width: 80%"
+                  disabled
+                />
+              </template>
+            </template>
+            <template v-else>
+              <a-textarea
+                v-model="formShow[key]"
+                :placeholder="$t(`stationTable.form.default.placeholder`)"
+                style="width: 80%"
+                disabled
+              />
+            </template>
           </a-form-item>
         </a-form>
       </a-modal>
@@ -264,77 +302,13 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <!--分站编号-->
-        <template #id="{ record }">
-          {{ $t(`stationTable.form.id.${record.id}`) }}
-        </template>
-        <!--区域编号-->
-        <template #regionId="{ record }">
-          {{ $t(`stationTable.form.regionId.${record.regionId}`) }}
-        </template>
-        <!--库房编号-->
-        <template #wareId="{ record }">
-          {{ $t(`stationTable.form.wareId.${record.wareId}`) }}
-        </template>
-        <!--名称-->
-        <template #name="{ record }">
-          {{ $t(`stationTable.form.name.${record.name}`) }}
-        </template>
-        <!--电话号-->
-        <template #phone="{ record }">
-          {{ $t(`stationTable.form.phone.${record.phone}`) }}
-        </template>
-        <!--省-->
-        <template #province="{ record }">
-          {{ $t(`stationTable.form.province.${record.province}`) }}
-        </template>
-        <!--市-->
-        <template #city="{ record }">
-          {{ $t(`stationTable.form.city.${record.city}`) }}
-        </template>
-        <!--区-->
-        <template #district="{ record }">
-          {{ $t(`stationTable.form.district.${record.district}`) }}
-        </template>
-        <!--详细地址-->
-        <template #detailAddress="{ record }">
-          {{ $t(`stationTable.form.detailAddress.${record.detailAddress}`) }}
-        </template>
-        <!--        &lt;!&ndash;纬度&ndash;&gt;-->
-        <!--        <template #latitude="{ record }">-->
-        <!--          {{ $t(`stationTable.form.latitude.${record.latitude}`) }}-->
-        <!--        </template>-->
-        <!--        &lt;!&ndash;经度&ndash;&gt;-->
-        <!--        <template #longitude="{ record }">-->
-        <!--          {{ $t(`stationTable.form.longitude.${record.longitude}`) }}-->
-        <!--        </template>-->
-        <!--        &lt;!&ndash;门店照片&ndash;&gt;-->
-        <!--        <template #storePath="{ record }">-->
-        <!--          {{ $t(`stationTable.form.storePath.${record.storePath}`) }}-->
-        <!--        </template>-->
-        <!--        &lt;!&ndash;创建时间&ndash;&gt;-->
-        <!--        <template #creatTime="{ record }">-->
-        <!--          {{ $t(`stationTable.form.creatTime.${record.creatTime}`) }}-->
-        <!--        </template>-->
-        <!--        &lt;!&ndash;更新时间&ndash;&gt;-->
-        <!--        <template #updateTime="{ record }">-->
-        <!--          {{ $t(`stationTable.form.updateTime.${record.updateTime}`) }}-->
-        <!--        </template>-->
-        <!--        &lt;!&ndash;营业状态&ndash;&gt;-->
-        <!--        <template #workStatus="{ record }">-->
-        <!--          {{ $t(`stationTable.form.workStatus.${record.workStatus}`) }}-->
-        <!--        </template>-->
-        <!--        &lt;!&ndash;营业时间&ndash;&gt;-->
-        <!--        <template #workTime="{ record }">-->
-        <!--          {{ $t(`stationTable.form.workTime.${record.workTime}`) }}-->
-        <!--        </template>-->
         <!--操作-->
         <template #operations="{ record }">
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="getStationById(record.id)"
+            @click="getStation(record)"
           >
             {{ $t('stationTable.columns.operations.view') }}
           </a-button>
@@ -370,7 +344,6 @@
     addStation,
     updateStation,
     deleteStation,
-    getStation,
   } from '@/api/station';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -397,21 +370,26 @@
       latitude: '', // 维度
       longitude: '', // 经度
       storePath: '', // 门店照片
-      param: null,
+      // param: null,
       workTime: '',
       workStatus: 0, // 营业时间
-      creatTime: null, // 创建日期
+      createTime: null, // 创建日期
       updateTime: null, // 更新时间
     };
   };
   const formDefault = () => {
     return {
-      id: '', // id
+      id: '', // 分站id
       regionId: '', // 地区Id
       wareId: '', // 库房id
       name: '', // 名称
       phone: '', // 联系方式
+      province: '', // 省市
+      city: '', // 城市编号
+      district: '', // 区域
       detailAddress: '', // 详细地址
+      latitude: '', // 维度
+      longitude: '', // 经度
       storePath: '', // 门店照片
       workTime: '', // 营业时间
       workStatus: '', // 营业状态
@@ -425,13 +403,15 @@
   const showColumns = ref<Column[]>([]);
   const isCreating = ref(false);
   const isUpdating = ref(false);
+  const isDetailing = ref(false);
 
   let form = reactive(formDefault());
+  let formShow = reactive(generateFormModel());
 
   const size = ref<SizeProps>('medium');
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -497,12 +477,32 @@
       dataIndex: 'detailAddress',
     },
     // {
-    //   title: t('stationTable.columns.creatTime'),
-    //   dataIndex: 'creatTime',
+    //   title: t('stationTable.columns.createTime'),
+    //   dataIndex: 'createTime',
     // },
     // {
     //   title: t('stationTable.columns.updateTime'),
     //   dataIndex: 'updateTime',
+    // },
+    // {
+    //   title: t('stationTable.columns.latitude'),
+    //   dataIndex: 'latitude',
+    // },
+    // {
+    //   title: t('stationTable.columns.longitude'),
+    //   dataIndex: 'longitude',
+    // },
+    // {
+    //   title: t('stationTable.columns.storePath'),
+    //   dataIndex: 'storePath',
+    // },
+    // {
+    //   title: t('stationTable.columns.workStatus'),
+    //   dataIndex: 'workStatus',
+    // },
+    // {
+    //   title: t('stationTable.columns.workTime'),
+    //   dataIndex: 'workTime',
     // },
     {
       title: t('stationTable.columns.operations'),
@@ -550,15 +550,16 @@
   const handleBeforeOk = () => {
     if (isCreating.value) {
       addStation(form as unknown as Station);
-    } else {
+    } else if (isUpdating.value) {
       updateStation(form as unknown as Station);
+    } else {
+      handleClose();
     }
-    fetchData(pagination.current, pagination.pageSize, formModel.value);
-    handleClose();
   };
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
+    search();
     form = reactive(formDefault());
   };
   // 删
@@ -573,12 +574,23 @@
       setLoading(false);
     }
   };
+  // 详情信息
+  const getStation = async (station: Station) => {
+    // 显示当前分站的详细信息
+    copy(station, formShow);
+    isDetailing.value = true;
+  };
+  const handleDetailClose = () => {
+    formShow = reactive(generateFormModel());
+    isDetailing.value = false;
+  };
   // 查询重置
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const reset = () => {
     formModel.value = generateFormModel();
+    search();
   };
   // 分页
   const onPageChange = (current: number) => {

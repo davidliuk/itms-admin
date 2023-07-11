@@ -1,56 +1,87 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.station', 'menu.station.courierTable']" />
-    <a-card class="general-card" :title="$t('menu.station.courierTable')">
+    <Breadcrumb :items="['menu.station', 'menu.station.receiptTable']" />
+    <a-card class="general-card" :title="$t('menu.station.receiptTable')">
+      <!--查询框-->
       <a-row>
-        <!--查询框-->
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 20 }"
             label-align="left"
           >
-            <!--分站-->
-            <a-col :span="8">
-              <a-form-item
-                field="stationId"
-                :label="$t('courierTable.form.stationId')"
-              >
-                <a-input
-                  v-model="formModel.stationId"
-                  :placeholder="$t('courierTable.form.stationId.placeholder')"
-                />
-              </a-form-item>
-            </a-col>
             <a-row :gutter="16">
-              <!--姓名-->
+              <!--分站id-->
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('courierTable.form.name')">
+                <a-form-item
+                  field="stationId"
+                  :label="$t('receiptTable.form.stationId')"
+                >
                   <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('courierTable.form.name.placeholder')"
+                    v-model="formModel.stationId"
+                    :placeholder="$t('receiptTable.form.stationId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <!--手机号-->
+              <!--分站名称-->
+              <a-col :span="8">
+                <a-form-item
+                  field="stationName"
+                  :label="$t('receiptTable.form.stationName')"
+                >
+                  <a-input
+                    v-model="formModel.stationName"
+                    :placeholder="
+                      $t('receiptTable.form.stationName.placeholder')
+                    "
+                  />
+                </a-form-item>
+              </a-col>
+              <!--分站phone-->
+              <a-col :span="8">
+                <a-form-item
+                  field="stationPhone"
+                  :label="$t('receiptTable.form.stationPhone')"
+                >
+                  <a-input
+                    v-model="formModel.stationPhone"
+                    :placeholder="
+                      $t('receiptTable.form.stationPhone.placeholder')
+                    "
+                  />
+                </a-form-item>
+              </a-col>
+              <!--收货人姓名-->
+              <a-col :span="8">
+                <a-form-item field="name" :label="$t('receiptTable.form.name')">
+                  <a-input
+                    v-model="formModel.name"
+                    :placeholder="$t('receiptTable.form.name.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <!--收货人phone-->
               <a-col :span="8">
                 <a-form-item
                   field="phone"
-                  :label="$t('courierTable.form.phone')"
+                  :label="$t('receiptTable.form.phone')"
                 >
                   <a-input
                     v-model="formModel.phone"
-                    :placeholder="$t('courierTable.form.phone.placeholder')"
+                    :placeholder="$t('receiptTable.form.phone.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <!--身份证号-->
+              <!--订单id-->
               <a-col :span="8">
-                <a-form-item field="idNo" :label="$t('courierTable.form.idNo')">
+                <a-form-item
+                  field="orderId"
+                  :label="$t('receiptTable.form.orderId')"
+                >
                   <a-input
-                    v-model="formModel.idNo"
-                    :placeholder="$t('courierTable.form.idNo.placeholder')"
+                    v-model="formModel.orderId"
+                    :placeholder="$t('receiptTable.form.orderId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -58,41 +89,24 @@
           </a-form>
         </a-col>
         <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
-              <template #icon>
-                <icon-search />
-              </template>
-              {{ $t('courierTable.form.search') }}
-            </a-button>
-            <a-button @click="reset">
-              <template #icon>
-                <icon-refresh />
-              </template>
-              {{ $t('courierTable.form.reset') }}
-            </a-button>
-          </a-space>
-        </a-col>
       </a-row>
       <a-divider style="margin-top: 0" />
+      <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
-        <!-- 查找重置按钮 -->
+        <!-- 查询重置 -->
         <a-col :span="12">
           <a-space>
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('courierTable.form.search') }}
+              {{ $t('receiptTable.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('courierTable.form.reset') }}
+              {{ $t('receiptTable.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -105,16 +119,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('stationTable.operation.download') }}
+            {{ $t('receiptTable.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('stationTable.actions.refresh')">
+          <a-tooltip :content="$t('receiptTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('stationTable.actions.density')">
+            <a-tooltip :content="$t('receiptTable.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -130,7 +144,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('stationTable.actions.columnSetting')">
+          <a-tooltip :content="$t('receiptTable.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -166,79 +180,28 @@
           </a-tooltip>
         </a-col>
       </a-row>
-      <!--      修改-->
-      <a-modal
-        :visible="isUpdating"
-        :title="$t(`courierTable.form.title.update`)"
-        @cancel="handleClose"
-        @before-ok="handleBeforeOk"
-      >
-        <a-form :model="form">
-          <a-form-item
-            v-for="(val, key) in form"
-            :key="key"
-            :field="key"
-            :label="$t(`courierTable.form.${key}`)"
-          >
-            <template v-if="key === 'id' || key === 'userId'">
-              <a-input
-                v-model="form[key]"
-                :placeholder="$t(`courierTable.form.${key}.placeholder`)"
-                disabled
-              />
-            </template>
-            <template v-else>
-              <a-input
-                v-model="form[key]"
-                :placeholder="$t(`courierTable.form.${key}.placeholder`)"
-              />
-            </template>
-          </a-form-item>
-        </a-form>
-      </a-modal>
-      <!--      详情-->
+      <!-- 详情-->
       <a-modal
         :visible="isDetailing"
-        :title="$t(`courierTable.form.title.detail`)"
+        :title="$t(`receiptTable.form.title.detail`)"
         draggable
-        fullscreen
         hide-cancel
         @ok="handleDetailClose"
         @cancel="handleDetailClose"
       >
-        <a-form :model="formshow">
+        <a-form :model="formShow">
           <a-form-item
-            v-for="(val, key) in formshow"
+            v-for="(val, key) in formShow"
             :key="key"
             :field="key"
-            :label="$t(`courierTable.form.${key}`)"
+            :label="$t(`receiptTable.form.${key}`)"
           >
-            <template v-if="key === 'idNoUrl1'">
-              <img :src="formshow[key]" style="width: 200px; height: 150px" />
-              <a-link :href="formshow[key]">
-                <template #icon>
-                  <icon-zoom-in />
-                </template>
-                放大
-              </a-link>
-            </template>
-            <template v-else-if="key === 'idNoUrl2'">
-              <img :src="formshow[key]" style="width: 200px; height: 150px" />
-              <a-link :href="formshow[key]">
-                <template #icon>
-                  <icon-zoom-in />
-                </template>
-                放大
-              </a-link>
-            </template>
-            <template v-else>
-              <a-input
-                v-model="formshow[key]"
-                :placeholder="$t(`courierTable.form.default.placeholder`)"
-                style="width: 80%"
-                disabled
-              />
-            </template>
+            <a-textarea
+              v-model="formShow[key]"
+              :placeholder="$t(`receiptTable.form.default.placeholder`)"
+              style="width: 80%"
+              disabled
+            />
           </a-form-item>
         </a-form>
       </a-modal>
@@ -253,42 +216,19 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!--序号-->
+        <!--编号-->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <!--        &lt;!&ndash;完成任务量&ndash;&gt;-->
-        <!--        <template #count="{ record }">-->
-        <!--          {{ getworkNum(record.id) }}-->
-        <!--        </template>-->
         <!--操作-->
         <template #operations="{ record }">
           <a-button
-            v-perCourier="['admin']"
-            type="text"
-            size="small"
-            @click="getCourier(record)"
-          >
-            <template #icon>
-              <icon-link />
-            </template>
-            {{ $t('courierTable.columns.operations.view') }}
-          </a-button>
-          <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="handleUpdateClick(record)"
+            @click="getReceipt(record)"
           >
-            {{ $t('courierTable.columns.operations.change') }}
-          </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteCourierById(record.id)"
-          >
-            {{ $t('courierTable.columns.operations.delete') }}
+            {{ $t('receiptTable.columns.operations.view') }}
           </a-button>
         </template>
       </a-table>
@@ -300,15 +240,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryCourierList,
-    Courier,
-    updateCourier,
-    deleteCourier,
-    WorkOrder,
-    queryWorkOrderList,
-    CourierVo,
-  } from '@/api/station';
+  import { queryReceiptList, Receipt } from '@/api/station';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -321,55 +253,53 @@
   const generateFormModel = () => {
     return {
       id: '',
+      orderId: '',
       userId: '',
       name: '',
-      stationId: '',
-      idNo: '',
       phone: '',
-      idNoUrl1: '',
-      idNoUrl2: '',
-      createTime: null,
-      updateTime: null,
-      workNum: '',
-      // param: null,
+      stationId: '', // 分站
+      stationName: '', // 分站名称
+      stationPhone: '', // 分站电话
+      postCode: '', // 收货人邮编
+      requirement: '', // 要求
+      remark: '', // 备注
+      feedback: '', // 反馈
+      takeInvoice: '', // 是否开具发票
+      mark: '', // 客户满意度
+      province: '', // 省
+      city: '', // 市
+      district: '', // 区
+      detailAddress: '', // 详细地址
+      createTime: null, // 开始时间
+      updateTime: null, // 结束时间
     };
   };
-
-  const serachFormModel = () => {
-    return {
-      name: '',
-      stationId: '',
-      idNo: '',
-      phone: '',
-    };
-  };
-  const updateFormModel = () => {
+  const formDefault = () => {
     return {
       id: '',
+      orderId: '',
       userId: '',
       name: '',
       phone: '',
-      idNo: '',
-      idNoUrl1: '',
-      idNoUrl2: '',
-      stationId: '',
+      stationName: '', // 分站名称
+      requirement: '', // 要求
+      remark: '', // 备注
+      feedback: '', // 反馈
+      takeInvoice: '', // 是否开具发票
+      mark: '', // 客户满意度
     };
   };
-
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Courier[]>([]);
-  const formModel = ref(serachFormModel());
+  const renderData = ref<Receipt[]>([]);
+  const formModel = ref(formDefault());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-  const isUpdating = ref(false);
   const isDetailing = ref(false);
 
-  let form = reactive(updateFormModel());
-  let formshow = reactive(generateFormModel());
+  let formShow = reactive(generateFormModel());
 
   const size = ref<SizeProps>('medium');
-
   const basePagination: Pagination = {
     current: 1,
     pageSize: 10,
@@ -379,58 +309,54 @@
   });
   const densityList = computed(() => [
     {
-      name: t('courierTable.size.mini'),
+      name: t('receiptTable.size.mini'),
       value: 'mini',
     },
     {
-      name: t('courierTable.size.small'),
+      name: t('receiptTable.size.small'),
       value: 'small',
     },
     {
-      name: t('courierTable.size.medium'),
+      name: t('receiptTable.size.medium'),
       value: 'medium',
     },
     {
-      name: t('courierTable.size.large'),
+      name: t('receiptTable.size.large'),
       value: 'large',
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('courierTable.columns.index'),
+      title: t('receiptTable.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('courierTable.columns.id'),
+      title: t('receiptTable.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('courierTable.columns.stationId'),
-      dataIndex: 'stationId',
-    },
-    {
-      title: t('courierTable.columns.name'),
+      title: t('receiptTable.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('courierTable.columns.phone'),
+      title: t('receiptTable.columns.stationName'),
+      dataIndex: 'stationName',
+    },
+    {
+      title: t('receiptTable.columns.phone'),
       dataIndex: 'phone',
     },
     {
-      title: t('courierTable.columns.idNo'),
-      dataIndex: 'idNo',
+      title: t('receiptTable.columns.mark'),
+      dataIndex: 'mark',
     },
     {
-      title: t('courierTable.columns.workNum'),
-      dataIndex: 'workNum',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-      slotName: 'count',
+      title: t('receiptTable.columns.takeInvoice'),
+      dataIndex: 'takeInvoice',
     },
     {
-      title: t('courierTable.columns.operations'),
+      title: t('receiptTable.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
@@ -439,11 +365,11 @@
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<any>
+    params: Partial<Receipt>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryCourierList(current, pageSize, params);
+      const { data } = await queryReceiptList(current, pageSize, params);
       renderData.value = data.records;
       pagination.current = current;
       pagination.total = data.total;
@@ -455,90 +381,27 @@
   };
   fetchData(pagination.current, pagination.pageSize, formModel.value);
 
-  // 改
-  const handleUpdateClick = (courier: Courier) => {
-    copy(courier, form);
-    isUpdating.value = true;
-  };
-  const handleBeforeOk = () => {
-    updateCourier(form as unknown as Courier);
-    handleClose();
-  };
-  const handleClose = () => {
-    isUpdating.value = false;
-    search();
-    form = reactive(updateFormModel());
-  };
-
-  // 删
-  const deleteCourierById = async (id: number) => {
-    setLoading(true);
-    try {
-      await deleteCourier(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // 详情信息
-  const getCourier = (courier: Courier) => {
-    // 显示当前配送员的详细信息
-    copy(courier, formshow);
+  const getReceipt = async (receipt: Receipt) => {
+    // 显示当前分站的详细信息
+    copy(receipt, formShow);
     isDetailing.value = true;
   };
   const handleDetailClose = () => {
-    formshow = reactive(generateFormModel());
+    formShow = reactive(generateFormModel());
     isDetailing.value = false;
   };
-
-  //  任务量
-  // const missionCount = ref<number[]>([]);
-  // const getMissionCount = (id: number) => {
-  //   // 根据配送员id查总共任务
-  //   if (missionCount.value[id] !== undefined) {
-  //     return missionCount.value[id];
-  //   }
-  //   const params: Partial<WorkOrder> = {
-  //     courierId: id,
-  //   };
-  //   fetchMissionCount(pagination.current, pagination.pageSize, id, params);
-  //   return missionCount.value[id];
-  // };
-  // const fetchMissionCount = async (
-  //   current: number,
-  //   pageSize: number,
-  //   id: number,
-  //   params: Partial<WorkOrder>
-  // ) => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await queryWorkOrderList(current, pageSize, params);
-  //     missionCount.value[id] = data.total;
-  //   } catch (err) {
-  //     // you can report use errorHandler or other
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   // 查询重置
   const search = () => {
-    console.log(formModel.value);
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
-
   const reset = () => {
-    formModel.value = serachFormModel();
-    fetchData(pagination.current, pagination.pageSize, formModel.value);
+    formModel.value = generateFormModel();
   };
   // 分页
   const onPageChange = (current: number) => {
     fetchData(current, basePagination.pageSize, formModel.value);
   };
-
   // 四个小标
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
@@ -609,7 +472,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CourierTable',
+    name: 'ReceiptTable',
   };
 </script>
 
