@@ -1,5 +1,6 @@
 import { computed } from 'vue';
 import { OrderState } from '@/store/modules/order_info/types';
+import { OrderDetail } from '@/api/orderInfo';
 
 export type StepData = {
   step: number;
@@ -25,25 +26,32 @@ export const OrderStateGetString = (state: string) => {
     // if (num === '4') return '已完成';
     // if (num === '-1') return '已取消';
 
-    if (state === 'UNPAID') return '未付款';
-    if (state === 'CANCEL') return '已取消';
-    if (state === 'WAITING_DISPATCH') return '待调度';
-    if (state === 'DISPATCH') return '已调度';
-    if (state === 'OUT') return '出库中';
-    if (state === 'IN') return '入库中';
-    if (state === 'WAITING_ASSIGN') return '待配送';
-    if (state === 'ASSIGN') return '配送中';
-    if (state === 'WAITING_TAKE') return '待取件';
-    if (state === 'FINISHED') return '已完成';
-    if (state === 'CANCEL') return '已取消';
+    let res = '未付款';
+    if (state === 'UNPAID') return res;
+    res = '已付款';
+    if (state === 'PAID') return res;
+    res = '已调度';
+    if (state === 'DISPATCH') return res;
+    res = '出库中';
+    if (state === 'OUT') return res;
+    res = '入库中';
+    if (state === 'IN') return res;
+    res = '配送中';
+    if (state === 'ASSIGN') return res;
+    res = '已送达';
+    if (state === 'TAKE') return res;
+    res = '已取件';
+    if (state === 'RECEIVE') return res;
+    res = '已取消';
+    if (state === 'CANCEL') return res;
 
-    // UNPAID,WAITING_DISPATCH,DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_TAKE,FINISHED,CANCEL
+    // UNPAID,PAID,DISPATCH,OUT,IN,ASSIGN,TAKE,RECEIVE,CANCEL
     return '未知订单状态';
   });
 };
-export const OrderStateGetStepAndString = (orderInfo: OrderState) => {
+export const OrderStateGetStepAndString = (orderDetail: OrderDetail) => {
   return computed(() => {
-    const num: string = orderInfo.orderStatus as unknown as string;
+    const num: string = orderDetail.orderStatus as unknown as string;
     const res: StepData = {
       step: 1,
       strList: [],
@@ -72,40 +80,46 @@ export const OrderStateGetStepAndString = (orderInfo: OrderState) => {
     res.step = 1;
     if (num === 'UNPAID') return res;
     res.strList[1] = `已付款`;
-    res.description[1] = orderInfo.paymentTime as unknown as string;
+    res.description[1] = `${orderDetail.paymentTime as unknown as string} \n ${
+      orderDetail.nickName as unknown as string
+    }`;
 
     res.step = 2;
-    if (num === 'WAITING_DISPATCH') return res;
+    if (num === 'DISPATCH') return res;
     res.strList[2] = `已调度`;
+    res.description[2] = orderDetail.dispatchTime as unknown as string;
+
     res.step = 3;
-    if (num === 'OUT' || num === 'DISPATCH') return res;
+    if (num === 'OUT') return res;
     res.strList[3] = `已出库`;
-    res.description[3] = orderInfo.deliveryTime as unknown as string;
+    res.description[3] = `${
+      orderDetail.checkOrder?.outTime as unknown as string
+    } \n ${orderDetail.wareName as unknown as string}`;
+
     res.step = 4;
     if (num === 'IN') return res;
     res.strList[4] = `已入库`;
-    // res.description[4] = orderInfo.takeTime as unknown as string;
+    res.description[4] = `${
+      orderDetail.checkOrder?.inTime as unknown as string
+    } \n ${orderDetail.stationName as unknown as string}`;
 
     res.step = 5;
-    if (num === 'WAITING_ASSIGN') {
-      res.strList[5] = `待配送`;
-      return res;
-    }
-    if (num === 'ASSIGN') {
-      res.strList[5] = `配送中`;
-      res.description[5] = `配送员:${orderInfo.courierName}`;
-      return res;
-    }
+    res.description[5] = `配送员:${orderDetail.courierName}`;
+    if (num === 'ASSIGN') return res;
+    res.strList[5] = `已送达`;
+    res.description[5] = `${
+      orderDetail.assignTime as unknown as string
+    } \n 配送员:${orderDetail.courierName}`;
 
     res.step = 6;
-    if (num === 'WAITING_TAKE') return res;
+    if (num === 'TAKE') return res;
     res.strList[6] = `已取件`;
-    res.description[6] = orderInfo.takeTime as unknown as string;
-
+    res.description[6] = `${orderDetail.takeTime as unknown as string} \n ${
+      orderDetail.receiverName as unknown as string
+    }`;
     res.step = 7;
-    if (num === 'FINISHED') return res;
 
-    // UNPAID,WAITING_DISPATCH,DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_TAKE,FINISHED,CANCEL
+    // UNPAID,WAITING_DISPATCH,DISPATCH,OUT,IN,WAITING_ASSIGN,ASSIGN,WAITING_TAKE,CANCEL
     // 返回的值是一个对象，其中有：步骤数+string列表，总共5个元素
     throw new Error('Invalid OrderInfo');
   });

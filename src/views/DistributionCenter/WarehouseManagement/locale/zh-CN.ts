@@ -1,5 +1,5 @@
 export default {
-  'menu.list.warehouseList': '库房列表',
+  'menu.DistributionCenter.WarehouseManagement': '库房管理',
   'warehouseList.tab.title.all': '全部',
   'warehouseList.tab.title.center': '中心仓库',
   'warehouseList.tab.title.region': '区域仓库',
@@ -9,7 +9,7 @@ export default {
   // 'cardList.statistic.disable': '未启用',
   'cardList.content.delete': '删除',
   'cardList.content.inspection': '质检',
-  'cardList.content.action': '新建仓库',
+  'cardList.content.action': '点击创建质检内容队列',
   'cardList.service.open': '开通服务',
   'cardList.service.cancel': '取消服务',
   'cardList.service.renew': '续约服务',

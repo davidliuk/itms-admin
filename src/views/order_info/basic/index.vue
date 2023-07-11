@@ -81,14 +81,13 @@
   const handleBack = () => {
     backButtonLoading.value = true;
     taskButtonDisabled.value = true;
-    router.push({ name: 'SearchTable' });
   };
 
   // 下面是步骤显示器STEP的相关属性
   // console.log(typeof currentData.order_status);
   const step = computed(() => {
-    if (typeof currentData.order_status === 'string') {
-      const orderStatus = Number(currentData.order_status);
+    if (typeof currentData.orderStatus === 'string') {
+      const orderStatus = Number(currentData.orderStatus);
       return orderStatus + 1;
     }
     if (typeof currentData.order_status === 'number') {

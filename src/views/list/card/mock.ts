@@ -63,6 +63,26 @@ const qualityInspectionList: ServiceRecord[] = [
       },
     ],
   },
+  {
+    id: 4,
+    name: 'quality',
+    title: '图文类-高清图片222',
+    description: '1111-10-15 08:10:00',
+    data: [
+      {
+        label: '待质检数',
+        value: '120',
+      },
+      {
+        label: '积压时长',
+        value: '60s',
+      },
+      {
+        label: '待抽检数',
+        value: '0',
+      },
+    ],
+  },
 ];
 const theServiceList: ServiceRecord[] = [
   {

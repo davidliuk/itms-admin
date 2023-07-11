@@ -1,12 +1,12 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const LIST: AppRouteRecordRaw = {
+const DispatchCenter: AppRouteRecordRaw = {
   path: '/list',
   name: 'list',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.list',
+    locale: 'menu.dispatch',
     requiresAuth: true,
     icon: 'icon-list',
     order: 2,
@@ -17,22 +17,13 @@ const LIST: AppRouteRecordRaw = {
       name: 'SearchTable',
       component: () => import('@/views/list/search-table/index.vue'),
       meta: {
-        locale: 'menu.list.searchTable',
+        locale: 'menu.dispatch.orderList',
         requiresAuth: true,
         roles: ['*'],
       },
     },
-    {
-      path: 'card',
-      name: 'Card',
-      component: () => import('@/views/list/card/index.vue'),
-      meta: {
-        locale: 'menu.list.cardList',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
+
   ],
 };
 
-export default LIST;
+export default DispatchCenter;
