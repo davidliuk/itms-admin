@@ -138,6 +138,12 @@
               </template>
               {{ $t('admin.operation.create') }}
             </a-button>
+            <a-button type="primary" @click="handleBatchDeleteClick">
+              <template #icon>
+                <icon-delete />
+              </template>
+              {{ $t('admin.operation.batchDelete') }}
+            </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
@@ -145,12 +151,6 @@
                 </a-button>
               </template>
             </a-upload>
-            <a-button type="primary" @click="handleBatchDeleteClick">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('admin.operation.batchDelete') }}
-            </a-button>
           </a-space>
         </a-col>
         <!-- 表格上面的下载设置等 -->
@@ -354,6 +354,7 @@
     Role,
     toAssign,
     doAssign,
+deleteAdminBatch,
   } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -400,9 +401,10 @@
 
   const handleBatchDeleteClick = () => {
     console.log(selectedKeys.value);
-    selectedKeys.value.forEach((id) => {
-      deleteAdminById(id);
-    });
+    // selectedKeys.value.forEach((id) => {
+    //   deleteAdminById(id);
+    // });
+    deleteAdminBatch(selectedKeys.value);
   };
   const handleCreateClick = () => {
     isCreating.value = true;
