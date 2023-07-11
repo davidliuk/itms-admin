@@ -40,6 +40,7 @@ import localePermission from '@/views/acl/permission/locale/zh-CN';
 
 import localeCategory from '@/views/product/category/locale/zh-CN';
 import localeAttrGroup from '@/views/product/attr-group/locale/zh-CN';
+import localeAttr from '@/views/product/attr/locale/zh-CN';
 import localeSku from '@/views/product/sku/locale/zh-CN';
 
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
@@ -133,6 +134,7 @@ export default {
 
   ...localeCategory,
   ...localeAttrGroup,
+  ...localeAttr,
   ...localeSku,
 
   ...localeMissionTable,

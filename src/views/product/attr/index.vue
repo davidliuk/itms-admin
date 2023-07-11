@@ -1,102 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.product', 'menu.product.attr-group']" />
-    <a-card class="general-card" :title="$t('menu.product.attr-group')">
-      <a-row>
-        <!-- 6个输入框 -->
-        <a-col :flex="1">
-          <a-form
-            :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
-            label-align="left"
-          >
-            <a-row :gutter="16">
-              <a-col :span="8">
-                <a-form-item field="id" :label="$t('attrGroup.form.id')">
-                  <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('attrGroup.form.id.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="name" :label="$t('attrGroup.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('attrGroup.form.name.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="remark"
-                  :label="$t('attrGroup.form.remark')"
-                >
-                  <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('attrGroup.form.remark.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('attrGroup.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="updateTime"
-                  :label="$t('attrGroup.form.updateTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.updateTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col> -->
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('attrGroup.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('attrGroup.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col> -->
-            </a-row>
-          </a-form>
-        </a-col>
-
-        <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
-              <template #icon>
-                <icon-search />
-              </template>
-              {{ $t('attrGroup.form.search') }}
-            </a-button>
-            <a-button @click="reset">
-              <template #icon>
-                <icon-refresh />
-              </template>
-              {{ $t('attrGroup.form.reset') }}
-            </a-button>
-          </a-space>
-        </a-col>
-      </a-row>
+    <Breadcrumb :items="['menu.product', 'menu.product.attr']" />
+    <a-card class="general-card" :title="$t('menu.product.attr')">
       <a-divider style="margin-top: 0" />
       <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
@@ -107,12 +12,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('attrGroup.operation.create') }}
+              {{ $t('attr.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('attrGroup.operation.import') }}
+                  {{ $t('attr.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -127,16 +32,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('attrGroup.operation.download') }}
+            {{ $t('attr.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('attrGroup.actions.refresh')">
+          <a-tooltip :content="$t('attr.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('attrGroup.actions.density')">
+            <a-tooltip :content="$t('attr.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -152,7 +57,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('attrGroup.actions.columnSetting')">
+          <a-tooltip :content="$t('attr.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -190,7 +95,7 @@
       </a-row>
       <a-modal
         :visible="isCreating || isUpdating"
-        :title="$t(`attrGroup.form.title.${isCreating ? 'create' : 'update'}`)"
+        :title="$t(`attr.form.title.${isCreating ? 'create' : 'update'}`)"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
       >
@@ -199,42 +104,23 @@
             v-for="(val, key) in form"
             :key="key"
             :field="key"
-            :label="$t(`attrGroup.form.${key}`)"
+            :label="$t(`attr.form.${key}`)"
           >
-            <a-input
+            <a-input-tag
+              v-if="key == 'selectList'"
               v-model="form[key]"
-              :placeholder="$t(`attrGroup.form.${key}.placeholder`)"
+              :style="{ width: '380px' }"
+              :placeholder="$t(`attr.form.${key}.placeholder`)"
+              allow-clear
+            />
+            <a-input
+              v-else
+              v-model="form[key]"
+              :disabled="key == 'id'"
+              :placeholder="$t(`attr.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
-      </a-modal>
-      <a-modal
-        :visible="isAssigning"
-        :title="$t('attrGroup.form.title.assign')"
-        @cancel="handleClose"
-        @before-ok="handleBeforeOk"
-      >
-        <a-space direction="vertical" size="large">
-          <a-select
-            v-if="!isAssignListFinished"
-            :options="[]"
-            :style="{ width: '480px' }"
-            placeholder="Please select ..."
-            loading
-          />
-          <a-select
-            v-else
-            v-model="selectedOptions"
-            :options="options"
-            :style="{ width: '480px' }"
-            :field-names="fieldNames"
-            placeholder="Please select ..."
-            multiple
-            allow-search
-            allow-clear
-          >
-          </a-select>
-        </a-space>
       </a-modal>
       <!-- 表格 -->
       <a-table
@@ -265,9 +151,18 @@
             v-else-if="record.status === 'stocked'"
             class="circle pass"
           ></span>
-          {{ $t(`attrGroup.form.status.${record.status}`) }}
+          {{ $t(`attr.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
+        <template #selectList="{ record }">
+          <a-input-tag
+            :default-value="record.selectList.split(',')"
+            :style="{ width: '320px' }"
+            :max-tag-count="5"
+            placeholder="$t(`attr.form.selectList.null`)"
+            readonly
+          />
+        </template>
 
         <!-- table里 -->
         <!-- 查看 -->
@@ -276,17 +171,9 @@
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="handleView(record.id)"
+            @click="deleteAttrById(record.id)"
           >
-            {{ $t('attrGroup.columns.operations.view') }}
-          </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteAttrGroupById(record.id)"
-          >
-            {{ $t('attrGroup.columns.operations.delete') }}
+            {{ $t('attr.columns.operations.delete') }}
           </a-button>
           <a-button
             v-permission="['admin']"
@@ -294,7 +181,7 @@
             size="small"
             @click="handleUpdateClick(record)"
           >
-            {{ $t('attrGroup.columns.operations.update') }}
+            {{ $t('attr.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -308,32 +195,28 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryAttrGroupList,
-    addAttrGroup,
-    updateAttrGroup,
-    deleteAttrGroup,
-    AttrGroup,
+    getByGroupId,
+    addAttr,
+    updateAttr,
+    deleteAttr,
+    Attr,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { useRouter } from 'vue-router';
+
+  import { useRoute } from 'vue-router';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-
-  const fieldNames = { value: 'id', label: 'name' };
-  let selectedOptions: Ref<string[]>;
-  let selectedAttrGroup: AttrGroup;
 
   const generateFormModel = () => {
     return {
       id: '',
       name: '',
-      sort: 0,
-      remark: '',
+      selectList: [],
       // createTime: null,
       // updateTime: null,
     };
@@ -350,35 +233,27 @@
   const isCreating = ref(false);
   const isUpdating = ref(false);
   const isAssigning = ref(false);
-  const isAssignListFinished = ref(false);
-  const router = useRouter();
   let form = reactive(generateFormModel());
-  const handleView = (groupId: number) => {
-    router.push({
-      name: 'attr',
-      params: {
-        groupId,
-      },
-    });
-  };
+
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (attrGroup: AttrGroup) => {
-    copy(attrGroup, form);
+  const handleUpdateClick = (attr: Attr) => {
+    copy(attr, form);
+    form.selectList = attr.selectList.split(',');
     isUpdating.value = true;
   };
   const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
     if (isCreating.value) {
-      addAttrGroup(form as unknown as AttrGroup);
+      const value = form as unknown as Attr;
+      value.selectList = form.selectList.join(',');
+      value.groupId = route.params.groupId;
+      addAttr(form as unknown as Attr);
     } else if (isUpdating.value) {
-      updateAttrGroup(form as unknown as AttrGroup);
+      const value = form as unknown as Attr;
+      value.selectList = form.selectList.join(',');
+      value.groupId = route.params.groupId;
+      updateAttr(form as unknown as Attr);
     }
     done();
     handleClose();
@@ -392,8 +267,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<AttrGroup[]>([]);
-  const formModel = ref(generateFormModel());
+  const renderData = ref<Attr[]>([]);
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
@@ -408,115 +282,100 @@
   });
   const densityList = computed(() => [
     {
-      name: t('attrGroup.size.mini'),
+      name: t('attr.size.mini'),
       value: 'mini',
     },
     {
-      name: t('attrGroup.size.small'),
+      name: t('attr.size.small'),
       value: 'small',
     },
     {
-      name: t('attrGroup.size.medium'),
+      name: t('attr.size.medium'),
       value: 'medium',
     },
     {
-      name: t('attrGroup.size.large'),
+      name: t('attr.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     // {
-    //   title: t('attrGroup.columns.index'),
+    //   title: t('attr.columns.index'),
     //   dataIndex: 'index',
     //   slotName: 'index',
     // },
     {
-      title: t('attrGroup.columns.id'),
+      title: t('attr.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('attrGroup.columns.name'),
+      title: t('attr.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('attrGroup.columns.sort'),
-      dataIndex: 'sort',
+      title: t('attr.columns.inputType'),
+      dataIndex: 'inputType',
     },
     {
-      title: t('attrGroup.columns.remark'),
-      dataIndex: 'remark',
+      title: t('attr.columns.selectList'),
+      dataIndex: 'selectList',
+      slotName: 'selectList',
     },
     {
-      title: t('attrGroup.columns.createTime'),
+      title: t('attr.columns.createTime'),
       dataIndex: 'createTime',
     },
     {
-      title: t('attrGroup.columns.updateTime'),
+      title: t('attr.columns.updateTime'),
       dataIndex: 'updateTime',
     },
     // {
-    //   title: t('attrGroup.columns.phone'),
+    //   title: t('attr.columns.phone'),
     //   dataIndex: 'phone',
     //   slotName: 'phone',
     // },
     // {
-    //   title: t('attrGroup.columns.sku_name'),
+    //   title: t('attr.columns.sku_name'),
     //   dataIndex: 'sku_name',
     //   slotName: 'sku_name',
     // },
     // {
-    //   title: t('attrGroup.columns.sku_num'),
+    //   title: t('attr.columns.sku_num'),
     //   dataIndex: 'sku_num',
     // },
     // {
-    //   title: t('attrGroup.columns.status'),
+    //   title: t('attr.columns.status'),
     //   dataIndex: 'status',
     //   slotName: 'status',
     // },
     {
-      title: t('attrGroup.columns.operations'),
+      title: t('attr.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
 
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('attrGroup.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('attrGroup.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
+  const route = useRoute();
 
   // 分页
-  const fetchData = async (
-    current: number,
-    pageSize: number,
-    params: Partial<AttrGroup>
-  ) => {
+  const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await queryAttrGroupList(current, pageSize, params);
-      renderData.value = data.records;
-      pagination.current = current;
-      pagination.total = data.total;
+      const { data } = await getByGroupId(route.params.groupId);
+      renderData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-
-  const deleteAttrGroupById = async (id: number) => {
+  const deleteAttrById = async (id: number) => {
     setLoading(true);
     try {
-      await deleteAttrGroup(id);
-      fetchData(pagination.current, pagination.pageSize, formModel.value);
+      await deleteAttr(id);
+      // getByGroupId()
+      fetchData();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -525,18 +384,13 @@
   };
 
   const search = () => {
-    fetchData(pagination.current, pagination.pageSize, formModel.value);
+    fetchData();
   };
-
   const onPageChange = (current: number) => {
-    fetchData(current, pagination.pageSize, formModel.value);
+    fetchData();
   };
-  fetchData(pagination.current, pagination.pageSize, formModel.value);
+  fetchData();
 
-  // 重置
-  const reset = () => {
-    formModel.value = generateFormModel();
-  };
   // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
@@ -607,7 +461,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AttrGroup',
+    name: 'Attr',
   };
 </script>
 

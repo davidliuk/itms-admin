@@ -23,6 +23,17 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
+      path: 'attr/:groupId', // The midline path complies with SEO specifications
+      name: 'attr',
+      component: () => import('@/views/product/attr/index.vue'),
+      meta: {
+        hideInMenu: true,
+        locale: 'menu.product.attr',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
       path: 'category', // The midline path complies with SEO specifications
       name: 'category',
       component: () => import('@/views/product/category/index.vue'),

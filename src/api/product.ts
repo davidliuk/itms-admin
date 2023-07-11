@@ -27,15 +27,6 @@ export function queryCategoryList(
   );
 }
 
-export function toAssign(attrGroupId: string) {
-  return axios.get<any>(`/admin/product/attrGroup/toAssign/${attrGroupId}`);
-}
-export function doAssign(attrGroupId: string, categoryIds: string[]) {
-  return axios.post<any>(
-    `/admin/product/attrGroup/doAssign/${attrGroupId}`,
-    categoryIds
-  );
-}
 export function findAllList() {
   return axios.get<Category[]>('/admin/product/category/findAllList');
 }
@@ -123,4 +114,41 @@ export function updateSkuInfo(skuInfo: SkuInfo) {
 
 export function deleteSkuInfo(id: number) {
   return axios.delete<any>(`/admin/product/skuInfo/${id}`);
+}
+
+export interface Attr {
+  id: string;
+  name: string;
+  inputType: number;
+  selectList: string;
+  groupId: string;
+  createTime: Date;
+  updateTime: Date;
+}
+
+export function queryAttrList(
+  current: number,
+  limit: number,
+  params: Partial<Attr>
+) {
+  return axios.post<PageRes<Attr>>(
+    `/admin/product/attr/${current}/${limit}`,
+    params
+  );
+}
+
+export function addAttr(attr: Attr) {
+  return axios.post<any>('/admin/product/attr', attr);
+}
+
+export function updateAttr(attr: Attr) {
+  return axios.put<any>('/admin/product/attr', attr);
+}
+
+export function deleteAttr(id: number) {
+  return axios.delete<any>(`/admin/product/attr/${id}`);
+}
+
+export function getByGroupId(groupId: string) {
+  return axios.get<Attr[]>(`/admin/product/attr/getByGroupId/${groupId}`);
 }
