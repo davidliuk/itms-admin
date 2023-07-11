@@ -9,6 +9,7 @@ import {
   DataZoomComponent,
   GraphicComponent,
 } from 'echarts/components';
+import { Bill } from 'mand-mobile-next';
 import Chart from './chart/index.vue';
 import Breadcrumb from './breadcrumb/index.vue';
 
@@ -31,5 +32,6 @@ export default {
   install(Vue: App) {
     Vue.component('Chart', Chart);
     Vue.component('Breadcrumb', Breadcrumb);
+    Vue.component(Bill.name, Bill);
   },
 };

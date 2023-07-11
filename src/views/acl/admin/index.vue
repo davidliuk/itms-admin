@@ -354,7 +354,7 @@
     Role,
     toAssign,
     doAssign,
-deleteAdminBatch,
+    deleteAdminBatch,
   } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
