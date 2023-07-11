@@ -142,7 +142,18 @@
         </template>
 
         <!-- 表格form里 -->
-
+        <template #status="{ record }">
+          <span v-if="record.status === 'CANCEL'" class="circle"></span>
+          <span
+              v-else-if="record.status === 'USED'"
+              class="circle pass"
+          ></span>
+          <span
+              v-else-if="record.status === 'UNUSED'"
+              class="circle pass"
+          ></span>
+          {{ $t(`settlement.form.status.${record.status}`) }}
+        </template>
         <!-- 表格form里 -->
         <template #operations="{ record }">
           <a-button
@@ -195,6 +206,7 @@
       userId: '',
       stationId: '',
       totalAmount: '',
+      status:'',
     };
   };
 
@@ -275,6 +287,11 @@
       dataIndex: 'totalAmount',
     },
     {
+      title: t('settlement.columns.category'),
+      dataIndex: 'status',
+      slotName: 'status',
+    },
+    {
       title: t('invoice.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
@@ -294,26 +311,8 @@
       value: 'verticalVideo',
     },
   ]);
-  const filterTypeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('settlement.form.filterType.artificial'),
-      value: 'artificial',
-    },
-    {
-      label: t('settlement.form.filterType.rules'),
-      value: 'rules',
-    },
-  ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('settlement.form.status.online'),
-      value: 'online',
-    },
-    {
-      label: t('settlement.form.status.offline'),
-      value: 'offline',
-    },
-  ]);
+
+
   const fetchData = async (
     page: number,
     pageSize: number,

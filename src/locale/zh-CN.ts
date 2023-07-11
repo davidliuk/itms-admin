@@ -32,6 +32,8 @@ import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
 
 import localeSupply from '@/views/stock/supply/locale/zh-CN';
 
+import localeFinanceView from '@/views/finance/financeview/locale/zh-CN';
+
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
 import localePermission from '@/views/acl/permission/locale/zh-CN';
@@ -90,6 +92,8 @@ export default {
   'menu.acl': '权限管理',
   'menu.product': '商品管理',
   'menu.supplier': '供应商管理',
+  'menu.financeView': '财务分析',
+
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
@@ -111,6 +115,8 @@ export default {
   ...locale404,
   ...locale500,
   ...localeUserInfo,
+
+  ...localeFinanceView,
 
   ...localeSettlement,
   ...localeSupplier,
