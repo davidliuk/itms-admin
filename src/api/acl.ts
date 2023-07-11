@@ -103,15 +103,12 @@ export interface Permission {
 export function queryPermissionList() {
   return axios.get<Permission[]>(`/admin/acl/permission`);
 }
-
 export function addPermission(permission: Permission) {
   return axios.post<any>('/admin/acl/permission', permission);
 }
-
 export function updatePermission(permission: Permission) {
   return axios.put<any>('/admin/acl/permission', permission);
 }
-
 export function deletePermission(id: number) {
   return axios.delete<any>(`/admin/acl/permission/${id}`);
 }

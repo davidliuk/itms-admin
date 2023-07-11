@@ -194,8 +194,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPermissionList, Permission } from '@/api/acl';
-  import { Pagination } from '@/types/global';
+  import { queryPermissionList, Permission, addPermission, updatePermission, deletePermission } from '@/api/acl';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -236,18 +235,12 @@
     copy(admin, form);
     isUpdating.value = true;
   };
-  const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
-    // if (isCreating.value) {
-    //   add(form as unknown as Permission);
-    // } else {
-    //   update(form as unknown as Permission);
-    // }
+  const handleBeforeOk = async (done) => {
+    if (isCreating.value) {
+      await addPermission(form as unknown as Permission);
+    } else {
+      await updatePermission(form as unknown as Permission);
+    }
     done();
     handleClose();
     search();
@@ -256,6 +249,10 @@
     isCreating.value = false;
     isUpdating.value = false;
     form = reactive(generateFormModel());
+  };
+  const deleteById = async (id: number) => {
+    await deletePermission(id);
+    search();
   };
 
   const size = ref<SizeProps>('medium');

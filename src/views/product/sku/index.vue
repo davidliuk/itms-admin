@@ -241,34 +241,6 @@
           </a-form-item>
         </a-form>
       </a-modal>
-      <a-modal
-        :visible="isAssigning"
-        :title="$t('skuInfo.form.title.assign')"
-        @cancel="handleClose"
-        @before-ok="handleBeforeOk"
-      >
-        <a-space direction="vertical" size="large">
-          <a-select
-            v-if="!isAssignListFinished"
-            :options="[]"
-            :style="{ width: '480px' }"
-            placeholder="Please select ..."
-            loading
-          />
-          <a-select
-            v-else
-            v-model="selectedOptions"
-            :options="options"
-            :style="{ width: '480px' }"
-            :field-names="fieldNames"
-            placeholder="Please select ..."
-            multiple
-            allow-search
-            allow-clear
-          >
-          </a-select>
-        </a-space>
-      </a-modal>
       <!-- 表格 -->
       <a-table
         v-model:selected-keys="selectedKeys"
@@ -348,9 +320,6 @@
     updateSkuInfo,
     deleteSkuInfo,
     SkuInfo,
-    Role,
-    toAssign,
-    doAssign,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -360,11 +329,6 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-
-  const fieldNames = { value: 'id', label: 'skuName' };
-  let options: Ref<Role[]>;
-  let selectedOptions: Ref<string[]>;
-  let selectedSkuInfo: SkuInfo;
 
   const generateFormModel = () => {
     return {
@@ -391,8 +355,6 @@
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
-  const isAssigning = ref(false);
-  const isAssignListFinished = ref(false);
   let form = reactive(generateFormModel());
 
   const handleCreateClick = () => {
@@ -403,18 +365,10 @@
     isUpdating.value = true;
   };
   const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
     if (isCreating.value) {
       addSkuInfo(form as unknown as SkuInfo);
     } else if (isUpdating.value) {
       updateSkuInfo(form as unknown as SkuInfo);
-    } else {
-      doAssign(selectedSkuInfo.id, selectedOptions.value);
     }
     done();
     handleClose();
@@ -423,17 +377,7 @@
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
-    isAssigning.value = false;
     form = reactive(generateFormModel());
-  };
-  const assignSkuInfo = async (skuInfo: SkuInfo) => {
-    isAssignListFinished.value = false;
-    isAssigning.value = true;
-    selectedSkuInfo = skuInfo;
-    const { data } = await toAssign(skuInfo.id);
-    options = ref(data.allRolesList);
-    selectedOptions = ref(data.assignRoles.map((role: Role) => role.id));
-    isAssignListFinished.value = true;
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
