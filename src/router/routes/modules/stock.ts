@@ -2,22 +2,22 @@ import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
 const LIST: AppRouteRecordRaw = {
-  path: '/dispatch',
-  name: 'dispatch',
+  path: '/stock',
+  name: 'stock',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.dispatch',
+    locale: 'menu.stock',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'icon-layers',
     order: 8,
   },
   children: [
     {
       path: 'supply',
       name: 'supply',
-      component: () => import('@/views/dispatch/goods/supply/index.vue'),
+      component: () => import('@/views/stock/supply/index.vue'),
       meta: {
-        locale: 'menu.dispatch.supplier',
+        locale: 'menu.stock.supplier',
         requiresAuth: true,
         roles: ['*'],
       },

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.dispatch.goods.supply']" />
-    <a-card class="general-card" :title="$t('menu.dispatch.goods.supply')">
+    <Breadcrumb :items="['menu.list', 'menu.stock.supplier']" />
+    <a-card class="general-card" :title="$t('menu.stock.supplier')">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -12,29 +12,29 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="number" :label="$t('supply.form.number')">
+                <a-form-item field="number" :label="$t('supplier.form.number')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('supply.form.number.placeholder')"
+                    :placeholder="$t('supplier.form.number.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('supply.form.name')">
+                <a-form-item field="name" :label="$t('supplier.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('supply.form.name.placeholder')"
+                    :placeholder="$t('supplier.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="province"
-                  :label="$t('supply.form.province')"
+                  :label="$t('supplier.form.province')"
                 >
                   <a-input
                     v-model="formModel.province"
-                    :placeholder="$t('supply.form.province.placeholder')"
+                    :placeholder="$t('supplier.form.province.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -53,13 +53,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('supply.form.search') }}
+              {{ $t('supplier.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('supply.form.reset') }}
+              {{ $t('supplier.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -72,12 +72,12 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('supply.operation.create') }}
+              {{ $t('supplier.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('supply.operation.import') }}
+                  {{ $t('supplier.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -91,15 +91,15 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('supply.operation.download') }}
+            {{ $t('supplier.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('supply.actions.refresh')">
+          <a-tooltip :content="$t('supplier.actions.refresh')">
             <div class="action-icon" @click="fresh"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('supply.actions.density')">
+            <a-tooltip :content="$t('supplier.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -113,7 +113,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('supply.actions.columnSetting')">
+          <a-tooltip :content="$t('supplier.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -152,7 +152,7 @@
 
       <a-modal
         :visible="isCreating || isUpdating"
-        :title="$t(`supply.form.title.${isCreating ? 'create' : 'update'}`)"
+        :title="$t(`supplier.form.title.${isCreating ? 'create' : 'update'}`)"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
       >
@@ -161,11 +161,11 @@
             v-for="(val, key) in form"
             :key="key"
             :field="key"
-            :label="$t(`supply.form.${key}`)"
+            :label="$t(`supplier.form.${key}`)"
           >
             <a-input
               v-model="form[key]"
-              :placeholder="$t(`supply.form.${key}.placeholder`)"
+              :placeholder="$t(`supplier.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
@@ -194,7 +194,7 @@
             v-else-if="record.status === 'using'"
             class="circle pass"
           ></span>
-          {{ $t(`supply.form.status.${record.status}`) }}
+          {{ $t(`supplier.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
@@ -207,7 +207,7 @@
             size="small"
             @click="deleteSupplyById(record.id)"
           >
-            {{ $t('supply.columns.operations.delete') }}
+            {{ $t('supplier.columns.operations.delete') }}
           </a-button>
           <a-button
             v-permission="['admin']"
@@ -215,7 +215,7 @@
             size="small"
             @click="handleUpdateClick(record)"
           >
-            {{ $t('supply.columns.operations.update') }}
+            {{ $t('supplier.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -266,8 +266,8 @@
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (supply: Supply) => {
-    copy(supply, form);
+  const handleUpdateClick = (supplier: Supply) => {
+    copy(supplier, form);
     isUpdating.value = true;
   };
   const handleBeforeOk = (done: any) => {
@@ -303,90 +303,90 @@
   });
   const densitylist = computed(() => [
     {
-      name: t('supply.size.mini'),
+      name: t('supplier.size.mini'),
       value: 'mini',
     },
     {
-      name: t('supply.size.small'),
+      name: t('supplier.size.small'),
       value: 'small',
     },
     {
-      name: t('supply.size.medium'),
+      name: t('supplier.size.medium'),
       value: 'medium',
     },
     {
-      name: t('supply.size.large'),
+      name: t('supplier.size.large'),
       value: 'large',
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('supply.columns.index'),
+      title: t('supplier.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('supply.columns.number'),
+      title: t('supplier.columns.number'),
       dataIndex: 'id',
     },
     {
-      title: t('supply.columns.name'),
+      title: t('supplier.columns.name'),
       dataIndex: 'name',
     },
 
     {
-      title: t('supply.columns.phone'),
+      title: t('supplier.columns.phone'),
       dataIndex: 'phone',
     },
     {
-      title: t('supply.columns.province'),
+      title: t('supplier.columns.province'),
       dataIndex: 'province',
     },
     {
-      title: t('supply.columns.detailAddress'),
+      title: t('supplier.columns.detailAddress'),
       dataIndex: 'detailAddress',
     },
     {
-      title: t('supply.columns.postCode'),
+      title: t('supplier.columns.postCode'),
       dataIndex: 'postCode',
     },
     {
-      title: t('supply.columns.operations'),
+      title: t('supplier.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('supply.form.contentType.img'),
+      label: t('supplier.form.contentType.img'),
       value: 'img',
     },
     {
-      label: t('supply.form.contentType.horizontalVideo'),
+      label: t('supplier.form.contentType.horizontalVideo'),
       value: 'horizontalVideo',
     },
     {
-      label: t('supply.form.contentType.verticalVideo'),
+      label: t('supplier.form.contentType.verticalVideo'),
       value: 'verticalVideo',
     },
   ]);
   const filterTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('supply.form.filterType.artificial'),
+      label: t('supplier.form.filterType.artificial'),
       value: 'artificial',
     },
     {
-      label: t('supply.form.filterType.rules'),
+      label: t('supplier.form.filterType.rules'),
       value: 'rules',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('supply.form.status.using'),
+      label: t('supplier.form.status.using'),
       value: 'using',
     },
     {
-      label: t('supply.form.status.waste'),
+      label: t('supplier.form.status.waste'),
       value: 'waste',
     },
   ]);

@@ -145,6 +145,12 @@
                 </a-button>
               </template>
             </a-upload>
+            <a-button type="primary" @click="handleBatchDeleteClick">
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('admin.operation.batchDelete') }}
+            </a-button>
           </a-space>
         </a-col>
         <!-- 表格上面的下载设置等 -->
@@ -392,6 +398,12 @@
   const isAssignListFinished = ref(false);
   let form = reactive(generateFormModel());
 
+  const handleBatchDeleteClick = () => {
+    console.log(selectedKeys.value);
+    selectedKeys.value.forEach((id) => {
+      deleteAdminById(id);
+    });
+  };
   const handleCreateClick = () => {
     isCreating.value = true;
   };

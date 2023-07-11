@@ -1,7 +1,7 @@
 export default {
   'supply.form.title.update': '修改',
-  'menu.dispatch.supplier': '供应商管理',
-  'menu.dispatch.goods.supply': '供应商管理',
+  'menu.stock.supplier': '供应商管理',
+  'menu.stock.goods.supply': '供应商管理',
   'supply.form.number': '供应商编号',
   'supply.form.number.placeholder': '请输入供应商编号',
   'supply.form.name': '供应商名称',
@@ -25,7 +25,6 @@ export default {
 
   'supply.form.totalAmount.placeholder': '请输入总金额',
   'supply.form.totalAmount': '总金额',
-
   'supply.form.name.placeholder': '请输入供应商名称',
   'supply.form.createdTime': '创建时间',
   'supply.form.status.using': '已领用',

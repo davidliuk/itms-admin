@@ -76,6 +76,10 @@ export function updateAdmin(admin: Admin) {
   return axios.put<any>('/admin/acl/user', admin);
 }
 
+// export function deleteAdminBatch(ids: number[]) {
+//   return axios.delete<any>(`/admin/acl/user`, ids);
+// }
+
 export function deleteAdmin(id: number) {
   return axios.delete<any>(`/admin/acl/user/${id}`);
 }

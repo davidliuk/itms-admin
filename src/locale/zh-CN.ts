@@ -30,7 +30,7 @@ import localeInvoice from '@/views/finance/invoice/locale/zh-CN';
 import localeSettlement from '@/views/finance/settlement/locale/zh-CN';
 import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
 
-import localeSupply from '@/views/dispatch/goods/supply/locale/zh-CN';
+import localeSupply from '@/views/stock/supply/locale/zh-CN';
 
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
@@ -65,7 +65,7 @@ export default {
   'menu.server.workplace': '工作台-服务端',
   'menu.server.monitor': '实时监控-服务端',
   'menu.finance': '财务管理',
-  'menu.dispatch': '配送中心',
+  'menu.stock': '进货管理',
   'menu.list': '列表页',
   'menu.result': '结果页',
   'menu.exception': '异常页',
