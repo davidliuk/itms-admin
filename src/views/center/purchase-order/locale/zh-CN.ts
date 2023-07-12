@@ -38,20 +38,6 @@ export default {
   'PurchaseOrder.operation.import': '批量导入',
   'PurchaseOrder.operation.download': '下载',
 
-  // id: number; //	id
-  // wareId: number;
-
-  // imgUrl: string; // 商品sku图片
-  // skuId: number; // 商品sku编号
-  // skuName: string; // 商品sku名字
-  // skuNum: number; //	商品购买的数量
-  // skuPrice: number; // 商品sku价格
-
-  // supplierId: number; // 供应商ID
-  // supplierName: string; // 供应商名称
-  // createTime: string; // 创建时间
-  // updateTime: string; //	更新时间
-
   // id	integer(int64)	id
   // wareId	integer(int64)	仓库ID
 

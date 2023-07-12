@@ -53,6 +53,8 @@ import localeTransferOrder from '@/views/center/transfer-order/locale/zh-CN'; //
 import localeWorkOrder from '@/views/center/work-order/locale/zh-CN';
 import localeStorageOrder from '@/views/center/storage-order/locale/zh-CN';
 import localPurchaseOrder from '@/views/center/purchase-order/locale/zh-CN';
+import localeLogistics from '@/views/center/logistics-table/locale/zh-CN';
+import localeStationTable from '@/views/center/station-table/locale/zh-CN';
 // @ts-ignore
 import localeLogisticsCheckOrder from '@/views/logistics/logistics-check-order/locale/zh-CN';
 // 运输公司接收的验货单
@@ -144,7 +146,6 @@ export default {
   ...localeMissionTable,
   ...localeCourierTable,
   ...localeStationInfo,
-  // ...localeStationTable,
   ...localeStationCheckOrder,
   ...localeReceiptTable,
   ...localeTransferTable,
@@ -156,4 +157,6 @@ export default {
   ...localeWorkOrder,
   ...localeStorageOrder,
   ...localPurchaseOrder,
+  ...localeLogistics,
+  ...localeStationTable,
 };

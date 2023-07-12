@@ -202,6 +202,7 @@
         :data="renderData"
         :bordered="false"
         :size="size"
+        :scroll="scroll"
         @page-change="onPageChange"
       >
         <!-- 分页 -->
@@ -428,44 +429,56 @@
     },
   ]);
   // 展示出库单信息表格
+  // 固定列表列
+  const scroll = { x: 1500, y: 1500 };
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('StorageOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
+      width: 70,
+      fixed: 'left',
     },
     {
       title: t('StorageOrder.columns.id'),
       dataIndex: 'id',
+      width: 110,
+      fixed: 'left',
     },
     {
       title: t('StorageOrder.columns.wareId'),
       dataIndex: 'wareId',
+      width: 100,
     },
     {
       title: t('StorageOrder.columns.stationId'),
       dataIndex: 'stationId',
       slotName: 'stationId',
+      width: 100,
     },
     {
       title: t('StorageOrder.columns.supplierName'),
       dataIndex: 'stationName',
       slotName: 'stationName',
+      width: 120,
     },
     {
       title: t('StorageOrder.columns.supplierId'),
       dataIndex: 'supplierId',
       slotName: 'supplierId',
+      width: 110,
     },
     {
       title: t('StorageOrder.columns.supplierId'),
       dataIndex: 'supplierName',
       slotName: 'supplierName',
+      width: 120,
     },
     {
       title: t('StorageOrder.columns.storageType'),
       dataIndex: 'storageType',
       slotName: 'storageType',
+      width: 120,
     },
     {
       title: t('StorageOrder.columns.createTime'),
@@ -479,6 +492,8 @@
       title: t('StorageOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      width: 250,
+      fixed: 'right',
     },
   ]);
   // 搜索类型输入框下拉列表

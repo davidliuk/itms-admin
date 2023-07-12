@@ -85,6 +85,12 @@
               </template>
               {{ $t('skuWare.operation.create') }}
             </a-button>
+            <a-button type="primary" @click="skuListInWare()">
+              <template #icon>
+                <icon-plus />
+              </template>
+              批量进货
+            </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
@@ -167,7 +173,7 @@
       </a-row>
 
       <a-modal
-        :visible="isCreating || isUpdating"
+        :visible="isCreating || isUpdating || isReturning"
         :title="$t(`skuWare.form.title.${isCreating ? 'create' : 'update'}`)"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
@@ -180,13 +186,37 @@
             :label="$t(`skuWare.form.${key}`)"
           >
             <a-input
-              v-if="key !== 'createTime' && key !== 'updateTime'"
+              v-if="
+                key !== 'createTime' && key !== 'updateTime' && key !== 'stock'
+              "
               v-model="form[key]"
+              disabled
               :placeholder="$t(`skuWare.form.${key}.placeholder`)"
             />
-            <a-date-picker
-              v-else
+            <a-input
+              v-else-if="key === 'stock' && isCreating"
               v-model="form[key]"
+              required
+              placeholder="请输入新增商品数量"
+              :rules="[{ required: true, message: 'name is required' }]"
+            />
+            <a-input
+              v-else-if="key === 'stock' && isUpdating"
+              v-model="form[key]"
+              required
+              placeholder="请输入手动补货商品数量"
+            />
+            <a-input
+              v-if="key === 'stock' && isReturning"
+              v-model="form[key]"
+              required
+              placeholder="请输入退货到供应商的商品数量"
+              :rules="[{ required: true, message: 'name is required' }]"
+            />
+            <a-date-picker
+              v-else-if="key === 'createTime' || key === 'updateTime'"
+              v-model="form[key]"
+              disabled
               style="width: 100%"
               show-time
               :time-picker-props="{ defaultValue: '00:00:00' }"
@@ -219,6 +249,14 @@
           >
             {{ $t('skuWare.form.title.addsku') }}
           </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="returnSkuWare(record)"
+          >
+            退货到供应商
+          </a-button>
           <!--                    库存为0的时候可以删除-->
           <!--                    <a-button-->
           <!--                      v-if="record.stock===0"-->
@@ -239,13 +277,19 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { querySkuWareList, SkuWare, addSkuWare } from '@/api/center';
+  import {
+    querySkuWareList,
+    SkuWare,
+    addSkuWare,
+    returnSkuWareToSupplier,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
   import htmlToPdf from '@/utils/pdf';
+  import { useRouter } from 'vue-router';
 
   const generateFormModel = () => {
     return {
@@ -256,14 +300,31 @@
       stock: '',
       lockStock: '',
       lowStock: '',
+      maxStock: '',
       sale: '',
       createTime: null,
       updateTime: null,
     };
   };
 
+  const router = useRouter();
+  const skuListInWare = () => {
+    router.push({
+      name: 'skuListInWare',
+    });
+  };
+
+  // const handleView = (groupId: number) => {
+  //   router.push({
+  //     name: 'attr',
+  //     params: {
+  //       groupId,
+  //     },
+  //   });
+
   const isCreating = ref(false);
   const isUpdating = ref(false);
+  const isReturning = ref(false);
   let form = reactive(generateFormModel());
 
   // 下载整个库存列表
@@ -310,6 +371,10 @@
       dataIndex: 'lowStock',
     },
     {
+      title: t('skuWare.columns.maxStock'),
+      dataIndex: 'maxStock',
+    },
+    {
       title: t('skuWare.columns.sale'),
       dataIndex: 'sale',
     },
@@ -329,27 +394,39 @@
       slotName: 'operations',
     },
   ]);
-
+  // 新建商品
   const handleCreateClick = () => {
     isCreating.value = true;
   };
+  // 手动补货
   const handleUpdateClick = (skuWare: SkuWare) => {
     skuWare.stock = '';
     copy(skuWare, form);
     isUpdating.value = true;
   };
+  // 退货到供应商
+  const returnSkuWare = async (skuWare: SkuWare) => {
+    skuWare.stock = '';
+    copy(skuWare, form);
+    isReturning.value = true;
+    // await returnSkuWareToSupplier(skuWare);
+  };
   // 往后面传参数的时候记得异步操作
   const handleBeforeOk = async () => {
     if (isCreating.value) {
       await addSkuWare(form as unknown as SkuWare);
-    } else {
+    } else if (isUpdating.value) {
       await addSkuWare(form as unknown as SkuWare);
+    } else {
+      await returnSkuWareToSupplier(form as unknown as SkuWare);
     }
+
     handleClose();
   };
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
+    isReturning.value = false;
     form = reactive(generateFormModel());
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };

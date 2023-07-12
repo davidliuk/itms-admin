@@ -1,88 +1,49 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.center', 'menu.center.searchTable']" />
-    <a-card class="general-card" :title="$t('menu.center.searchTable')">
+    <Breadcrumb :items="['menu.center', 'menu.center.Logistics']" />
+    <a-card class="general-card" :title="$t('menu.center.Logistics')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 8 }"
+            :wrapper-col-props="{ span: 15 }"
             label-align="left"
           >
             <a-row :gutter="16">
               <a-col :span="8">
+                <a-form-item field="id" :label="$t('Logistics.form.id')">
+                  <a-input
+                    v-model="formModel.id"
+                    :placeholder="$t('Logistics.form.id.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item
-                  field="distribution_id"
-                  :label="$t('searchTable.form.distribution_id')"
+                  field="wareId"
+                  :label="$t('Logistics.form.wareId')"
                 >
                   <a-input
-                    v-model="formModel.distribution_id"
-                    :placeholder="
-                      $t('searchTable.form.distribution_id.placeholder')
-                    "
+                    v-model="formModel.wareId"
+                    :placeholder="$t('Logistics.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="ware_id"
-                  :label="$t('searchTable.form.ware_id')"
-                >
+                <a-form-item field="name" :label="$t('Logistics.form.name')">
                   <a-input
-                    v-model="formModel.ware_id"
-                    :placeholder="$t('searchTable.form.ware_id.placeholder')"
+                    v-model="formModel.name"
+                    :placeholder="$t('Logistics.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="station_id"
-                  :label="$t('searchTable.form.station_id')"
-                >
+                <a-form-item field="phone" :label="$t('Logistics.form.phone')">
                   <a-input
-                    v-model="formModel.station_id"
-                    :placeholder="$t('searchTable.form.station_id.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="sku_id"
-                  :label="$t('searchTable.form.sku_id')"
-                >
-                  <a-input
-                    v-model="formModel.sku_id"
-                    :placeholder="$t('searchTable.form.sku_id.placeholder')"
-                  />
-                  <!-- <a-select
-                    v-model="formModel.sku_id"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
-                  /> -->
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createdTime"
-                  :label="$t('searchTable.form.createdTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createdTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('searchTable.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    v-model="formModel.phone"
+                    :placeholder="$t('Logistics.form.phone.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -99,13 +60,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('searchTable.form.search') }}
+              {{ $t('Logistics.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('searchTable.form.reset') }}
+              {{ $t('Logistics.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -117,16 +78,16 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="createLogisticsClick">
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('searchTable.operation.create') }}
+              {{ $t('Logistics.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('searchTable.operation.import') }}
+                  {{ $t('Logistics.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -141,16 +102,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('searchTable.operation.download') }}
+            {{ $t('Logistics.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
+          <a-tooltip :content="$t('Logistics.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('searchTable.actions.density')">
+            <a-tooltip :content="$t('Logistics.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -166,7 +127,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+          <a-tooltip :content="$t('Logistics.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -214,33 +175,51 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- 分页 -->
+        <!-- # -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
 
         <!-- table里 -->
-        <!-- 状态 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'no_shipped'" class="circle"></span>
-          <span
-            v-else-if="record.status === 'shipped'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
-            class="circle pass"
-          ></span>
-          {{ $t(`searchTable.form.status.${record.status}`) }}
-        </template>
-
         <!-- 操作 -->
-        <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('searchTable.columns.operations.view') }}
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="deleteLogisticsById(record.id)"
+          >
+            {{ $t('Logistics.columns.operations.delete') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="updateLogisticsById(record)"
+          >
+            {{ $t('Logistics.columns.operations.update') }}
           </a-button>
         </template>
       </a-table>
+
+      <a-modal
+        :visible="isCreating || isUpdating"
+        title="更新"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`Logistics.form.${key}`)"
+          >
+            <a-input
+              v-model="form[key]"
+              :placeholder="$t(`Logistics.form.${key}.placeholder`)"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -249,22 +228,81 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/center';
+  import {
+    Logistics,
+    addLogistics,
+    updateLogistics,
+    deleteLogistics,
+    getLogistics,
+    queryLogisticsList,
+    addSkuWare,
+    SkuWare,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import copy from '@/utils/objects';
+  import { createReactiveFn } from '@vueuse/core';
+
+  const generateFormModel = () => {
+    return {
+      id: '', //	id
+      wareId: '', //	仓库id
+      name: '', //	名称
+      phone: '', //	手机
+    };
+  };
+
+  const deleteLogisticsById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteLogistics(id);
+      fetchData(pagination.current, pagination.pageSize, formModel.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  let form = reactive(generateFormModel());
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+  const updateLogVisible = ref(false);
+
+  const createLogisticsClick = () => {
+    isCreating.value = true;
+  };
+  const updateLogisticsById = async (logistics: Logistics) => {
+    copy(logistics, form);
+    updateLogVisible.value = true;
+    isUpdating.value = true;
+  };
+  const handleBeforeOk = async () => {
+    if (isCreating.value) {
+      await addLogistics(form as unknown as Logistics);
+    } else {
+      await updateLogistics(form as unknown as Logistics);
+    }
+    isCreating.value = false;
+    isUpdating.value = false;
+    handleClose();
+  };
+  const handleClose = () => {
+    isCreating.value = false;
+    isUpdating.value = false;
+    form = reactive(generateFormModel());
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const generateFormModel = () => {
-    return {};
-  };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<PolicyRecord[]>([]);
+  const renderData = ref<Logistics[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -280,96 +318,73 @@
   });
   const densityList = computed(() => [
     {
-      name: t('searchTable.size.mini'),
+      name: t('Logistics.size.mini'),
       value: 'mini',
     },
     {
-      name: t('searchTable.size.small'),
+      name: t('Logistics.size.small'),
       value: 'small',
     },
     {
-      name: t('searchTable.size.medium'),
+      name: t('Logistics.size.medium'),
       value: 'medium',
     },
     {
-      name: t('searchTable.size.large'),
+      name: t('Logistics.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('searchTable.columns.index'),
+      title: t('Logistics.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('searchTable.columns.id'),
+      title: t('Logistics.columns.id'),
       dataIndex: 'id',
     },
+    // {
+    //   title: t('Logistics.columns.wareId'),
+    //   dataIndex: 'ware_id',
+    // },
     {
-      title: t('searchTable.columns.ware_id'),
-      dataIndex: 'ware_id',
+      title: t('Logistics.columns.name'),
+      dataIndex: 'name',
+      slotName: 'name',
     },
     {
-      title: t('searchTable.columns.station_id'),
-      dataIndex: 'station_id',
-      slotName: 'station_id',
+      title: t('Logistics.columns.phone'),
+      dataIndex: 'phone',
     },
     {
-      title: t('searchTable.columns.sku_id'),
-      dataIndex: 'sku_id',
+      title: t('Logistics.columns.createTime'),
+      dataIndex: 'createTime',
     },
     {
-      title: t('searchTable.columns.sku_name'),
-      dataIndex: 'sku_name',
-      slotName: 'sku_name',
+      title: t('Logistics.columns.updateTime'),
+      dataIndex: 'updateTime',
     },
     {
-      title: t('searchTable.columns.sku_num'),
-      dataIndex: 'sku_num',
-    },
-    {
-      title: t('searchTable.columns.createdTime'),
-      dataIndex: 'createdTime',
-    },
-    {
-      title: t('searchTable.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
-    {
-      title: t('searchTable.columns.operations'),
+      title: t('Logistics.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
 
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('searchTable.form.status.no_shipped'),
-      value: 'no_shipped',
-    },
-    {
-      label: t('searchTable.form.status.shipped'),
-      value: 'shipped',
-    },
-    {
-      label: t('searchTable.form.status.stocked'),
-      value: 'stocked',
-    },
-  ]);
-
   // 分页
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    current: number,
+    pageSize: number,
+    params: Partial<Logistics>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryPolicyList(params);
+      const { data } = await queryLogisticsList(current, pageSize, params);
       console.log(data);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      renderData.value = data.records;
+      pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -379,15 +394,13 @@
   };
 
   const search = () => {
-    fetchData({
-      ...basePagination,
-      ...formModel.value,
-    } as unknown as PolicyParams);
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
-  fetchData();
+
+  fetchData(basePagination.current, basePagination.pageSize, formModel.value);
 
   // 重置
   const reset = () => {
@@ -464,7 +477,7 @@
 
 <script lang="ts">
   export default {
-    name: 'SearchTable',
+    name: 'Logistics',
   };
 </script>
 
