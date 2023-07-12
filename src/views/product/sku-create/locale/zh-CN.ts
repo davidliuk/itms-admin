@@ -20,12 +20,14 @@ export default {
   'skuCreate.button.submit': '提交',
   'skuCreate.button.again': '再次创建',
   'skuCreate.button.view': '查看详情',
+  'skuCreate.content.add': '上传图片',
 
   // form
   'skuCreate.form.label.skuName': '商品名称',
   'skuCreate.placeholder.skuName': '输入汉字、字母或数字，最多20字符',
   'skuCreate.form.error.skuName.required': '请输入商品名称',
   'skuCreate.form.error.skuName.pattern': '输入汉字、字母或数字，最多20字符',
+  'skuCreate.form.label.isNewPerson': '新人专享',
   'skuCreate.form.label.skuCode': '商品代码',
   'skuCreate.placeholder.skuCode': '输入汉字、字母或数字，最多20字符',
   'skuCreate.form.error.skuCode.required': '请输入商品代码',
@@ -33,6 +35,9 @@ export default {
   'skuCreate.form.label.categoryId': '商品类型',
   'skuCreate.placeholder.categoryId': '请选择商品类型',
   'skuCreate.form.error.categoryId.required': '请选择商品类型',
+  'skuCreate.form.label.attrGroupId': '属性分组',
+  'skuCreate.placeholder.attrGroupId': '请选择属性分组',
+  'skuCreate.form.error.attrGroupId.required': '请选择属性分组',
   'skuCreate.form.label.promotionTime': '推广时间',
   'skuCreate.form.error.promotionTime.required': '请选择推广时间',
   'skuCreate.form.label.price': '价格',
@@ -55,9 +60,9 @@ export default {
   'skuCreate.form.label.advertisingMedia': '广告媒介',
   'skuCreate.placeholder.advertisingMedia': '营销媒介：cpc、banner、edm',
   'skuCreate.form.error.advertisingMedia.required': '请输入广告媒介',
-  'skuCreate.form.label.keyword': '关键词',
-  'skuCreate.placeholder.keyword': '请选择关键词',
-  'skuCreate.form.error.keyword.required': '请选择关键词',
+  'skuCreate.form.label.skuAttrValueList': '平台属性',
+  'skuCreate.placeholder.skuAttrValueList': '请选择平台属性',
+  'skuCreate.form.error.skuAttrValueList.required': '请选择平台属性',
   'skuCreate.form.label.pushNotify': '推送提醒',
   'skuCreate.form.label.advertisingContent': '广告内容',
   'skuCreate.placeholder.advertisingContent':
@@ -67,4 +72,8 @@ export default {
   'skuCreate.form.description.title': '渠道表单说明',
   'skuCreate.form.description.text':
     '广告商渠道推广支持追踪在第三方广告商投放广告下载App用户的场景，例如在今日头条渠道投放下载App广告，追踪通过在渠道下载激活App的用户。',
+  'skuCreate.form.label.skuImageList': '商品图片',
+  'skuCreate.form.error.skuImageList.required': '请选择商品图片',
+  'skuCreate.form.label.skuPosterList': '商品海报',
+  'skuCreate.form.error.skuPosterList.required': '请选择商品海报',
 };

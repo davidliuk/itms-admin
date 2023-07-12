@@ -300,10 +300,6 @@
       title: t('permission.columns.code'),
       dataIndex: 'code',
     },
-    // {
-    //   title: t('permission.columns.toCode'),
-    //   dataIndex: 'toCode',
-    // },
     {
       title: t('permission.columns.type'),
       dataIndex: 'type',
@@ -322,43 +318,12 @@
       title: t('permission.columns.updateTime'),
       dataIndex: 'updateTime',
     },
-    // {
-    //   title: t('permission.columns.code'),
-    //   dataIndex: 'code',
-    //   slotName: 'code',
-    // },
-    // {
-    //   title: t('permission.columns.sku_name'),
-    //   dataIndex: 'sku_name',
-    //   slotName: 'sku_name',
-    // },
-    // {
-    //   title: t('permission.columns.sku_num'),
-    //   dataIndex: 'sku_num',
-    // },
-    // {
-    //   title: t('permission.columns.status'),
-    //   dataIndex: 'status',
-    //   slotName: 'status',
-    // },
     {
       title: t('permission.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('permission.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('permission.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
 
   // 分页
   const fetchData = async () => {

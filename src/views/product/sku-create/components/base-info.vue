@@ -57,8 +57,11 @@
       <a-select
         v-model="formData.categoryId"
         :placeholder="$t('skuCreate.placeholder.categoryId')"
+        :options="categoryOptions"
+        :loading="categoryLoading"
+        :field-names="fieldNames"
       >
-        <a-option>APP通用渠道</a-option>
+        <!-- <a-option>APP通用渠道</a-option> -->
       </a-select>
     </a-form-item>
     <!-- <a-form-item
@@ -74,6 +77,51 @@
       <a-range-picker v-model="formData.promotionTime" />
     </a-form-item> -->
     <a-form-item
+      field="price"
+      :label="$t('skuCreate.form.label.price')"
+      :rules="[
+        {
+          required: true,
+          message: $t('skuCreate.form.error.price.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.price"
+        :placeholder="$t('skuCreate.placeholder.price')"
+        :default-value="1200"
+        :min="0"
+        :formatter="formatter"
+        :parser="parser"
+      />
+    </a-form-item>
+    <a-form-item
+      field="marketPrice"
+      :label="$t('skuCreate.form.label.marketPrice')"
+      :rules="[
+        {
+          required: true,
+          message: $t('skuCreate.form.error.marketPrice.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.marketPrice"
+        :placeholder="$t('skuCreate.placeholder.marketPrice')"
+        :default-value="1200"
+        :min="0"
+        :formatter="formatter"
+        :parser="parser"
+      />
+    </a-form-item>
+    <a-form-item
+      field="isNewPerson"
+      :label="$t('skuCreate.form.label.isNewPerson')"
+      :rules="[{ required: true }]"
+    >
+      <a-switch v-model="formData.isNewPerson" />
+    </a-form-item>
+    <!-- <a-form-item
       field="price"
       :label="$t('skuCreate.form.label.price')"
       :rules="[
@@ -118,7 +166,7 @@
       <template #help>
         <span>{{ $t('skuCreate.form.tip.marketPrice') }}</span>
       </template>
-    </a-form-item>
+    </a-form-item> -->
     <a-form-item>
       <a-button type="primary" @click="onNextClick">
         {{ $t('skuCreate.button.next') }}
@@ -128,23 +176,49 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, Ref } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { SkuBasicInfo } from '@/api/product';
+  import { allCategory, Category, SkuBasicInfo } from '@/api/product';
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
   const formData = ref<SkuBasicInfo>({
+    id: '',
     skuName: '',
+    skuCode: '',
     categoryId: '',
-    promotionTime: [],
+    skuType: 0,
+    isNewPerson: 0,
+    sort: 0,
+    price: 0,
+    marketPrice: 0,
   });
+  const fieldNames = { value: 'id', label: 'name' };
+  const categoryOptions: Ref<Category[]> = ref([]);
+  const categoryLoading = ref(true);
 
+  const getAllCategory = async () => {
+    const { data } = await allCategory();
+    categoryOptions.value = data;
+    categoryLoading.value = false;
+  };
+  getAllCategory();
   const onNextClick = async () => {
+    console.log(formData.value);
     const res = await formRef.value?.validate();
     if (!res) {
       emits('changeStep', 'forward', { ...formData.value });
     }
+  };
+  const formatter = (value: string) => {
+    const values = value.split('.');
+    values[0] = values[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    return values.join('.');
+  };
+
+  const parser = (value: string) => {
+    return value.replace(/,/g, '');
   };
 </script>
 

@@ -357,7 +357,10 @@
     deleteAdminBatch,
   } from '@/api/acl';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
@@ -391,7 +394,7 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
@@ -400,10 +403,6 @@
   let form = reactive(generateFormModel());
 
   const handleBatchDeleteClick = () => {
-    console.log(selectedKeys.value);
-    // selectedKeys.value.forEach((id) => {
-    //   deleteAdminById(id);
-    // });
     deleteAdminBatch(selectedKeys.value);
   };
   const handleCreateClick = () => {
@@ -413,13 +412,7 @@
     copy(admin, form);
     isUpdating.value = true;
   };
-  const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
+  const handleBeforeOk = (done: any) => {
     if (isCreating.value) {
       addAdmin(form as unknown as Admin);
     } else if (isUpdating.value) {

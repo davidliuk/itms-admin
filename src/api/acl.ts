@@ -37,9 +37,8 @@ export function addRole(role: Role) {
 export function updateRole(role: Role) {
   return axios.put<any>('/admin/acl/role', role);
 }
-
-export function deleteRole(role: Role) {
-  return axios.post<any>('/admin/acl/role', role);
+export function deleteRole(id: number) {
+  return axios.post<any>('/admin/acl/role', id);
 }
 
 export interface Admin {
@@ -60,12 +59,10 @@ export function queryAdminList(
   limit: number,
   params: Partial<Admin>
 ) {
-  return axios.post<PageRes<Admin>>(`/admin/acl/user/${current}/${limit}`, {
-    params,
-    // paramsSerializer: (obj) => {
-    //   return qs.stringify(obj);
-    // },
-  });
+  return axios.post<PageRes<Admin>>(
+    `/admin/acl/user/${current}/${limit}`,
+    params
+  );
 }
 
 export function addAdmin(admin: Admin) {
