@@ -39,4 +39,3 @@ export type SkuList = Array<{
   status: number;
   updateTime: string;
 }>;
-

@@ -60,7 +60,7 @@ import localeLogisticsCheckOrder from '@/views/logistics/logistics-check-order/l
 import localeMissionTable from '@/views/station/mission-table/locale/zh-CN';
 import localeCourierTable from '@/views/station/courier-table/locale/zh-CN';
 import localeStationInfo from '@/views/station/station-info/locale/zh-CN';
-import localeStationTable from '@/views/station/station-table/locale/zh-CN';
+// import localeStationTable from '@/views/station/station-table/locale/zh-CN';
 import localeStationCheckOrder from '@/views/station/checkorder-table/locale/zh-CN';
 import localeReceiptTable from '@/views/station/receipt-table/locale/zh-CN';
 import localeTransferTable from '@/views/station/transfer-table/locale/zh-CN';
@@ -144,7 +144,7 @@ export default {
   ...localeMissionTable,
   ...localeCourierTable,
   ...localeStationInfo,
-  ...localeStationTable,
+  // ...localeStationTable,
   ...localeStationCheckOrder,
   ...localeReceiptTable,
   ...localeTransferTable,

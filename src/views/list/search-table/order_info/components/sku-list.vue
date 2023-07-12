@@ -4,38 +4,23 @@
     <a-spin :loading="loading" style="width: 100%">
       <a-table :data="renderData.orderItemList as unknown as TableData[]">
         <template #columns>
-          <a-table-column
-            title="编号"
-            data-index="skuId"
-          />
-          <a-table-column
-            title="名称"
-            data-index="skuName"
-          />
-            <a-table-column
-                    title="分类"
-                    data-index="skuType"
-            > <template #cell="{ record }">
-                <p v-if="record === 'COMMON'">
-                    <span class="circle"></span>
-                    <span>普通</span>
-                </p>
-                <p v-if="record === 'SECKILL'">
-                    <span class="circle pass"></span>
-                    <span>秒杀商品</span>
-                </p>
+          <a-table-column title="编号" data-index="skuId" />
+          <a-table-column title="名称" data-index="skuName" />
+          <a-table-column title="分类" data-index="skuType">
+            <template #cell="{ record }">
+              <p v-if="record === 'COMMON'">
+                <span class="circle"></span>
+                <span>普通</span>
+              </p>
+              <p v-if="record === 'SECKILL'">
+                <span class="circle pass"></span>
+                <span>秒杀商品</span>
+              </p>
             </template>
-            </a-table-column>
-          <a-table-column
-            title="数量"
-            data-index="skuNum"
-          />
+          </a-table-column>
+          <a-table-column title="数量" data-index="skuNum" />
 
-
-          <a-table-column
-            title="价格"
-            data-index="skuPrice"
-          />
+          <a-table-column title="价格" data-index="skuPrice" />
 
           <a-table-column title="操作">
             <template #cell>
@@ -51,12 +36,12 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+  import { computed, ref } from 'vue';
   import { queryOperationLog, operationLogRes } from '@/api/profile';
   import useLoading from '@/hooks/loading';
-  import {OrderDetail} from "@/api/orderInfo";
-import {SkuList} from "@/api/orderDetailSkuList";
-import {TableData} from "@arco-design/web-vue/es/table/interface";
+  import { OrderDetail } from '@/api/orderInfo';
+  import { SkuList } from '@/api/orderDetailSkuList';
+  import { TableData } from '@arco-design/web-vue/es/table/interface';
 
   const props = defineProps({
     renderData: {
@@ -70,8 +55,6 @@ import {TableData} from "@arco-design/web-vue/es/table/interface";
   });
 
   const renderData = ref(props.renderData as OrderDetail);
-
-
 </script>
 
 <style scoped lang="less">

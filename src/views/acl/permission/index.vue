@@ -194,7 +194,13 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPermissionList, Permission, addPermission, updatePermission, deletePermission } from '@/api/acl';
+  import {
+    queryPermissionList,
+    Permission,
+    addPermission,
+    updatePermission,
+    deletePermission,
+  } from '@/api/acl';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';

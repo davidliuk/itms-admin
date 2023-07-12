@@ -202,6 +202,5 @@ export interface OrderDetail {
 }
 
 export function queryOrderDetail(orderNo: string) {
-
   return axios.get<OrderDetail>(`/admin/sys/dispatch/orderDetail/${orderNo}`);
 }

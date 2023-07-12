@@ -7,48 +7,29 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 7 }"
-            :wrapper-col-props="{ span: 20 }"
+            :label-col-props="{ span: 6 }"
+            :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <!--分站id-->
+              <!--id-->
               <a-col :span="8">
-                <a-form-item
-                  field="stationId"
-                  :label="$t('receiptTable.form.stationId')"
-                >
+                <a-form-item field="id" :label="$t('receiptTable.form.id')">
                   <a-input
-                    v-model="formModel.stationId"
-                    :placeholder="$t('receiptTable.form.stationId.placeholder')"
+                    v-model="formModel.id"
+                    :placeholder="$t('receiptTable.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <!--分站名称-->
+              <!--用户id-->
               <a-col :span="8">
                 <a-form-item
-                  field="stationName"
-                  :label="$t('receiptTable.form.stationName')"
+                  field="userId"
+                  :label="$t('receiptTable.form.userId')"
                 >
                   <a-input
-                    v-model="formModel.stationName"
-                    :placeholder="
-                      $t('receiptTable.form.stationName.placeholder')
-                    "
-                  />
-                </a-form-item>
-              </a-col>
-              <!--分站phone-->
-              <a-col :span="8">
-                <a-form-item
-                  field="stationPhone"
-                  :label="$t('receiptTable.form.stationPhone')"
-                >
-                  <a-input
-                    v-model="formModel.stationPhone"
-                    :placeholder="
-                      $t('receiptTable.form.stationPhone.placeholder')
-                    "
+                    v-model="formModel.userId"
+                    :placeholder="$t('receiptTable.form.userId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -61,18 +42,6 @@
                   />
                 </a-form-item>
               </a-col>
-              <!--收货人phone-->
-              <a-col :span="8">
-                <a-form-item
-                  field="phone"
-                  :label="$t('receiptTable.form.phone')"
-                >
-                  <a-input
-                    v-model="formModel.phone"
-                    :placeholder="$t('receiptTable.form.phone.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
               <!--订单id-->
               <a-col :span="8">
                 <a-form-item
@@ -82,6 +51,30 @@
                   <a-input
                     v-model="formModel.orderId"
                     :placeholder="$t('receiptTable.form.orderId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <!--满意度-->
+              <a-col :span="8">
+                <a-form-item field="mark" :label="$t('receiptTable.form.mark')">
+                  <a-input
+                    v-model="formModel.mark"
+                    :placeholder="$t('receiptTable.form.mark.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <!--是否要发票-->
+              <a-col :span="8">
+                <a-form-item
+                  field="takeInvoice"
+                  :label="$t('receiptTable.form.takeInvoice')"
+                >
+                  <a-select
+                    v-model="formModel.takeInvoice"
+                    :options="yesOrNoOptions"
+                    :placeholder="
+                      $t('receiptTable.form.takeInvoice.placeholder')
+                    "
                   />
                 </a-form-item>
               </a-col>
@@ -220,6 +213,10 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
+        <!--        是否-->
+        <template #takeInvoice="{ record }">
+          {{ $t(`receiptTable.form.takeInvoice.${record.takeInvoice}`) }}
+        </template>
         <!--操作-->
         <template #operations="{ record }">
           <a-button
@@ -246,6 +243,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
+  import { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -297,6 +295,17 @@
   const showColumns = ref<Column[]>([]);
   const isDetailing = ref(false);
 
+  const yesOrNoOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('receiptTable.form.takeInvoice.true'),
+      value: 1,
+    },
+    {
+      label: t('receiptTable.form.takeInvoice.false'),
+      value: 0,
+    },
+  ]);
+
   let formShow = reactive(generateFormModel());
 
   const size = ref<SizeProps>('medium');
@@ -336,16 +345,16 @@
       dataIndex: 'id',
     },
     {
-      title: t('receiptTable.columns.name'),
-      dataIndex: 'name',
+      title: t('receiptTable.columns.orderId'),
+      dataIndex: 'orderId',
     },
     {
-      title: t('receiptTable.columns.stationName'),
-      dataIndex: 'stationName',
+      title: t('receiptTable.columns.userName'),
+      dataIndex: 'userName',
     },
     {
-      title: t('receiptTable.columns.phone'),
-      dataIndex: 'phone',
+      title: t('receiptTable.columns.userPhone'),
+      dataIndex: 'userPhone',
     },
     {
       title: t('receiptTable.columns.mark'),
@@ -354,6 +363,7 @@
     {
       title: t('receiptTable.columns.takeInvoice'),
       dataIndex: 'takeInvoice',
+      slotName: 'takeInvoice',
     },
     {
       title: t('receiptTable.columns.operations'),
@@ -397,6 +407,7 @@
   };
   const reset = () => {
     formModel.value = generateFormModel();
+    search();
   };
   // 分页
   const onPageChange = (current: number) => {
