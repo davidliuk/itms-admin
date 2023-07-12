@@ -23,6 +23,17 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
+      path: 'attr/:groupId', // The midline path complies with SEO specifications
+      name: 'attr',
+      component: () => import('@/views/product/attr/index.vue'),
+      meta: {
+        hideInMenu: true,
+        locale: 'menu.product.attr',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
       path: 'category', // The midline path complies with SEO specifications
       name: 'category',
       component: () => import('@/views/product/category/index.vue'),
@@ -39,6 +50,30 @@ const LIST: AppRouteRecordRaw = {
       component: () => import('@/views/product/sku/index.vue'),
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.product.sku',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'sku/create', // The midline path complies with SEO specifications
+      name: 'skuCreate',
+      component: () => import('@/views/product/sku-create/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        hideInMenu: true,
+        locale: 'menu.product.sku',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'sku/edit/:skuId', // The midline path complies with SEO specifications
+      name: 'skuEdit',
+      component: () => import('@/views/product/sku-edit/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        hideInMenu: true,
         locale: 'menu.product.sku',
         requiresAuth: true,
         roles: ['*'],

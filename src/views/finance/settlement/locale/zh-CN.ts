@@ -24,8 +24,7 @@ export default {
   'settlement.form.name.placeholder': '请输入分站名称',
   'settlement.form.createdTime': '创建时间',
   'settlement.form.status': '状态',
-  'settlement.form.status.online': '已领用',
-  'settlement.form.status.offline': '已作废',
+
   'settlement.form.search': '查询',
   'settlement.form.reset': '重置',
   'settlement.form.selectDefault': '全部',
@@ -42,6 +41,11 @@ export default {
   'settlement.columns.start': '开始号码',
   'settlement.columns.end': '结束号码',
   'settlement.columns.name': '分站名称',
+
+  'settlement.columns.category':'订单类型',
+  'settlement.form.status.USED': '收款',
+  'settlement.form.status.UNUSED': '收款',
+  'settlement.form.status.CANCEL': '退款',
 
   'settlement.columns.stationId': '分站名称',
   'settlement.columns.totalAmount': '金额',

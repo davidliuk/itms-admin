@@ -1,23 +1,23 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.acl', 'menu.acl.permission']" />
-    <a-card class="general-card" :title="$t('menu.acl.permission')">
+    <Breadcrumb :items="['menu.product', 'menu.product.attr']" />
+    <a-card class="general-card" :title="$t('menu.product.attr')">
       <a-divider style="margin-top: 0" />
       <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="handleCreateClick">
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('permission.operation.create') }}
+              {{ $t('attr.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('permission.operation.import') }}
+                  {{ $t('attr.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -32,16 +32,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('permission.operation.download') }}
+            {{ $t('attr.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('permission.actions.refresh')">
+          <a-tooltip :content="$t('attr.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('permission.actions.density')">
+            <a-tooltip :content="$t('attr.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -57,7 +57,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('permission.actions.columnSetting')">
+          <a-tooltip :content="$t('attr.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -95,7 +95,7 @@
       </a-row>
       <a-modal
         :visible="isCreating || isUpdating"
-        :title="$t(`permission.form.title.${isCreating ? 'create' : 'update'}`)"
+        :title="$t(`attr.form.title.${isCreating ? 'create' : 'update'}`)"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
       >
@@ -104,27 +104,41 @@
             v-for="(val, key) in form"
             :key="key"
             :field="key"
-            :label="$t(`permission.form.${key}`)"
+            :label="$t(`attr.form.${key}`)"
           >
-            <a-input
+            <a-input-tag
+              v-if="key == 'selectList'"
               v-model="form[key]"
-              :placeholder="$t(`permission.form.${key}.placeholder`)"
+              :style="{ width: '380px' }"
+              :placeholder="$t(`attr.form.${key}.placeholder`)"
+              allow-clear
+            />
+            <a-input
+              v-else
+              v-model="form[key]"
+              :disabled="key == 'id'"
+              :placeholder="$t(`attr.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
       </a-modal>
-
       <!-- 表格 -->
       <a-table
+        v-model:selected-keys="selectedKeys"
         row-key="id"
+        :row-selection="rowSelection"
         :loading="loading"
+        :pagination="pagination"
         :columns="(cloneColumns as TableColumnData[])"
         :data="renderData"
         :bordered="false"
-        :default-expanded-keys="[1]"
-        :default-expand-all-rows="true"
         :size="size"
+        @page-change="onPageChange"
       >
+        <!-- 分页 -->
+        <!-- <template #index="{ rowIndex }">
+          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+        </template> -->
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
@@ -137,43 +151,29 @@
             v-else-if="record.status === 'stocked'"
             class="circle pass"
           ></span>
-          {{ $t(`permission.form.status.${record.status}`) }}
-        </template>
-        <template #type="{ record }">
-          <span v-if="record.type === 'no_shipped'" class="circle"></span>
-          <span
-            v-else-if="record.type === 'shipped'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.type === 'stocked'"
-            class="circle pass"
-          ></span>
-          {{ $t(`permission.form.type.${record.type}`) }}
+          {{ $t(`attr.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
+        <template #selectList="{ record }">
+          <a-input-tag
+            :default-value="record.selectList.split(',')"
+            :style="{ width: '320px' }"
+            :max-tag-count="5"
+            placeholder="$t(`attr.form.selectList.null`)"
+            readonly
+          />
+        </template>
 
         <!-- table里 -->
         <!-- 查看 -->
-        <template #operations>
-          <!-- <a-button v-permission="['admin']" type="text" size="small">
-            {{ $t('permission.columns.operations.view') }}
-          </a-button> -->
+        <template #operations="{ record }">
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="handleCreateClick(record)"
+            @click="deleteAttrById(record.id)"
           >
-            {{ $t('permission.columns.operations.create') }}
-          </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteById(record.id)"
-          >
-            {{ $t('permission.columns.operations.delete') }}
+            {{ $t('attr.columns.operations.delete') }}
           </a-button>
           <a-button
             v-permission="['admin']"
@@ -181,7 +181,7 @@
             size="small"
             @click="handleUpdateClick(record)"
           >
-            {{ $t('permission.columns.operations.update') }}
+            {{ $t('attr.columns.operations.update') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -191,55 +191,69 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, reactive, watch, nextTick, Ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPermissionList, Permission, addPermission, updatePermission, deletePermission } from '@/api/acl';
+  import {
+    getByGroupId,
+    addAttr,
+    updateAttr,
+    deleteAttr,
+    Attr,
+  } from '@/api/product';
+  import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
 
+  import { useRoute } from 'vue-router';
+
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
-  const renderData = ref<Permission[]>([]);
-  const cloneColumns = ref<Column[]>([]);
-  const showColumns = ref<Column[]>([]);
 
   const generateFormModel = () => {
     return {
       id: '',
-      username: '',
       name: '',
-      password: '',
-      phone: '',
-      email: '',
-      wareId: '',
-      stationId: '',
+      selectList: [],
       // createTime: null,
       // updateTime: null,
     };
   };
 
+  const selectedKeys = ref([]);
+
+  const rowSelection = reactive({
+    type: 'checkbox',
+    showCheckedAll: true,
+    onlyCurrent: false,
+  });
+
   const isCreating = ref(false);
   const isUpdating = ref(false);
+  const isAssigning = ref(false);
   let form = reactive(generateFormModel());
 
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (admin: Permission) => {
-    copy(admin, form);
+  const handleUpdateClick = (attr: Attr) => {
+    copy(attr, form);
+    form.selectList = attr.selectList.split(',');
     isUpdating.value = true;
   };
-  const handleBeforeOk = async (done) => {
+  const handleBeforeOk = (done) => {
     if (isCreating.value) {
-      await addPermission(form as unknown as Permission);
-    } else {
-      await updatePermission(form as unknown as Permission);
+      const value = form as unknown as Attr;
+      value.selectList = form.selectList.join(',');
+      value.groupId = route.params.groupId;
+      addAttr(form as unknown as Attr);
+    } else if (isUpdating.value) {
+      const value = form as unknown as Attr;
+      value.selectList = form.selectList.join(',');
+      value.groupId = route.params.groupId;
+      updateAttr(form as unknown as Attr);
     }
     done();
     handleClose();
@@ -248,118 +262,120 @@
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
+    isAssigning.value = false;
     form = reactive(generateFormModel());
   };
-  const deleteById = async (id: number) => {
-    await deletePermission(id);
-    search();
-  };
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
+  const renderData = ref<Attr[]>([]);
+  const cloneColumns = ref<Column[]>([]);
+  const showColumns = ref<Column[]>([]);
 
   const size = ref<SizeProps>('medium');
 
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 20,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
   const densityList = computed(() => [
     {
-      name: t('permission.size.mini'),
+      name: t('attr.size.mini'),
       value: 'mini',
     },
     {
-      name: t('permission.size.small'),
+      name: t('attr.size.small'),
       value: 'small',
     },
     {
-      name: t('permission.size.medium'),
+      name: t('attr.size.medium'),
       value: 'medium',
     },
     {
-      name: t('permission.size.large'),
+      name: t('attr.size.large'),
       value: 'large',
     },
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
+    // {
+    //   title: t('attr.columns.index'),
+    //   dataIndex: 'index',
+    //   slotName: 'index',
+    // },
     {
-      title: t('permission.columns.index'),
-      dataIndex: 'index',
-      slotName: 'index',
-    },
-    {
-      title: t('permission.columns.id'),
+      title: t('attr.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('permission.columns.name'),
+      title: t('attr.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('permission.columns.code'),
-      dataIndex: 'code',
-    },
-    // {
-    //   title: t('permission.columns.toCode'),
-    //   dataIndex: 'toCode',
-    // },
-    {
-      title: t('permission.columns.type'),
-      dataIndex: 'type',
-      slotName: 'type',
+      title: t('attr.columns.inputType'),
+      dataIndex: 'inputType',
     },
     {
-      title: t('permission.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
+      title: t('attr.columns.selectList'),
+      dataIndex: 'selectList',
+      slotName: 'selectList',
     },
     {
-      title: t('permission.columns.createTime'),
+      title: t('attr.columns.createTime'),
       dataIndex: 'createTime',
     },
     {
-      title: t('permission.columns.updateTime'),
+      title: t('attr.columns.updateTime'),
       dataIndex: 'updateTime',
     },
     // {
-    //   title: t('permission.columns.code'),
-    //   dataIndex: 'code',
-    //   slotName: 'code',
+    //   title: t('attr.columns.phone'),
+    //   dataIndex: 'phone',
+    //   slotName: 'phone',
     // },
     // {
-    //   title: t('permission.columns.sku_name'),
+    //   title: t('attr.columns.sku_name'),
     //   dataIndex: 'sku_name',
     //   slotName: 'sku_name',
     // },
     // {
-    //   title: t('permission.columns.sku_num'),
+    //   title: t('attr.columns.sku_num'),
     //   dataIndex: 'sku_num',
     // },
     // {
-    //   title: t('permission.columns.status'),
+    //   title: t('attr.columns.status'),
     //   dataIndex: 'status',
     //   slotName: 'status',
     // },
     {
-      title: t('permission.columns.operations'),
+      title: t('attr.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
 
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('permission.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('permission.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
+  const route = useRoute();
 
   // 分页
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await queryPermissionList();
+      const { data } = await getByGroupId(route.params.groupId);
       renderData.value = data;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  const deleteAttrById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteAttr(id);
+      // getByGroupId()
+      fetchData();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -370,9 +386,9 @@
   const search = () => {
     fetchData();
   };
-  // const onPageChange = (current: number) => {
-  //   fetchData();
-  // };
+  const onPageChange = (current: number) => {
+    fetchData();
+  };
   fetchData();
 
   // 设置密度
@@ -445,7 +461,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Permission',
+    name: 'Attr',
   };
 </script>
 

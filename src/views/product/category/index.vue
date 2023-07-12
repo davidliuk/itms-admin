@@ -220,33 +220,6 @@
           </a-form-item>
         </a-form>
       </a-modal>
-      <a-modal
-        :visible="isAssigning"
-        :title="$t('category.form.title.assign')"
-        @cancel="handleClose"
-        @before-ok="handleBeforeOk"
-      >
-        <a-space direction="vertical" size="large">
-          <a-cascader
-            v-if="!isAssignListFinished"
-            :options="[]"
-            :style="{ width: '480px' }"
-            placeholder="Please select ..."
-            loading
-          />
-          <a-cascader
-            v-else
-            :options="options"
-            :field-names="fieldNames"
-            :style="{ width: '480px' }"
-            placeholder="Please select ..."
-            multiple
-            allow-search
-            allow-clear
-            check-strictly
-          />
-        </a-space>
-      </a-modal>
 
       <!-- 表格 -->
       <a-table
@@ -319,10 +292,11 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    Permission,
-    queryPermissionList,
     queryCategoryList,
     Category,
+    addCategory,
+    updateCategory,
+deleteCategory,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -332,8 +306,7 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-  const fieldNames = { value: 'id', label: 'name' };
-  const isAssignListFinished = ref(false);
+
   const generateFormModel = () => {
     return {
       id: '',
@@ -354,55 +327,31 @@
     onlyCurrent: false,
   });
 
-  let options: Permission[];
-
   const isCreating = ref(false);
   const isUpdating = ref(false);
-  const isAssigning = ref(false);
-  // const form = reactive({
-  //   username: '',
-  //   name: '',
-  //   password: '',
-  //   phone: '',
-  //   email: '',
-  //   wareId: '',
-  //   stationId: '',
-  // });
   let form = reactive(generateFormModel());
   const handleCreateClick = () => {
     isCreating.value = true;
   };
   const handleUpdateClick = (category: Category) => {
     copy(category, form);
-    // form = admin;
     isUpdating.value = true;
   };
   const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
     if (isCreating.value) {
-      //   addCategory(form as unknown as Category);
-      // } else {
-      //   updateCategory(form as unknown as Category);
+      addCategory(form as unknown as Category);
+    } else {
+      updateCategory(form as unknown as Category);
     }
     handleClose();
   };
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
-    isAssigning.value = false;
     form = reactive(generateFormModel());
   };
-  const assignCategory = async (category: Category) => {
-    isAssignListFinished.value = false;
-    isAssigning.value = true;
-    const { data } = await queryPermissionList();
-    options = reactive(data);
-    isAssignListFinished.value = true;
+  const deleteCategoryById = (id: number) => {
+    deleteCategory(id);
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
@@ -499,18 +448,6 @@
       slotName: 'operations',
     },
   ]);
-
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('category.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('category.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
 
   // 分页
   const fetchData = async (

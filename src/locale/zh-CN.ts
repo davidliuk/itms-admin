@@ -32,13 +32,18 @@ import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
 
 import localeSupply from '@/views/stock/supply/locale/zh-CN';
 
+import localeFinanceView from '@/views/finance/financeview/locale/zh-CN';
+
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
 import localeRole from '@/views/acl/role/locale/zh-CN';
 import localePermission from '@/views/acl/permission/locale/zh-CN';
 
 import localeCategory from '@/views/product/category/locale/zh-CN';
 import localeAttrGroup from '@/views/product/attr-group/locale/zh-CN';
+import localeAttr from '@/views/product/attr/locale/zh-CN';
 import localeSku from '@/views/product/sku/locale/zh-CN';
+import localeSkuCreate from '@/views/product/sku-create/locale/zh-CN';
+import localeSkuEdit from '@/views/product/sku-edit/locale/zh-CN';
 
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
 import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN'; // 库存
@@ -90,6 +95,8 @@ export default {
   'menu.acl': '权限管理',
   'menu.product': '商品管理',
   'menu.supplier': '供应商管理',
+  'menu.financeView': '财务分析',
+
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
@@ -112,6 +119,8 @@ export default {
   ...locale500,
   ...localeUserInfo,
 
+  ...localeFinanceView,
+
   ...localeSettlement,
   ...localeSupplier,
   ...localeInvoice,
@@ -127,7 +136,10 @@ export default {
 
   ...localeCategory,
   ...localeAttrGroup,
+  ...localeAttr,
   ...localeSku,
+  ...localeSkuCreate,
+  ...localeSkuEdit,
 
   ...localeMissionTable,
   ...localeCourierTable,

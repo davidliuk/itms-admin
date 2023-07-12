@@ -185,8 +185,15 @@
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.status === 1" class="circle"></span>
-          <span v-else-if="record.status === 0" class="circle pass"></span>
+          <span v-if="record.status === 'CANCEL'" class="circle"></span>
+          <span
+              v-else-if="record.status === 'USED'"
+              class="circle pass"
+          ></span>
+          <span
+              v-else-if="record.status === 'UNUSED'"
+              class="circle pass"
+          ></span>
           {{ $t(`invoice.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
@@ -195,28 +202,36 @@
         <!-- 删改 -->
         <template #operations="{ record }">
           <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteInvoiceById(record.id)"
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="takeInvoice(record)"
           >
-            {{ $t('invoice.columns.operations.delete') }}
+            {{ $t('invoice.columns.operations.take') }}
           </a-button>
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="handleUpdateClick(record)"
+            @click="wasteInvoice(record)"
+          >
+            {{ $t('invoice.columns.operations.waste') }}
+          </a-button>
+          <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="handleUpdateClick(record)"
           >
             {{ $t('invoice.columns.operations.update') }}
           </a-button>
           <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteInvoiceById(record.id)"
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="deleteInvoiceById(record.id)"
           >
-            {{ $t('invoice.columns.operations.waste') }}
+            {{ $t('invoice.columns.operations.delete') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -276,6 +291,7 @@
     copy(invoice, form);
     isUpdating.value = true;
   };
+
   const handleBeforeOk = (done: any) => {
     console.log(form);
     if (isCreating.value) {
@@ -285,6 +301,24 @@
     }
     handleClose();
   };
+
+  const takeInvoice = (invoice: Invoice) => {
+    if(invoice.status==='CANCEL'){
+      alert("已作废的发票不可领用");
+    }else{
+      invoice.status='USED';
+      updateInvoice(invoice);
+    }
+
+  };
+
+  const wasteInvoice = (invoice: Invoice) => {
+
+    invoice.status='CANCEL';
+    alert(invoice.status);
+    updateInvoice(invoice);
+  };
+
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;

@@ -272,7 +272,12 @@
         <!-- table里 -->
         <!-- 查看 -->
         <template #operations="{ record }">
-          <a-button v-permission="['admin']" type="text" size="small">
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleView(record.id)"
+          >
             {{ $t('attrGroup.columns.operations.view') }}
           </a-button>
           <a-button
@@ -308,21 +313,18 @@
     updateAttrGroup,
     deleteAttrGroup,
     AttrGroup,
-    Role,
-    toAssign,
-    doAssign,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
+  import { useRouter } from 'vue-router';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
   const fieldNames = { value: 'id', label: 'name' };
-  let options: Ref<Role[]>;
   let selectedOptions: Ref<string[]>;
   let selectedAttrGroup: AttrGroup;
 
@@ -349,8 +351,16 @@
   const isUpdating = ref(false);
   const isAssigning = ref(false);
   const isAssignListFinished = ref(false);
+  const router = useRouter();
   let form = reactive(generateFormModel());
-
+  const handleView = (groupId: number) => {
+    router.push({
+      name: 'attr',
+      params: {
+        groupId,
+      },
+    });
+  };
   const handleCreateClick = () => {
     isCreating.value = true;
   };
@@ -369,8 +379,6 @@
       addAttrGroup(form as unknown as AttrGroup);
     } else if (isUpdating.value) {
       updateAttrGroup(form as unknown as AttrGroup);
-    } else {
-      doAssign(selectedAttrGroup.id, selectedOptions.value);
     }
     done();
     handleClose();
@@ -381,15 +389,6 @@
     isUpdating.value = false;
     isAssigning.value = false;
     form = reactive(generateFormModel());
-  };
-  const assignAttrGroup = async (attrGroup: AttrGroup) => {
-    isAssignListFinished.value = false;
-    isAssigning.value = true;
-    selectedAttrGroup = attrGroup;
-    const { data } = await toAssign(attrGroup.id);
-    options = ref(data.allRolesList);
-    selectedOptions = ref(data.assignRoles.map((role: Role) => role.id));
-    isAssignListFinished.value = true;
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();

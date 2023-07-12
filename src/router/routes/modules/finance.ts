@@ -43,6 +43,16 @@ const LIST: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'financeView',
+      name: 'financeView',
+      component: () => import('@/views/finance/financeview/index.vue'),
+      meta: {
+        locale: 'menu.finance.financeView',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 
