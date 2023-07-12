@@ -121,10 +121,12 @@ export interface WorkOrder {
   createTime?: string;
   detailAddress?: string;
   district?: string;
+  feedback?: string;
   id?: number;
   logisticsId?: number;
   logisticsName?: string;
   logisticsPhone?: string;
+  mark?: string;
   name?: string;
   orderId?: number;
   orderInfo?: object;
@@ -200,9 +202,6 @@ export interface OrderDetail {
 }
 
 export function queryOrderDetail(orderNo: string) {
-  const res = axios.get<OrderDetail>(
-    `/api/order/inner/getOrderInfo/${orderNo}`
-  );
-  console.log(res);
-  return res;
+
+  return axios.get<OrderDetail>(`/admin/sys/dispatch/orderDetail/${orderNo}`);
 }

@@ -79,7 +79,6 @@
     try {
       renderData.value = await queryWareHouseList(pageParam);
       console.log(renderData.value);
-
     } catch (err) {
       // you can report use errorHandler or other
       console.error(err);

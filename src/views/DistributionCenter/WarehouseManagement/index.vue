@@ -12,20 +12,20 @@
           <a-row justify="space-between">
             <a-col :span="24">
               <a-tabs :default-active-tab="1" type="rounded">
-<!--                <a-tab-pane key="1" :title="$t('warehouseList.tab.title.all')">-->
-<!--                  <DispatchCenterCard wareHouseType="All" />-->
-<!--                </a-tab-pane>-->
+                <!--                <a-tab-pane key="1" :title="$t('warehouseList.tab.title.all')">-->
+                <!--                  <DispatchCenterCard wareHouseType="All" />-->
+                <!--                </a-tab-pane>-->
                 <a-tab-pane
                   key="2"
                   :title="$t('warehouseList.tab.title.center')"
                 >
-                  <DispatchCenterCard/>
+                  <DispatchCenterCard />
                 </a-tab-pane>
                 <a-tab-pane
                   key="3"
                   :title="$t('warehouseList.tab.title.region')"
                 >
-                  <DispatchRegionCard/>
+                  <DispatchRegionCard />
                 </a-tab-pane>
               </a-tabs>
             </a-col>

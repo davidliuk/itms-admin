@@ -5,7 +5,6 @@
     </a-card>
 
     <a-card v-else bordered="bordered" hoverable>
-
       <!--      <a-card-meta>-->
       <template #title>
         <a-typography-text style="margin-right: 10px">
@@ -15,7 +14,7 @@
       <template #extra>
         {{ cardData.province }}/{{ cardData.city }}/{{ cardData.district }}
       </template>
-      <template #actions >
+      <template #actions>
         <a-col justify="start">
           <a-row justify="start">{{ cardData.leaderName }}</a-row>
           <a-row justify="start"> {{ cardData.leaderEmail }}</a-row>
@@ -23,23 +22,22 @@
         <a-space>
           <a-button @click="handleInfo"> 详情 </a-button>
         </a-space>
-
       </template>
       <a-card-meta>
         <template #description>
-          <a-col >
-          <a-row class="list-row" :gutter="12" justify="end">
-            <a-progress :animation="true" :percent="percentage" :style="{ width: '100%'}" />
-          </a-row>
-          <a-row>{{ cardData.use }} / {{ cardData.total }}</a-row>
+          <a-col>
+            <a-row class="list-row" :gutter="12" justify="end">
+              <a-progress
+                :animation="true"
+                :percent="percentage"
+                :style="{ width: '100%' }"
+              />
+            </a-row>
+            <a-row>{{ cardData.use }} / {{ cardData.total }}</a-row>
           </a-col>
         </template>
-
-
       </a-card-meta>
-
     </a-card>
-
 
     <!--    <canvas id="canvas"/>-->
   </div>
@@ -140,11 +138,8 @@
     return Number(
       // (props.use / props.total).toFixed(2)
       (cardData.value.use / cardData.value.total).toFixed(2)
-
     );
   });
-
-
 
   const handleInfo = () => {};
 </script>
@@ -220,7 +215,7 @@
     justify-content: flex-start;
   }
 
-  .list-row-conter-card{
+  .list-row-conter-card {
     justify-content: center;
   }
 </style>

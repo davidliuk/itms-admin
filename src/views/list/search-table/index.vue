@@ -17,35 +17,6 @@
     <a-card class="general-card" :title="$t('menu.list.searchTable')">
       <a-row>
         <a-col :flex="1">
-          <!--这里是查询部分，分为6个查询部分，我们的订单查询要结合订单的元信息进行查询
-          也就是数据库表的order_info部分
-    order_no              char(64)       default ''                not null comment '订单号',
-    nick_name             varchar(200)                             null comment '会员昵称',
-    receiver_name         varchar(100)                             null comment '收货人姓名',
-    order_status          tinyint        default 0                 not null comment '订单状态【0->待付款；1->待发货；2->已发货；3->待用户收货，已完成；-1->已取消】',
-    payment_time          datetime                                 null comment '支付时间',
-    take_name             varchar(50)    default ''                null comment '提货点名称',
-
-    高级功能
-    
-    user_id               bigint         default 0                 not null comment '会员_id',
-    total_amount          decimal(10, 2) default 0.00              not null comment '订单总额（应当设定为一个区间）',
-    feight_fee            decimal(10, 2) default 0.00              not null comment '运费',
-    refundable_time       datetime                                 null comment '可退款日期（签收后1天）',
-    courier_id            bigint         default 0                 not null comment '配送员id',
-    courier_name          varchar(20)                              null comment '配送员名称',
-    courier_phone         varchar(11)                              null comment '配送员电话',
-    receiver_phone        varchar(32)                              null comment '收货人电话',
-    receiver_post_code    varchar(32)                              null comment '收货人邮编',
-    receiver_province     bigint                                   null comment '省份/直辖市',
-    receiver_city         bigint                                   null comment '城市',
-    receiver_district     bigint                                   null comment '区',
-    receiver_address      varchar(200)                             null comment '详细地址',
-    delivery_time         datetime                                 null comment '发货时间',
-    take_time             datetime                                 null comment '提货时间',
-    receive_time          datetime                                 null comment '确认收货时间',
-    ware_id               bigint         default 0                 not null comment '仓库id',
-          -->
           <a-form
             :model="formModel"
             :label-col-props="{ span: 6 }"
@@ -668,6 +639,8 @@
   // console.log(renderData);
 
   const visibleModal = ref(false);
+
+  // todo: 手动调度
   const handleTask = () => {
     visible.value = false;
   };

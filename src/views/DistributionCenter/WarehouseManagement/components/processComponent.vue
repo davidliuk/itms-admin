@@ -68,7 +68,7 @@
             formatter: '{c}',
           },
           barWidth: '100%', // Adjust the width of the bars as needed
-          z:2,
+          z: 2,
         },
         {
           type: 'bar',
@@ -79,7 +79,7 @@
             borderColor: '#3398DB', // Customize the color of the border
             borderWidth: 1, // Adjust the width of the border as needed
           },
-          z:1,
+          z: 1,
         },
       ],
     };

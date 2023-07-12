@@ -45,4 +45,3 @@ export interface OrderState {
   updateTime?: string;
   isDeleted?: number;
 }
-
