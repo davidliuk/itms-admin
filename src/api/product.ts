@@ -15,8 +15,7 @@ export interface PageRes<T> {
   records: T[];
   total: number;
 }
-
-export function findAllList() {
+export function allCategory() {
   return axios.get<Category[]>('/admin/product/category/findAllList');
 }
 export function queryCategoryList(
@@ -67,6 +66,9 @@ export function updateAttrGroup(attrGroup: AttrGroup) {
 export function deleteAttrGroup(id: number) {
   return axios.delete<any>(`/admin/product/attrGroup/${id}`);
 }
+export function allAttrGroup() {
+  return axios.get<AttrGroup[]>(`/admin/product/attrGroup/findAllList`);
+}
 
 export interface SkuInfo {
   // 内容不影响
@@ -98,9 +100,6 @@ export function querySkuInfoList(
     params
   );
 }
-export function addSkuInfo(skuInfo: SkuInfo) {
-  return axios.post<any>('/admin/product/skuInfo', skuInfo);
-}
 export function updateSkuInfo(skuInfo: SkuInfo) {
   return axios.put<any>('/admin/product/skuInfo', skuInfo);
 }
@@ -117,7 +116,6 @@ export interface Attr {
   createTime: Date;
   updateTime: Date;
 }
-
 export function queryAttrList(
   current: number,
   limit: number,
@@ -138,8 +136,7 @@ export function updateAttr(attr: Attr) {
 export function deleteAttr(id: number) {
   return axios.delete<any>(`/admin/product/attr/${id}`);
 }
-
-export function getByGroupId(groupId: string) {
+export function getAttrByGroupId(groupId: string) {
   return axios.get<Attr[]>(`/admin/product/attr/getByGroupId/${groupId}`);
 }
 
@@ -148,11 +145,13 @@ export interface SkuBasicInfo {
   skuName: string;
   categoryId: string;
   skuType: number;
-  isNewPerson: boolean;
+  isNewPerson: number;
   skuCode: string;
   sort: number;
   price: number;
   marketPrice: number;
+  supplierId: string;
+  supplierName: string;
 }
 
 export interface SkuAttrValue {
@@ -190,10 +189,16 @@ export interface SkuImageInfo {
 }
 
 export interface SkuPosterInfo {
-  skuPosterList: SkuImage[];
+  skuPosterList: SkuPoster[];
 }
+
+export type SkuImgInfo = SkuImageInfo & SkuPosterInfo;
 
 export type SkuInfoVO = SkuBasicInfo &
   SkuAttrInfo &
   SkuImageInfo &
   SkuPosterInfo;
+
+export function addSkuInfo(skuInfoVo: SkuInfoVO) {
+  return axios.post<any>('/admin/product/skuInfo', skuInfoVo);
+}

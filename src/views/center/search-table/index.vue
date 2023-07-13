@@ -219,7 +219,7 @@
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
 
-        <!-- 表格form里 -->
+        <!-- table里 -->
         <!-- 状态 -->
         <template #status="{ record }">
           <span v-if="record.status === 'no_shipped'" class="circle"></span>
@@ -233,16 +233,13 @@
           ></span>
           {{ $t(`searchTable.form.status.${record.status}`) }}
         </template>
-        <!-- 表格form里 -->
 
-        <!-- table里 -->
-        <!-- 查看 -->
+        <!-- 操作 -->
         <template #operations>
           <a-button v-permission="['admin']" type="text" size="small">
             {{ $t('searchTable.columns.operations.view') }}
           </a-button>
         </template>
-        <!-- 查看 -->
       </a-table>
     </a-card>
   </div>
@@ -263,15 +260,7 @@
   type Column = TableColumnData & { checked?: true };
 
   const generateFormModel = () => {
-    return {
-      distribution_id: '',
-      ware_id: '',
-      station_id: '',
-      sku_id: '',
-      sku_name: '',
-      createdTime: [],
-      status: '',
-    };
+    return {};
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
@@ -356,17 +345,6 @@
     },
   ]);
 
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('searchTable.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('searchTable.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('searchTable.form.status.no_shipped'),

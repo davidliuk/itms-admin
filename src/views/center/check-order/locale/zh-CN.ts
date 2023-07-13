@@ -65,7 +65,7 @@ export default {
 
   'CheckOrder.columns.index': '#',
   'CheckOrder.columns.id': '分发单标识',
-  'CheckOrder.columns.orderId': '分发单所属订单',
+  'CheckOrder.columns.orderId': '订单编号',
   'CheckOrder.columns.wareId': '仓库标识',
   'CheckOrder.columns.stationId': '分站标识',
   'CheckOrder.columns.workOrderId': '任务单标识',
@@ -73,6 +73,7 @@ export default {
   'CheckOrder.columns.outTime': '出库时间',
   'CheckOrder.columns.createTime': '创建时间',
   'CheckOrder.columns.updateTime': '更新时间',
+  'CheckOrder.columns.skuDetails': '查看商品信息',
 
   'CheckOrder.columns.status': '状态',
   'CheckOrder.columns.operations': '操作',

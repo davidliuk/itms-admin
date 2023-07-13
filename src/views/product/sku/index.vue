@@ -55,7 +55,7 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item field="price" :label="$t('skuInfo.form.price')">
-                  <a-input
+                  <a-input-number
                     v-model="formModel.price"
                     :placeholder="$t('skuInfo.form.price.placeholder')"
                   />
@@ -66,7 +66,7 @@
                   field="publishStatus"
                   :label="$t('skuInfo.form.publishStatus')"
                 >
-                  <a-input
+                  <a-input-number
                     v-model="formModel.publishStatus"
                     :placeholder="$t('skuInfo.form.publishStatus.placeholder')"
                   />
@@ -276,7 +276,7 @@
         <template #imgUrl="{ record }">
           <img
             :src="record.imgUrl"
-            alt="Sku Image"
+            alt="No Sku Image"
             style="width: 100px; height: 100px"
           />
         </template>
@@ -311,21 +311,26 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick, Ref } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     querySkuInfoList,
-    addSkuInfo,
     updateSkuInfo,
     deleteSkuInfo,
     SkuInfo,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -333,16 +338,15 @@
   const generateFormModel = () => {
     return {
       id: '',
+      categoryId: '',
       skuName: '',
       skuCode: '',
       publishStatus: 0,
-      price: '',
-      categoryId: '',
+      price: 0,
       sort: 0,
-      remark: '',
       // createTime: null,
       // updateTime: null,
-    };
+    } as SkuInfo;
   };
 
   const selectedKeys = ref([]);
@@ -351,22 +355,23 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
   let form = reactive(generateFormModel());
 
   const handleCreateClick = () => {
-    isCreating.value = true;
+    // isCreating.value = true;
+    router.push({ name: 'skuCreate' });
   };
   const handleUpdateClick = (skuInfo: SkuInfo) => {
     copy(skuInfo, form);
     isUpdating.value = true;
   };
-  const handleBeforeOk = (done) => {
+  const handleBeforeOk = (done: any) => {
     if (isCreating.value) {
-      addSkuInfo(form as unknown as SkuInfo);
+      // addSkuInfo(form as unknown as SkuInfo);
     } else if (isUpdating.value) {
       updateSkuInfo(form as unknown as SkuInfo);
     }
@@ -390,7 +395,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -438,6 +443,10 @@
       slotName: 'imgUrl',
     },
     {
+      title: t('skuInfo.columns.supplierName'),
+      dataIndex: 'supplierName',
+    },
+    {
       title: t('skuInfo.columns.sort'),
       dataIndex: 'sort',
     },
@@ -453,10 +462,10 @@
       title: t('skuInfo.columns.createTime'),
       dataIndex: 'createTime',
     },
-    {
-      title: t('skuInfo.columns.updateTime'),
-      dataIndex: 'updateTime',
-    },
+    // {
+    //   title: t('skuInfo.columns.updateTime'),
+    //   dataIndex: 'updateTime',
+    // },
     // {
     //   title: t('skuInfo.columns.phone'),
     //   dataIndex: 'phone',

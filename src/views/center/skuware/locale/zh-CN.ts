@@ -17,6 +17,7 @@ export default {
   // String skuName = skuWare.getSkuName();
 
   'menu.center.skuWare': '货物库存表格',
+  'menu.center.skuWare.skuListInWare': '商品批量入库',
   'skuWare.form.id': 'id',
   'skuWare.form.id.placeholder': '请输入id',
   'skuWare.form.skuId': '商品编号',
@@ -31,6 +32,9 @@ export default {
   'skuWare.form.lockStock.placeholder': '请输入锁定库存',
   'skuWare.form.lowStock': '最低库存',
   'skuWare.form.lowStock.placeholder': '请输入最低库存',
+  'skuWare.columns.maxStock': '最大库存',
+  'skuWare.form.maxStock': '最大库存',
+  'skuWare.form.maxStock.placeholder': '请输入最大库存',
   'skuWare.form.sale': '销售量',
   'skuWare.form.sale.placeholder': '请输入销售量',
   'skuWare.form.createTime': '创建时间',
@@ -76,4 +80,7 @@ export default {
   'skuWare.actions.refresh': '刷新',
   'skuWare.actions.density': '密度',
   'skuWare.actions.columnSetting': '列设置',
+
+  // skuInWare
+  'skuInfo.form.title.InWare': '批量进货',
 };
