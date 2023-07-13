@@ -30,8 +30,6 @@ import localeInvoice from '@/views/finance/invoice/locale/zh-CN';
 import localeSettlement from '@/views/finance/settlement/locale/zh-CN';
 import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
 
-import localeSupply from '@/views/stock/supply/locale/zh-CN';
-
 import localeFinanceView from '@/views/finance/financeview/locale/zh-CN';
 
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
@@ -104,8 +102,6 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
-
-  ...localeSupply,
 
   ...localeMonitor,
   ...localeSearchTable,

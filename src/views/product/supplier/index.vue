@@ -41,9 +41,9 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
+        <a-divider style="height: 32px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
+          <a-space :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
@@ -161,6 +161,7 @@
             <a-input
               v-model="form[key]"
               :placeholder="$t(`supplier.form.${key}.placeholder`)"
+              :disabled="key === 'id'"
             />
           </a-form-item>
         </a-form>

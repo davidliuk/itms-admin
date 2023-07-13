@@ -39,49 +39,15 @@
                   />
                 </a-form-item>
               </a-col>
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('attrGroup.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="updateTime"
-                  :label="$t('attrGroup.form.updateTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.updateTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col> -->
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('attrGroup.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('attrGroup.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col> -->
             </a-row>
           </a-form>
         </a-col>
 
         <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
+        <a-divider style="height: 32px" direction="vertical" />
         <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
+          <a-space :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
