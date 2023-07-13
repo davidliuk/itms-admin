@@ -137,9 +137,9 @@ export function querySettlementList(
   limit: number,
   params: Partial<Invoice>
 ) {
-  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
-    params,
-  });
+  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`,
+      {params,}
+  );
 }
 export function searchSettlementList(
   page: number,
@@ -153,6 +153,27 @@ export function searchSettlementList(
   });
 }
 
-export function querList() {
-  return axios.get('/api/finance/rules-preset');
+export interface OrderDetail {
+  // 定义类型
+  id: string;
+  nickName: string;
+  orderNo: string;
+  orderStatus:string;
+  processStatus:string;
+  payType:string;
+  orderType:string;
+  courierName:string;
+  courierPhone:string;
+  receiverAddress:string;
+  receiverPhone:string;
+  originalTotalAmount:string;
+  couponId:string;
+  totalAmount: string;
+  cancelReason:string;
+}
+
+export function queryOrderDetailList(
+    orderId: string,
+) {
+  return axios.get<OrderDetail>(`/admin/sys/dispatch/orderDetailById/${orderId}`);
 }
