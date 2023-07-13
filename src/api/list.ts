@@ -145,3 +145,38 @@ export function queryTheServiceList() {
 export function queryRulesPresetList() {
   return axios.get('/api/list/rules-preset');
 }
+
+
+export interface LogisticsBaseInfo {
+  id: string;
+  name: string;
+  phone: string;
+}
+
+export interface StationBaseInfo {
+  id: string;
+  name: string;
+}
+
+export function queryLogisticsBaseInfo(wareId : string) {
+  return axios.get<LogisticsBaseInfo[]>( `/admin/sys/station/getByWareId/${wareId}`);
+}
+
+export function queryStationBaseInfo(wareId : string) {
+  return axios.get<StationBaseInfo[]>(`/admin/sys/logistics/getByWareId/${wareId}`);
+}
+
+export interface SelfDispatchParam {
+  orderNo: string;
+  stationId: string;
+  stationName: string;
+  logisticsId: string;
+  logisticsName: string;
+  logisticsPhone: string;
+}
+
+// 这个地方请求莫名其妙失效老是201
+export function postSelfDispatch(selfDispatchParam: SelfDispatchParam) {
+  return axios.get<any>(`/admin/sys/dispatch/manual`, { params:selfDispatchParam });
+}
+

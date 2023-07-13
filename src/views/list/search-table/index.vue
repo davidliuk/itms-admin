@@ -3,7 +3,42 @@
   <div class="container">
     <Breadcrumb :items="['menu.list', 'menu.list.searchTable']" />
     <a-modal
-      v-model:visible="visibleModal"
+      :visible="visibleTask"
+      ok-text="确定"
+      cancel-text="返回"
+      unmount-on-close
+      title="请选择"
+      align-center
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <a-space fill class="flex-center">
+        <a-select
+          v-model="logisticsBaseInfoIndex"
+          :style="{ width: '160px' }"
+          placeholder="运输公司"
+          :trigger-props="{ autoFitPopupMinWidth: true }"
+          :loading="loadingLogistics"
+          :disabled="disableSelecting"
+          :options="logisticsOptions"
+        />
+
+        <a-select
+          v-model="stationsBaseInfoIndex"
+          :style="{ width: '160px' }"
+          placeholder="分站"
+          :trigger-props="{ autoFitPopupMinWidth: true }"
+          :loading="loadingStations"
+          :disabled="disableSelecting"
+          :options="stationsOptions"
+        />
+
+      </a-space>
+
+    </a-modal>
+
+    <a-modal
+      :visible="visibleModal"
       fullscreen
       ok-text="手工调度"
       cancel-text="返回"
@@ -321,10 +356,20 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, reactive, watch, nextTick, Ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, deletePolicyList } from '@/api/list';
+  import {
+    queryPolicyList,
+    PolicyRecord,
+    deletePolicyList,
+    LogisticsBaseInfo,
+    StationBaseInfo,
+    queryLogisticsBaseInfo,
+    queryStationBaseInfo,
+    SelfDispatchParam,
+    postSelfDispatch,
+  } from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -333,6 +378,7 @@
   import { Modal } from '@arco-design/web-vue';
   import router from '@/router';
   import { useOrderInfoStore } from '@/store';
+  import { LSPPage } from "@/api/dispatch-center";
   import OrderInfo from './order_info/index.vue';
   import { OrderStateGetString } from '../../../utils/lsp-utils/order_state_to_string';
 
@@ -365,7 +411,7 @@
 
   const size = ref<SizeProps>('medium');
 
-  const basePagination: Pagination = {
+  const basePagination: LSPPage = {
     current: 1,
     limit: 10,
   };
@@ -496,7 +542,7 @@
   ]);
   // 从后端获取各种数据，我们把查询条件也传过去，让后端处理处数据来
   const fetchData = async (
-    pageSetting: Pagination,
+    pageSetting: LSPPage,
     params: PolicyRecord | null
   ) => {
     setLoading(true);
@@ -510,7 +556,6 @@
       renderData.value = data.records;
       // console.log(renderData.value);
       pagination.current = data.current;
-      pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -626,9 +671,13 @@
 
   const orderStore = useOrderInfoStore();
   const visible = ref(false);
+  const dataToShowWareId = ref('-1');
+  const dataToShowOrderNo = ref('-1');
   const handleSeeOrder = (index: any) => {
     setLoading(true);
     const dataToShow = renderData.value[index];
+    dataToShowWareId.value = dataToShow.wareId as unknown as string;
+    dataToShowOrderNo.value = dataToShow.orderNo as unknown as string;
     orderStore.setInfo(dataToShow);
     // await router.push({ name: 'order_info' });
     visibleModal.value = true;
@@ -639,13 +688,90 @@
   // console.log(renderData);
 
   const visibleModal = ref(false);
+  const visibleTask = ref(false);
+  const disableSelecting = ref(false);
 
   // todo: 手动调度
-  const handleTask = () => {
-    visible.value = false;
+  const logisticsBaseInfo: Ref<LogisticsBaseInfo[]> = ref([]);
+  const stationBaseInfo: Ref<StationBaseInfo[]> = ref([]);
+  const loadingLogistics = ref(true);
+  const loadingStations = ref(true);
+  // 计算属性生成选项数组
+  const logisticsOptions = computed<SelectOptionData[]>(() => {
+    return logisticsBaseInfo.value.map((item, index) => {
+      return {
+        label: item.name,
+        value: index,
+      };
+    });
+  });
+  // 计算属性生成选项数组
+  const stationsOptions = computed<SelectOptionData[]>(() => {
+    return stationBaseInfo.value.map((item, index) => {
+      return {
+        label: item.name,
+        value: index,
+      };
+    });
+  });
+  const logisticsBaseInfoIndex = ref(0);
+  const stationsBaseInfoIndex = ref(0);
+  const handleTask = async () => {
+    visibleTask.value = true;
+
+    loadingLogistics.value = true;
+    // 拿到运输公司信息
+    try {
+      const { data } = await queryLogisticsBaseInfo(dataToShowWareId.value);
+      // console.log(data);
+      logisticsBaseInfo.value = data;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      loadingLogistics.value = false;
+    }
+
+    // 拿到分站信息
+    loadingStations.value = true;
+    try {
+      const { data } = await queryStationBaseInfo(dataToShowWareId.value);
+      // console.log(data);
+      stationBaseInfo.value = data;
+
+      console.log(logisticsBaseInfo.value);
+      console.log(stationBaseInfo.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      loadingStations.value = false;
+    }
   };
   const handleBack = () => {
-    visible.value = false;
+    visibleModal.value = false;
+  };
+
+  const handleOk = async () => {
+    disableSelecting.value = true;
+
+    const selfDispatchParam: SelfDispatchParam = {
+      orderNo: dataToShowOrderNo.value,
+      stationId: stationBaseInfo.value[stationsBaseInfoIndex.value].id,
+      stationName: stationBaseInfo.value[stationsBaseInfoIndex.value].name,
+      logisticsId: logisticsBaseInfo.value[logisticsBaseInfoIndex.value].id,
+      logisticsName: logisticsBaseInfo.value[logisticsBaseInfoIndex.value].name,
+      logisticsPhone:
+        logisticsBaseInfo.value[logisticsBaseInfoIndex.value].phone,
+    };
+
+    console.log(selfDispatchParam);
+    await postSelfDispatch(selfDispatchParam);
+
+    disableSelecting.value = false;
+    visibleTask.value = false;
+    visibleModal.value = false;
+  };
+  const handleCancel = () => {
+    visibleTask.value = false;
   };
 </script>
 
@@ -682,5 +808,12 @@
       margin-left: 12px;
       cursor: pointer;
     }
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
   }
 </style>
