@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.product', 'menu.product.attr-group']" />
-    <a-card class="general-card" :title="$t('menu.product.attr-group')">
+    <Breadcrumb :items="['menu.list', 'menu.product.supplier']" />
+    <a-card class="general-card" :title="$t('menu.product.supplier')">
       <a-row>
-        <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -13,112 +12,72 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('attrGroup.form.id')">
+                <a-form-item field="number" :label="$t('supplier.form.number')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('attrGroup.form.id.placeholder')"
+                    :placeholder="$t('supplier.form.number.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('attrGroup.form.name')">
+                <a-form-item field="name" :label="$t('supplier.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('attrGroup.form.name.placeholder')"
+                    :placeholder="$t('supplier.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="remark"
-                  :label="$t('attrGroup.form.remark')"
+                  field="province"
+                  :label="$t('supplier.form.province')"
                 >
                   <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('attrGroup.form.remark.placeholder')"
+                    v-model="formModel.province"
+                    :placeholder="$t('supplier.form.province.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('attrGroup.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="updateTime"
-                  :label="$t('attrGroup.form.updateTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.updateTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col> -->
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('attrGroup.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('attrGroup.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col> -->
             </a-row>
           </a-form>
         </a-col>
-
-        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('attrGroup.form.search') }}
+              {{ $t('supplier.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('attrGroup.form.reset') }}
+              {{ $t('supplier.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
       </a-row>
       <a-divider style="margin-top: 0" />
-      <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
-        <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
             <a-button type="primary" @click="handleCreateClick">
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('attrGroup.operation.create') }}
+              {{ $t('supplier.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('attrGroup.operation.import') }}
+                  {{ $t('supplier.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
           </a-space>
         </a-col>
-        <!-- 表格上面的下载设置等 -->
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
@@ -127,23 +86,20 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('attrGroup.operation.download') }}
+            {{ $t('supplier.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('attrGroup.actions.refresh')">
-            <div class="action-icon" @click="search"
+          <a-tooltip :content="$t('supplier.actions.refresh')">
+            <div class="action-icon" @click="fresh"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <!-- 密度 -->
-            <a-tooltip :content="$t('attrGroup.actions.density')">
+            <a-tooltip :content="$t('supplier.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
-
-            <!-- size -->
             <template #content>
               <a-doption
-                v-for="item in densityList"
+                v-for="item in densitylist"
                 :key="item.value"
                 :value="item.value"
                 :class="{ active: item.value === size }"
@@ -152,7 +108,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('attrGroup.actions.columnSetting')">
+          <a-tooltip :content="$t('supplier.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -188,9 +144,10 @@
           </a-tooltip>
         </a-col>
       </a-row>
+
       <a-modal
         :visible="isCreating || isUpdating"
-        :title="$t(`attrGroup.form.title.${isCreating ? 'create' : 'update'}`)"
+        :title="$t(`supplier.form.title.${isCreating ? 'create' : 'update'}`)"
         @cancel="handleClose"
         @before-ok="handleBeforeOk"
       >
@@ -199,20 +156,18 @@
             v-for="(val, key) in form"
             :key="key"
             :field="key"
-            :label="$t(`attrGroup.form.${key}`)"
+            :label="$t(`supplier.form.${key}`)"
           >
             <a-input
               v-model="form[key]"
-              :placeholder="$t(`attrGroup.form.${key}.placeholder`)"
+              :placeholder="$t(`supplier.form.${key}.placeholder`)"
             />
           </a-form-item>
         </a-form>
       </a-modal>
-      <!-- 表格 -->
+
       <a-table
-        v-model:selected-keys="selectedKeys"
         row-key="id"
-        :row-selection="rowSelection"
         :loading="loading"
         :pagination="pagination"
         :columns="(cloneColumns as TableColumnData[])"
@@ -222,51 +177,40 @@
         @page-change="onPageChange"
       >
         <!-- 分页 -->
-        <!-- <template #index="{ rowIndex }">
+        <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
-        </template> -->
+        </template>
+
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.status === 'no_shipped'" class="circle"></span>
+          <span v-if="record.status === 'waste'" class="circle"></span>
           <span
-            v-else-if="record.status === 'shipped'"
+            v-else-if="record.status === 'using'"
             class="circle pass"
           ></span>
-          <span
-            v-else-if="record.status === 'stocked'"
-            class="circle pass"
-          ></span>
-          {{ $t(`attrGroup.form.status.${record.status}`) }}
+          {{ $t(`supplier.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
 
         <!-- table里 -->
-        <!-- 查看 -->
+        <!-- 删改 -->
         <template #operations="{ record }">
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="handleView(record.id)"
-          >
-            {{ $t('attrGroup.columns.operations.view') }}
-          </a-button>
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="deleteAttrGroupById(record.id)"
-          >
-            {{ $t('attrGroup.columns.operations.delete') }}
-          </a-button>
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="handleUpdateClick(record)"
           >
-            {{ $t('attrGroup.columns.operations.update') }}
+            {{ $t('supplier.columns.operations.update') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteSupplierById(record.id)"
+          >
+            {{ $t('supplier.columns.operations.delete') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -280,21 +224,18 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryAttrGroupList,
-    addAttrGroup,
-    updateAttrGroup,
-    deleteAttrGroup,
-    AttrGroup,
+    addSupplier,
+    deleteSupplier,
+    updateSupplier,
+    querySupplierList,
+    Supplier,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
-  import type {
-    TableColumnData,
-    TableRowSelection,
-  } from '@arco-design/web-vue/es/table/interface';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { useRouter } from 'vue-router';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -303,60 +244,44 @@
     return {
       id: '',
       name: '',
-      sort: 0,
-      remark: '',
-      // createTime: null,
-      // updateTime: null,
+      phone: '',
+      postCode: '',
+      province: '',
+      city: '',
+      detailAddress: '',
     };
   };
 
-  const selectedKeys = ref([]);
-
-  const rowSelection = reactive({
-    type: 'checkbox',
-    showCheckedAll: true,
-    onlyCurrent: false,
-  } as TableRowSelection);
-
   const isCreating = ref(false);
   const isUpdating = ref(false);
-  const isAssigning = ref(false);
-  const router = useRouter();
+
   let form = reactive(generateFormModel());
-  const handleView = (groupId: number) => {
-    router.push({
-      name: 'attr',
-      params: {
-        groupId,
-      },
-    });
-  };
+
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (attrGroup: AttrGroup) => {
-    copy(attrGroup, form);
+  const handleUpdateClick = (supplier: Supplier) => {
+    copy(supplier, form);
     isUpdating.value = true;
   };
   const handleBeforeOk = (done: any) => {
+    console.log(form);
     if (isCreating.value) {
-      addAttrGroup(form as unknown as AttrGroup);
-    } else if (isUpdating.value) {
-      updateAttrGroup(form as unknown as AttrGroup);
+      addSupplier(form as unknown as Supplier);
+    } else {
+      updateSupplier(form as unknown as Supplier);
     }
-    done();
     handleClose();
-    search();
   };
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
-    isAssigning.value = false;
     form = reactive(generateFormModel());
   };
+
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<AttrGroup[]>([]);
+  const renderData = ref<Supplier[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -370,104 +295,105 @@
   const pagination = reactive({
     ...basePagination,
   });
-  const densityList = computed(() => [
+  const densitylist = computed(() => [
     {
-      name: t('attrGroup.size.mini'),
+      name: t('supplier.size.mini'),
       value: 'mini',
     },
     {
-      name: t('attrGroup.size.small'),
+      name: t('supplier.size.small'),
       value: 'small',
     },
     {
-      name: t('attrGroup.size.medium'),
+      name: t('supplier.size.medium'),
       value: 'medium',
     },
     {
-      name: t('attrGroup.size.large'),
+      name: t('supplier.size.large'),
       value: 'large',
     },
   ]);
-
   const columns = computed<TableColumnData[]>(() => [
-    // {
-    //   title: t('attrGroup.columns.index'),
-    //   dataIndex: 'index',
-    //   slotName: 'index',
-    // },
     {
-      title: t('attrGroup.columns.id'),
+      title: t('supplier.columns.index'),
+      dataIndex: 'index',
+      slotName: 'index',
+    },
+    {
+      title: t('supplier.columns.number'),
       dataIndex: 'id',
     },
     {
-      title: t('attrGroup.columns.name'),
+      title: t('supplier.columns.name'),
       dataIndex: 'name',
     },
+
     {
-      title: t('attrGroup.columns.sort'),
-      dataIndex: 'sort',
+      title: t('supplier.columns.phone'),
+      dataIndex: 'phone',
     },
     {
-      title: t('attrGroup.columns.remark'),
-      dataIndex: 'remark',
+      title: t('supplier.columns.province'),
+      dataIndex: 'province',
     },
     {
-      title: t('attrGroup.columns.createTime'),
-      dataIndex: 'createTime',
+      title: t('supplier.columns.detailAddress'),
+      dataIndex: 'detailAddress',
     },
     {
-      title: t('attrGroup.columns.updateTime'),
-      dataIndex: 'updateTime',
+      title: t('supplier.columns.postCode'),
+      dataIndex: 'postCode',
     },
-    // {
-    //   title: t('attrGroup.columns.phone'),
-    //   dataIndex: 'phone',
-    //   slotName: 'phone',
-    // },
-    // {
-    //   title: t('attrGroup.columns.sku_name'),
-    //   dataIndex: 'sku_name',
-    //   slotName: 'sku_name',
-    // },
-    // {
-    //   title: t('attrGroup.columns.sku_num'),
-    //   dataIndex: 'sku_num',
-    // },
-    // {
-    //   title: t('attrGroup.columns.status'),
-    //   dataIndex: 'status',
-    //   slotName: 'status',
-    // },
     {
-      title: t('attrGroup.columns.operations'),
+      title: t('supplier.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-
-  // //过滤器
-  //   const filterTypeOptions = computed<SelectOptionData[]>(() => [
-  //     {
-  //       label: t('attrGroup.form.filterType.artificial'),
-  //       value: 'artificial',
-  //     },
-  //     {
-  //       label: t('attrGroup.form.filterType.rules'),
-  //       value: 'rules',
-  //     },
-  //   ]);
-
-  // 分页
+  const contentTypeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('supplier.form.contentType.img'),
+      value: 'img',
+    },
+    {
+      label: t('supplier.form.contentType.horizontalVideo'),
+      value: 'horizontalVideo',
+    },
+    {
+      label: t('supplier.form.contentType.verticalVideo'),
+      value: 'verticalVideo',
+    },
+  ]);
+  const filterTypeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('supplier.form.filterType.artificial'),
+      value: 'artificial',
+    },
+    {
+      label: t('supplier.form.filterType.rules'),
+      value: 'rules',
+    },
+  ]);
+  const statusOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('supplier.form.status.using'),
+      value: 'using',
+    },
+    {
+      label: t('supplier.form.status.waste'),
+      value: 'waste',
+    },
+  ]);
   const fetchData = async (
-    current: number,
+    page: number,
     pageSize: number,
-    params: Partial<AttrGroup>
+    params: Partial<Supplier>
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryAttrGroupList(current, pageSize, params);
+      const { data } = await querySupplierList(page, pageSize, params);
       renderData.value = data.records;
-      pagination.current = current;
+      pagination.current = page;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -475,11 +401,63 @@
       setLoading(false);
     }
   };
+  // const searchSupplierBy = (id: string, name: string, province: string) => {
+  //   searchData(pagination.current, pagination.pageSize, id, name, province);
+  // };
+  // const searchData = async (
+  //   page: number,
+  //   pageSize: number,
+  //   id: string,
+  //   name: string,
+  //   province: string
+  // ) => {
+  //   setLoading(true);
+  //   alert(id + name + province);
+  //   try {
+  //     const { data } = await searchSupplierList(
+  //       page,
+  //       pageSize,
+  //       id,
+  //       name,
+  //       province
+  //     );
+  //     renderData.value = data.records;
+  //     pagination.current = page;
+  //     pagination.total = data.total;
+  //   } catch (err) {
+  //     // you can report use errorHandler or other
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const deleteAttrGroupById = async (id: number) => {
+  const search = () => {
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+
+  const fresh = () => {
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+
+  const onPageChange = (current: number) => {
+    fetchData(current, basePagination.pageSize, formModel.value);
+  };
+  fetchData(pagination.current, pagination.pageSize, formModel.value);
+  const reset = () => {
+    formModel.value = generateFormModel();
+  };
+
+  const handleSelectDensity = (
+    val: string | number | Record<string, any> | undefined,
+    e: Event
+  ) => {
+    size.value = val as SizeProps;
+  };
+
+  const deleteSupplierById = async (id: number) => {
     setLoading(true);
     try {
-      await deleteAttrGroup(id);
+      await deleteSupplier(id);
       fetchData(pagination.current, pagination.pageSize, formModel.value);
     } catch (err) {
       // you can report use errorHandler or other
@@ -487,28 +465,6 @@
       setLoading(false);
     }
   };
-
-  const search = () => {
-    fetchData(pagination.current, pagination.pageSize, formModel.value);
-  };
-
-  const onPageChange = (current: number) => {
-    fetchData(current, pagination.pageSize, formModel.value);
-  };
-  fetchData(pagination.current, pagination.pageSize, formModel.value);
-
-  // 重置
-  const reset = () => {
-    formModel.value = generateFormModel();
-  };
-  // 设置密度
-  const handleSelectDensity = (
-    val: string | number | Record<string, any> | undefined,
-    e: Event
-  ) => {
-    size.value = val as SizeProps;
-  };
-  // 改变内容
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -531,7 +487,7 @@
   ): T => {
     const newArray = isDeep ? cloneDeep(array) : array;
     if (beforeIdx > -1 && newIdx > -1) {
-      // 先替换后面的，然后拿到替换的结果替换前面的
+      // 先替换后面的，然后拿到替换的结果替换前面
       newArray.splice(
         beforeIdx,
         1,
@@ -571,7 +527,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AttrGroup',
+    name: 'Supplier',
   };
 </script>
 

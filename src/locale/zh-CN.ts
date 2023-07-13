@@ -44,6 +44,7 @@ import localeAttr from '@/views/product/attr/locale/zh-CN';
 import localeSku from '@/views/product/sku/locale/zh-CN';
 import localeSkuCreate from '@/views/product/sku-create/locale/zh-CN';
 import localeSkuEdit from '@/views/product/sku-edit/locale/zh-CN';
+import localeSupplierProduct from '@/views/product/supplier/locale/zh-CN';
 
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
 import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN'; // 库存
@@ -142,6 +143,7 @@ export default {
   ...localeSku,
   ...localeSkuCreate,
   ...localeSkuEdit,
+  ...localeSupplierProduct,
 
   ...localeMissionTable,
   ...localeCourierTable,
