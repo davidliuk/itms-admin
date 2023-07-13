@@ -16,12 +16,13 @@ export interface UserState {
   organizationName?: string;
   locationName?: string;
   phone?: string;
-  registrationDate?: string;
-  accountId?: string;
+  createTime?: string;
   certification?: number;
   role: RoleType;
-  roles: string[];
-  permissions: string[];
+  wareId?: string;
+  stationId?: string;
+  roles?: string[];
+  permissions?: string[];
   // 在 TypeScript 中，? 是一个可选属性的标记，
   // 用于指示属性是可选的，即可以存在也可以不存在。
 }

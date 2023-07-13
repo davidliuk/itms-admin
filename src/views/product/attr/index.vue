@@ -195,7 +195,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    getByGroupId,
+    getAttrByGroupId,
     addAttr,
     updateAttr,
     deleteAttr,
@@ -362,7 +362,7 @@
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await getByGroupId(route.params.groupId);
+      const { data } = await getAttrByGroupId(route.params.groupId);
       renderData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -374,7 +374,7 @@
     setLoading(true);
     try {
       await deleteAttr(id);
-      // getByGroupId()
+      // getAttrByGroupId()
       fetchData();
     } catch (err) {
       // you can report use errorHandler or other

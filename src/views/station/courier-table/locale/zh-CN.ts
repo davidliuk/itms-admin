@@ -4,7 +4,7 @@ export default {
   'courierTable.form.id.placeholder': '请输入配送员ID',
   'courierTable.form.userId': '用户编号',
   'courierTable.form.userId.placeholder': '请输入配送员用户编号',
-  'courierTable.form.name': '姓名',
+  'courierTable.form.name': '配送员姓名',
   'courierTable.form.name.placeholder': '请输入配送员姓名',
   'courierTable.form.phone': '联系方式',
   'courierTable.form.phone.placeholder': '请输入配送员联系方式',
@@ -24,7 +24,7 @@ export default {
   'courierTable.form.search': '查询',
   'courierTable.form.reset': '重置',
   'courierTable.form.selectDefault': '全部',
-  'courierTable.form.default.placeholder': '空',
+  'courierTable.form.default.placeholder': '暂无数据',
   'courierTable.operation.download': '下载',
   // columns
   'courierTable.columns.index': '序号',

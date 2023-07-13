@@ -303,6 +303,19 @@
           {{ $t(`admin.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
+        <template #avatar="{ record }">
+          <a-avatar :size="64" :image-url="record.avatar">
+            <template #trigger-icon>
+              <icon-camera />
+            </template>
+            <!-- <img :src="record.avatar" /> -->
+          </a-avatar>
+          <!-- <img
+            :src="record.avatar"
+            alt="No Avatar"
+            style="width: 100px; height: 100px"
+          /> -->
+        </template>
 
         <!-- table里 -->
         <!-- 查看 -->
@@ -357,7 +370,10 @@
     deleteAdminBatch,
   } from '@/api/acl';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
@@ -391,7 +407,7 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
@@ -400,10 +416,6 @@
   let form = reactive(generateFormModel());
 
   const handleBatchDeleteClick = () => {
-    console.log(selectedKeys.value);
-    // selectedKeys.value.forEach((id) => {
-    //   deleteAdminById(id);
-    // });
     deleteAdminBatch(selectedKeys.value);
   };
   const handleCreateClick = () => {
@@ -413,13 +425,7 @@
     copy(admin, form);
     isUpdating.value = true;
   };
-  const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
+  const handleBeforeOk = (done: any) => {
     if (isCreating.value) {
       addAdmin(form as unknown as Admin);
     } else if (isUpdating.value) {
@@ -494,6 +500,11 @@
     {
       title: t('admin.columns.username'),
       dataIndex: 'username',
+    },
+    {
+      title: t('admin.columns.avatar'),
+      dataIndex: 'avatar',
+      slotName: 'avatar',
     },
     {
       title: t('admin.columns.name'),
@@ -706,5 +717,10 @@
       margin-left: 12px;
       cursor: pointer;
     }
+  }
+  a-img {
+    display: block;
+    width: 100px;
+    height: 100px;
   }
 </style>

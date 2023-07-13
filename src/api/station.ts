@@ -76,55 +76,6 @@ export function returnAssign(workOrderId: number, courierId: number) {
   );
 }
 
-// 分站
-export interface Station {
-  // 内容不影响
-  id: number; // id
-  regionId: number; // 地区Id
-  wareId: number; // 库房id
-  name: string; // 名称
-  phone: string; // 联系方式
-  province: string; // 省市
-  city: string; // 城市编号
-  district: string; // 区域
-  detailAddress: string; // 详细地址
-  latitude: number; // 维度
-  longitude: number; // 经度
-  // param: object;
-  storePath: string; // 门店照片
-  workTime: string; // 营业时间
-  workStatus: number; // 营业状态
-  createTime: Date; // 创建日期
-  updateTime: Date; // 更新时间
-}
-
-export function addStation(station: Station) {
-  return axios.post<any>('/admin/sys/station', station);
-}
-
-export function updateStation(station: Station) {
-  return axios.put<any>('/admin/sys/station', station);
-}
-
-export function deleteStation(id: number) {
-  return axios.delete<any>(`/admin/sys/station/${id}`);
-}
-
-export function getStation(id: number) {
-  return axios.get<any>(`/admin/sys/station/${id}`);
-}
-
-export function queryStationList(
-  current: number,
-  limit: number,
-  params: Partial<Station>
-) {
-  return axios.post<PageRes<Station>>(
-    `/admin/sys/station/${current}/${limit}`,
-    params
-  );
-}
-
 // 配送员
 export interface Courier {
   id: number;
@@ -138,7 +89,7 @@ export interface Courier {
   createTime: Date;
   updateTime: Date;
   workNum: number;
-  param: object;
+  // param: object;
 }
 export function updateCourier(courier: Courier) {
   return axios.put<any>('/admin/user/courier/', courier);
@@ -179,8 +130,8 @@ export interface Receipt {
   id: number;
   orderId: number;
   userId: number;
-  name: string;
-  phone: string;
+  userName: string;
+  userPhone: string;
   stationId: number; // 分站
   stationName: string; // 分站名称
   stationPhone: string; // 收货人
@@ -263,4 +214,53 @@ export interface DetailRecord {
 
 export function queryStationDetail() {
   return axios.get<DetailRecord[]>('/api/station/detail');
+}
+
+// 分站
+export interface Station {
+  // 内容不影响
+  id: number; // id
+  regionId: number; // 地区Id
+  wareId: number; // 库房id
+  name: string; // 名称
+  phone: string; // 联系方式
+  province: string; // 省市
+  city: string; // 城市编号
+  district: string; // 区域
+  detailAddress: string; // 详细地址
+  latitude: number; // 维度
+  longitude: number; // 经度
+  // param: object;
+  storePath: string; // 门店照片
+  workTime: string; // 营业时间
+  workStatus: number; // 营业状态
+  createTime: Date; // 创建日期
+  updateTime: Date; // 更新时间
+}
+
+export function addStation(station: Station) {
+  return axios.post<any>('/admin/sys/station', station);
+}
+
+export function updateStation(station: Station) {
+  return axios.put<any>('/admin/sys/station', station);
+}
+
+export function deleteStation(id: number) {
+  return axios.delete<any>(`/admin/sys/station/${id}`);
+}
+
+export function getStation(id: number) {
+  return axios.get<any>(`/admin/sys/station/${id}`);
+}
+
+export function queryStationList(
+  current: number,
+  limit: number,
+  params: Partial<Station>
+) {
+  return axios.post<PageRes<Station>>(
+    `/admin/sys/station/${current}/${limit}`,
+    params
+  );
 }

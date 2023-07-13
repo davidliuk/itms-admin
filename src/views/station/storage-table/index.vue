@@ -7,8 +7,8 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 16 }"
             label-align="left"
           >
             <a-row :gutter="16">
@@ -20,7 +20,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="10">
+              <a-col :span="8">
                 <a-form-item
                   field="wareId"
                   :label="$t('StorageTable.form.wareId')"
@@ -33,25 +33,34 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="stationId"
-                  :label="$t('StorageTable.form.stationId')"
+                  field="orderId"
+                  :label="$t('StorageTable.form.orderId')"
                 >
                   <a-input
-                    v-model="formModel.stationId"
-                    :placeholder="$t('StorageTable.form.stationId.placeholder')"
+                    v-model="formModel.orderId"
+                    :placeholder="$t('StorageTable.form.orderId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="stationName"
-                  :label="$t('StorageTable.form.stationName')"
+                  field="skuId"
+                  :label="$t('StorageTable.form.skuId')"
                 >
                   <a-input
-                    v-model="formModel.stationName"
-                    :placeholder="
-                      $t('StorageTable.form.stationName.placeholder')
-                    "
+                    v-model="formModel.skuId"
+                    :placeholder="$t('StorageTable.form.skuId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="skuName"
+                  :label="$t('StorageTable.form.skuName')"
+                >
+                  <a-input
+                    v-model="formModel.skuName"
+                    :placeholder="$t('StorageTable.form.skuName.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -97,11 +106,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="downloadStorageTableList">
+          <a-button @click="downloadStorageOrderList">
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('StorageTable.operation.download') }}列表
+            {{ $t('StorageOrder.operation.download') }}列表
           </a-button>
           <a-tooltip :content="$t('StorageTable.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -206,16 +215,46 @@
           <!--          打印-->
 
           <!--          查看 商品详情-->
+          <!-- 打印 -->
+          <a-button type="text" size="small" @click="printClick(record)"
+            >打印出库单</a-button
+          >
+          <a-modal
+            ok-text="打印"
+            :visible="printVisible"
+            title="出库单详情"
+            width="700px"
+            @cancel="printCancel"
+            @before-ok="printBeforeOk"
+            >间距
+            <a-radio-group v-model="pdfSize" type="button">
+              <a-radio value="mini">mini</a-radio>
+              <a-radio value="small">small</a-radio>
+              <a-radio value="medium">medium</a-radio>
+              <a-radio value="large">large</a-radio>
+            </a-radio-group>
+            <a-descriptions
+              id="capture"
+              style="margin-top: 20px"
+              :data="data"
+              :size="pdfSize"
+              title="User Info"
+              :column="1"
+            ></a-descriptions>
+          </a-modal>
+          <!--            打印结束-->
+          <!--          查看 商品详情-->
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            {{ $t('StorageTable.columns.operations.view') }}
+            {{ $t('StorageOrder.columns.operations.view') }}
           </a-button>
           <a-modal
             v-model:visible="visible"
+            hide-cancel
             @ok="handleOk"
             @cancel="handleCancel"
           >
@@ -260,17 +299,20 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import htmlToPdf from '@/utils/pdf';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
   const generateFormModel = () => {
     return {
+      supplierId: '',
       wareId: '',
       skuId: '',
       skuName: '',
       stationId: '',
       storageType: null,
+      storageStatus: null,
     };
   };
   const generateorderItemModel = () => {
@@ -290,7 +332,7 @@
 
   // 描述列表展示打印信息
   const pdfSize = ref('medium');
-  const data = [
+  let data = [
     { label: '分发单标识', value: '' },
     { label: '区域中心库房编号', value: '' },
     { label: '订单编号', value: '' },
@@ -304,6 +346,40 @@
     { label: '创建时间', value: '' },
     { label: '更新时间', value: '' },
   ];
+
+  const printVisible = ref(false);
+  const printClick = (storageOrder: StorageOrder) => {
+    data = [
+      { label: '出库单标识', value: storageOrder.id },
+      { label: '区域中心库房编号', value: storageOrder.wareId.toString() },
+      { label: '订单编号', value: storageOrder.orderId.toString() },
+      { label: '商品编号', value: storageOrder.skuId.toString() },
+      { label: '商品名称', value: storageOrder.skuName.valueOf() },
+      { label: '分站编号', value: storageOrder.stationId.toString() },
+      { label: '分站名称', value: storageOrder.stationName },
+      { label: '供应商编号', value: storageOrder.supplierId.toString() },
+      { label: '供货商名称', value: storageOrder.supplierName },
+      {
+        label: '库存单类型',
+        value: t(`StorageOrder.form.storageType.${storageOrder.storageType}`),
+      },
+      { label: '创建时间', value: storageOrder.createTime },
+      { label: '更新时间', value: storageOrder.updateTime },
+    ];
+    setTimeout(() => {
+      printVisible.value = true;
+    }, 500);
+  };
+  const printBeforeOk = () => {
+    console.log('打印');
+    const text = '出库单详情';
+    // text:文件标题
+    htmlToPdf(text, '#capture');
+  };
+  const printCancel = () => {
+    printVisible.value = false;
+  };
+  // 描述列表展示打印信息
 
   // 描述列表展示打印信息
 
@@ -342,17 +418,16 @@
       dataIndex: 'wareId',
     },
     {
-      title: t('StorageTable.columns.stationId'),
-      dataIndex: 'stationId',
+      title: t('StorageTable.columns.orderId'),
+      dataIndex: 'orderId',
     },
+    // {
+    //   title: t('StorageTable.columns.stationId'),
+    //   dataIndex: 'stationId',
+    // },
     {
-      title: t('StorageTable.columns.stationName'),
-      dataIndex: 'stationName',
-    },
-    {
-      title: t('StorageTable.columns.storageType'),
-      dataIndex: 'storageType',
-      slotName: 'storageType',
+      title: t('StorageTable.columns.skuName'),
+      dataIndex: 'skuName',
     },
     // {
     //   title: t('StorageTable.columns.supplierId'),
@@ -360,10 +435,14 @@
     //   slotName: 'supplierId',
     // },
     // {
-    //   title: t('StorageTable.columns.supplierId'),
-    //   dataIndex: 'supplierName',
-    //   slotName: 'supplierName',
+    //   title: t('StorageTable.columns.stationName'),
+    //   dataIndex: 'stationName',
     // },
+    {
+      title: t('StorageTable.columns.storageType'),
+      dataIndex: 'storageType',
+      slotName: 'storageType',
+    },
     // {
     //   title: t('StorageTable.columns.createTime'),
     //   dataIndex: 'createTime',
@@ -439,21 +518,28 @@
     }
   };
   const SkuDetail = (orderId: number) => {
-    findOrderItemData(orderId, generateorderItemModel.value);
+    findOrderItemData(orderId);
     visible.value = true;
   };
   const handleOk = () => {
     visible.value = false;
+    orderItemData.value = [];
   };
   const handleCancel = () => {
     visible.value = false;
+    orderItemData.value = [];
   };
-
+  // 打印出库单列表
+  const downloadStorageOrderList = () => {
+    const text = '所有出库单信息';
+    // text:文件标题
+    htmlToPdf(text, '#printTable');
+  };
   // 分页
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
   };
   const pagination = reactive({
     ...basePagination,

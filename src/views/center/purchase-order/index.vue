@@ -206,6 +206,7 @@
         :data="renderData"
         :bordered="false"
         :size="size"
+        :scroll="scroll"
         @page-change="onPageChange"
       >
         <!-- 分页 -->
@@ -344,11 +345,23 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 6,
   };
   const pagination = reactive({
     ...basePagination,
   });
+
+  // 固定列
+  //   const expandable = {
+  //     title: 'Expand',
+  //     width: 80,
+  //   }
+
+  const scroll = {
+    x: 1500,
+    y: 1500,
+  };
+  // 固定列
 
   // 描述列表展示打印信息
   const pdfSize = ref('medium');
@@ -469,10 +482,14 @@
       title: t('PurchaseOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
+      width: 50,
+      fixed: 'left',
     },
     {
       title: t('PurchaseOrder.columns.id'),
       dataIndex: 'id',
+      width: 110,
+      fixed: 'left',
     },
     // {
     //   title: t('PurchaseOrder.columns.wareId'),
@@ -481,11 +498,13 @@
     {
       title: t('PurchaseOrder.columns.skuId'),
       dataIndex: 'skuId',
+      width: 100,
     },
     {
       title: t('PurchaseOrder.columns.skuName'),
       dataIndex: 'skuName',
       slotName: 'skuName',
+      width: 110,
     },
     {
       title: t('PurchaseOrder.columns.skuImg'),
@@ -495,14 +514,17 @@
     {
       title: t('PurchaseOrder.columns.skuNum'),
       dataIndex: 'skuNum',
+      width: 100,
     },
     {
       title: t('PurchaseOrder.columns.skuPrice'),
       dataIndex: 'skuPrice',
+      width: 100,
     },
     {
       title: t('PurchaseOrder.columns.supplierId'),
       dataIndex: 'supplierId',
+      width: 110,
     },
     {
       title: t('PurchaseOrder.columns.supplierName'),
@@ -521,6 +543,8 @@
       title: t('PurchaseOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      width: 100,
+      fixed: 'right',
     },
   ]);
 

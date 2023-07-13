@@ -1,64 +1,99 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.finance.settlement']" />
-    <a-card class="general-card" :title="$t('menu.finance.settlement')">
+    <Breadcrumb :items="['menu.center', 'menu.center.Logistics']" />
+    <a-card class="general-card" :title="$t('menu.center.Logistics')">
       <a-row>
+        <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 8 }"
+            :wrapper-col-props="{ span: 15 }"
             label-align="left"
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('settlement.form.number')"
-                >
+                <a-form-item field="id" :label="$t('Logistics.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('settlement.form.number.placeholder')"
+                    :placeholder="$t('Logistics.form.id.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="userName"
-                  :label="$t('settlement.form.userName')"
+                  field="wareId"
+                  :label="$t('Logistics.form.wareId')"
                 >
                   <a-input
-                    v-model="formModel.userName"
-                    :placeholder="$t('settlement.form.userName.placeholder')"
+                    v-model="formModel.wareId"
+                    :placeholder="$t('Logistics.form.wareId.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="name" :label="$t('Logistics.form.name')">
+                  <a-input
+                    v-model="formModel.name"
+                    :placeholder="$t('Logistics.form.name.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="phone" :label="$t('Logistics.form.phone')">
+                  <a-input
+                    v-model="formModel.phone"
+                    :placeholder="$t('Logistics.form.phone.placeholder')"
                   />
                 </a-form-item>
               </a-col>
             </a-row>
           </a-form>
         </a-col>
+
+        <!-- 分割线 -->
         <a-divider style="height: 84px" direction="vertical" />
+        <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button
-              type="primary"
-              @click="searchSettlementBy(formModel.id, formModel.userName)"
-            >
+            <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('settlement.form.search') }}
+              {{ $t('Logistics.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('settlement.form.reset') }}
+              {{ $t('Logistics.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
       </a-row>
+
       <a-divider style="margin-top: 0" />
+      <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
+        <!-- 表格上面的新建、批量导入 -->
+        <a-col :span="12">
+          <a-space>
+            <a-button type="primary" @click="createLogisticsClick">
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('Logistics.operation.create') }}
+            </a-button>
+            <a-upload action="/">
+              <template #upload-button>
+                <a-button>
+                  {{ $t('Logistics.operation.import') }}
+                </a-button>
+              </template>
+            </a-upload>
+          </a-space>
+        </a-col>
+        <!-- 表格上面的下载设置等 -->
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
@@ -67,20 +102,23 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('settlement.operation.download') }}
+            {{ $t('Logistics.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('settlement.actions.refresh')">
-            <div class="action-icon" @click="fresh"
+          <a-tooltip :content="$t('Logistics.actions.refresh')">
+            <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('settlement.actions.density')">
+            <!-- 密度 -->
+            <a-tooltip :content="$t('Logistics.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
+
+            <!-- size -->
             <template #content>
               <a-doption
-                v-for="item in densitylist"
+                v-for="item in densityList"
                 :key="item.value"
                 :value="item.value"
                 :class="{ active: item.value === size }"
@@ -89,7 +127,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('settlement.actions.columnSetting')">
+          <a-tooltip :content="$t('Logistics.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -126,6 +164,7 @@
         </a-col>
       </a-row>
 
+      <!-- 表格 -->
       <a-table
         row-key="id"
         :loading="loading"
@@ -136,61 +175,51 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- 分页 -->
+        <!-- # -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
 
-        <!-- 表格form里 -->
-        <template #status="{ record }">
-          <span v-if="record.status === 'CANCEL'" class="circle"></span>
-          <span v-else-if="record.status === 'USED'" class="circle pass"></span>
-          <span
-            v-else-if="record.status === 'UNUSED'"
-            class="circle pass"
-          ></span>
-          {{ $t(`settlement.form.status.${record.status}`) }}
-        </template>
-
-
-
-
-        <!-- 表格form里 -->
-
-        <template #operations="{ record }">
-          <a-button type="text" size="small" @click="detailOrderData(record.id)"
-          >查看详情</a-button
-          >
-          <a-modal
-              ok-text="打印"
-              :visible="printVisible"
-              title="订单详情"
-              width="700px"
-              @cancel="printCancel"
-              @before-ok="printBeforeOk"
-          >间距
-            <a-radio-group v-model="pdfSize" type="button">
-              <a-radio value="mini">mini</a-radio>
-              <a-radio value="small">small</a-radio>
-              <a-radio value="medium">medium</a-radio>
-              <a-radio value="large">large</a-radio>
-            </a-radio-group>
-            <a-descriptions
-                id="capture"
-                style="margin-top: 20px"
-                :data="detailData"
-                :size="pdfSize"
-                title="详情"
-                :column="1"
-            ></a-descriptions>
-          </a-modal>
-        </template>
-
         <!-- table里 -->
-        <!-- 删改 -->
-
-        <!-- 查看 -->
+        <!-- 操作 -->
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="deleteLogisticsById(record.id)"
+          >
+            {{ $t('Logistics.columns.operations.delete') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="updateLogisticsById(record)"
+          >
+            {{ $t('Logistics.columns.operations.update') }}
+          </a-button>
+        </template>
       </a-table>
+
+      <a-modal
+        :visible="isCreating || isUpdating"
+        title="更新"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`Logistics.form.${key}`)"
+          >
+            <a-input
+              v-model="form[key]"
+              :placeholder="$t(`Logistics.form.${key}.placeholder`)"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -200,52 +229,80 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    querySettlementList,
-    Settlement,
-    searchSettlementList, queryOrderDetailList, OrderDetail,
-  } from '@/api/finance';
-
+    Logistics,
+    addLogistics,
+    updateLogistics,
+    deleteLogistics,
+    getLogistics,
+    queryLogisticsList,
+    addSkuWare,
+    SkuWare,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { addAdmin, Admin, deleteAdmin, updateAdmin } from '@/api/acl';
   import copy from '@/utils/objects';
-  import {CheckOrder} from "@/api/center";
-  import htmlToPdf from "@/utils/pdf";
-
-  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
-  type Column = TableColumnData & { checked?: true };
+  import { createReactiveFn } from '@vueuse/core';
 
   const generateFormModel = () => {
     return {
-      id: '',
-      orderId: '',
-      courierId: '',
-      userName: '',
-      userId: '',
-      stationId: '',
-      totalAmount: '',
-      status: '',
+      id: '', //	id
+      wareId: '', //	仓库id
+      name: '', //	名称
+      phone: '', //	手机
     };
   };
 
-  const isCreating = ref(false);
-  const isUpdating = ref(false);
+  const deleteLogisticsById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteLogistics(id);
+      fetchData(pagination.current, pagination.pageSize, formModel.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   let form = reactive(generateFormModel());
+  const isCreating = ref(false);
+  const isUpdating = ref(false);
+  const updateLogVisible = ref(false);
 
+  const createLogisticsClick = () => {
+    isCreating.value = true;
+  };
+  const updateLogisticsById = async (logistics: Logistics) => {
+    copy(logistics, form);
+    updateLogVisible.value = true;
+    isUpdating.value = true;
+  };
+  const handleBeforeOk = async () => {
+    if (isCreating.value) {
+      await addLogistics(form as unknown as Logistics);
+    } else {
+      await updateLogistics(form as unknown as Logistics);
+    }
+    isCreating.value = false;
+    isUpdating.value = false;
+    handleClose();
+  };
   const handleClose = () => {
     isCreating.value = false;
     isUpdating.value = false;
     form = reactive(generateFormModel());
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
+
+  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
+  type Column = TableColumnData & { checked?: true };
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Settlement[]>([]);
-  const newData = ref<OrderDetail[]>([]);
+  const renderData = ref<Logistics[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -259,205 +316,105 @@
   const pagination = reactive({
     ...basePagination,
   });
-  const densitylist = computed(() => [
+  const densityList = computed(() => [
     {
-      name: t('settlement.size.mini'),
+      name: t('Logistics.size.mini'),
       value: 'mini',
     },
     {
-      name: t('settlement.size.small'),
+      name: t('Logistics.size.small'),
       value: 'small',
     },
     {
-      name: t('settlement.size.medium'),
+      name: t('Logistics.size.medium'),
       value: 'medium',
     },
     {
-      name: t('settlement.size.large'),
+      name: t('Logistics.size.large'),
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('settlement.columns.index'),
+      title: t('Logistics.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('settlement.columns.number'),
+      title: t('Logistics.columns.id'),
       dataIndex: 'id',
     },
+    // {
+    //   title: t('Logistics.columns.wareId'),
+    //   dataIndex: 'ware_id',
+    // },
     {
-      title: t('settlement.columns.stationId'),
-      dataIndex: 'stationId',
-    },
-
-    {
-      title: t('settlement.columns.courierId'),
-      dataIndex: 'courierId',
-    },
-    {
-      title: t('settlement.columns.userId'),
-      dataIndex: 'userId',
+      title: t('Logistics.columns.name'),
+      dataIndex: 'name',
+      slotName: 'name',
     },
     {
-      title: t('settlement.columns.userName'),
-      dataIndex: 'userName',
+      title: t('Logistics.columns.phone'),
+      dataIndex: 'phone',
     },
     {
-      title: t('settlement.columns.totalAmount'),
-      dataIndex: 'totalAmount',
+      title: t('Logistics.columns.createTime'),
+      dataIndex: 'createTime',
     },
     {
-      title: t('settlement.columns.category'),
-      dataIndex: 'status',
-      slotName: 'status',
+      title: t('Logistics.columns.updateTime'),
+      dataIndex: 'updateTime',
     },
     {
-      title: t('invoice.columns.operations'),
+      title: t('Logistics.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-  const contentTypeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('settlement.form.contentType.img'),
-      value: 'img',
-    },
-    {
-      label: t('settlement.form.contentType.horizontalVideo'),
-      value: 'horizontalVideo',
-    },
-    {
-      label: t('settlement.form.contentType.verticalVideo'),
-      value: 'verticalVideo',
-    },
-  ]);
 
+  // 分页
   const fetchData = async (
-    page: number,
+    current: number,
     pageSize: number,
-    params: Partial<Settlement>
+    params: Partial<Logistics>
   ) => {
     setLoading(true);
     try {
-      const { data } = await querySettlementList(page, pageSize, params);
+      const { data } = await queryLogisticsList(current, pageSize, params);
+      console.log(data);
       renderData.value = data.records;
-      pagination.current = page;
+      pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
-  };
-
-  const detailOrderData = async (
-     orderId:string,
-  ) => {
-    setLoading(true);
-      const { data } = await queryOrderDetailList(orderId);
-    detailData = [
-      { label: '用户昵称', value: data.nickName },
-      { label: '订单编号', value: data.orderNo },
-      { label: '订单类型', value:data.orderType},
-      { label: '订单状态', value: data.orderStatus },
-      { label: '支付类型', value: data.payType },
-      { label: '原价', value:data.originalTotalAmount},
-      { label: '优惠券', value: data.couponId },
-      { label: '支付金额', value: data.totalAmount },
-      { label: '支付类型', value: data.payType },
-      { label: '配送状态', value:data.processStatus},
-      { label: '配送员名称', value: data.courierName },
-      { label: '配送员电话', value: data.courierPhone },
-      { label: '配送地址', value: data.receiverAddress },
-      { label: '配送电话', value: data.receiverPhone },
-      { label: '退款原因', value: data.cancelReason },
-    ];
-    setTimeout(() => {
-      printVisible.value = true;
-    }, 500);
-  };
-
-  const searchData = async (
-    page: number,
-    pageSize: number,
-    id: string,
-    userName: string
-  ) => {
-    setLoading(true);
-
-    try {
-      const { data } = await searchSettlementList(page, pageSize, id, userName);
-      renderData.value = data.records;
-      pagination.current = page;
-      pagination.total = data.total;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const pdfSize = ref('medium');
-  let detailData = [
-    { label: '用户昵称', value:'' },
-    { label: '订单编号', value:''  },
-    { label: '订单类型', value:''},
-    { label: '订单状态', value: ''},
-    { label: '支付类型', value: ''},
-    { label: '原价', value:''},
-    { label: '优惠券', value: ''},
-    { label: '支付金额', value: ''},
-    { label: '支付类型', value: ''},
-    { label: '配送状态', value:''},
-    { label: '配送员名称', value: '' },
-    { label: '配送员电话', value: ''},
-    { label: '配送地址', value: '' },
-    { label: '配送电话', value: '' },
-    { label: '退款原因', value: '' },
-  ];
-
-
-  const printVisible = ref(false);
-
-  const printBeforeOk = () => {
-    console.log('打印');
-    const text = '订单详情';
-    // text:文件标题
-    htmlToPdf(text, '#capture');
-  };
-  const printCancel = () => {
-    printVisible.value = false;
-  };
-
-  const searchSettlementBy = (id: string, userName: string) => {
-    searchData(pagination.current, pagination.pageSize, id, userName);
   };
 
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
-
-  const fresh = () => {
+  const onPageChange = (current: number) => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
-  const onPageChange = (current: number) => {
-    fetchData(current, basePagination.pageSize, formModel.value);
-  };
-  fetchData(pagination.current, pagination.pageSize, formModel.value);
+  fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+
+  // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
-
+  // 设置密度
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
   ) => {
     size.value = val as SizeProps;
   };
-
+  // 改变内容
   const handleChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -480,7 +437,7 @@
   ): T => {
     const newArray = isDeep ? cloneDeep(array) : array;
     if (beforeIdx > -1 && newIdx > -1) {
-      // 先替换后面的，然后拿到替换的结果替换前面
+      // 先替换后面的，然后拿到替换的结果替换前面的
       newArray.splice(
         beforeIdx,
         1,
@@ -520,7 +477,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Settlement',
+    name: 'Logistics',
   };
 </script>
 

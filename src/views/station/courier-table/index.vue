@@ -12,17 +12,17 @@
             label-align="left"
           >
             <!--分站-->
-            <a-col :span="8">
-              <a-form-item
-                field="stationId"
-                :label="$t('courierTable.form.stationId')"
-              >
-                <a-input
-                  v-model="formModel.stationId"
-                  :placeholder="$t('courierTable.form.stationId.placeholder')"
-                />
-              </a-form-item>
-            </a-col>
+            <!--            <a-col :span="8">-->
+            <!--              <a-form-item-->
+            <!--                field="stationId"-->
+            <!--                :label="$t('courierTable.form.stationId')"-->
+            <!--              >-->
+            <!--                <a-input-->
+            <!--                  v-model="formModel.stationId"-->
+            <!--                  :placeholder="$t('courierTable.form.stationId.placeholder')"-->
+            <!--                />-->
+            <!--              </a-form-item>-->
+            <!--            </a-col>-->
             <a-row :gutter="16">
               <!--姓名-->
               <a-col :span="8">
@@ -56,25 +56,6 @@
               </a-col>
             </a-row>
           </a-form>
-        </a-col>
-        <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
-        <!-- 查找重置按钮 -->
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
-              <template #icon>
-                <icon-search />
-              </template>
-              {{ $t('courierTable.form.search') }}
-            </a-button>
-            <a-button @click="reset">
-              <template #icon>
-                <icon-refresh />
-              </template>
-              {{ $t('courierTable.form.reset') }}
-            </a-button>
-          </a-space>
         </a-col>
       </a-row>
       <a-divider style="margin-top: 0" />
@@ -305,9 +286,6 @@
     Courier,
     updateCourier,
     deleteCourier,
-    WorkOrder,
-    queryWorkOrderList,
-    CourierVo,
   } from '@/api/station';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -317,7 +295,7 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-
+  // 详情
   const generateFormModel = () => {
     return {
       id: '',
@@ -334,8 +312,8 @@
       // param: null,
     };
   };
-
-  const serachFormModel = () => {
+  // 查询框
+  const searchFormModel = () => {
     return {
       name: '',
       stationId: '',
@@ -343,6 +321,7 @@
       phone: '',
     };
   };
+  // 修改
   const updateFormModel = () => {
     return {
       id: '',
@@ -359,7 +338,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<Courier[]>([]);
-  const formModel = ref(serachFormModel());
+  const formModel = ref(searchFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const isUpdating = ref(false);
@@ -372,7 +351,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
   };
   const pagination = reactive({
     ...basePagination,
@@ -439,7 +418,7 @@
   const fetchData = async (
     current: number,
     pageSize: number,
-    params: Partial<any>
+    params: Partial<Courier>
   ) => {
     setLoading(true);
     try {
@@ -494,44 +473,14 @@
     isDetailing.value = false;
   };
 
-  //  任务量
-  // const missionCount = ref<number[]>([]);
-  // const getMissionCount = (id: number) => {
-  //   // 根据配送员id查总共任务
-  //   if (missionCount.value[id] !== undefined) {
-  //     return missionCount.value[id];
-  //   }
-  //   const params: Partial<WorkOrder> = {
-  //     courierId: id,
-  //   };
-  //   fetchMissionCount(pagination.current, pagination.pageSize, id, params);
-  //   return missionCount.value[id];
-  // };
-  // const fetchMissionCount = async (
-  //   current: number,
-  //   pageSize: number,
-  //   id: number,
-  //   params: Partial<WorkOrder>
-  // ) => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await queryWorkOrderList(current, pageSize, params);
-  //     missionCount.value[id] = data.total;
-  //   } catch (err) {
-  //     // you can report use errorHandler or other
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   // 查询重置
   const search = () => {
     console.log(formModel.value);
-    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+    fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
 
   const reset = () => {
-    formModel.value = serachFormModel();
+    formModel.value = searchFormModel();
     fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
   // 分页

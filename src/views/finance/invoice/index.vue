@@ -78,6 +78,8 @@
               </template>
             </a-upload>
           </a-space>
+
+
         </a-col>
         <a-col
           :span="12"

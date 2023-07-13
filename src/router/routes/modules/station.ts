@@ -42,16 +42,16 @@ const STATION: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
-    {
-      path: 'station-table', // The midline path complies with SEO specifications
-      name: 'StationTable',
-      component: () => import('@/views/station/station-table/index.vue'),
-      meta: {
-        locale: 'menu.station.stationTable',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
+    // {
+    //   path: 'station-table', // The midline path complies with SEO specifications
+    //   name: 'StationTable',
+    //   component: () => import('@/views/station/station-table/index.vue'),
+    //   meta: {
+    //     locale: 'menu.station.stationTable',
+    //     requiresAuth: true,
+    //     roles: ['*'],
+    //   },
+    // },
     {
       path: 'checkOrder-table', // The midline path complies with SEO specifications
       name: 'CheckOrderTable',
@@ -74,10 +74,10 @@ const STATION: AppRouteRecordRaw = {
     },
     {
       path: 'transfer-table', // The midline path complies with SEO specifications
-      name: 'TransferOrder',
+      name: 'TransferTable',
       component: () => import('@/views/station/transfer-table/index.vue'),
       meta: {
-        locale: 'menu.station.TransferOrder',
+        locale: 'menu.station.TransferTable',
         requiresAuth: true,
         roles: ['*'],
       },

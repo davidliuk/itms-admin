@@ -17,17 +17,20 @@
             <a-step :description="$t('skuCreate.step.subTitle.image')">
               {{ $t('skuCreate.step.title.image') }}
             </a-step>
-            <a-step :description="$t('skuCreate.step.subTitle.poster')">
+            <!-- <a-step :description="$t('skuCreate.step.subTitle.poster')">
               {{ $t('skuCreate.step.title.poster') }}
-            </a-step>
+            </a-step> -->
             <a-step :description="$t('skuCreate.step.subTitle.finish')">
               {{ $t('skuCreate.step.title.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
             <BaseInfo v-if="step === 1" @change-step="changeStep" />
-            <ChannelInfo v-else-if="step === 2" @change-step="changeStep" />
-            <Success v-else-if="step === 3" @change-step="changeStep" />
+            <!-- <PosterInfo v-else-if="step === 2" @change-step="changeStep" /> -->
+            <AttrInfo v-else-if="step === 2" @change-step="changeStep" />
+            <ImageInfo v-else-if="step === 3" @change-step="changeStep" />
+            <!-- <ChannelInfo v-else-if="step === 4" @change-step="changeStep" /> -->
+            <Success v-else-if="step === 4" @change-step="changeStep" />
           </keep-alive>
         </div>
       </a-card>
@@ -39,24 +42,26 @@
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
   import {
-    submitChannelForm,
-    BaseInfoModel,
-    ChannelInfoModel,
-    UnitChannelModel,
-  } from '@/api/form';
+    SkuAttrInfo,
+    SkuBasicInfo,
+    SkuImgInfo,
+    SkuInfoVO,
+    addSkuInfo,
+  } from '@/api/product';
   import BaseInfo from './components/base-info.vue';
-  import ChannelInfo from './components/channel-info.vue';
+  import AttrInfo from './components/attr-info.vue';
   import Success from './components/success.vue';
+  import ImageInfo from './components/image-info.vue';
 
   const { loading, setLoading } = useLoading(false);
   const step = ref(1);
-  const submitModel = ref<UnitChannelModel>({} as UnitChannelModel);
+  const submitModel = ref<SkuInfoVO>({} as SkuInfoVO);
   const submitForm = async () => {
     setLoading(true);
     try {
-      await submitChannelForm(submitModel.value); // The mock api default success
-      step.value = 3;
-      submitModel.value = {} as UnitChannelModel; // init
+      await addSkuInfo(submitModel.value);
+      step.value = 4;
+      submitModel.value = {} as SkuInfoVO; // init
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -65,7 +70,7 @@
   };
   const changeStep = (
     direction: string | number,
-    model: BaseInfoModel | ChannelInfoModel
+    model: SkuBasicInfo | SkuImgInfo | SkuAttrInfo
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -85,12 +90,6 @@
     } else if (direction === 'backward') {
       step.value -= 1;
     }
-  };
-</script>
-
-<script lang="ts">
-  export default {
-    name: 'Step',
   };
 </script>
 

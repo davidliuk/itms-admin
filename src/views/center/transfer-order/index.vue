@@ -205,6 +205,7 @@
         :data="renderData"
         :bordered="false"
         :size="size"
+        :scroll="scroll"
         @page-change="onPageChange"
       >
         <!-- 分页 -->
@@ -236,16 +237,6 @@
 
         <!-- 查看 -->
         <template #operations="{ record }">
-          <a-popconfirm
-            content="是否确认出库?"
-            type="warning"
-            @ok="transferOutWare(record.orderId)"
-            @cancel="handleCancelOutWare"
-          >
-            <a-button v-permission="['admin']" type="text" size="small">
-              出库
-            </a-button>
-          </a-popconfirm>
           <!--          查看商品详情-->
           <a-button
             v-permission="['admin']"
@@ -279,6 +270,18 @@
               </template>
             </a-table>
           </a-modal>
+
+          <a-popconfirm
+            v-if="record.status === 'DISPATCH'"
+            content="是否确认出库?"
+            type="warning"
+            @ok="transferOutWare(record.orderId)"
+            @cancel="handleCancelOutWare"
+          >
+            <a-button v-permission="['admin']" type="text" size="small">
+              出库
+            </a-button>
+          </a-popconfirm>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -386,19 +389,25 @@
   ]);
 
   // 展示分发单信息表格
+  const scroll = { x: 1450, y: 1500 };
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('TransferOrder.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
+      width: 70,
+      fixed: 'left',
     },
     {
       title: t('TransferOrder.columns.id'),
       dataIndex: 'id',
+      width: 110,
+      fixed: 'left',
     },
     {
       title: t('TransferOrder.columns.orderId'),
       dataIndex: 'orderId',
+      width: 100,
     },
     // {
     //   title: t('TransferOrder.columns.wareId'),
@@ -408,26 +417,30 @@
       title: t('TransferOrder.columns.stationId'),
       dataIndex: 'stationId',
       slotName: 'stationId',
+      width: 100,
     },
     {
       title: t('TransferOrder.columns.stationName'),
       dataIndex: 'stationName',
+      width: 100,
     },
     {
       title: t('TransferOrder.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      width: 140,
     },
     {
       title: t('TransferOrder.columns.type'),
       dataIndex: 'type',
       slotName: 'type',
+      width: 80,
     },
-    {
-      title: t('TransferOrder.columns.logisticsId'),
-      dataIndex: 'logisticsId',
-      slotName: 'logisticsId',
-    },
+    // {
+    //   title: t('TransferOrder.columns.logisticsId'),
+    //   dataIndex: 'logisticsId',
+    //   slotName: 'logisticsId',
+    // },
     {
       title: t('TransferOrder.columns.logisticsName'),
       dataIndex: 'logisticsName',
@@ -448,6 +461,8 @@
       title: t('TransferOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      width: 210,
+      fixed: 'right',
     },
   ]);
 

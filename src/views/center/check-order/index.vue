@@ -241,7 +241,28 @@
 
         <!-- 打印 -->
         <template #operations="{ record }">
-          <a-button type="text" size="small" @click="printClick(record)"
+          <a-popconfirm
+            content="是否确认出库?"
+            type="warning"
+            @ok="checkOrderReturnInWare(record.orderId)"
+            @cancel="handleCancelReturnInWare"
+          >
+            <a-button
+              v-if="record.type === 'RETURN'"
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              class="red-button"
+            >
+              退货入库
+            </a-button>
+          </a-popconfirm>
+
+          <a-button
+            v-if="record.type !== 'RETURN'"
+            type="text"
+            size="small"
+            @click="printClick(record)"
             >打印分发单</a-button
           >
           <a-modal
@@ -267,6 +288,9 @@
               :column="1"
             ></a-descriptions>
           </a-modal>
+        </template>
+
+        <template #skuDetails="{ record }">
           <!--  分发单商品详情 -->
           <a-button
             v-permission="['admin']"
@@ -315,6 +339,7 @@
     CheckOrder,
     queryOrderInfo,
     OrderItem,
+    checkorderReturnInWareByOrderId,
   } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -325,6 +350,31 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  // 退货入库
+  const visibleReturnInWare = ref(false);
+
+  const checkOrderReturnInWare = async (orderId: number) => {
+    setLoading(true);
+    try {
+      const { data } = await checkorderReturnInWareByOrderId(orderId);
+      visibleReturnInWare.value = false;
+      console.log(data);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      fetchData(
+        basePagination.current,
+        basePagination.pageSize,
+        formModel.value
+      );
+      setLoading(false);
+    }
+  };
+  const handleCancelReturnInWare = () => {
+    visibleReturnInWare.value = false;
+  };
+  // 退货入库
 
   // 描述列表展示打印信息
   const pdfSize = ref('medium');
@@ -451,10 +501,10 @@
       title: t('CheckOrder.columns.orderId'),
       dataIndex: 'orderId',
     },
-    {
-      title: t('CheckOrder.columns.wareId'),
-      dataIndex: 'wareId',
-    },
+    // {
+    //   title: t('CheckOrder.columns.wareId'),
+    //   dataIndex: 'wareId',
+    // },
     {
       title: t('CheckOrder.columns.stationId'),
       dataIndex: 'stationId',
@@ -489,6 +539,11 @@
       title: t('CheckOrder.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+    },
+    {
+      title: t('CheckOrder.columns.skuDetails'),
+      dataIndex: 'skuDetails',
+      slotName: 'skuDetails',
     },
   ]);
   // 搜索状态输入框下拉列表
@@ -668,6 +723,9 @@
 </script>
 
 <style scoped lang="less">
+  .red-button {
+    color: rebeccapurple;
+  }
   .container {
     padding: 0 20px 20px 20px;
   }

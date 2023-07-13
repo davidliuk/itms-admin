@@ -7,6 +7,118 @@ export interface PageRes<T> {
   total: number;
 }
 
+// 商品详情
+export interface SkuInfo {
+  // 内容不影响
+  id: string;
+  categoryId: string;
+  attrGroupId: string;
+  skuType: number;
+  skuName: string;
+  imgUrl: string;
+  publishStatus: number;
+  checkStatus: number;
+  isNewPerson: boolean;
+  skuCode: string;
+  sort: number;
+  price: number;
+  marketPrice: number;
+  createTime: string;
+  updateTime: string;
+  skuWareList: any[];
+}
+export function getSkuInfoBySkuId(skuId: number) {
+  return axios.get<any>(`/admin/product/skuInfo/${skuId}`);
+}
+
+// 分站
+export interface Station {
+  // 内容不影响
+  id: number; // id
+  regionId: number; // 地区Id
+  wareId: number; // 库房id
+  name: string; // 名称
+  phone: string; // 联系方式
+  province: string; // 省市
+  city: string; // 城市编号
+  district: string; // 区域
+  detailAddress: string; // 详细地址
+  latitude: number; // 维度
+  longitude: number; // 经度
+  // param: object;
+  storePath: string; // 门店照片
+  workTime: string; // 营业时间
+  workStatus: number; // 营业状态
+  createTime: Date; // 创建日期
+  updateTime: Date; // 更新时间
+}
+
+export function addStation(station: Station) {
+  return axios.post<any>('/admin/sys/station', station);
+}
+
+export function updateStation(station: Station) {
+  return axios.put<any>('/admin/sys/station', station);
+}
+
+export function deleteStation(id: number) {
+  return axios.delete<any>(`/admin/sys/station/${id}`);
+}
+
+export function getStation(id: number) {
+  return axios.get<any>(`/admin/sys/station/${id}`);
+}
+
+export function queryStationList(
+  current: number,
+  limit: number,
+  params: Partial<Station>
+) {
+  return axios.post<PageRes<Station>>(
+    `/admin/sys/station/${current}/${limit}`,
+    params
+  );
+}
+
+// 中心库房根据orderid 订单id 调拨出库
+export function checkorderReturnInWareByOrderId(orderId: number) {
+  return axios.get<any>(`/admin/sys/ware/returnOrder/in/${orderId}`);
+}
+
+export interface Logistics {
+  id: number; //	id
+  wareId: number; //	仓库id
+  name: string; //	名称
+  phone: string; //	手机
+  createTime: string; //	创建时间
+  updateTime: string; //	更新时间
+}
+
+export function queryLogisticsList(
+  current: number,
+  limit: number,
+  params: Partial<Logistics>
+) {
+  return axios.post<PageRes<Logistics>>(
+    `/admin/sys/logistics/${current}/${limit}`,
+    params
+  );
+}
+export function addLogistics(logistics: Logistics) {
+  return axios.post<any>('/admin/sys/logistics', logistics);
+}
+export function updateLogistics(logistics: Logistics) {
+  return axios.put<any>('/admin/sys/logistics', logistics);
+}
+
+export function getLogistics(id: number) {
+  return axios.get<any>(`/admin/sys/logistics/${id}`);
+}
+
+export function deleteLogistics(id: number) {
+  return axios.delete<any>(`/admin/sys/logistics/${id}`);
+}
+
 export interface PurchaseOrder {
   // 接口文档匹配 7.11
   id: number; //	id
@@ -73,6 +185,7 @@ export interface SkuWare {
   stock: string;
   lockStock: number;
   lowStock: number;
+  maxStock: number;
   sale: number;
   createTime: Date;
   updateTime: Date;
@@ -88,10 +201,13 @@ export function querySkuWareList(
     params
   );
 }
-
 export function addSkuWare(skuWare: SkuWare) {
   // 新增商品和修改都是这个
-  return axios.post<any>('/admin/product/skuInfo/stock', skuWare);
+  return axios.post<any>('/admin/product/skuWare/stock', skuWare);
+}
+export function returnSkuWareToSupplier(skuWare: SkuWare) {
+  // 新增商品和修改都是这个
+  return axios.post<any>('/admin/product/skuWare/returnStock', skuWare);
 }
 
 // 给运输公司的分发单，给分站的验货单
@@ -152,7 +268,7 @@ export interface OrderInfo {
 }
 
 export function queryOrderInfo(orderId: number) {
-  return axios.get<OrderInfo>(`/api/order/auth/getOrderInfoById/${orderId}`);
+  return axios.get<OrderInfo>(`/api/order/auth/getOrderDetailById/${orderId}`);
 }
 
 export interface TransferOrder {

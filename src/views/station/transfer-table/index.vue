@@ -1,69 +1,81 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.station', 'menu.station.TransferOrder']" />
-    <a-card class="general-card" :title="$t('menu.station.TransferOrder')">
+    <Breadcrumb :items="['menu.station', 'menu.station.TransferTable']" />
+    <a-card class="general-card" :title="$t('menu.station.TransferTable')">
       <a-row>
         <!-- 6个输入框 -->
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('TransferOrder.form.id')">
+                <a-form-item field="id" :label="$t('TransferTable.form.id')">
                   <a-input
                     v-model="formModel.id"
-                    :placeholder="$t('TransferOrder.form.id.placeholder')"
+                    :placeholder="$t('TransferTable.form.id.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="orderId"
+                  :label="$t('TransferTable.form.orderId')"
+                >
+                  <a-input
+                    v-model="formModel.orderId"
+                    :placeholder="$t('TransferTable.form.orderId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="wareId"
-                  :label="$t('TransferOrder.form.wareId')"
+                  :label="$t('TransferTable.form.wareId')"
                 >
                   <a-input
                     v-model="formModel.wareId"
-                    :placeholder="$t('TransferOrder.form.wareId.placeholder')"
+                    :placeholder="$t('TransferTable.form.wareId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="stationId"
-                  :label="$t('TransferOrder.form.stationId')"
+                  field="workOrderId"
+                  :label="$t('TransferTable.form.workOrderId')"
                 >
                   <a-input
-                    v-model="formModel.stationId"
+                    v-model="formModel.workOrderId"
                     :placeholder="
-                      $t('TransferOrder.form.stationId.placeholder')
+                      $t('TransferTable.form.workOrderId.placeholder')
                     "
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="createTime"
-                  :label="$t('TransferOrder.form.createTime')"
+                  field="type"
+                  :label="$t('TransferTable.form.type')"
                 >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
+                  <a-select
+                    v-model="formModel.type"
+                    :options="typeOptions"
+                    :placeholder="$t('TransferTable.form.type.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('TransferOrder.form.status')"
+                  :label="$t('TransferTable.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('TransferOrder.form.selectDefault')"
+                    :placeholder="$t('TransferTable.form.status.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -81,13 +93,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('TransferOrder.form.search') }}
+              {{ $t('TransferTable.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('TransferOrder.form.reset') }}
+              {{ $t('TransferTable.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -100,16 +112,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('TransferOrder.operation.download') }}
+            {{ $t('TransferTable.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('TransferOrder.actions.refresh')">
+          <a-tooltip :content="$t('TransferTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('TransferOrder.actions.density')">
+            <a-tooltip :content="$t('TransferTable.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -125,7 +137,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('TransferOrder.actions.columnSetting')">
+          <a-tooltip :content="$t('TransferTable.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -161,7 +173,6 @@
           </a-tooltip>
         </a-col>
       </a-row>
-
       <!-- 表格 -->
       <a-table
         row-key="id"
@@ -173,27 +184,68 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- 分页 -->
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
+
+        <!-- table里 -->
+        <!-- 状态 -->
+        <template #status="{ record }">
+          <span v-if="record.status === 'DISPATCH'" class="circle"></span>
+          <span v-else-if="record.status === 'OUT'" class="circle pass"></span>
+          <span v-else-if="record.status === 'IN'" class="circle pass"></span>
+          <span
+            v-else-if="record.status === 'CANCEL'"
+            class="circle pass"
+          ></span>
+          {{ $t(`TransferTable.form.status.${record.status}`) }}
+        </template>
+        <template #type="{ record }">
+          <span v-if="record.type === 'DELIVERY'" class="circle"></span>
+          <span
+            v-else-if="record.type === 'EXCHANGE'"
+            class="circle pass"
+          ></span>
+          <span v-else-if="record.type === 'RETURN'" class="circle pass"></span>
+          {{ $t(`TransferTable.form.type.${record.type}`) }}
+        </template>
+
         <!-- 查看 -->
         <template #operations="{ record }">
+          <!--          查看商品详情-->
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            {{ $t('TransferOrder.columns.operations.view') }}
+            {{ $t('TransferTable.columns.operations.view') }}
           </a-button>
-
+          <template v-if="record.status === 'DISPATCH'">
+            <a-button
+              v-permission="['admin']"
+              type="text"
+              size="small"
+              @click="transferOutStation(record.orderId)"
+            >
+              {{ $t('TransferTable.columns.operations.returnWare') }}
+            </a-button>
+            <!--            <a-popconfirm-->
+            <!--              content="是否确认出库?"-->
+            <!--              type="warning"-->
+            <!--              @ok="transferOutStation(record.orderId)"-->
+            <!--            >-->
+            <!--              <a-button v-permission="['admin']" type="text" size="small">-->
+            <!--                {{ $t(`TransferTable.columns.operations.returnWare`) }}-->
+            <!--              </a-button>-->
+            <!--            </a-popconfirm>-->
+          </template>
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
             @cancel="handleCancel"
           >
-            <template #title> 调拨单商品详情</template>
+            <template #title> 验收单商品详情 </template>
             <a-table
               row-key="id"
               :loading="loading"
@@ -227,39 +279,35 @@
     queryTransferOrderList,
     TransferOrder,
     queryOrderInfo,
-    OrderInfo,
     OrderItem,
   } from '@/api/center';
+  import { outTransferOrder, inTransferOrder } from '@/api/station';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import htmlToPdf from '@/utils/pdf';
+  import { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
   const generateFormModel = () => {
     return {
-      id: '', // 调拨单id
-      orderId: '', // 订单ID
-      wareId: '', // 仓库ID
-      workOrderId: '', // 任务单ID
-      stationId: '', // 分站ID，生成分发单之后
-      stationName: '', // 分站名称
-      logisticsId: '', // 物流公司id
-      logisticsName: '', // 物流公司名称
-      logisticsPhone: '', // 物流公司电话
-      status: '', // 状态
-      inTime: null, // 入库时间
-      outTime: null, // 出库时间
-      createTime: null, // 创建时间
-      updateTime: null, // 更新时间
+      // 后端所有的查询条件
+      id: '',
+      wareId: '',
+      stationId: '',
+      stationName: '',
+      orderId: '',
+      workOrderId: '',
+      logisticsId: '',
+      logisticsName: '',
+      type: null,
     };
   };
   const generateorderItemModel = () => {
     return {
-      // 定义类型
       orderItemList: [],
     };
   };
@@ -271,159 +319,179 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
-  const size = ref<SizeProps>('medium');
-
-  const basePagination: Pagination = {
-    current: 1,
-    pageSize: 20,
+  // 调拨出库
+  const transferOutStation = async (orderId: number) => {
+    setLoading(true);
+    try {
+      const { data } = await outTransferOrder(orderId);
+      console.log(data);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      fetchData(
+        basePagination.current,
+        basePagination.pageSize,
+        formModel.value
+      );
+      setLoading(false);
+    }
   };
-  const pagination = reactive({
-    ...basePagination,
-  });
+  // const handleCancelOutWare = () => {
+  //
+  // };
+  // 调拨出库
+  // 密度选择
   const densityList = computed(() => [
     {
-      name: t('TransferOrder.size.mini'),
+      name: t('TransferTable.size.mini'),
       value: 'mini',
     },
     {
-      name: t('TransferOrder.size.small'),
+      name: t('TransferTable.size.small'),
       value: 'small',
     },
     {
-      name: t('TransferOrder.size.medium'),
+      name: t('TransferTable.size.medium'),
       value: 'medium',
     },
     {
-      name: t('TransferOrder.size.large'),
+      name: t('TransferTable.size.large'),
       value: 'large',
     },
   ]);
-
+  // 展示分发单信息表格
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('TransferOrder.columns.index'),
+      title: t('TransferTable.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('TransferOrder.columns.id'),
+      title: t('TransferTable.columns.id'),
       dataIndex: 'id',
     },
     {
-      title: t('TransferOrder.columns.orderId'),
+      title: t('TransferTable.columns.orderId'),
       dataIndex: 'orderId',
-      slotName: 'orderId',
     },
     {
-      title: t('TransferOrder.columns.wareId'),
-      dataIndex: 'wareId',
-    },
-    {
-      title: t('TransferOrder.columns.workOrderId'),
+      title: t('TransferTable.columns.workOrderId'),
       dataIndex: 'workOrderId',
     },
+    {
+      title: t('TransferTable.columns.wareId'),
+      dataIndex: 'wareId',
+    },
     // {
-    //   title: t('TransferOrder.columns.stationId'),
+    //   title: t('TransferTable.columns.stationId'),
     //   dataIndex: 'stationId',
     //   slotName: 'stationId',
     // },
     // {
-    //   title: t('TransferOrder.columns.stationName'),
+    //   title: t('TransferTable.columns.stationName'),
     //   dataIndex: 'stationName',
-    //   slotName: 'stationName',
     // },
+    {
+      title: t('TransferTable.columns.status'),
+      dataIndex: 'status',
+      slotName: 'status',
+    },
+    {
+      title: t('TransferTable.columns.type'),
+      dataIndex: 'type',
+      slotName: 'type',
+    },
     // {
-    //   title: t('TransferOrder.columns.logisticsId'),
+    //   title: t('TransferTable.columns.logisticsId'),
     //   dataIndex: 'logisticsId',
     //   slotName: 'logisticsId',
     // },
     // {
-    //   title: t('TransferOrder.columns.logisticsName'),
+    //   title: t('TransferTable.columns.logisticsName'),
     //   dataIndex: 'logisticsName',
-    //   slotName: 'logisticsName',
     // },
     // {
-    //   title: t('TransferOrder.columns.logisticsPhone'),
+    //   title: t('TransferTable.columns.logisticsPhone'),
     //   dataIndex: 'logisticsPhone',
-    //   slotName: 'logisticsPhone',
-    // },
-    // {
-    //   title: t('TransferOrder.columns.createTime'),
-    //   dataIndex: 'createTime',
-    // },
-    // {
-    //   title: t('TransferOrder.columns.updateTime'),
-    //   dataIndex: 'updateTime',
-    // },
-    // {
-    //   title: t('TransferOrder.columns.inTime'),
-    //   dataIndex: 'inTime',
-    // },
-    // {
-    //   title: t('TransferOrder.columns.outTime'),
-    //   dataIndex: 'outTime',
     // },
     {
-      title: t('TransferOrder.columns.status'),
-      dataIndex: 'status',
+      title: t('TransferTable.columns.inTime'),
+      dataIndex: 'inTime',
     },
     {
-      title: t('TransferOrder.columns.operations'),
+      title: t('TransferTable.columns.outTime'),
+      dataIndex: 'outTime',
+    },
+    {
+      title: t('TransferTable.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('TransferOrder.form.status.dispatch'),
-      value: 'DISPATCH',
-    },
-    {
-      label: t('TransferOrder.form.status.out'),
-      value: 'OUT',
-    },
-    {
-      label: t('TransferOrder.form.status.in'),
-      value: 'IN',
-    },
-    {
-      label: t('TransferOrder.form.status.cancel'),
-      value: 'CANCEL',
-    },
-  ]);
-
-  // 展示商品的表格内容,展示商品详细信息---begin
+  // 展示商品的表格内容
   const Skucolumns = computed<TableColumnData[]>(() => [
     {
-      title: t('TransferOrder.columns.skuId'),
+      title: t('TransferTable.columns.skuId'),
       dataIndex: 'skuId',
     },
     {
-      title: t('TransferOrder.columns.skuName'),
+      title: t('TransferTable.columns.skuName'),
       dataIndex: 'skuName',
       slotName: 'skuName',
     },
     {
-      title: t('TransferOrder.columns.skuImg'),
+      title: t('TransferTable.columns.skuImg'),
       dataIndex: 'imgUrl',
       slotName: 'imgUrl',
     },
     {
-      title: t('TransferOrder.columns.skuNum'),
+      title: t('TransferTable.columns.skuNum'),
       dataIndex: 'skuNum',
     },
     {
-      title: t('TransferOrder.columns.skuPrice'),
+      title: t('TransferTable.columns.skuPrice'),
       dataIndex: 'skuPrice',
     },
   ]);
+  // 选择类型
+  const typeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('TransferTable.form.type.DELIVERY'),
+      value: 'DELIVERY',
+    },
+    {
+      label: t('TransferTable.form.type.EXCHANGE'),
+      value: 'EXCHANGE',
+    },
+    {
+      label: t('TransferTable.form.type.RETURN'),
+      value: 'RETURN',
+    },
+  ]);
+  const statusOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('TransferTable.form.status.DISPATCH'),
+      value: 'DISPATCH',
+    },
+    {
+      label: t('TransferTable.form.status.OUT'),
+      value: 'OUT',
+    },
+    {
+      label: t('TransferTable.form.status.IN'),
+      value: 'IN',
+    },
+    {
+      label: t('TransferTable.form.status.CANCEL'),
+      value: 'CANCEL',
+    },
+  ]);
+  // 展示商品详细信息
   const visible = ref(false);
   const findOrderItemData = async (orderId: number) => {
     setLoading(true);
     try {
       const { data } = await queryOrderInfo(orderId);
-      console.log('调拨单内容');
       console.log(data);
       orderItemData.value = data.orderItemList; // data里的一个字段
     } catch (err) {
@@ -432,7 +500,6 @@
       setLoading(false);
     }
   };
-
   const SkuDetail = (orderId: number) => {
     findOrderItemData(orderId, generateorderItemModel.value);
     visible.value = true;
@@ -443,9 +510,15 @@
   const handleCancel = () => {
     visible.value = false;
   };
-  // 展示商品的表格内容,展示商品详细信息-end
 
-  // 分页---begin
+  // 分页
+  const basePagination: Pagination = {
+    current: 1,
+    pageSize: 20,
+  };
+  const pagination = reactive({
+    ...basePagination,
+  });
   const fetchData = async (
     current: number,
     pageSize: number,
@@ -476,9 +549,11 @@
   // 重置
   const reset = () => {
     formModel.value = generateFormModel();
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 设置密度
+  const size = ref<SizeProps>('medium');
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
     e: Event
@@ -549,7 +624,7 @@
 
 <script lang="ts">
   export default {
-    name: 'TransferOrder',
+    name: 'TransferTable',
   };
 </script>
 

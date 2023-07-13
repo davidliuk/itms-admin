@@ -15,7 +15,7 @@ const LIST: AppRouteRecordRaw = {
     // {
     //   path: 'search-table', // The midline path complies with SEO specifications
     //   name: 'centerSearchTable',
-    //   component: () => import('@/views/center/search-table/index.vue'),
+    //   components: () => import('@/views/center/search-table/index.vue'),
     //   meta: {
     //     locale: 'menu.center.searchTable',
     //     requiresAuth: true,
@@ -36,7 +36,7 @@ const LIST: AppRouteRecordRaw = {
     // {
     //   path: 'transfer_order', // The midline path complies with SEO specifications
     //   name: 'centerTransferOrder',
-    //   component: () => import('@/views/center/transfer_order/index.vue'),
+    //   components: () => import('@/views/center/transfer_order/index.vue'),
     //   meta: {
     //     // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
     //     locale: 'menu.center.transferOrder',
@@ -69,7 +69,7 @@ const LIST: AppRouteRecordRaw = {
     // {
     //   path: 'workOrder',
     //   name: 'centerWorkOrder',
-    //   component: () => import('@/views/center/work-order/index.vue'),
+    //   components: () => import('@/views/center/work-order/index.vue'),
     //   meta: {
     //     // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
     //     locale: 'menu.center.WorkOrder',
@@ -95,6 +95,39 @@ const LIST: AppRouteRecordRaw = {
       meta: {
         // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
         locale: 'menu.center.PurchaseOrder',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'logistics',
+      name: 'centerLogistics',
+      component: () => import('@/views/center/logistics-table/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.center.Logistics',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'station-table', // The midline path complies with SEO specifications
+      name: 'StationTable',
+      component: () => import('@/views/center/station-table/index.vue'),
+      meta: {
+        locale: 'menu.center.stationTable',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'skuListInWare', // The midline path complies with SEO specifications
+      name: 'skuListInWare',
+      component: () =>
+        import('@/views/center/skuware/components/skuInWare.vue'),
+      meta: {
+        hideInMenu: true,
+        locale: '批量进货',
         requiresAuth: true,
         roles: ['*'],
       },

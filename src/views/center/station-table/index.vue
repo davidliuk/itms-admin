@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.station', 'menu.station.stationTable']" />
-    <a-card class="general-card" :title="$t('menu.station.stationTable')">
+    <Breadcrumb :items="['menu.center', 'menu.center.stationTable']" />
+    <a-card class="general-card" :title="$t('menu.center.stationTable')">
       <!--查询框-->
       <a-row>
         <a-col :flex="1">
@@ -78,18 +78,6 @@
                   />
                 </a-form-item>
               </a-col>
-              <!--              &lt;!&ndash;开始时间&ndash;&gt;-->
-              <!--              <a-col :span="8">-->
-              <!--                <a-form-item-->
-              <!--                  field="createTime"-->
-              <!--                  :label="$t('stationTable.form.createTime')"-->
-              <!--                >-->
-              <!--                  <a-range-picker-->
-              <!--                    v-model="formModel.createTime"-->
-              <!--                    style="width: 100%"-->
-              <!--                  />-->
-              <!--                </a-form-item>-->
-              <!--              </a-col>-->
             </a-row>
           </a-form>
         </a-col>
@@ -234,6 +222,7 @@
                 :placeholder="$t('stationTable.form.workStatus.placeholder')"
               />
             </template>
+
             <template v-else>
               <a-input
                 v-model="form[key]"
@@ -243,6 +232,70 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
+      <a-modal
+        :visible="isCreating"
+        :title="$t(`stationTable.form.title.create`)"
+        @cancel="handleClose"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item
+            v-for="(val, key) in form"
+            :key="key"
+            :field="key"
+            :label="$t(`stationTable.form.${key}`)"
+          >
+            <template v-if="key === 'id'">
+              <a-input
+                v-model="form[key]"
+                :placeholder="$t(`stationTable.form.${key}.placeholder`)"
+                disabled
+              />
+            </template>
+            <template v-else-if="key === 'workStatus'">
+              <a-select
+                v-model="form[key]"
+                :options="statusOptions"
+                :placeholder="$t('stationTable.form.workStatus.placeholder')"
+              />
+            </template>
+            <template v-else-if="key === 'province' || key === 'district'">
+              <!--              province: '', // 省市-->
+              <!--              city: '', // 城市编号-->
+              <!--              district: '', // 区域-->
+              <a-space direction="vertical" size="large">
+                <a-cascader
+                  v-if="!isAssignListFinished"
+                  :options="[]"
+                  :style="{ width: '480px' }"
+                  placeholder="Please select ..."
+                  loading
+                />
+                <a-cascader
+                  v-else
+                  :options="options"
+                  :field-names="fieldNames"
+                  :style="{ width: '480px' }"
+                  placeholder="Please select ..."
+                  multiple
+                  allow-search
+                  allow-clear
+                  check-strictly
+                />
+              </a-space>
+            </template>
+
+            <template v-else>
+              <a-input
+                v-model="form[key]"
+                :placeholder="$t(`stationTable.form.${key}.placeholder`)"
+              />
+            </template>
+          </a-form-item>
+        </a-form>
+      </a-modal>
+
       <!-- 详情-->
       <a-modal
         :visible="isDetailing"
@@ -344,14 +397,14 @@
     addStation,
     updateStation,
     deleteStation,
-  } from '@/api/station';
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { deleteAdmin } from '@/api/acl';
+  import { Permission } from '@/api/acl';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -395,6 +448,7 @@
       workStatus: '', // 营业状态
     };
   };
+
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<Station[]>([]);
@@ -408,10 +462,13 @@
   let form = reactive(formDefault());
   let formShow = reactive(generateFormModel());
 
+  const isAssignListFinished = ref(false);
+  let options: Permission[];
+
   const size = ref<SizeProps>('medium');
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,

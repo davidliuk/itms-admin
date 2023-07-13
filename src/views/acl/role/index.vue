@@ -228,17 +228,10 @@
       >
         <a-space direction="vertical" size="large">
           <a-cascader
-            v-if="!isAssignListFinished"
-            :options="[]"
-            :style="{ width: '480px' }"
-            placeholder="Please select ..."
-            loading
-          />
-          <a-cascader
-            v-else
             :options="options"
             :field-names="fieldNames"
             :style="{ width: '480px' }"
+            :loading="!isAssignListFinished"
             placeholder="Please select ..."
             multiple
             allow-search
@@ -300,7 +293,7 @@
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="deleteARoleById(record.id)"
+            @click="deleteById(record.id)"
           >
             {{ $t('role.columns.operations.delete') }}
           </a-button>
@@ -324,13 +317,19 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
+    addRole,
+    deleteRole,
     Permission,
     queryPermissionList,
     queryRoleList,
     Role,
+    updateRole,
   } from '@/api/acl';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
@@ -338,16 +337,16 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
   const fieldNames = { value: 'id', label: 'name' };
-  const isAssignListFinished = ref(false);
+  let selectedRole: Role;
   const generateFormModel = () => {
     return {
       id: '',
       name: '',
       code: '',
       remark: '',
-      createTime: null,
-      updateTime: null,
-    };
+      // createTime: null,
+      // updateTime: null,
+    } as Role;
   };
 
   const selectedKeys = ref([]);
@@ -356,44 +355,25 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   let options: Permission[];
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
   const isAssigning = ref(false);
-  // const form = reactive({
-  //   username: '',
-  //   name: '',
-  //   password: '',
-  //   phone: '',
-  //   email: '',
-  //   wareId: '',
-  //   stationId: '',
-  // });
+  const isAssignListFinished = ref(false);
   let form = reactive(generateFormModel());
+
+  const deleteById = (id: number) => {
+    deleteRole(id);
+  };
   const handleCreateClick = () => {
     isCreating.value = true;
   };
   const handleUpdateClick = (role: Role) => {
     copy(role, form);
-    // form = admin;
     isUpdating.value = true;
-  };
-  const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
-    if (isCreating.value) {
-      //   addRole(form as unknown as Role);
-      // } else {
-      //   updateRole(form as unknown as Role);
-    }
-    handleClose();
   };
   const handleClose = () => {
     isCreating.value = false;
@@ -401,9 +381,21 @@
     isAssigning.value = false;
     form = reactive(generateFormModel());
   };
+  const handleBeforeOk = (done: any) => {
+    if (isCreating.value) {
+      addRole(form as unknown as Role);
+    } else if (isUpdating.value) {
+      updateRole(form as unknown as Role);
+    } else {
+      // assignRole(selectedRole.id, selectedKeys.value);
+    }
+    done();
+    handleClose();
+  };
   const assignRole = async (role: Role) => {
     isAssignListFinished.value = false;
     isAssigning.value = true;
+    selectedRole = role;
     const { data } = await queryPermissionList();
     options = reactive(data);
     isAssignListFinished.value = true;
@@ -597,19 +589,13 @@
     () => columns.value,
     (val) => {
       cloneColumns.value = cloneDeep(val);
-      cloneColumns.value.forEach((item, index) => {
+      cloneColumns.value.forEach((item) => {
         item.checked = true;
       });
       showColumns.value = cloneDeep(cloneColumns.value);
     },
     { deep: true, immediate: true }
   );
-</script>
-
-<script lang="ts">
-  export default {
-    name: 'Role',
-  };
 </script>
 
 <style scoped lang="less">

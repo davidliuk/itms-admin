@@ -8,11 +8,11 @@
           <a-form
             :model="formModel"
             :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
+            :wrapper-col-props="{ span: 15 }"
             label-align="left"
           >
-            <a-row :gutter="16">
-              <a-col :span="8">
+            <a-row :gutter="20">
+              <a-col :span="12">
                 <a-form-item field="id" :label="$t('CheckOrderTable.form.id')">
                   <a-input
                     v-model="formModel.id"
@@ -20,33 +20,33 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="stationId"
-                  :label="$t('CheckOrderTable.form.stationId')"
-                >
-                  <a-input
-                    v-model="formModel.stationId"
-                    :placeholder="
-                      $t('CheckOrderTable.form.stationId.placeholder')
-                    "
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="workOrderId"
-                  :label="$t('CheckOrderTable.form.workOrderId')"
-                >
-                  <a-input
-                    v-model="formModel.workOrderId"
-                    :placeholder="
-                      $t('CheckOrderTable.form.workOrderId.placeholder')
-                    "
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              <!--              <a-col :span="8">-->
+              <!--                <a-form-item-->
+              <!--                  field="stationId"-->
+              <!--                  :label="$t('CheckOrderTable.form.stationId')"-->
+              <!--                >-->
+              <!--                  <a-input-->
+              <!--                    v-model="formModel.stationId"-->
+              <!--                    :placeholder="-->
+              <!--                      $t('CheckOrderTable.form.stationId.placeholder')-->
+              <!--                    "-->
+              <!--                  />-->
+              <!--                </a-form-item>-->
+              <!--              </a-col>-->
+              <!--              <a-col :span="8">-->
+              <!--                <a-form-item-->
+              <!--                  field="workOrderId"-->
+              <!--                  :label="$t('CheckOrderTable.form.workOrderId')"-->
+              <!--                >-->
+              <!--                  <a-input-->
+              <!--                    v-model="formModel.workOrderId"-->
+              <!--                    :placeholder="-->
+              <!--                      $t('CheckOrderTable.form.workOrderId.placeholder')-->
+              <!--                    "-->
+              <!--                  />-->
+              <!--                </a-form-item>-->
+              <!--              </a-col>-->
+              <a-col :span="12">
                 <a-form-item
                   field="orderId"
                   :label="$t('CheckOrderTable.form.orderId')"
@@ -59,19 +59,19 @@
                   />
                 </a-form-item>
               </a-col>
-              <!--              <a-col :span="8">-->
-              <!--              <a-form-item-->
-              <!--                field="type"-->
-              <!--                :label="$t('CheckOrderTable.form.type')"-->
-              <!--              >-->
-              <!--                <a-select-->
-              <!--                  v-model="formModel.type"-->
-              <!--                  :options="typeOptions"-->
-              <!--                  :placeholder="$t('CheckOrderTable.form.selectDefault')"-->
-              <!--                />-->
-              <!--              </a-form-item>-->
-              <!--            </a-col>-->
-              <a-col :span="8">
+              <a-col :span="12">
+                <a-form-item
+                  field="type"
+                  :label="$t('CheckOrderTable.form.type')"
+                >
+                  <a-select
+                    v-model="formModel.type"
+                    :options="typeOptions"
+                    :placeholder="$t('CheckOrderTable.form.selectDefault')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
                 <a-form-item
                   field="status"
                   :label="$t('CheckOrderTable.form.status')"
@@ -193,6 +193,27 @@
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
         <!-- 查看 -->
+        <!--        状态-->
+        <template #status="{ record }">
+          <span v-if="record.status === 'OUT'" class="circle pass"></span>
+          <span v-else-if="record.status === 'IN'" class="circle pass"></span>
+          <span
+            v-else-if="record.status === 'CANCEL'"
+            class="circle pass"
+          ></span>
+          {{ $t(`CheckOrderTable.form.status.${record.status}`) }}
+        </template>
+        <!--        类型-->
+        <template #type="{ record }">
+          <span v-if="record.type === 'DELIVERY'" class="circle"></span>
+          <span
+            v-else-if="record.type === 'EXCHANGE'"
+            class="circle pass"
+          ></span>
+          <span v-else-if="record.type === 'RETURN'" class="circle pass"></span>
+          {{ $t(`CheckOrderTable.form.type.${record.type}`) }}
+        </template>
+
         <template #operations="{ record }">
           <a-button
             v-permission="['admin']"
@@ -207,7 +228,6 @@
             draggable
             hide-cancel
             @ok="handleOk"
-            @cancel="handleCancel"
           >
             <template #title> 验收单商品详情 </template>
             <a-table
@@ -268,11 +288,12 @@
   const generateFormModel = () => {
     return {
       id: '',
-      orderId: '',
-      workOrderId: '',
+      wareId: '',
       stationId: '',
       status: null,
-      // type:null,
+      type: null,
+      inTime: null,
+      outTime: null,
     };
   };
 
@@ -288,7 +309,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
   };
   const pagination = reactive({
     ...basePagination,
@@ -329,11 +350,10 @@
       title: t('CheckOrderTable.columns.wareId'),
       dataIndex: 'wareId',
     },
-    {
-      title: t('CheckOrderTable.columns.stationId'),
-      dataIndex: 'stationId',
-      slotName: 'stationId',
-    },
+    // {
+    //   title: t('CheckOrderTable.columns.workOrderId'),
+    //   dataIndex: 'workOrderId',
+    // },
     {
       title: t('CheckOrderTable.columns.orderId'),
       dataIndex: 'orderId',
@@ -343,12 +363,18 @@
       dataIndex: 'outTime',
     },
     {
+      title: t('CheckOrderTable.columns.inTime'),
+      dataIndex: 'inTime',
+    },
+    {
       title: t('CheckOrderTable.columns.type'),
       dataIndex: 'type',
+      slotName: 'type',
     },
     {
       title: t('CheckOrderTable.columns.status'),
       dataIndex: 'status',
+      slotName: 'status',
     },
     {
       title: t('CheckOrderTable.columns.operations'),
@@ -541,7 +567,7 @@
     () => columns.value,
     (val) => {
       cloneColumns.value = cloneDeep(val);
-      cloneColumns.value.forEach((item, index) => {
+      cloneColumns.value.forEach((item) => {
         item.checked = true;
       });
       showColumns.value = cloneDeep(cloneColumns.value);
