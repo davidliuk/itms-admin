@@ -33,6 +33,9 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
+  mand-mobile-next:
+    specifier: 0.0.1-alpha.14
+    version: 0.0.1-alpha.14(@better-scroll/core@2.5.1)(@better-scroll/pull-down@2.5.1)(@better-scroll/pull-up@2.5.1)(@better-scroll/slide@2.5.1)(@better-scroll/wheel@2.5.1)(vue@3.2.47)
   mitt:
     specifier: ^3.0.0
     version: 3.0.0
@@ -538,6 +541,40 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
     dev: true
+
+  /@better-scroll/core@2.5.1:
+    resolution: {integrity: sha512-koKOuYA55dQ04FJRIVUpMGDr1hbCfWmfX0MGp1hKagkQSWSRpwblqACiwtggVauoj9aaJRJZ9hDsTM4weaavlg==}
+    dependencies:
+      '@better-scroll/shared-utils': 2.5.1
+    dev: false
+
+  /@better-scroll/pull-down@2.5.1:
+    resolution: {integrity: sha512-Y6XcGu2NlevPg3k9VBRRFvpmfoTA+rO96JGdog2qKHclIPNXnsVwsIHtZfAm9weE/f9UuC4BnB+VUFRlucfupg==}
+    dependencies:
+      '@better-scroll/core': 2.5.1
+    dev: false
+
+  /@better-scroll/pull-up@2.5.1:
+    resolution: {integrity: sha512-1hu3xSMxdB8T391KffpNZ7g93lMwZEHjfb1F1Y4KvIkciDt8nXqkGpqrZF+YwR+EJTgYcWqUO8kgmI6XXu7Pkg==}
+    dependencies:
+      '@better-scroll/core': 2.5.1
+    dev: false
+
+  /@better-scroll/shared-utils@2.5.1:
+    resolution: {integrity: sha512-AplkfSjXVYP9LZiD6JsKgmgQJ/mG4uuLmBuwLz8W5OsYc7AYTfN8kw6GqZ5OwCGoXkVhBGyd8NeC4xwYItp0aw==}
+    dev: false
+
+  /@better-scroll/slide@2.5.1:
+    resolution: {integrity: sha512-aDOrfsmjAcz6DXN7mDX3tPieAn195R43Yn9e3waI19TIEok/mQlI1a/kb5quqWOoxkiaZQ8xe3vx5ZTj9C+F6Q==}
+    dependencies:
+      '@better-scroll/core': 2.5.1
+    dev: false
+
+  /@better-scroll/wheel@2.5.1:
+    resolution: {integrity: sha512-fYLcEvkh88Z/2L+P5/+SGMunuc+HzAjGOiORIa/x21qb/knO2RFH4A/V1Rt3OIW4QluWzuFnU6jJRPlsQVZ4fg==}
+    dependencies:
+      '@better-scroll/core': 2.5.1
+    dev: false
 
   /@commitlint/cli@17.5.1:
     resolution: {integrity: sha512-pRRgGSzdHQHehxZbGA3qF6wVPyl+EEQgTe/t321rtMLFbuJ7nRj2waS17s/v5oEbyZtiY5S8PGB6XtEIm0I+Sg==}
@@ -5660,6 +5697,25 @@ packages:
   /make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
     dev: true
+
+  /mand-mobile-next@0.0.1-alpha.14(@better-scroll/core@2.5.1)(@better-scroll/pull-down@2.5.1)(@better-scroll/pull-up@2.5.1)(@better-scroll/slide@2.5.1)(@better-scroll/wheel@2.5.1)(vue@3.2.47):
+    resolution: {integrity: sha512-8kj/yjpatVope5UE2ug0k3oJ1jhtV/YnrUnDXgXGiEYAigig6uIUPXx2BiM1eplhA7lW/SXy0iHaVnH/4ZaHiA==}
+    engines: {node: '>=14.16.1'}
+    peerDependencies:
+      '@better-scroll/core': ^2.3.1
+      '@better-scroll/pull-down': ^2.3.1
+      '@better-scroll/pull-up': ^2.3.1
+      '@better-scroll/slide': ^2.3.1
+      '@better-scroll/wheel': ^2.3.1
+      vue: ^3.0.11
+    dependencies:
+      '@better-scroll/core': 2.5.1
+      '@better-scroll/pull-down': 2.5.1
+      '@better-scroll/pull-up': 2.5.1
+      '@better-scroll/slide': 2.5.1
+      '@better-scroll/wheel': 2.5.1
+      vue: 3.2.47
+    dev: false
 
   /map-cache@0.2.2:
     resolution: {integrity: sha512-8y/eV9QQZCiyn1SprXSrCmqJN0yNRATe+PO8ztwqrvrbdRLA3eYJF0yaR0YayLWkMbsQSKWS9N2gPcGEc4UsZg==}

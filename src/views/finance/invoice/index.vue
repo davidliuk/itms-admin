@@ -186,13 +186,10 @@
         <!-- 状态 -->
         <template #status="{ record }">
           <span v-if="record.status === 'CANCEL'" class="circle"></span>
+          <span v-else-if="record.status === 'USED'" class="circle pass"></span>
           <span
-              v-else-if="record.status === 'USED'"
-              class="circle pass"
-          ></span>
-          <span
-              v-else-if="record.status === 'UNUSED'"
-              class="circle pass"
+            v-else-if="record.status === 'UNUSED'"
+            class="circle pass"
           ></span>
           {{ $t(`invoice.form.status.${record.status}`) }}
         </template>
@@ -202,10 +199,10 @@
         <!-- 删改 -->
         <template #operations="{ record }">
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="takeInvoice(record)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="takeInvoice(record)"
           >
             {{ $t('invoice.columns.operations.take') }}
           </a-button>
@@ -218,18 +215,18 @@
             {{ $t('invoice.columns.operations.waste') }}
           </a-button>
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="handleUpdateClick(record)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="handleUpdateClick(record)"
           >
             {{ $t('invoice.columns.operations.update') }}
           </a-button>
           <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="deleteInvoiceById(record.id)"
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="deleteInvoiceById(record.id)"
           >
             {{ $t('invoice.columns.operations.delete') }}
           </a-button>
@@ -303,18 +300,16 @@
   };
 
   const takeInvoice = (invoice: Invoice) => {
-    if(invoice.status==='CANCEL'){
-      alert("已作废的发票不可领用");
-    }else{
-      invoice.status='USED';
+    if (invoice.status === 'CANCEL') {
+      alert('已作废的发票不可领用');
+    } else {
+      invoice.status = 'USED';
       updateInvoice(invoice);
     }
-
   };
 
   const wasteInvoice = (invoice: Invoice) => {
-
-    invoice.status='CANCEL';
+    invoice.status = 'CANCEL';
     alert(invoice.status);
     updateInvoice(invoice);
   };

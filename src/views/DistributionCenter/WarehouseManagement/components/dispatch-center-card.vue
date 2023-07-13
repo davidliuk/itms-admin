@@ -37,10 +37,11 @@
       >
         <CardWrap
           :id="item.id"
+          v-model:shuttle-data="shuttleData"
           :loading="loadingCard"
           :name="item.name"
-          :leader-name="item.leaderName"
-          :leader-email="item.leaderEmail"
+          :leader-name="item.adminName"
+          :leader-email="item.adminEmail"
           :province="item.province"
           :city="item.city"
           :district="item.district"
@@ -65,16 +66,33 @@
 </template>
 
 <script lang="ts" setup>
-  import { queryWareHouseList, WareHouseRecord } from '@/api/dispatch-center';
+  import {
+    LSPPage,
+    queryWareHouseList,
+    ShuttleData,
+    WareHouseRecord,
+  } from '@/api/dispatch-center';
   import { Pagination } from '@/types/global';
-  import { Ref, ref } from 'vue';
+  import { onMounted, Ref, ref } from 'vue';
   import CardWrap from './card-wrap-center.vue';
 
   const loadingCard = ref(true);
   const queryParam = ref({ current: 1, limit: 10, total: 100 });
   const renderData: Ref<WareHouseRecord[]> = ref([]);
 
-  const fetchData = async (pageParam: Pagination) => {
+  const props = withDefaults(
+    defineProps<{
+      shuttleData: ShuttleData;
+    }>(),
+    {
+      shuttleData: undefined,
+    }
+  );
+
+  const shuttleData=ref(props.shuttleData);
+  console.log(shuttleData.value);
+
+  const fetchData = async (pageParam: LSPPage) => {
     loadingCard.value = true;
     try {
       renderData.value = await queryWareHouseList(pageParam);
@@ -87,6 +105,7 @@
     }
   };
   fetchData(queryParam.value);
+
   // console.log(renderData.value);
 </script>
 

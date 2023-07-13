@@ -62,7 +62,6 @@
           label: '名字',
           value: (renderData as OrderDetail).nickName as unknown as string,
         },
-
       ],
     };
     return result;

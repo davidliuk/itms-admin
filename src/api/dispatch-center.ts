@@ -5,11 +5,23 @@ import { LoginRes } from '@/api/user';
 import { PageRes, Role } from '@/api/acl';
 import { Pagination } from '@/types/global';
 
+
+export interface LSPPage {
+  current:number;
+  limit:number;
+}
+
+export interface ShuttleData {
+  showDetailPage:boolean;
+  wareId:string;
+}
+
+
 export interface WareHouseRecord {
   id: string;
   name: string;
-  leaderName: string;
-  leaderEmail: string;
+  adminName: string;
+  adminEmail: string;
   province: string;
   city: string;
   district: string;
@@ -25,12 +37,12 @@ interface SumRecord {
 
 // todo:重构
 export async function queryWareHouseList(
-  pageParam: Pagination
+  pageParam: LSPPage
 ): Promise<WareHouseRecord[]> {
   const res: WareHouseRecord[] = (
     await axios.post(
       `/admin/sys/ware/${pageParam.current}/${pageParam.limit}`,
-      pageParam
+      {}
     )
   ).data.records;
   // console.log(res);

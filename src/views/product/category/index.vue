@@ -296,7 +296,7 @@
     Category,
     addCategory,
     updateCategory,
-deleteCategory,
+    deleteCategory,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';

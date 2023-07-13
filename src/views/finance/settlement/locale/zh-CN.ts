@@ -42,7 +42,7 @@ export default {
   'settlement.columns.end': '结束号码',
   'settlement.columns.name': '分站名称',
 
-  'settlement.columns.category':'订单类型',
+  'settlement.columns.category': '订单类型',
   'settlement.form.status.USED': '收款',
   'settlement.form.status.UNUSED': '收款',
   'settlement.form.status.CANCEL': '退款',

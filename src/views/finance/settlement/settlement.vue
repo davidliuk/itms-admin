@@ -144,13 +144,10 @@
         <!-- 表格form里 -->
         <template #status="{ record }">
           <span v-if="record.status === 'CANCEL'" class="circle"></span>
+          <span v-else-if="record.status === 'USED'" class="circle pass"></span>
           <span
-              v-else-if="record.status === 'USED'"
-              class="circle pass"
-          ></span>
-          <span
-              v-else-if="record.status === 'UNUSED'"
-              class="circle pass"
+            v-else-if="record.status === 'UNUSED'"
+            class="circle pass"
           ></span>
           {{ $t(`settlement.form.status.${record.status}`) }}
         </template>
@@ -206,7 +203,7 @@
       userId: '',
       stationId: '',
       totalAmount: '',
-      status:'',
+      status: '',
     };
   };
 
@@ -311,7 +308,6 @@
       value: 'verticalVideo',
     },
   ]);
-
 
   const fetchData = async (
     page: number,

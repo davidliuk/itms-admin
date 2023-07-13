@@ -62,11 +62,9 @@
             </a-step>
           </a-steps>
         </a-space>
-
-
       </a-card>
 
-        <!-- 以下部分分为： 调度单、配送信息（任务单）-->
+      <!-- 以下部分分为： 调度单、配送信息（任务单）-->
       <a-space>
         <a-card class="general-card">
           <TransferOrderInfo :loading="loading" :render-data="orderDetail" />
@@ -79,7 +77,7 @@
         </a-card>
       </a-space>
 
-      <SkuList :loading="loading" :render-data="orderDetail"/>
+      <SkuList :loading="loading" :render-data="orderDetail" />
     </a-space>
   </div>
 </template>
@@ -97,7 +95,7 @@
   import { OrderDetail, queryOrderDetail } from '@/api/orderInfo';
   import TransferOrderInfo from '@/views/list/search-table/order_info/components/transfer-order-info.vue';
   import WorkOrderInfo from '@/views/list/search-table/order_info/components/work-order-info.vue';
-  import SkuList from "@/views/list/search-table/order_info/components/sku-list.vue";
+  import SkuList from '@/views/list/search-table/order_info/components/sku-list.vue';
 
   const orderStore = useOrderInfoStore();
 

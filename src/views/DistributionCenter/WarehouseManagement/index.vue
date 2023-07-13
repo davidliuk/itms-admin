@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div v-if="shuttleData.showDetailPage">
+    <WorkPlace />
+  </div>
+  <div v-else class="container">
     <Breadcrumb
       :items="[
         'menu.DistributionCenter',
@@ -19,7 +22,7 @@
                   key="2"
                   :title="$t('warehouseList.tab.title.center')"
                 >
-                  <DispatchCenterCard />
+                  <DispatchCenterCard v-model:shuttle-data="shuttleData" />
                 </a-tab-pane>
                 <a-tab-pane
                   key="3"
@@ -43,6 +46,19 @@
 <script lang="ts" setup>
   import DispatchCenterCard from '@/views/DistributionCenter/WarehouseManagement/components/dispatch-center-card.vue';
   import DispatchRegionCard from '@/views/DistributionCenter/WarehouseManagement/components/dispatch-region-card.vue';
+  import { Ref, ref } from 'vue';
+  import { ShuttleData } from '@/api/dispatch-center';
+  import  WorkPlace  from './dashboard/workplace/index.vue';
+
+  const shuttleData: Ref<ShuttleData> = ref({
+    showDetailPage: false,
+    wareId: '-1',
+  });
+
+
+
+
+
 </script>
 
 <script lang="ts">

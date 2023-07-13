@@ -129,7 +129,7 @@ export interface Settlement {
   userName: string;
   stationId: string;
   totalAmount: string;
-  status:string;
+  status: string;
 }
 
 export function querySettlementList(

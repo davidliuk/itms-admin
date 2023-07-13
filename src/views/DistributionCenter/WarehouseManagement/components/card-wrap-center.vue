@@ -3,16 +3,14 @@
     <a-card v-if="loading" :bordered="false" hoverable>
       <slot name="skeleton"></slot>
     </a-card>
-
-    <a-card v-else bordered="bordered" hoverable>
-      <!--      <a-card-meta>-->
+    <a-card v-else :bordered="false" hoverable>
       <template #title>
         <a-typography-text style="margin-right: 10px">
           {{ cardData.name }}
         </a-typography-text>
       </template>
       <template #extra>
-        {{ cardData.province }}/{{ cardData.city }}/{{ cardData.district }}
+        {{ cardData.province }}-{{ cardData.city }}-{{ cardData.district }}
       </template>
       <template #actions>
         <a-col justify="start">
@@ -31,15 +29,21 @@
                 :animation="true"
                 :percent="percentage"
                 :style="{ width: '100%' }"
+                :status="
+                  percentage < 0.8
+                    ? 'normal'
+                    : percentage < 0.95
+                    ? 'warning'
+                    : 'danger'
+                "
+                :size="'large'"
               />
             </a-row>
-            <a-row>{{ cardData.use }} / {{ cardData.total }}</a-row>
+            <a-row>{{ cardDataUse.toFixed(0) }} / {{ cardDataTotal }}</a-row>
           </a-col>
         </template>
       </a-card-meta>
     </a-card>
-
-    <!--    <canvas id="canvas"/>-->
   </div>
 </template>
 
@@ -51,7 +55,10 @@
     ref,
     defineComponent,
     nextTick,
+    onUpdated,
   } from 'vue';
+  import OrderInfo from '@/views/list/search-table/order_info/index.vue';
+  import { ShuttleData } from '@/api/dispatch-center';
 
   const props = withDefaults(
     // 参数一：定义props类型：? 代表非必传字段， :号后面紧跟的是数据类型或自定义接口， | 或多种类型
@@ -66,6 +73,7 @@
       district?: string;
       total?: number;
       use?: number;
+      shuttleData: ShuttleData;
     }>(),
     // 参数二：指定非必传字段的默认值
     {
@@ -79,69 +87,41 @@
       district: '',
       total: 1,
       use: 0,
+      shuttleData: undefined,
     }
   );
-
-  // const props=defineProps({
-  //   id: {
-  //     type: String,
-  //     default: '',
-  //   },
-  //   loading: {
-  //     type: Boolean,
-  //     default: false,
-  //   },
-  //   name: {
-  //     type: String,
-  //     default: '',
-  //   },
-  //   leaderName: {
-  //     type: String,
-  //     default: '未知',
-  //   },
-  //   leaderEmail: {
-  //     type: String,
-  //     default: 'xxxxxxxx@xxx.com',
-  //   },
-  //   province: {
-  //     type: String,
-  //     default: '',
-  //   },
-  //   city: {
-  //     type: String,
-  //     default: '',
-  //   },
-  //   district: {
-  //     type: String,
-  //     default: '',
-  //   },
-  //   total: {
-  //     type: Number,
-  //     default: 1,
-  //   },
-  //   use: {
-  //     type: Number,
-  //     default: 0,
-  //   },
-  // });
-
   const cardData = ref(props);
+  const cardDataUse = ref(0);
+  const cardDataTotal = ref(props.total);
+  const cardDataShuttleData = ref(props.shuttleData);
 
-  console.log(cardData.value);
-  // console.log(props);
+  console.log(cardDataUse.value);
+  console.log(props);
 
   const percentage: Ref<number> = computed(() => {
-    console.log(cardData.value.use);
-    console.log(cardData.value.total);
-    console.log((cardData.value.use / cardData.value.total).toFixed(2));
-
-    return Number(
-      // (props.use / props.total).toFixed(2)
-      (cardData.value.use / cardData.value.total).toFixed(2)
-    );
+    return Number((cardDataUse.value / cardDataTotal.value).toFixed(2));
   });
 
-  const handleInfo = () => {};
+  onMounted(() => {
+    const totalTime = 500;
+    const cardDataUse2 = ref(props.use);
+    for (let i = 0; i <= 100; i += 1) {
+      setTimeout(() => {
+        cardDataUse.value = (cardDataUse2.value * i) / 100;
+      }, (i * totalTime) / 100);
+    }
+  });
+
+  const handleInfo = () => {
+    cardDataShuttleData.value.wareId = cardData.value.id;
+    cardDataShuttleData.value.showDetailPage = true;
+
+    const $emit = defineEmits(['update:shuttleData']);
+    $emit('update:shuttleData',cardDataShuttleData.value);
+
+  };
+
+
 </script>
 
 <style scoped lang="less">
