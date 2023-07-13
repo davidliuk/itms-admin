@@ -20,8 +20,8 @@ export default {
   // new
   'userSetting.label.certification': 'Certification',
   'userSetting.label.phone': 'Phone',
-  'userSetting.label.accountId': 'Account Id',
-  'userSetting.label.registrationDate': 'Registration Date',
+  'userSetting.label.username': 'Account Id',
+  'userSetting.label.createTime': 'Registration Date',
   'userSetting.tab.basicInformation': 'Basic Information',
   'userSetting.tab.securitySettings': 'Security Settings',
   'userSetting.tab.certification': 'Certification',

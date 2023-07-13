@@ -44,6 +44,7 @@ export function deleteRole(id: number) {
 export interface Admin {
   id: string;
   username: string;
+  avatar: string;
   password: string;
   name: string;
   phone: string;

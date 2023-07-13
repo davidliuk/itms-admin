@@ -150,6 +150,8 @@ export interface SkuBasicInfo {
   sort: number;
   price: number;
   marketPrice: number;
+  supplierId: string;
+  supplierName: string;
 }
 
 export interface SkuAttrValue {

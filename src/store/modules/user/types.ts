@@ -16,8 +16,7 @@ export interface UserState {
   organizationName?: string;
   locationName?: string;
   phone?: string;
-  registrationDate?: string;
-  accountId?: string;
+  createTime?: string;
   certification?: number;
   role: RoleType;
   wareId?: string;

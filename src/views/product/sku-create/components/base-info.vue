@@ -192,7 +192,7 @@
     sort: 0,
     price: 0,
     marketPrice: 0,
-  });
+  } as SkuBasicInfo);
   const fieldNames = { value: 'id', label: 'name' };
   const categoryOptions: Ref<Category[]> = ref([]);
   const categoryLoading = ref(true);

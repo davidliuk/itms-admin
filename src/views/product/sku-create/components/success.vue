@@ -2,24 +2,24 @@
   <div class="success-wrap">
     <a-result
       status="success"
-      :title="$t('stepForm.success.title')"
-      :subtitle="$t('stepForm.success.subTitle')"
+      :title="$t('skuCreate.success.title')"
+      :subtitle="$t('skuCreate.success.subTitle')"
     />
     <a-space :size="16">
       <a-button key="view" type="primary">
-        {{ $t('stepForm.button.view') }}
+        {{ $t('skuCreate.button.view') }}
       </a-button>
       <a-button key="again" type="secondary" @click="oneMore">
-        {{ $t('stepForm.button.again') }}
+        {{ $t('skuCreate.button.again') }}
       </a-button>
     </a-space>
     <div class="details-wrapper">
       <a-typography-title :heading="6" style="margin-top: 0">
-        {{ $t('stepForm.form.description.title') }}
+        {{ $t('skuCreate.form.description.title') }}
       </a-typography-title>
       <a-typography-paragraph style="margin-bottom: 0">
-        {{ $t('stepForm.form.description.text') }}
-        <a-link href="link">{{ $t('stepForm.button.view') }}</a-link>
+        {{ $t('skuCreate.form.description.text') }}
+        <a-link href="link">{{ $t('skuCreate.button.view') }}</a-link>
       </a-typography-paragraph>
     </div>
   </div>

@@ -136,7 +136,6 @@
   };
   getAllAttrGroup();
   const onNextClick = async () => {
-    console.log(formData.value);
     const res = await formRef.value?.validate();
     if (!res) {
       emits('changeStep', 'forward', { ...formData.value });

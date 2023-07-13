@@ -303,6 +303,19 @@
           {{ $t(`admin.form.status.${record.status}`) }}
         </template>
         <!-- 表格form里 -->
+        <template #avatar="{ record }">
+          <a-avatar :size="64" :image-url="record.avatar">
+            <template #trigger-icon>
+              <icon-camera />
+            </template>
+            <!-- <img :src="record.avatar" /> -->
+          </a-avatar>
+          <!-- <img
+            :src="record.avatar"
+            alt="No Avatar"
+            style="width: 100px; height: 100px"
+          /> -->
+        </template>
 
         <!-- table里 -->
         <!-- 查看 -->
@@ -487,6 +500,11 @@
     {
       title: t('admin.columns.username'),
       dataIndex: 'username',
+    },
+    {
+      title: t('admin.columns.avatar'),
+      dataIndex: 'avatar',
+      slotName: 'avatar',
     },
     {
       title: t('admin.columns.name'),
@@ -699,5 +717,10 @@
       margin-left: 12px;
       cursor: pointer;
     }
+  }
+  a-img {
+    display: block;
+    width: 100px;
+    height: 100px;
   }
 </style>

@@ -77,6 +77,7 @@
 
   const onImageSuccess = (res: any) => {
     imageFileList.value[imageFileList.value.length - 1].url = res.response.data;
+    formData.value.imgUrl = imageFileList.value[0].url as string;
     formData.value.skuImageList = imageFileList.value.map((item, index) => {
       return {
         id: '',

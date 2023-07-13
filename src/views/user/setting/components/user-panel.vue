@@ -76,16 +76,20 @@
       value: userStore.certification,
     },
     {
-      label: 'userSetting.label.accountId',
-      value: userStore.accountId,
+      label: 'userSetting.label.username',
+      value: userStore.username,
     },
     {
       label: 'userSetting.label.phone',
       value: userStore.phone,
     },
     {
-      label: 'userSetting.label.registrationDate',
-      value: userStore.registrationDate,
+      label: 'userSetting.label.email',
+      value: userStore.email,
+    },
+    {
+      label: 'userSetting.label.createTime',
+      value: userStore.createTime,
     },
   ] as DescData[];
   const fileList = ref<FileItem[]>([file]);

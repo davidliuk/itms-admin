@@ -276,7 +276,7 @@
         <template #imgUrl="{ record }">
           <img
             :src="record.imgUrl"
-            alt="Sku Image"
+            alt="No Sku Image"
             style="width: 100px; height: 100px"
           />
         </template>
@@ -395,7 +395,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -443,6 +443,10 @@
       slotName: 'imgUrl',
     },
     {
+      title: t('skuInfo.columns.supplierName'),
+      dataIndex: 'supplierName',
+    },
+    {
       title: t('skuInfo.columns.sort'),
       dataIndex: 'sort',
     },
@@ -458,10 +462,10 @@
       title: t('skuInfo.columns.createTime'),
       dataIndex: 'createTime',
     },
-    {
-      title: t('skuInfo.columns.updateTime'),
-      dataIndex: 'updateTime',
-    },
+    // {
+    //   title: t('skuInfo.columns.updateTime'),
+    //   dataIndex: 'updateTime',
+    // },
     // {
     //   title: t('skuInfo.columns.phone'),
     //   dataIndex: 'phone',

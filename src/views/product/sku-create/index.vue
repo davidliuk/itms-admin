@@ -60,7 +60,7 @@
     setLoading(true);
     try {
       await addSkuInfo(submitModel.value);
-      step.value = 3;
+      step.value = 4;
       submitModel.value = {} as SkuInfoVO; // init
     } catch (err) {
       // you can report use errorHandler or other
