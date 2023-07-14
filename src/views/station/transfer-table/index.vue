@@ -219,6 +219,9 @@
             size="small"
             @click="SkuDetail(record.orderId)"
           >
+            <template #icon>
+              <icon-link />
+            </template>
             {{ $t('TransferTable.columns.operations.view') }}
           </a-button>
           <template v-if="record.status === 'DISPATCH'">

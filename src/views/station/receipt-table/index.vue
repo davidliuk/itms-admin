@@ -182,21 +182,25 @@
         @ok="handleDetailClose"
         @cancel="handleDetailClose"
       >
-        <a-form :model="formShow">
-          <a-form-item
-            v-for="(val, key) in formShow"
-            :key="key"
-            :field="key"
-            :label="$t(`receiptTable.form.${key}`)"
-          >
-            <a-textarea
-              v-model="formShow[key]"
-              :placeholder="$t(`receiptTable.form.default.placeholder`)"
-              style="width: 80%"
-              disabled
-            />
-          </a-form-item>
-        </a-form>
+        <div class="data-details">
+          <div class="data-container">
+            <div
+                v-for="(val, key) in formShow"
+                :key="key"
+                :model="formShow"
+                class="data-item"
+            >
+              <div class="data-content">
+                <div class="data-row">
+                  <div class="data-title">{{
+                      $t(`receiptTable.form.${key}`)
+                    }}</div>
+                  <div class="data-value">{{ formShow[key] }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </a-modal>
       <!--数据表格-->
       <a-table
@@ -225,6 +229,9 @@
             size="small"
             @click="getReceipt(record)"
           >
+            <template #icon>
+              <icon-link />
+            </template>
             {{ $t('receiptTable.columns.operations.view') }}
           </a-button>
         </template>
@@ -514,5 +521,37 @@
       margin-left: 12px;
       cursor: pointer;
     }
+  }
+  .data-details {
+    display: flex;
+    padding: 10px;
+    background-color: #f6f6f6;
+  }
+  .data-container {
+    flex: 1;
+  }
+  .data-item {
+    display: inline;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  .data-content {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .data-title {
+    font-size: 15px;
+    color: #9a9797;
+  }
+  .data-value {
+    color: #4d4c4c;
+    font-size: 15px;
+    text-align: center;
+    //margin-left: 100px;
   }
 </style>

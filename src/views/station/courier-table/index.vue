@@ -86,16 +86,16 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('stationTable.operation.download') }}
+            {{ $t('courierTable.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('stationTable.actions.refresh')">
+          <a-tooltip :content="$t('courierTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <!-- 密度 -->
-            <a-tooltip :content="$t('stationTable.actions.density')">
+            <a-tooltip :content="$t('courierTable.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
 
@@ -111,7 +111,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('stationTable.actions.columnSetting')">
+          <a-tooltip :content="$t('courierTable.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -182,46 +182,39 @@
         :visible="isDetailing"
         :title="$t(`courierTable.form.title.detail`)"
         draggable
-        fullscreen
         hide-cancel
         @ok="handleDetailClose"
         @cancel="handleDetailClose"
       >
-        <a-form :model="formshow">
-          <a-form-item
-            v-for="(val, key) in formshow"
-            :key="key"
-            :field="key"
-            :label="$t(`courierTable.form.${key}`)"
-          >
-            <template v-if="key === 'idNoUrl1'">
-              <img :src="formshow[key]" style="width: 200px; height: 150px" />
-              <a-link :href="formshow[key]">
-                <template #icon>
-                  <icon-zoom-in />
-                </template>
-                放大
-              </a-link>
-            </template>
-            <template v-else-if="key === 'idNoUrl2'">
-              <img :src="formshow[key]" style="width: 200px; height: 150px" />
-              <a-link :href="formshow[key]">
-                <template #icon>
-                  <icon-zoom-in />
-                </template>
-                放大
-              </a-link>
-            </template>
-            <template v-else>
-              <a-input
-                v-model="formshow[key]"
-                :placeholder="$t(`courierTable.form.default.placeholder`)"
-                style="width: 80%"
-                disabled
-              />
-            </template>
-          </a-form-item>
-        </a-form>
+        <div class="data-details">
+          <div class="data-container">
+            <div
+                v-for="(val, key) in formshow"
+                :key="key"
+                :model="formshow"
+                class="data-item"
+            >
+              <div class="data-content">
+                <div class="data-row">
+                  <div class="data-title">{{
+                      $t(`courierTable.form.${key}`)
+                    }}</div>
+                  <template v-if="key === 'idNoUrl1'">
+                    <div>
+                      <img :src="formshow[key]" style="width: 200px; height: 150px" />
+                    </div>
+                  </template>
+                  <template v-else-if="key === 'idNoUrl2'">
+                    <img :src="formshow[key]" style="width: 200px; height: 150px" />
+                  </template>
+                  <template v-else>
+                  <div class="data-value">{{ formshow[key] }}</div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </a-modal>
       <!--数据表格-->
       <a-table
@@ -589,5 +582,37 @@
       margin-left: 12px;
       cursor: pointer;
     }
+  }
+  .data-details {
+    display: flex;
+    padding: 10px;
+    background-color: #f6f6f6;
+  }
+  .data-container {
+    flex: 1;
+  }
+  .data-item {
+    display: inline;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .data-content {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .data-title {
+    font-size: 15px;
+    color: #9a9797;
+  }
+  .data-value {
+    color: #4d4c4c;
+    font-size: 15px;
+    text-align: center;
+    //margin-left: 100px;
   }
 </style>
