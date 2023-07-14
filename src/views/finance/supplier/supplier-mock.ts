@@ -31,10 +31,5 @@ setupMock({
         total: 55,
       });
     });
-    Mock.mock(new RegExp('/api/list/payment'), () => {
-      return {
-        data: '100',
-      };
-    });
   },
 });

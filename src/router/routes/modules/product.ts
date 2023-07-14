@@ -79,6 +79,17 @@ const LIST: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'supplier', // The midline path complies with SEO specifications
+      name: 'supplier',
+      component: () => import('@/views/product/supplier/index.vue'),
+      meta: {
+        // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
+        locale: 'menu.product.supplier',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

@@ -39,49 +39,15 @@
                   />
                 </a-form-item>
               </a-col>
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="createTime"
-                  :label="$t('attrGroup.form.createTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.createTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="updateTime"
-                  :label="$t('attrGroup.form.updateTime')"
-                >
-                  <a-range-picker
-                    v-model="formModel.updateTime"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col> -->
-              <!-- <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('attrGroup.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('attrGroup.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col> -->
             </a-row>
           </a-form>
         </a-col>
 
         <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
+        <a-divider style="height: 32px" direction="vertical" />
         <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
+          <a-space :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
@@ -208,34 +174,6 @@
           </a-form-item>
         </a-form>
       </a-modal>
-      <a-modal
-        :visible="isAssigning"
-        :title="$t('attrGroup.form.title.assign')"
-        @cancel="handleClose"
-        @before-ok="handleBeforeOk"
-      >
-        <a-space direction="vertical" size="large">
-          <a-select
-            v-if="!isAssignListFinished"
-            :options="[]"
-            :style="{ width: '480px' }"
-            placeholder="Please select ..."
-            loading
-          />
-          <a-select
-            v-else
-            v-model="selectedOptions"
-            :options="options"
-            :style="{ width: '480px' }"
-            :field-names="fieldNames"
-            placeholder="Please select ..."
-            multiple
-            allow-search
-            allow-clear
-          >
-          </a-select>
-        </a-space>
-      </a-modal>
       <!-- 表格 -->
       <a-table
         v-model:selected-keys="selectedKeys"
@@ -304,7 +242,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick, Ref } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -315,7 +253,10 @@
     AttrGroup,
   } from '@/api/product';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
@@ -323,10 +264,6 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
-
-  const fieldNames = { value: 'id', label: 'name' };
-  let selectedOptions: Ref<string[]>;
-  let selectedAttrGroup: AttrGroup;
 
   const generateFormModel = () => {
     return {
@@ -345,12 +282,11 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
   const isAssigning = ref(false);
-  const isAssignListFinished = ref(false);
   const router = useRouter();
   let form = reactive(generateFormModel());
   const handleView = (groupId: number) => {
@@ -368,13 +304,7 @@
     copy(attrGroup, form);
     isUpdating.value = true;
   };
-  const handleBeforeOk = (done) => {
-    // window.setTimeout(() => {
-    //   done();
-    //   // prevent close
-    //   // done(false)
-    //   handleClose();
-    // }, 3000);
+  const handleBeforeOk = (done: any) => {
     if (isCreating.value) {
       addAttrGroup(form as unknown as AttrGroup);
     } else if (isUpdating.value) {
