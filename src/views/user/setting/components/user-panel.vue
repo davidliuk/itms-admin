@@ -56,9 +56,10 @@
     FileItem,
     RequestOption,
   } from '@arco-design/web-vue/es/upload/interfaces';
-  import { useUserStore } from '@/store';
+
   import { userUploadApi } from '@/api/user-center';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
+  import { useUserStore } from '@/store';
 
   const userStore = useUserStore();
   const file = {

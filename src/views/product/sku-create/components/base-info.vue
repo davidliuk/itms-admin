@@ -45,6 +45,26 @@
       />
     </a-form-item>
     <a-form-item
+      field="supplierId"
+      :label="$t('skuCreate.form.label.supplierId')"
+      :rules="[
+        {
+          required: true,
+          message: $t('skuCreate.form.error.supplierId.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.supplierId"
+        :placeholder="$t('skuCreate.placeholder.supplierId')"
+        :options="supplierOptions"
+        :loading="supplierLoading"
+        :field-names="fieldNames"
+      >
+        <!-- <a-option>APP通用渠道</a-option> -->
+      </a-select>
+    </a-form-item>
+    <a-form-item
       field="categoryId"
       :label="$t('skuCreate.form.label.categoryId')"
       :rules="[
@@ -178,7 +198,13 @@
 <script lang="ts" setup>
   import { ref, Ref } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { allCategory, Category, SkuBasicInfo } from '@/api/product';
+  import {
+    allCategory,
+    allSupplier,
+    Category,
+    SkuBasicInfo,
+    Supplier,
+  } from '@/api/product';
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
@@ -196,6 +222,8 @@
   const fieldNames = { value: 'id', label: 'name' };
   const categoryOptions: Ref<Category[]> = ref([]);
   const categoryLoading = ref(true);
+  const supplierOptions: Ref<Supplier[]> = ref([]);
+  const supplierLoading = ref(true);
 
   const getAllCategory = async () => {
     const { data } = await allCategory();
@@ -203,6 +231,12 @@
     categoryLoading.value = false;
   };
   getAllCategory();
+  const getAllSupplier = async () => {
+    const { data } = await allSupplier();
+    supplierOptions.value = data;
+    supplierLoading.value = false;
+  };
+  getAllSupplier();
   const onNextClick = async () => {
     console.log(formData.value);
     const res = await formRef.value?.validate();

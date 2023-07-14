@@ -30,8 +30,6 @@ import localeInvoice from '@/views/finance/invoice/locale/zh-CN';
 import localeSettlement from '@/views/finance/settlement/locale/zh-CN';
 import localeSupplier from '@/views/finance/supplier/locale/zh-CN';
 
-import localeSupply from '@/views/stock/supply/locale/zh-CN';
-
 import localeFinanceView from '@/views/finance/financeview/locale/zh-CN';
 
 import localeAdmin from '@/views/acl/admin/locale/zh-CN';
@@ -44,6 +42,7 @@ import localeAttr from '@/views/product/attr/locale/zh-CN';
 import localeSku from '@/views/product/sku/locale/zh-CN';
 import localeSkuCreate from '@/views/product/sku-create/locale/zh-CN';
 import localeSkuEdit from '@/views/product/sku-edit/locale/zh-CN';
+import localeSupplierProduct from '@/views/product/supplier/locale/zh-CN';
 
 import localeeSearchTable from '@/views/center/search-table/locale/zh-CN';
 import localeCenterProjectStock from '@/views/center/skuware/locale/zh-CN'; // 库存
@@ -104,8 +103,6 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
 
-  ...localeSupply,
-
   ...localeMonitor,
   ...localeSearchTable,
   ...localeCardList,
@@ -142,6 +139,7 @@ export default {
   ...localeSku,
   ...localeSkuCreate,
   ...localeSkuEdit,
+  ...localeSupplierProduct,
 
   ...localeMissionTable,
   ...localeCourierTable,

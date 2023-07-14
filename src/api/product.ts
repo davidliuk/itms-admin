@@ -202,3 +202,38 @@ export type SkuInfoVO = SkuBasicInfo &
 export function addSkuInfo(skuInfoVo: SkuInfoVO) {
   return axios.post<any>('/admin/product/skuInfo', skuInfoVo);
 }
+
+export interface Supplier {
+  // 定义类型
+  id: string;
+  name: string;
+  phone: string;
+  postCode: string;
+  province: string;
+  city: string;
+  detailAddress: string;
+}
+
+export function addSupplier(supplier: Supplier) {
+  return axios.post<any>('/admin/product/supplier', supplier);
+}
+export function deleteSupplier(id: number) {
+  return axios.delete<any>(`/admin/product/supplier/${id}`);
+}
+export function updateSupplier(supplier: Supplier) {
+  return axios.put<any>('/admin/product/supplier', supplier);
+}
+
+export function querySupplierList(
+  page: number,
+  limit: number,
+  params: Partial<Supplier>
+) {
+  return axios.post<PageRes<Supplier>>(
+    `/admin/product/supplier/${page}/${limit}`,
+    params
+  );
+}
+export function allSupplier() {
+  return axios.get<Supplier[]>('/admin/product/supplier/findAllList');
+}

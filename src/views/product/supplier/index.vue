@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.stock.supplier']" />
-    <a-card class="general-card" :title="$t('menu.stock.supplier')">
+    <Breadcrumb :items="['menu.list', 'menu.product.supplier']" />
+    <a-card class="general-card" :title="$t('menu.product.supplier')">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -41,15 +41,10 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
+        <a-divider style="height: 32px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
-            <a-button
-              type="primary"
-              @click="
-                searchSupplyBy(formModel.id, formModel.name, formModel.province)
-              "
-            >
+          <a-space :size="18">
+            <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />
               </template>
@@ -166,6 +161,7 @@
             <a-input
               v-model="form[key]"
               :placeholder="$t(`supplier.form.${key}.placeholder`)"
+              :disabled="key === 'id'"
             />
           </a-form-item>
         </a-form>
@@ -205,17 +201,17 @@
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="deleteSupplyById(record.id)"
+            @click="handleUpdateClick(record)"
           >
-            {{ $t('supplier.columns.operations.delete') }}
+            {{ $t('supplier.columns.operations.update') }}
           </a-button>
           <a-button
             v-permission="['admin']"
             type="text"
             size="small"
-            @click="handleUpdateClick(record)"
+            @click="deleteSupplierById(record.id)"
           >
-            {{ $t('supplier.columns.operations.update') }}
+            {{ $t('supplier.columns.operations.delete') }}
           </a-button>
         </template>
         <!-- 查看 -->
@@ -229,13 +225,12 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    addSupply,
-    deleteSupply,
-    updateSupply,
-    querySupplyList,
-    searchSupplyList,
-    Supply,
-  } from '@/api/dispatch';
+    addSupplier,
+    deleteSupplier,
+    updateSupplier,
+    querySupplierList,
+    Supplier,
+  } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -266,16 +261,16 @@
   const handleCreateClick = () => {
     isCreating.value = true;
   };
-  const handleUpdateClick = (supplier: Supply) => {
+  const handleUpdateClick = (supplier: Supplier) => {
     copy(supplier, form);
     isUpdating.value = true;
   };
   const handleBeforeOk = (done: any) => {
     console.log(form);
     if (isCreating.value) {
-      addSupply(form as unknown as Supply);
+      addSupplier(form as unknown as Supplier);
     } else {
-      updateSupply(form as unknown as Supply);
+      updateSupplier(form as unknown as Supplier);
     }
     handleClose();
   };
@@ -287,7 +282,7 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<Supply[]>([]);
+  const renderData = ref<Supplier[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -393,11 +388,11 @@
   const fetchData = async (
     page: number,
     pageSize: number,
-    params: Partial<Supply>
+    params: Partial<Supplier>
   ) => {
     setLoading(true);
     try {
-      const { data } = await querySupplyList(page, pageSize, params);
+      const { data } = await querySupplierList(page, pageSize, params);
       renderData.value = data.records;
       pagination.current = page;
       pagination.total = data.total;
@@ -407,35 +402,35 @@
       setLoading(false);
     }
   };
-  const searchSupplyBy = (id: string, name: string, province: string) => {
-    searchData(pagination.current, pagination.pageSize, id, name, province);
-  };
-  const searchData = async (
-    page: number,
-    pageSize: number,
-    id: string,
-    name: string,
-    province: string
-  ) => {
-    setLoading(true);
-    alert(id + name + province);
-    try {
-      const { data } = await searchSupplyList(
-        page,
-        pageSize,
-        id,
-        name,
-        province
-      );
-      renderData.value = data.records;
-      pagination.current = page;
-      pagination.total = data.total;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const searchSupplierBy = (id: string, name: string, province: string) => {
+  //   searchData(pagination.current, pagination.pageSize, id, name, province);
+  // };
+  // const searchData = async (
+  //   page: number,
+  //   pageSize: number,
+  //   id: string,
+  //   name: string,
+  //   province: string
+  // ) => {
+  //   setLoading(true);
+  //   alert(id + name + province);
+  //   try {
+  //     const { data } = await searchSupplierList(
+  //       page,
+  //       pageSize,
+  //       id,
+  //       name,
+  //       province
+  //     );
+  //     renderData.value = data.records;
+  //     pagination.current = page;
+  //     pagination.total = data.total;
+  //   } catch (err) {
+  //     // you can report use errorHandler or other
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
@@ -460,10 +455,10 @@
     size.value = val as SizeProps;
   };
 
-  const deleteSupplyById = async (id: number) => {
+  const deleteSupplierById = async (id: number) => {
     setLoading(true);
     try {
-      await deleteSupply(id);
+      await deleteSupplier(id);
       fetchData(pagination.current, pagination.pageSize, formModel.value);
     } catch (err) {
       // you can report use errorHandler or other
@@ -533,7 +528,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Supply',
+    name: 'Supplier',
   };
 </script>
 
