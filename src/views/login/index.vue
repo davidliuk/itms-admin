@@ -5,7 +5,7 @@
         alt="logo"
         src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
       />
-      <div class="logo-text">IDEA TMS</div>
+      <div class="logo-text">iTMS - 灵创物运</div>
     </div>
     <LoginBanner />
     <div class="content">

@@ -1,5 +1,5 @@
 <template>
-  <a-layout-footer class="footer">IDEA TMS</a-layout-footer>
+  <a-layout-footer class="footer">iTMS - 灵创物运</a-layout-footer>
 </template>
 
 <script lang="ts" setup></script>
