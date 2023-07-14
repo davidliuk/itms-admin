@@ -168,39 +168,26 @@
 
         <!-- 表格form里 -->
         <!-- 状态 -->
-        <template #contentType="{ record }">
-          <a-space>
-            <a-avatar
-              v-if="record.contentType === 'img'"
-              :size="16"
-              shape="square"
-            >
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/581b17753093199839f2e327e726b157.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            <a-avatar
-              v-else-if="record.contentType === 'horizontalVideo'"
-              :size="16"
-              shape="square"
-            >
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77721e365eb2ab786c889682cbc721c1.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            <a-avatar v-else :size="16" shape="square">
-              <img
-                alt="avatar"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
-              />
-            </a-avatar>
-            {{ $t(`supplier.form.contentType.${record.contentType}`) }}
-          </a-space>
-        </template>
-        <template #filterType="{ record }">
-          {{ $t(`supplier.form.filterType.${record.filterType}`) }}
+        <template #status="{ record }">
+          <span v-if="record.storageType === 'RETURN_SUPPLIER'" class="circle"></span>
+          <span v-else-if="record.storageType === 'IN'" class="circle pass"></span>
+          <span
+              v-else-if="record.storageType === 'OUT'"
+              class="circle pass"
+          ></span>
+          <span
+              v-else-if="record.storageType === 'RETURN_IN'"
+              class="circle pass"
+          ></span>
+          <span
+              v-else-if="record.storageType === 'RETURN_OUT'"
+              class="circle pass"
+          ></span>
+          <span
+              v-else-if="record.storageType === 'SUPPLIER'"
+              class="circle pass"
+          ></span>
+          {{ $t(`supplier.form.status.${record.storageType}`) }}
         </template>
         <!--        <template #status="{ record }">
           <span v-if="record.status === 'offline'" class="circle"></span>
@@ -227,7 +214,6 @@
   import {
     addInvoice,
     Invoice,
-    querySupplierListById,
     querySupplierList,
     Supplier,
     updateInvoice,
@@ -245,13 +231,14 @@
   const generateFormModel = () => {
     return {
       id: '',
-      skuId: '',
       skuName: '',
       skuNum: '',
       skuPrice: '',
       supplierId: '',
       supplierName: '',
       wareId: '',
+      stationName: '',
+      storageType:null,
     };
   };
 
@@ -331,14 +318,6 @@
       dataIndex: 'supplierName',
     },
     {
-      title: t('supplier.columns.supplierId'),
-      dataIndex: 'supplierId',
-    },
-    {
-      title: t('supplier.columns.skuId'),
-      dataIndex: 'skuId',
-    },
-    {
       title: t('supplier.columns.skuName'),
       dataIndex: 'skuName',
     },
@@ -354,6 +333,16 @@
       title: t('supplier.columns.wareId'),
       dataIndex: 'wareId',
     },
+    {
+      title: t('supplier.columns.stationName'),
+      dataIndex: 'stationName',
+    },
+    {
+      title: t('supplier.columns.storageType'),
+      dataIndex: 'storageType',
+      slotName: 'status',
+    },
+
   ]);
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);

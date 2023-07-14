@@ -63,13 +63,14 @@ export function searchInvoiceList(
 export interface Supplier {
   // 定义类型
   id: string;
-  skuId: string;
   skuName: string;
   skuNum: string;
   skuPrice: string;
   supplierId: string;
   supplierName: string;
   wareId: string;
+  stationName: string;
+  storageType:string;
 }
 export function querySupplierList(
   page: number,
@@ -77,10 +78,8 @@ export function querySupplierList(
   params: Partial<Supplier>
 ) {
   return axios.post<PageRes<Supplier>>(
-    `/admin/sys/purchaseOrder/${page}/${limit}`,
-    {
+    `/admin/sys/storageOrder/${page}/${limit}`,
       params,
-    }
   );
 }
 export function searchSupplierList(
@@ -90,7 +89,7 @@ export function searchSupplierList(
   supplierName: string
 ) {
   return axios.post<PageRes<Supplier>>(
-    `/admin/sys/purchaseOrder/${page}/${limit}`,
+    `/admin/sys/storageOrder/${page}/${limit}`,
     {
       id,
       supplierName,
@@ -98,28 +97,11 @@ export function searchSupplierList(
   );
 }
 
-export function querySupplierListById(page: number, limit: number, id: number) {
-  return axios.post<PageRes<Supplier>>(
-    `/admin/sys/purchaseOrder/${page}/${limit}`,
-    {
-      id,
-    }
-  );
-}
+
 export function addSupplier(supplier: Supplier) {
-  return axios.post<any>('/admin/sys/purchaseOrder', supplier);
+  return axios.post<any>('/admin/sys/storageOrder', supplier);
 }
-export interface ServiceRecord {
-  id: number;
-  title: string;
-  description: string;
-  name?: string;
-  actionType?: string;
-  icon?: string;
-  data?: DescData[];
-  enable?: boolean;
-  expires?: boolean;
-}
+
 export interface Settlement {
   // 定义类型
   id: string;
