@@ -189,26 +189,32 @@
         <div class="data-details">
           <div class="data-container">
             <div
-                v-for="(val, key) in formshow"
-                :key="key"
-                :model="formshow"
-                class="data-item"
+              v-for="(val, key) in formshow"
+              :key="key"
+              :model="formshow"
+              class="data-item"
             >
               <div class="data-content">
                 <div class="data-row">
                   <div class="data-title">{{
-                      $t(`courierTable.form.${key}`)
-                    }}</div>
+                    $t(`courierTable.form.${key}`)
+                  }}</div>
                   <template v-if="key === 'idNoUrl1'">
                     <div>
-                      <img :src="formshow[key]" style="width: 200px; height: 150px" />
+                      <img
+                        :src="formshow[key]"
+                        style="width: 200px; height: 150px"
+                      />
                     </div>
                   </template>
                   <template v-else-if="key === 'idNoUrl2'">
-                    <img :src="formshow[key]" style="width: 200px; height: 150px" />
+                    <img
+                      :src="formshow[key]"
+                      style="width: 200px; height: 150px"
+                    />
                   </template>
                   <template v-else>
-                  <div class="data-value">{{ formshow[key] }}</div>
+                    <div class="data-value">{{ formshow[key] }}</div>
                   </template>
                 </div>
               </div>

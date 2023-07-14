@@ -186,49 +186,49 @@
         @ok="handleDetailClose"
         @cancel="handleDetailClose"
       >
-          <div class="data-details">
-            <div class="data-container">
-              <div
-                  v-for="(val, key) in formShow"
-                  :key="key"
-                  :model="formShow"
-                  class="data-item"
-              >
-                <div class="data-content">
-                  <div class="data-row">
-                    <div class="data-title">{{
-                        $t(`missionTable.form.${key}`)
-                      }}</div>
-                    <div class="data-value">{{ formShow[key] }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </a-modal>
-      <!--打印-->
-      <a-modal
-          :visible="isPrinting"
-          :title="$t(`missionTable.form.title.detail`)"
-          draggable
-          @ok="handlePrinting"
-          @cancel="handlePrintClose"
-          okText="确定打印"
-      >
-        <div  class="data-details"  id="capture">
+        <div class="data-details">
           <div class="data-container">
             <div
-                v-for="(val, key) in formShow"
-                :key="key"
-                :model="formShow"
-                class="data-item"
-                id="workOrder"
+              v-for="(val, key) in formShow"
+              :key="key"
+              :model="formShow"
+              class="data-item"
             >
               <div class="data-content">
                 <div class="data-row">
                   <div class="data-title">{{
-                      $t(`missionTable.form.${key}`)
-                    }}</div>
+                    $t(`missionTable.form.${key}`)
+                  }}</div>
+                  <div class="data-value">{{ formShow[key] }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a-modal>
+      <!--打印-->
+      <a-modal
+        :visible="isPrinting"
+        :title="$t(`missionTable.form.title.detail`)"
+        draggable
+        ok-text="确定打印"
+        @ok="handlePrinting"
+        @cancel="handlePrintClose"
+      >
+        <div id="capture" class="data-details">
+          <div class="data-container">
+            <div
+              v-for="(val, key) in formShow"
+              id="workOrder"
+              :key="key"
+              :model="formShow"
+              class="data-item"
+            >
+              <div class="data-content">
+                <div class="data-row">
+                  <div class="data-title">{{
+                    $t(`missionTable.form.${key}`)
+                  }}</div>
                   <div class="data-value">{{ formShow[key] }}</div>
                 </div>
               </div>
@@ -509,7 +509,7 @@
   const searchFormModel = () => {
     return {
       stationId: '', // 分站
-      orderId:'',
+      orderId: '',
       name: '', // 收货人姓名
       courierId: '', // 配送员
       wareId: '', // 中心库房

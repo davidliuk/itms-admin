@@ -116,7 +116,6 @@ export function updateWareHouseInfo(warehouseInfo: WarehouseInfo) {
   return axios.put<any>(`/admin/sys/ware`, warehouseInfo);
 }
 
-
 export interface WareAdmins {
   id: number;
   createTime: string;

@@ -185,16 +185,16 @@
         <div class="data-details">
           <div class="data-container">
             <div
-                v-for="(val, key) in formShow"
-                :key="key"
-                :model="formShow"
-                class="data-item"
+              v-for="(val, key) in formShow"
+              :key="key"
+              :model="formShow"
+              class="data-item"
             >
               <div class="data-content">
                 <div class="data-row">
                   <div class="data-title">{{
-                      $t(`receiptTable.form.${key}`)
-                    }}</div>
+                    $t(`receiptTable.form.${key}`)
+                  }}</div>
                   <div class="data-value">{{ formShow[key] }}</div>
                 </div>
               </div>
