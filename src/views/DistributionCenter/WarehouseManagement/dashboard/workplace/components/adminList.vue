@@ -5,7 +5,7 @@
     :body-style="{ padding: '24px 20px 0 20px' }"
   >
     <template #title>
-      管理员列表
+            管理员列表
       <a-avatar-group :max-count="3">
         <!--        <a-avatar-->
         <!--          v-for="item in adminList.length"-->

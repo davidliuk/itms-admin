@@ -215,42 +215,6 @@
           <!--          打印-->
 
           <!--          查看 商品详情-->
-          <a-button
-            v-permission="['admin']"
-            type="text"
-            size="small"
-            @click="SkuDetail(record.orderId)"
-          >
-            <template #icon>
-              <icon-link />
-            </template>
-            {{ $t('StorageOrder.columns.operations.view') }}
-          </a-button>
-          <a-modal
-            v-model:visible="visible"
-            hide-cancel
-            @ok="handleOk"
-            @cancel="handleCancel"
-          >
-            <template #title> 出库单商品详情 </template>
-            <a-table
-              row-key="id"
-              :loading="loading"
-              :columns="(Skucolumns as TableColumnData[])"
-              :data="orderItemData"
-              :bordered="false"
-              :size="size"
-              @page-change="onPageChange"
-            >
-              <template #imgUrl="{ record }">
-                <img
-                  :src="record.imgUrl"
-                  alt="Product Image"
-                  style="width: 100px; height: 100px"
-                />
-              </template>
-            </a-table>
-          </a-modal>
           <!-- 打印 -->
           <a-button type="text" size="small" @click="printClick(record)"
             >打印出库单</a-button
@@ -280,6 +244,39 @@
           </a-modal>
           <!--            打印结束-->
           <!--          查看 商品详情-->
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            @click="SkuDetail(record.orderId)"
+          >
+            {{ $t('StorageOrder.columns.operations.view') }}
+          </a-button>
+          <a-modal
+            v-model:visible="visible"
+            hide-cancel
+            @ok="handleOk"
+            @cancel="handleCancel"
+          >
+            <template #title> 出库单商品详情 </template>
+            <a-table
+              row-key="id"
+              :loading="loading"
+              :columns="(Skucolumns as TableColumnData[])"
+              :data="orderItemData"
+              :bordered="false"
+              :size="size"
+              @page-change="onPageChange"
+            >
+              <template #imgUrl="{ record }">
+                <img
+                  :src="record.imgUrl"
+                  alt="Product Image"
+                  style="width: 100px; height: 100px"
+                />
+              </template>
+            </a-table>
+          </a-modal>
         </template>
         <!-- 查看 -->
       </a-table>

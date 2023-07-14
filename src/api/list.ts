@@ -146,6 +146,7 @@ export function queryRulesPresetList() {
   return axios.get('/api/list/rules-preset');
 }
 
+
 export interface LogisticsBaseInfo {
   id: string;
   name: string;
@@ -157,16 +158,12 @@ export interface StationBaseInfo {
   name: string;
 }
 
-export function queryLogisticsBaseInfo(wareId: string) {
-  return axios.get<LogisticsBaseInfo[]>(
-    `/admin/sys/station/getByWareId/${wareId}`
-  );
+export function queryLogisticsBaseInfo(wareId : string) {
+  return axios.get<LogisticsBaseInfo[]>( `/admin/sys/station/getByWareId/${wareId}`);
 }
 
-export function queryStationBaseInfo(wareId: string) {
-  return axios.get<StationBaseInfo[]>(
-    `/admin/sys/logistics/getByWareId/${wareId}`
-  );
+export function queryStationBaseInfo(wareId : string) {
+  return axios.get<StationBaseInfo[]>(`/admin/sys/logistics/getByWareId/${wareId}`);
 }
 
 export interface SelfDispatchParam {
@@ -180,7 +177,6 @@ export interface SelfDispatchParam {
 
 // 这个地方请求莫名其妙失效老是201
 export function postSelfDispatch(selfDispatchParam: SelfDispatchParam) {
-  return axios.get<any>(`/admin/sys/dispatch/manual`, {
-    params: selfDispatchParam,
-  });
+  return axios.get<any>(`/admin/sys/dispatch/manual`, { params:selfDispatchParam });
 }
+

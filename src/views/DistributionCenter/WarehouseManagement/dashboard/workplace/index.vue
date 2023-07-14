@@ -1,10 +1,9 @@
 <template>
   <div class="container">
     <div class="left-side panel">
-      <Banner v-model:shuttle-data="shuttleData" />
-      <DataPanel />
-      <!--todo: 这个等数据分析的时候在后端拿数据-->
-      <StationList />
+        <Banner  v-model:shuttle-data="shuttleData"/>
+        <DataPanel /> <!--todo: 这个等数据分析的时候在后端拿数据-->
+        <StationList />
     </div>
     <div class="right-side">
       <a-grid :cols="24" :row-gap="16">
@@ -13,15 +12,20 @@
             <AdminList />
           </div>
         </a-grid-item>
+
       </a-grid>
     </div>
   </div>
   <div class="container">
     <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
-      <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }">
+      <a-grid-item
+        :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
+      >
         <PopularContent />
       </a-grid-item>
-      <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }">
+      <a-grid-item
+        :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
+      >
         <CategoriesPercent />
       </a-grid-item>
     </a-grid>
@@ -29,14 +33,15 @@
 </template>
 
 <script lang="ts" setup>
-  import { ShuttleData } from '@/api/dispatch-center';
-  import { ref } from 'vue';
+  import { ShuttleData } from "@/api/dispatch-center";
+  import { ref } from "vue";
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import StationList from './components/stationList.vue';
   import PopularContent from './components/popular-content.vue';
   import CategoriesPercent from './components/categories-percent.vue';
   import AdminList from './components/adminList.vue';
+
 
   const props = withDefaults(
     defineProps<{
@@ -47,7 +52,7 @@
     }
   );
 
-  const shuttleData = ref(props.shuttleData);
+  const shuttleData=ref(props.shuttleData);
 </script>
 
 <script lang="ts">
@@ -142,6 +147,7 @@
     }
   }
 </style>
+
 
 <!--
     <div class="right-side">

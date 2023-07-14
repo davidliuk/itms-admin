@@ -1,7 +1,7 @@
 export default {
   'menu.finance.supplier': '供应商结算',
-  'supplier.columns.stationName': '分站名称',
-  'supplier.columns.storageType': '收款类型',
+  'supplier.columns.stationName':'分站名称',
+  'supplier.columns.storageType':'收款类型',
   'supplier.columns.index': '列序号',
   'supplier.form.reset': '重置',
   'supplier.form.supplier': '供应商名称',
@@ -22,6 +22,7 @@ export default {
   'supplier.columns.paymentSum': '收款小计',
   'supplier.columns.returnPaymentSum': '退款小计',
   'supplier.columns.date': '日期',
+
 
   'supplier.form.status.IN': '收款',
   'supplier.form.status.OUT': '收款',

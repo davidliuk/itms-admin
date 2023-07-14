@@ -7,11 +7,5 @@ import useWarehouseStore from './modules/warehouse-info';
 
 const pinia = createPinia();
 
-export {
-  useAppStore,
-  useUserStore,
-  useTabBarStore,
-  useOrderInfoStore,
-  useWarehouseStore,
-};
+export { useAppStore, useUserStore, useTabBarStore, useOrderInfoStore, useWarehouseStore};
 export default pinia;

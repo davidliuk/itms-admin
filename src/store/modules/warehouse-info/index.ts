@@ -17,7 +17,7 @@ const useWarehouseInfoStore = defineStore('warehouseInfo', {
 
   getters: {
     warehouseInfo(state: WareHouseRecord): WareHouseRecord {
-      return state;
+      return state ;
     },
   },
 

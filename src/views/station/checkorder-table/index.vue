@@ -221,9 +221,6 @@
             size="small"
             @click="SkuDetail(record.orderId)"
           >
-            <template #icon>
-              <icon-link />
-            </template>
             {{ $t('CheckOrderTable.columns.operations.view') }}
           </a-button>
           <a-modal

@@ -70,7 +70,7 @@ export interface Supplier {
   supplierName: string;
   wareId: string;
   stationName: string;
-  storageType: string;
+  storageType:string;
 }
 export function querySupplierList(
   page: number,
@@ -79,7 +79,7 @@ export function querySupplierList(
 ) {
   return axios.post<PageRes<Supplier>>(
     `/admin/sys/storageOrder/${page}/${limit}`,
-    params
+      params,
   );
 }
 export function searchSupplierList(
@@ -96,6 +96,7 @@ export function searchSupplierList(
     }
   );
 }
+
 
 export function addSupplier(supplier: Supplier) {
   return axios.post<any>('/admin/sys/storageOrder', supplier);
@@ -118,9 +119,9 @@ export function querySettlementList(
   limit: number,
   params: Partial<Invoice>
 ) {
-  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`, {
-    params,
-  });
+  return axios.post<PageRes<Invoice>>(`/admin/sys/invoice/${page}/${limit}`,
+      {params,}
+  );
 }
 export function searchSettlementList(
   page: number,
@@ -139,22 +140,22 @@ export interface OrderDetail {
   id: string;
   nickName: string;
   orderNo: string;
-  orderStatus: string;
-  processStatus: string;
-  payType: string;
-  orderType: string;
-  courierName: string;
-  courierPhone: string;
-  receiverAddress: string;
-  receiverPhone: string;
-  originalTotalAmount: string;
-  couponId: string;
+  orderStatus:string;
+  processStatus:string;
+  payType:string;
+  orderType:string;
+  courierName:string;
+  courierPhone:string;
+  receiverAddress:string;
+  receiverPhone:string;
+  originalTotalAmount:string;
+  couponId:string;
   totalAmount: string;
-  cancelReason: string;
+  cancelReason:string;
 }
 
-export function queryOrderDetailList(orderId: string) {
-  return axios.get<OrderDetail>(
-    `/admin/sys/dispatch/orderDetailById/${orderId}`
-  );
+export function queryOrderDetailList(
+    orderId: string,
+) {
+  return axios.get<OrderDetail>(`/admin/sys/dispatch/orderDetailById/${orderId}`);
 }
