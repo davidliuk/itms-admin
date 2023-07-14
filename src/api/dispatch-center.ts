@@ -5,13 +5,10 @@ import { LoginRes } from '@/api/user';
 import { PageRes, Role } from '@/api/acl';
 import { Pagination } from '@/types/global';
 
-
 export interface LSPPage {
-  current:number;
-  limit:number;
+  current: number;
+  limit: number;
 }
-
-
 
 export interface WareHouseRecord {
   id: string;
@@ -25,7 +22,7 @@ export interface WareHouseRecord {
   useNumber: number;
 }
 export interface ShuttleData {
-  showDetailPage:boolean;
+  showDetailPage: boolean;
 }
 
 interface SumRecord {

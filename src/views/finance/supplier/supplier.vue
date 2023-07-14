@@ -169,23 +169,29 @@
         <!-- 表格form里 -->
         <!-- 状态 -->
         <template #status="{ record }">
-          <span v-if="record.storageType === 'RETURN_SUPPLIER'" class="circle"></span>
-          <span v-else-if="record.storageType === 'IN'" class="circle pass"></span>
           <span
-              v-else-if="record.storageType === 'OUT'"
-              class="circle pass"
+            v-if="record.storageType === 'RETURN_SUPPLIER'"
+            class="circle"
           ></span>
           <span
-              v-else-if="record.storageType === 'RETURN_IN'"
-              class="circle pass"
+            v-else-if="record.storageType === 'IN'"
+            class="circle pass"
           ></span>
           <span
-              v-else-if="record.storageType === 'RETURN_OUT'"
-              class="circle pass"
+            v-else-if="record.storageType === 'OUT'"
+            class="circle pass"
           ></span>
           <span
-              v-else-if="record.storageType === 'SUPPLIER'"
-              class="circle pass"
+            v-else-if="record.storageType === 'RETURN_IN'"
+            class="circle pass"
+          ></span>
+          <span
+            v-else-if="record.storageType === 'RETURN_OUT'"
+            class="circle pass"
+          ></span>
+          <span
+            v-else-if="record.storageType === 'SUPPLIER'"
+            class="circle pass"
           ></span>
           {{ $t(`supplier.form.status.${record.storageType}`) }}
         </template>
@@ -238,7 +244,7 @@
       supplierName: '',
       wareId: '',
       stationName: '',
-      storageType:null,
+      storageType: null,
     };
   };
 
@@ -342,7 +348,6 @@
       dataIndex: 'storageType',
       slotName: 'status',
     },
-
   ]);
   const search = () => {
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);

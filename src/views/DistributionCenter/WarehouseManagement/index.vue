@@ -1,6 +1,6 @@
 <template>
-  <div v-if="shuttleData.showDetailPage" >
-    <WorkPlace v-model:shuttle-data="shuttleData"/>
+  <div v-if="shuttleData.showDetailPage">
+    <WorkPlace v-model:shuttle-data="shuttleData" />
   </div>
   <div v-else class="container">
     <Breadcrumb
@@ -48,16 +48,11 @@
   import DispatchRegionCard from '@/views/DistributionCenter/WarehouseManagement/components/dispatch-region-card.vue';
   import { Ref, ref } from 'vue';
   import { ShuttleData } from '@/api/dispatch-center';
-  import  WorkPlace  from './dashboard/workplace/index.vue';
+  import WorkPlace from './dashboard/workplace/index.vue';
 
   const shuttleData: Ref<ShuttleData> = ref({
-    showDetailPage: false
+    showDetailPage: false,
   });
-
-
-
-
-
 </script>
 
 <script lang="ts">

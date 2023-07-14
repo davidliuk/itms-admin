@@ -12,15 +12,15 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <!--分站id-->
+              <!--订单id-->
               <a-col :span="8">
                 <a-form-item
-                  field="stationId"
-                  :label="$t('missionTable.form.stationId')"
+                  field="orderId"
+                  :label="$t('missionTable.form.orderId')"
                 >
                   <a-input
-                    v-model="formModel.stationId"
-                    :placeholder="$t('missionTable.form.stationId.placeholder')"
+                    v-model="formModel.orderId"
+                    :placeholder="$t('missionTable.form.orderId.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -90,6 +90,7 @@
         </a-col>
       </a-row>
       <a-divider style="margin-top: 0" />
+
       <a-row style="margin-bottom: 16px">
         <!-- 查找重置按钮 -->
         <a-col :span="12">
@@ -180,26 +181,60 @@
         :visible="isDetailing"
         :title="$t(`missionTable.form.title.detail`)"
         draggable
-        fullscreen
         hide-cancel
+        width="500px"
         @ok="handleDetailClose"
         @cancel="handleDetailClose"
       >
-        <a-form id="capture" :model="formShow">
-          <a-form-item
-            v-for="(val, key) in formShow"
-            :key="key"
-            :field="key"
-            :label="$t(`missionTable.form.${key}`)"
-          >
-            <a-input
-              v-model="formShow[key]"
-              :placeholder="$t(`missionTable.form.default.placeholder`)"
-              style="width: 80%"
-              disabled
-            />
-          </a-form-item>
-        </a-form>
+        <div class="data-details">
+          <div class="data-container">
+            <div
+              v-for="(val, key) in formShow"
+              :key="key"
+              :model="formShow"
+              class="data-item"
+            >
+              <div class="data-content">
+                <div class="data-row">
+                  <div class="data-title">{{
+                    $t(`missionTable.form.${key}`)
+                  }}</div>
+                  <div class="data-value">{{ formShow[key] }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a-modal>
+      <!--打印-->
+      <a-modal
+        :visible="isPrinting"
+        :title="$t(`missionTable.form.title.detail`)"
+        draggable
+        ok-text="确定打印"
+        @ok="handlePrinting"
+        @cancel="handlePrintClose"
+      >
+        <div id="capture" class="data-details">
+          <div class="data-container">
+            <div
+              v-for="(val, key) in formShow"
+              id="workOrder"
+              :key="key"
+              :model="formShow"
+              class="data-item"
+            >
+              <div class="data-content">
+                <div class="data-row">
+                  <div class="data-title">{{
+                    $t(`missionTable.form.${key}`)
+                  }}</div>
+                  <div class="data-value">{{ formShow[key] }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </a-modal>
       <!--分配-->
       <a-modal
@@ -226,7 +261,7 @@
           </template>
         </a-table>
       </a-modal>
-      <!--详情展示-->
+      <!--回执-->
       <a-modal
         :visible="isReturning"
         :title="$t(`missionTable.form.title.return`)"
@@ -345,6 +380,9 @@
             size="small"
             @click="getWorkOrder(record)"
           >
+            <template #icon>
+              <icon-link />
+            </template>
             {{ $t('missionTable.columns.operations.view') }}
           </a-button>
           <template v-if="record.workStatus === 'IN'">
@@ -471,6 +509,7 @@
   const searchFormModel = () => {
     return {
       stationId: '', // 分站
+      orderId: '',
       name: '', // 收货人姓名
       courierId: '', // 配送员
       wareId: '', // 中心库房
@@ -489,6 +528,7 @@
   const isDetailing = ref(false);
   const isAssigning = ref(false);
   const isReturning = ref(false);
+  const isPrinting = ref(false);
   const deliverOrReturn = ref(false);
 
   const size = ref<SizeProps>('medium');
@@ -806,13 +846,21 @@
     formReturn = reactive(generateFormModel());
   };
   // 打印任务单
-  const printWorkOrder = (workOrder: WorkOrder) => {
+  const handlePrinting = () => {
+    // 打印当前任务单详情
     const text = '任务单详情';
-    getWorkOrder(workOrder);
-    // text:文件标题
     setTimeout(() => {
       htmlToPdf(text, '#capture');
-    }, 200);
+    }, 5000);
+    handlePrintClose();
+  };
+  const handlePrintClose = () => {
+    formShow = reactive(generateFormModel());
+    isPrinting.value = false;
+  };
+  const printWorkOrder = (workOrder: WorkOrder) => {
+    copy(workOrder, formShow);
+    isPrinting.value = true;
   };
 
   // 查询重置
@@ -926,5 +974,37 @@
       margin-left: 12px;
       cursor: pointer;
     }
+  }
+  .data-details {
+    display: flex;
+    padding: 10px;
+    background-color: #f6f6f6;
+  }
+  .data-container {
+    flex: 1;
+  }
+  .data-item {
+    display: inline;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  .data-content {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .data-title {
+    font-size: 15px;
+    color: #9a9797;
+  }
+  .data-value {
+    color: #4d4c4c;
+    font-size: 15px;
+    text-align: center;
+    //margin-left: 100px;
   }
 </style>

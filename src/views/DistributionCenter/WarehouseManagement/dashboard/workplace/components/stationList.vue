@@ -1,57 +1,54 @@
 <template>
   <div>
-
-
-  <a-table
-    :loading="loading"
-    :columns="tableColumns"
-    :data="dataToShow"
-    :pagination="false"
-    :bordered="false"
-
-    :table-layout-fixed="false"
-    class="table-style"
-  >
-    <template #order_status="{ record }">
-      <a-typography-paragraph>
-        {{ (record as StationInfo).province }}-{{
-          (record as StationInfo).city
-        }}-{{ (record as StationInfo).district }}-{{
-          (record as StationInfo).detailAddress
-        }}
-      </a-typography-paragraph>
-    </template>
-    <!--    <template #columns>-->
-    <!--      <a-table-column title="分站ID" data-index="regionId" />-->
-    <!--      <a-table-column title="分站名" data-index="name"/>-->
-    <!--&lt;!&ndash;      <a-table-column title="分站照片" data-index="storePath"/>&ndash;&gt;-->
-    <!--      <a-table-column title="营业状态" data-index="workStatus"/>-->
-    <!--      <a-table-column title="地址" data-index="name">-->
-    <!--        <template #cell="{ record }">-->
-    <!--            {{ (record as StationInfo).province }}-{{ (record as StationInfo).city }}-{{ (record as StationInfo).district }}-{{ (record as StationInfo).detailAddress }}-->
-    <!--        </template>-->
-    <!--      </a-table-column>-->
-    <!--      <a-table-column title="邮编" data-index="postCode" />-->
-    <!--      <a-table-column title="电话" data-index="phone" />-->
-    <!--      <a-table-column-->
-    <!--        title="营业时间"-->
-    <!--        data-index="increases"-->
-    <!--        :sortable="{-->
-    <!--          sortDirections: ['ascend', 'descend'],-->
-    <!--        }"-->
-    <!--      >-->
-    <!--        <template #cell="{ record }">-->
-    <!--          <div class="increases-cell">-->
-    <!--            <span>{{ (record as StationInfo).workTime }}%</span>-->
-    <!--            <icon-caret-up-->
-    <!--              v-if="record.increases !== 0"-->
-    <!--              style="color: #f53f3f; font-size: 8px"-->
-    <!--            />-->
-    <!--          </div>-->
-    <!--        </template>-->
-    <!--      </a-table-column>-->
-    <!--    </template>-->
-  </a-table>
+    <a-table
+      :loading="loading"
+      :columns="tableColumns"
+      :data="dataToShow"
+      :pagination="false"
+      :bordered="false"
+      :table-layout-fixed="false"
+      class="table-style"
+    >
+      <template #order_status="{ record }">
+        <a-typography-paragraph>
+          {{ (record as StationInfo).province }}-{{
+            (record as StationInfo).city
+          }}-{{ (record as StationInfo).district }}-{{
+            (record as StationInfo).detailAddress
+          }}
+        </a-typography-paragraph>
+      </template>
+      <!--    <template #columns>-->
+      <!--      <a-table-column title="分站ID" data-index="regionId" />-->
+      <!--      <a-table-column title="分站名" data-index="name"/>-->
+      <!--&lt;!&ndash;      <a-table-column title="分站照片" data-index="storePath"/>&ndash;&gt;-->
+      <!--      <a-table-column title="营业状态" data-index="workStatus"/>-->
+      <!--      <a-table-column title="地址" data-index="name">-->
+      <!--        <template #cell="{ record }">-->
+      <!--            {{ (record as StationInfo).province }}-{{ (record as StationInfo).city }}-{{ (record as StationInfo).district }}-{{ (record as StationInfo).detailAddress }}-->
+      <!--        </template>-->
+      <!--      </a-table-column>-->
+      <!--      <a-table-column title="邮编" data-index="postCode" />-->
+      <!--      <a-table-column title="电话" data-index="phone" />-->
+      <!--      <a-table-column-->
+      <!--        title="营业时间"-->
+      <!--        data-index="increases"-->
+      <!--        :sortable="{-->
+      <!--          sortDirections: ['ascend', 'descend'],-->
+      <!--        }"-->
+      <!--      >-->
+      <!--        <template #cell="{ record }">-->
+      <!--          <div class="increases-cell">-->
+      <!--            <span>{{ (record as StationInfo).workTime }}%</span>-->
+      <!--            <icon-caret-up-->
+      <!--              v-if="record.increases !== 0"-->
+      <!--              style="color: #f53f3f; font-size: 8px"-->
+      <!--            />-->
+      <!--          </div>-->
+      <!--        </template>-->
+      <!--      </a-table-column>-->
+      <!--    </template>-->
+    </a-table>
   </div>
 </template>
 

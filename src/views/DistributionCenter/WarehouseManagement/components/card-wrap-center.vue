@@ -113,17 +113,14 @@
     }
   });
 
-  const warehouseStore=useWarehouseInfoStore();
+  const warehouseStore = useWarehouseInfoStore();
   const handleInfo = () => {
     warehouseStore.setInfo(cardData.value);
     cardDataShuttleData.value.showDetailPage = true;
 
     const $emit = defineEmits(['update:shuttleData']);
-    $emit('update:shuttleData',cardDataShuttleData.value);
-
+    $emit('update:shuttleData', cardDataShuttleData.value);
   };
-
-
 </script>
 
 <style scoped lang="less">
