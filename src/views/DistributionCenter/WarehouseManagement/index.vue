@@ -1,6 +1,6 @@
 <template>
-  <div v-if="shuttleData.showDetailPage">
-    <WorkPlace />
+  <div v-if="shuttleData.showDetailPage" >
+    <WorkPlace v-model:shuttle-data="shuttleData"/>
   </div>
   <div v-else class="container">
     <Breadcrumb
@@ -51,8 +51,7 @@
   import  WorkPlace  from './dashboard/workplace/index.vue';
 
   const shuttleData: Ref<ShuttleData> = ref({
-    showDetailPage: false,
-    wareId: '-1',
+    showDetailPage: false
   });
 
 

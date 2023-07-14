@@ -59,6 +59,7 @@
   } from 'vue';
   import OrderInfo from '@/views/list/search-table/order_info/index.vue';
   import { ShuttleData } from '@/api/dispatch-center';
+  import useWarehouseInfoStore from '@/store/modules/warehouse-info';
 
   const props = withDefaults(
     // 参数一：定义props类型：? 代表非必传字段， :号后面紧跟的是数据类型或自定义接口， | 或多种类型
@@ -112,8 +113,9 @@
     }
   });
 
+  const warehouseStore=useWarehouseInfoStore();
   const handleInfo = () => {
-    cardDataShuttleData.value.wareId = cardData.value.id;
+    warehouseStore.setInfo(cardData.value);
     cardDataShuttleData.value.showDetailPage = true;
 
     const $emit = defineEmits(['update:shuttleData']);

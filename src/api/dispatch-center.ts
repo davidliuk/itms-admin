@@ -11,10 +11,6 @@ export interface LSPPage {
   limit:number;
 }
 
-export interface ShuttleData {
-  showDetailPage:boolean;
-  wareId:string;
-}
 
 
 export interface WareHouseRecord {
@@ -27,6 +23,9 @@ export interface WareHouseRecord {
   district: string;
   totalNumber: number;
   useNumber: number;
+}
+export interface ShuttleData {
+  showDetailPage:boolean;
 }
 
 interface SumRecord {

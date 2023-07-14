@@ -1,69 +1,50 @@
 <template>
-  <a-spin :loading="loading" style="width: 100%">
+  <a-spin style="width: 100%">
     <a-card
       class="general-card"
       :header-style="{ paddingBottom: '0' }"
       :body-style="{ padding: '17px 20px 21px 20px' }"
     >
-      <template #title>
-        {{ $t('workplace.popularContent') }}
-      </template>
-      <template #extra>
-        <a-link>{{ $t('workplace.viewMore') }}</a-link>
-      </template>
+      <template #title> 商品列表 </template>
+      <!--      <template #extra>-->
+      <!--        <a-link>{{ $t('workplace.viewMore') }}</a-link>-->
+      <!--      </template>-->
       <a-space direction="vertical" :size="10" fill>
-        <a-radio-group
-          v-model:model-value="type"
-          type="button"
-          @change="typeChange as any"
+        <a-select
+          v-model="type"
+          :style="{ width: '320px' }"
+          placeholder="选择类别"
+          @change="typeChange"
         >
-          <a-radio value="text">
-            {{ $t('workplace.popularContent.text') }}
-          </a-radio>
-          <a-radio value="image">
-            {{ $t('workplace.popularContent.image') }}
-          </a-radio>
-          <a-radio value="video">
-            {{ $t('workplace.popularContent.video') }}
-          </a-radio>
-        </a-radio-group>
+          <a-option v-for="category in categoriesAllName" :key="category">{{
+            category
+          }}</a-option>
+        </a-select>
         <a-table
+          :loading="loading"
           :data="renderList"
           :pagination="false"
-          :bordered="false"
+          :bordered="true"
           :scroll="{ x: '100%', y: '264px' }"
         >
           <template #columns>
-            <a-table-column title="排名" data-index="key"></a-table-column>
-            <a-table-column title="内容标题" data-index="title">
-              <template #cell="{ record }">
-                <a-typography-paragraph
-                  :ellipsis="{
-                    rows: 1,
-                  }"
-                >
-                  {{ record.title }}
-                </a-typography-paragraph>
-              </template>
-            </a-table-column>
-            <a-table-column title="点击量" data-index="clickNumber">
-            </a-table-column>
+            <a-table-column title="名称" data-index="skuName" />
+            <a-table-column title="类别" data-index="category" />
             <a-table-column
-              title="日涨幅"
-              data-index="increases"
+              title="销量"
+              data-index="sale"
               :sortable="{
                 sortDirections: ['ascend', 'descend'],
               }"
-            >
-              <template #cell="{ record }">
-                <div class="increases-cell">
-                  <span>{{ record.increases }}%</span>
-                  <icon-caret-up
-                    v-if="record.increases !== 0"
-                    style="color: #f53f3f; font-size: 8px"
-                  />
-                </div>
-              </template>
+            />
+            <a-table-column
+              title="现库存"
+              data-index="stock"
+              :sortable="{
+                sortDirections: ['ascend', 'descend'],
+              }"
+            />
+            <a-table-column title="最大库存" data-index="maxStock">
             </a-table-column>
           </template>
         </a-table>
@@ -73,29 +54,103 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { computed, Ref, ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { queryPopularList } from '@/api/dashboard';
+  import useWarehouseInfoStore from '@/store/modules/warehouse-info';
+  import {
+    CategoriesMap,
+    queryCategoriesNameList, queryStationList, queryWareList,
+    StationInfo,
+    WareInfo
+  } from "@/api/dashboard";
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
+  import { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import Category from '@/views/product/category/index.vue';
 
-  const type = ref('text');
+  const type = ref('全部');
   const { loading, setLoading } = useLoading();
-  const renderList = ref<TableData[]>();
-  const fetchData = async (contentType: string) => {
+
+  const baseData: Ref<WareInfo[]> = ref([]);
+  const renderList = ref([{}]);
+
+  const getrenderList = () => {
+    const tempData: Ref<WareInfo[]> = ref([]);
+    for (let i = 0; i < baseData.value.length; i += 1) {
+      if (
+        type.value === '全部' ||
+        (baseData.value[i].skuInfo.categoryName as unknown as string) ===
+          (type.value as unknown as string)
+      ) {
+        tempData.value.push(baseData.value[i]);
+      }
+    }
+
+    renderList.value = Array(tempData.value.length)
+      .fill(null)
+      .map((_, index) => ({
+        key: String(index),
+        skuName: tempData.value[index].skuName,
+        category: tempData.value[index].skuInfo.categoryName,
+        stock: tempData.value[index].stock,
+        maxStock: tempData.value[index].maxStock,
+        sale: tempData.value[index].sale,
+      }));
+  };
+
+
+
+  const baseCategoriesMap: Ref<CategoriesMap[]> = ref([]);
+
+  const setCategoryName = () => {
+    return baseData.value.map(data => {
+      const category = baseCategoriesMap.value.find(item => item.id === data.skuInfo.categoryId);
+      if (category) {
+        data.skuInfo.categoryName = category.name;
+      }
+      return data;
+    });
+  };
+  const fetchData = async (wareId: string) => {
+    // get wareInfo
     try {
       setLoading(true);
-      const { data } = await queryPopularList({ type: contentType });
-      renderList.value = data;
+      const { data } = await queryWareList(wareId);
+      baseData.value = data;
+
+      // console.log(renderList.value);
+      getrenderList();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
+
+    // get cateories id-name map
+    try {
+      setLoading(true);
+      const { data } = await queryCategoriesNameList();
+      baseCategoriesMap.value = data;
+      // console.log(renderList.value);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+
+    baseData.value = setCategoryName();
   };
-  const typeChange = (contentType: string) => {
-    fetchData(contentType);
+
+  const categoriesAllName: Ref<string[]> = computed(() => {
+    const tempRes=['全部'];
+    if (baseData.value === undefined) return tempRes;
+    tempRes.push(...[...new Set(baseData.value.map((obj) => obj.skuInfo.categoryName))]);
+    return tempRes;
+  });
+  const typeChange = () => {
+    console.log(type.value);
+    getrenderList();
   };
-  fetchData('text');
+  fetchData(useWarehouseInfoStore().$state.id as string);
 </script>
 
 <style scoped lang="less">

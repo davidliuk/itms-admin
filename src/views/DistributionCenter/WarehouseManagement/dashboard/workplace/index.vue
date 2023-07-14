@@ -1,21 +1,18 @@
 <template>
   <div class="container">
     <div class="left-side panel">
-        <Banner />
-        <DataPanel />
-        <ContentChart />
+        <Banner  v-model:shuttle-data="shuttleData"/>
+        <DataPanel /> <!--todo: 这个等数据分析的时候在后端拿数据-->
+        <StationList />
     </div>
     <div class="right-side">
       <a-grid :cols="24" :row-gap="16">
         <a-grid-item :span="24">
           <div class="panel moduler-wrap">
-            <QuickOperation />
-            <RecentlyVisited />
+            <AdminList />
           </div>
         </a-grid-item>
-        <a-grid-item class="panel" :span="24">
-          <Carousel />
-        </a-grid-item>
+
       </a-grid>
     </div>
   </div>
@@ -36,16 +33,26 @@
 </template>
 
 <script lang="ts" setup>
+  import { ShuttleData } from "@/api/dispatch-center";
+  import { ref } from "vue";
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
-  import ContentChart from './components/content-chart.vue';
+  import StationList from './components/stationList.vue';
   import PopularContent from './components/popular-content.vue';
   import CategoriesPercent from './components/categories-percent.vue';
-  import RecentlyVisited from './components/recently-visited.vue';
-  import QuickOperation from './components/quick-operation.vue';
-  import Announcement from './components/announcement.vue';
-  import Carousel from './components/carousel.vue';
-  import Docs from './components/docs.vue';
+  import AdminList from './components/adminList.vue';
+
+
+  const props = withDefaults(
+    defineProps<{
+      shuttleData: ShuttleData;
+    }>(),
+    {
+      shuttleData: undefined,
+    }
+  );
+
+  const shuttleData=ref(props.shuttleData);
 </script>
 
 <script lang="ts">
