@@ -8,7 +8,7 @@ const STATION: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.station',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'icon-home',
     order: 2,
   },
   children: [
