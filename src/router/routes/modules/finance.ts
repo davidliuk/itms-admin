@@ -8,10 +8,9 @@ const LIST: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.finance',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'icon-book',
     order: 8,
   },
-
   children: [
     {
       path: 'invoice', // The midline path complies with SEO specifications
