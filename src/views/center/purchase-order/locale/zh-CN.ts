@@ -54,7 +54,7 @@ export default {
   // updateTime	string(date-time)	更新时间
 
   'PurchaseOrder.columns.index': '#',
-  'PurchaseOrder.columns.id': '购货单标识',
+  'PurchaseOrder.columns.id': '编号',
   'PurchaseOrder.columns.wareId': '区域中心仓库标识',
   'PurchaseOrder.columns.supplierId': '供应商标识',
   'PurchaseOrder.columns.supplierName': '供应商名称',
