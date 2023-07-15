@@ -13,7 +13,7 @@ export default {
   'missionTable.form.courierId': '配送员',
   'missionTable.form.courierId.placeholder': '请输入配送员id',
   'missionTable.form.orderId': '订单编号',
-  // 'missionTable.form.orderId.placeholder': '请输入订单编号',
+  'missionTable.form.orderId.placeholder': '请输入订单编号',
   'missionTable.form.wareId': '中心库房',
   'missionTable.form.wareId.placeholder': '请输入区域中心库房id',
   'missionTable.form.workType': '任务类型',

@@ -32,9 +32,7 @@
           :disabled="disableSelecting"
           :options="stationsOptions"
         />
-
       </a-space>
-
     </a-modal>
 
     <a-modal
@@ -378,7 +376,7 @@
   import { Modal } from '@arco-design/web-vue';
   import router from '@/router';
   import { useOrderInfoStore } from '@/store';
-  import { LSPPage } from "@/api/dispatch-center";
+  import { LSPPage } from '@/api/dispatch-center';
   import OrderInfo from './order_info/index.vue';
   import { OrderStateGetString } from '../../../utils/lsp-utils/order_state_to_string';
 
@@ -814,6 +812,5 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-
   }
 </style>

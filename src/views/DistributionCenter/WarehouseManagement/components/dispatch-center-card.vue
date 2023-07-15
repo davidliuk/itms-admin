@@ -89,7 +89,7 @@
     }
   );
 
-  const shuttleData=ref(props.shuttleData);
+  const shuttleData = ref(props.shuttleData);
   console.log(shuttleData.value);
 
   const fetchData = async (pageParam: LSPPage) => {

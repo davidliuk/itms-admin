@@ -59,10 +59,12 @@
   import useWarehouseInfoStore from '@/store/modules/warehouse-info';
   import {
     CategoriesMap,
-    queryCategoriesNameList, queryStationList, queryWareList,
+    queryCategoriesNameList,
+    queryStationList,
+    queryWareList,
     StationInfo,
-    WareInfo
-  } from "@/api/dashboard";
+    WareInfo,
+  } from '@/api/dashboard';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
   import { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import Category from '@/views/product/category/index.vue';
@@ -97,13 +99,13 @@
       }));
   };
 
-
-
   const baseCategoriesMap: Ref<CategoriesMap[]> = ref([]);
 
   const setCategoryName = () => {
-    return baseData.value.map(data => {
-      const category = baseCategoriesMap.value.find(item => item.id === data.skuInfo.categoryId);
+    return baseData.value.map((data) => {
+      const category = baseCategoriesMap.value.find(
+        (item) => item.id === data.skuInfo.categoryId
+      );
       if (category) {
         data.skuInfo.categoryName = category.name;
       }
@@ -141,9 +143,11 @@
   };
 
   const categoriesAllName: Ref<string[]> = computed(() => {
-    const tempRes=['全部'];
+    const tempRes = ['全部'];
     if (baseData.value === undefined) return tempRes;
-    tempRes.push(...[...new Set(baseData.value.map((obj) => obj.skuInfo.categoryName))]);
+    tempRes.push(
+      ...[...new Set(baseData.value.map((obj) => obj.skuInfo.categoryName))]
+    );
     return tempRes;
   });
   const typeChange = () => {
