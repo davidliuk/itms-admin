@@ -132,8 +132,24 @@ export interface WareAdmins {
   stationId: number | null;
   roles: string[] | null;
   permissions: string[] | null;
+  shouldDelete: boolean;
 }
 
 export function queryWareAdmins(wareId: string) {
   return axios.get<WareAdmins[]>(`/admin/acl/user/ware/${wareId}`);
+}
+
+
+
+
+export function queryPopularList(params: { type: string }) {
+  return axios.get<TableData[]>('/api/popular/list', { params });
+}
+
+
+
+
+
+export function updateAdmin(admin:WareAdmins) {
+  return axios.put<any>('/admin/acl/user', admin);
 }
