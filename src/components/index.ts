@@ -10,6 +10,7 @@ import {
   GraphicComponent,
 } from 'echarts/components';
 import { Bill } from 'mand-mobile-next';
+import 'mand-mobile-next/dist/es/mand-mobile-next.min.css';
 import Chart from './chart/index.vue';
 import Breadcrumb from './breadcrumb/index.vue';
 

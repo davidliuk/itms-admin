@@ -152,23 +152,20 @@
           {{ $t(`settlement.form.status.${record.status}`) }}
         </template>
 
-
-
-
         <!-- 表格form里 -->
 
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailOrderData(record.id)"
-          >查看详情</a-button
+            >查看详情</a-button
           >
           <a-modal
-              ok-text="打印"
-              :visible="printVisible"
-              title="订单详情"
-              width="700px"
-              @cancel="printCancel"
-              @before-ok="printBeforeOk"
-          >间距
+            ok-text="打印"
+            :visible="printVisible"
+            title="订单详情"
+            width="700px"
+            @cancel="printCancel"
+            @before-ok="printBeforeOk"
+            >间距
             <a-radio-group v-model="pdfSize" type="button">
               <a-radio value="mini">mini</a-radio>
               <a-radio value="small">small</a-radio>
@@ -176,12 +173,12 @@
               <a-radio value="large">large</a-radio>
             </a-radio-group>
             <a-descriptions
-                id="capture"
-                style="margin-top: 20px"
-                :data="detailData"
-                :size="pdfSize"
-                title="详情"
-                :column="1"
+              id="capture"
+              style="margin-top: 20px"
+              :data="detailData"
+              :size="pdfSize"
+              title="详情"
+              :column="1"
             ></a-descriptions>
           </a-modal>
         </template>
@@ -202,7 +199,9 @@
   import {
     querySettlementList,
     Settlement,
-    searchSettlementList, queryOrderDetailList, OrderDetail,
+    searchSettlementList,
+    queryOrderDetailList,
+    OrderDetail,
   } from '@/api/finance';
 
   import { Pagination } from '@/types/global';
@@ -212,8 +211,8 @@
   import Sortable from 'sortablejs';
   import { addAdmin, Admin, deleteAdmin, updateAdmin } from '@/api/acl';
   import copy from '@/utils/objects';
-  import {CheckOrder} from "@/api/center";
-  import htmlToPdf from "@/utils/pdf";
+  import { CheckOrder } from '@/api/center';
+  import htmlToPdf from '@/utils/pdf';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -352,22 +351,20 @@
     }
   };
 
-  const detailOrderData = async (
-     orderId:string,
-  ) => {
+  const detailOrderData = async (orderId: string) => {
     setLoading(true);
-      const { data } = await queryOrderDetailList(orderId);
+    const { data } = await queryOrderDetailList(orderId);
     detailData = [
       { label: '用户昵称', value: data.nickName },
       { label: '订单编号', value: data.orderNo },
-      { label: '订单类型', value:data.orderType},
+      { label: '订单类型', value: data.orderType },
       { label: '订单状态', value: data.orderStatus },
       { label: '支付类型', value: data.payType },
-      { label: '原价', value:data.originalTotalAmount},
+      { label: '原价', value: data.originalTotalAmount },
       { label: '优惠券', value: data.couponId },
       { label: '支付金额', value: data.totalAmount },
       { label: '支付类型', value: data.payType },
-      { label: '配送状态', value:data.processStatus},
+      { label: '配送状态', value: data.processStatus },
       { label: '配送员名称', value: data.courierName },
       { label: '配送员电话', value: data.courierPhone },
       { label: '配送地址', value: data.receiverAddress },
@@ -401,23 +398,22 @@
 
   const pdfSize = ref('medium');
   let detailData = [
-    { label: '用户昵称', value:'' },
-    { label: '订单编号', value:''  },
-    { label: '订单类型', value:''},
-    { label: '订单状态', value: ''},
-    { label: '支付类型', value: ''},
-    { label: '原价', value:''},
-    { label: '优惠券', value: ''},
-    { label: '支付金额', value: ''},
-    { label: '支付类型', value: ''},
-    { label: '配送状态', value:''},
+    { label: '用户昵称', value: '' },
+    { label: '订单编号', value: '' },
+    { label: '订单类型', value: '' },
+    { label: '订单状态', value: '' },
+    { label: '支付类型', value: '' },
+    { label: '原价', value: '' },
+    { label: '优惠券', value: '' },
+    { label: '支付金额', value: '' },
+    { label: '支付类型', value: '' },
+    { label: '配送状态', value: '' },
     { label: '配送员名称', value: '' },
-    { label: '配送员电话', value: ''},
+    { label: '配送员电话', value: '' },
     { label: '配送地址', value: '' },
     { label: '配送电话', value: '' },
     { label: '退款原因', value: '' },
   ];
-
 
   const printVisible = ref(false);
 

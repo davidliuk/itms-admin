@@ -3,15 +3,16 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img
+        <!-- <img
           alt="logo"
           src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-        />
+        /> -->
+        <img alt="logo" src="/src/assets/logo.svg" />
         <a-typography-title
           :style="{ margin: 0, fontSize: '18px' }"
           :heading="5"
         >
-          IDEA TMS
+          iTMS - 灵创物运
         </a-typography-title>
         <icon-menu-fold
           v-if="!topMenu && appStore.device === 'mobile'"
