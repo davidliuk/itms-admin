@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <a-modal
       :visible="isAddingAdmin"
       title="授权管理员"
@@ -71,11 +71,22 @@
     <a-modal
       :visible="isEditingAdmin"
       title="管理员详情"
-          hide-cancel
-    @ok="handleCancelEdit"
+      hide-cancel
+      @ok="handleCancelEdit"
     >
-      <a-space align="center" fill style="display: flex;justify-content: center">
-        <a-col style="display: flex; flex-direction: column; align-items: center; margin-right: 12px">
+      <a-space
+        align="center"
+        fill
+        style="display: flex; justify-content: center"
+      >
+        <a-col
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 12px;
+          "
+        >
           <a-row>
             <a-avatar :size="48">
               <img alt="avatar" :src="(adminDetailInfo as WareAdmins).avatar" />
@@ -85,34 +96,29 @@
             {{ adminDetailInfo.name }}
           </a-row>
         </a-col>
-      <a-col >
         <a-col>
-          <a-typography-text
-            >ID：{{
-              adminDetailInfo.id
-            }}</a-typography-text
-          >
+          <a-col>
+            <a-typography-text>ID：{{ adminDetailInfo.id }}</a-typography-text>
+          </a-col>
+          <a-col>
+            <a-typography-text
+              >电话：{{ adminDetailInfo.phone }}</a-typography-text
+            >
+          </a-col>
+          <a-col>
+            <a-typography-text
+              >邮箱：{{ adminDetailInfo.email }}</a-typography-text
+            >
+          </a-col>
         </a-col>
-        <a-col>
-          <a-typography-text
-            >电话：{{ adminDetailInfo.phone }}</a-typography-text
-          >
-        </a-col>
-        <a-col>
-          <a-typography-text
-            >邮箱：{{ adminDetailInfo.email }}</a-typography-text
-          >
-        </a-col>
-      </a-col>
-
       </a-space>
-
     </a-modal>
 
     <a-card
       class="general-card"
       :header-style="{ paddingBottom: '0' }"
       :body-style="{ padding: '12px 20px 0 20px' }"
+      style="height: 100%"
     >
       <template #title>
         <div v-if="isManaging" class="two-side">
@@ -384,7 +390,7 @@
     isAddingAdmin.value = false;
   };
 
-  const adminDetailInfo=ref<WareAdmins>({
+  const adminDetailInfo = ref<WareAdmins>({
     id: -1,
     createTime: '',
     updateTime: '',

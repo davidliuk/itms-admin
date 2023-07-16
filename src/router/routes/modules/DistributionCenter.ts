@@ -2,18 +2,18 @@ import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
 const LIST: AppRouteRecordRaw = {
-  path: '/DistributionCenter',
+  path: '/distribution-center',
   name: 'DistributionCenter',
   component: DEFAULT_LAYOUT,
   meta: {
     locale: 'menu.DistributionCenter',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'icon-check-square',
     order: 3,
   },
   children: [
     {
-      path: 'WarehouseManagement',
+      path: 'warehouse-management',
       name: 'WarehouseManagement',
       component: () =>
         import('@/views/DistributionCenter/WarehouseManagement/index.vue'),

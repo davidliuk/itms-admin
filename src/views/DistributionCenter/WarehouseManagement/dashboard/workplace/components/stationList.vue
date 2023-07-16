@@ -157,7 +157,8 @@
 
 <style scoped lang="less">
   .table-style {
-    padding: 20px 20px 0 20px;
+    padding: 20px 20px 20px 20px;
+    height: 100%;
   }
 </style>
 

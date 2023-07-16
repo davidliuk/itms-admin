@@ -1,5 +1,5 @@
 export default {
-  'menu.DistributionCenter.WarehouseManagement': '库房管理',
+  'menu.DistributionCenter.WarehouseManagement': '区域中心库房',
   'searchTable.form.number': '订单号',
   'searchTable.form.number.placeholder': '请输入订单号',
   'searchTable.form.name': '会员昵称',

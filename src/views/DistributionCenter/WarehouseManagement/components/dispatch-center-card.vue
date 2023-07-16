@@ -1,8 +1,21 @@
 <template>
   <div class="list-wrap">
-    <!--    <a-typography-title class="block-title" :heading="6">-->
-    <!--      {{ $t('warehouseList.tab.title.center') }}-->
-    <!--    </a-typography-title>-->
+    <a-modal :visible="false">
+      <a-space direction="vertical" size="large">
+        <a-cascader
+          :options="options"
+          :field-names="fieldNames"
+          :style="{ width: '480px' }"
+          :loading="false"
+          placeholder="Please select ..."
+          multiple
+          allow-search
+          allow-clear
+          check-strictly
+        />
+      </a-space>
+    </a-modal>
+
     <a-row class="list-row" :gutter="24">
       <a-col
         :xs="12"
@@ -15,7 +28,7 @@
       >
         <div class="card-wrap empty-wrap">
           <!--新建仓库-->
-          <a-card :bordered="true" hoverable>
+          <a-card :bordered="true" hoverable @click="creatWareHouse">
             <a-result :status="null" :title="$t('cardList.content.action')">
               <template #icon>
                 <icon-plus style="font-size: 20px" />
@@ -68,12 +81,14 @@
 <script lang="ts" setup>
   import {
     LSPPage,
+    queryRegionList,
     queryWareHouseList,
     ShuttleData,
     WareHouseRecord,
   } from '@/api/dispatch-center';
   import { Pagination } from '@/types/global';
-  import { onMounted, Ref, ref } from 'vue';
+  import { onMounted, reactive, Ref, ref } from 'vue';
+  import { Permission, queryPermissionList } from '@/api/acl';
   import CardWrap from './card-wrap-center.vue';
 
   const loadingCard = ref(true);
@@ -107,6 +122,17 @@
   fetchData(queryParam.value);
 
   // console.log(renderData.value);
+
+  const fieldNames = { value: 'id', label: 'name' };
+  let options: string[];
+  const creatWareHouse = async () => {
+    // isAssignListFinished.value = false;
+    // isAssigning.value = true;
+    // selectedRole = role;
+    const data = await queryRegionList(['-1']);
+    // options = reactive(data);
+    // isAssignListFinished.value = true;
+  };
 </script>
 
 <style scoped lang="less">

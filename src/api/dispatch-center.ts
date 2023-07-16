@@ -69,3 +69,13 @@ export async function queryWareHouseList(
   // console.log(res);
   return res;
 }
+
+export async function queryRegionList(input: string[]): Promise<string> {
+  axios.get('/api/table').then((response) => {
+    const tableData = response.data;
+    console.log(tableData);
+    // 在这里使用模拟数据进行相应的处理
+  });
+
+  return '-1';
+}

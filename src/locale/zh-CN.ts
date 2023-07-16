@@ -76,7 +76,7 @@ export default {
   'menu.server.monitor': '实时监控-服务端',
   'menu.dispatch': '调度中心',
   'menu.dispatch.orderList': '订单列表',
-  'menu.DistributionCenter': '配送中心',
+  'menu.DistributionCenter': '库房管理',
   'menu.finance': '财务管理',
   'menu.stock': '进货管理',
   'menu.list': '列表页',

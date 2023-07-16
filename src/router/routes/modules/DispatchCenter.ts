@@ -8,7 +8,7 @@ const DispatchCenter: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.dispatch',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'icon-drag-arrow',
     order: 2,
   },
   children: [

@@ -1,8 +1,5 @@
 <template>
-  <div>
-
-  </div>
-
+  <div> </div>
 </template>
 
 <script lang="ts" setup>
@@ -16,12 +13,11 @@
     WareAdmins,
   } from '@/api/dashboard';
   import { isMap } from 'lodash';
-  import { ShuttleData } from "@/api/dispatch-center";
+  import { ShuttleData } from '@/api/dispatch-center';
 
   const wareInfo = ref(useWarehouseInfoStore().$state);
   const adminList: Ref<WareAdmins[]> = ref([]);
   const loading = ref(false);
-
 
   const props = withDefaults(
     defineProps<{
@@ -31,7 +27,6 @@
       idleList: undefined,
     }
   );
-
 </script>
 
 <style scoped lang="less">
@@ -59,5 +54,4 @@
     flex: 0 0 calc(25% - 10px); /* 每列占据 25% 的宽度，减去间距的宽度 */
     margin: 5px;
   }
-
 </style>

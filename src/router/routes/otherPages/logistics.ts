@@ -8,7 +8,7 @@ const LIST: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.logistics', // 一级菜单名
     requiresAuth: true, // 是否需要登录鉴权
-    icon: 'icon-list', // 菜单配置icon
+    icon: 'icon-send', // 菜单配置icon
     order: 11, // 排序路由菜单项。如果设置该值，值越高，越靠前
   },
   children: [

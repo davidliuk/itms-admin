@@ -7,13 +7,7 @@
       <StationList />
     </div>
     <div class="right-side">
-      <a-grid :cols="24" :row-gap="16">
-        <a-grid-item :span="24">
-          <div class="panel moduler-wrap">
-            <AdminList />
-          </div>
-        </a-grid-item>
-      </a-grid>
+      <AdminList />
     </div>
   </div>
   <div class="container">
@@ -62,11 +56,13 @@
     padding: 16px 20px;
     padding-bottom: 0;
     display: flex;
+    align-items: stretch;
   }
 
   .left-side {
     flex: 1;
     overflow: auto;
+    height: 100%;
   }
 
   .right-side {

@@ -138,17 +138,10 @@ export function queryWareAdmins(wareId: string) {
   return axios.get<WareAdmins[]>(`/admin/acl/user/ware/${wareId}`);
 }
 
-
-
-
 export function queryPopularList(params: { type: string }) {
   return axios.get<TableData[]>('/api/popular/list', { params });
 }
 
-
-
-
-
-export function updateAdmin(admin:WareAdmins) {
+export function updateAdmin(admin: WareAdmins) {
   return axios.put<any>('/admin/acl/user', admin);
 }
