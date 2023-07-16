@@ -1,7 +1,7 @@
 <template>
   <!--    该模板为查询界面模板  -->
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.list.searchTable']" />
+    <Breadcrumb :items="['调度中心', '订单列表']" />
     <a-modal
       :visible="visibleTask"
       ok-text="确定"
@@ -47,7 +47,7 @@
       <template #title> 订单详情 </template>
       <div><OrderInfo /></div>
     </a-modal>
-    <a-card class="general-card" :title="$t('menu.list.searchTable')">
+    <a-card class="general-card" title="订单列表">
       <a-row>
         <a-col :flex="1">
           <a-form

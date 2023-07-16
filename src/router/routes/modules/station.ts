@@ -53,7 +53,7 @@ const STATION: AppRouteRecordRaw = {
     //   },
     // },
     {
-      path: 'checkOrder-table', // The midline path complies with SEO specifications
+      path: 'checkorder-table', // The midline path complies with SEO specifications
       name: 'CheckOrderTable',
       component: () => import('@/views/station/checkorder-table/index.vue'),
       meta: {

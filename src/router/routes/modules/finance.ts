@@ -23,7 +23,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'supplierSettlement',
+      path: 'supplier-settlement',
       name: 'supplierSettlement',
       component: () => import('@/views/finance/supplier/supplier.vue'),
       meta: {
@@ -43,7 +43,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'financeView',
+      path: 'finance-view',
       name: 'financeView',
       component: () => import('@/views/finance/financeview/index.vue'),
       meta: {

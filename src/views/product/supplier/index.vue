@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.product.supplier']" />
+    <Breadcrumb :items="['menu.product', 'menu.product.supplier']" />
     <a-card class="general-card" :title="$t('menu.product.supplier')">
       <a-row>
         <a-col :flex="1">

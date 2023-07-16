@@ -1,17 +1,19 @@
 <template>
   <div class="list-wrap">
-    <a-modal :visible="false">
+    <a-modal :visible="isCreatingWare">
       <a-space direction="vertical" size="large">
         <a-cascader
           :options="options"
           :field-names="fieldNames"
           :style="{ width: '480px' }"
           :loading="false"
-          placeholder="Please select ..."
+          placeholder="请选择 ..."
           multiple
           allow-search
           allow-clear
           check-strictly
+          @cancel="()=>{isCreatingWare=false;}"
+          @ok="()=>{isCreatingWare=false;}"
         />
       </a-space>
     </a-modal>
@@ -89,6 +91,8 @@
   import { Pagination } from '@/types/global';
   import { onMounted, reactive, Ref, ref } from 'vue';
   import { Permission, queryPermissionList } from '@/api/acl';
+  import { Region } from "echarts/types/src/coord/geo/Region";
+  import { RegionList } from "@/mock/user";
   import CardWrap from './card-wrap-center.vue';
 
   const loadingCard = ref(true);
@@ -123,15 +127,15 @@
 
   // console.log(renderData.value);
 
+
+  const isCreatingWare = ref(false);
   const fieldNames = { value: 'id', label: 'name' };
-  let options: string[];
+  let options : RegionList[];
   const creatWareHouse = async () => {
-    // isAssignListFinished.value = false;
-    // isAssigning.value = true;
-    // selectedRole = role;
-    const data = await queryRegionList(['-1']);
-    // options = reactive(data);
-    // isAssignListFinished.value = true;
+    isCreatingWare.value = true;
+    const data = await queryRegionList();
+    options = reactive(data.data);
+    console.log(options);
   };
 </script>
 

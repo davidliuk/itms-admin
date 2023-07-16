@@ -23,7 +23,7 @@ const LIST: AppRouteRecordRaw = {
     //   },
     // },
     {
-      path: 'skuWare', // The midline path complies with SEO specifications
+      path: 'sku-ware', // The midline path complies with SEO specifications
       name: 'centerSkuWare',
       component: () => import('@/views/center/skuware/index.vue'),
       meta: {
@@ -45,7 +45,7 @@ const LIST: AppRouteRecordRaw = {
     //   },
     // },
     {
-      path: 'checkOrder', // The midline path complies with SEO specifications
+      path: 'check-order', // The midline path complies with SEO specifications
       name: 'centerCheckOrder',
       component: () => import('@/views/center/check-order/index.vue'),
       meta: {
@@ -56,7 +56,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'transferOrder',
+      path: 'transfer-order',
       name: 'centerTransferOrder',
       component: () => import('@/views/center/transfer-order/index.vue'),
       meta: {
@@ -78,7 +78,7 @@ const LIST: AppRouteRecordRaw = {
     //   },
     // },
     {
-      path: 'storageOrder',
+      path: 'storage-order',
       name: 'centerStorageOrder',
       component: () => import('@/views/center/storage-order/index.vue'),
       meta: {
@@ -89,7 +89,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'purchaseOrder',
+      path: 'purchase-order',
       name: 'centerPurChaseOrder',
       component: () => import('@/views/center/purchase-order/index.vue'),
       meta: {
@@ -121,7 +121,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'skuListInWare', // The midline path complies with SEO specifications
+      path: 'skuListIn-ware', // The midline path complies with SEO specifications
       name: 'skuListInWare',
       component: () =>
         import('@/views/center/skuware/components/skuInWare.vue'),
