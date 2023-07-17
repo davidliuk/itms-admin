@@ -488,7 +488,7 @@
     {
       title: t('PurchaseOrder.columns.id'),
       dataIndex: 'id',
-      width: 110,
+      width: 70,
       fixed: 'left',
     },
     // {

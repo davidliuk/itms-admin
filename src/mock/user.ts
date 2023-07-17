@@ -8,9 +8,8 @@ import setupMock, {
 import { MockParams } from '@/types/mock';
 import { isLogin } from '@/utils/auth';
 
-
-export interface RegionList{
-  name:string;
+export interface RegionList {
+  name: string;
   region: RegionList[];
 }
 
@@ -112,35 +111,41 @@ setupMock({
     // 创建模拟数据
     Mock.mock(new RegExp('/api/region/getAll'), () => {
       const provincesData = Mock.mock({
-        'list|34': [{
-          'id|+1': 1,
-          'name': '@province',
-        }]
+        'list|34': [
+          {
+            'id|+1': 1,
+            'name': '@province',
+          },
+        ],
       }).list;
 
-      const provinces = provincesData.map((provinceData: { name: any; }) => {
+      const provinces = provincesData.map((provinceData: { name: any }) => {
         const citiesData = Mock.mock({
-          'list|1-10': [{
-            'id|+1': 1,
-            'name': '@city',
-          }]
+          'list|1-10': [
+            {
+              'id|+1': 1,
+              'name': '@city',
+            },
+          ],
         }).list;
 
-        const cities = citiesData.map((cityData: { name: any; }) => {
+        const cities = citiesData.map((cityData: { name: any }) => {
           const districtsData = Mock.mock({
-            'list|1-10': [{
-              'id|+1': 1,
-              'name': '@county',
-            }]
+            'list|1-10': [
+              {
+                'id|+1': 1,
+                'name': '@county',
+              },
+            ],
           }).list;
 
-          const districts = districtsData.map(
-            (districtData: { name: any; }) => {return {name:districtData.name,region:null};}
-          );
-          return { name:cityData.name, region:districts};
+          const districts = districtsData.map((districtData: { name: any }) => {
+            return { name: districtData.name, region: null };
+          });
+          return { name: cityData.name, region: districts };
         });
 
-        return  {name:provinceData.name, region:cities} ;
+        return { name: provinceData.name, region: cities };
       });
 
       return successResponseWrap(provinces);

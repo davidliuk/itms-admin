@@ -12,8 +12,16 @@
           allow-search
           allow-clear
           check-strictly
-          @cancel="()=>{isCreatingWare=false;}"
-          @ok="()=>{isCreatingWare=false;}"
+          @cancel="
+            () => {
+              isCreatingWare = false;
+            }
+          "
+          @ok="
+            () => {
+              isCreatingWare = false;
+            }
+          "
         />
       </a-space>
     </a-modal>
@@ -91,8 +99,8 @@
   import { Pagination } from '@/types/global';
   import { onMounted, reactive, Ref, ref } from 'vue';
   import { Permission, queryPermissionList } from '@/api/acl';
-  import { Region } from "echarts/types/src/coord/geo/Region";
-  import { RegionList } from "@/mock/user";
+  import { Region } from 'echarts/types/src/coord/geo/Region';
+  import { RegionList } from '@/mock/user';
   import CardWrap from './card-wrap-center.vue';
 
   const loadingCard = ref(true);
@@ -127,10 +135,9 @@
 
   // console.log(renderData.value);
 
-
   const isCreatingWare = ref(false);
   const fieldNames = { value: 'id', label: 'name' };
-  let options : RegionList[];
+  let options: RegionList[];
   const creatWareHouse = async () => {
     isCreatingWare.value = true;
     const data = await queryRegionList();

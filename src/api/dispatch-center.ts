@@ -4,8 +4,8 @@ import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 import { LoginRes } from '@/api/user';
 import { PageRes, Role } from '@/api/acl';
 import { Pagination } from '@/types/global';
-import { Region } from "echarts/types/src/coord/geo/Region";
-import { RegionList } from "@/mock/user";
+import { Region } from 'echarts/types/src/coord/geo/Region';
+import { RegionList } from '@/mock/user';
 
 export interface LSPPage {
   current: number;
@@ -72,6 +72,6 @@ export async function queryWareHouseList(
   return res;
 }
 
-export async function queryRegionList(){
+export async function queryRegionList() {
   return axios.get<RegionList[]>('/api/region/getAll');
 }
