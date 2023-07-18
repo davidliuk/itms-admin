@@ -21,7 +21,7 @@ export interface UserState {
   role: RoleType;
   wareId?: string;
   stationId?: string;
-  roles?: string[];
+  roles: string[];
   permissions?: string[];
   // 在 TypeScript 中，? 是一个可选属性的标记，
   // 用于指示属性是可选的，即可以存在也可以不存在。

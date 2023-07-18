@@ -26,6 +26,23 @@
   import LoginForm from './components/login-form.vue';
 </script>
 
+<!-- <script src="three.r134.min.js"></script>
+
+<script src="vanta.waves.min.js"></script>
+
+<script>
+  VANTA.WAVES({
+    el: '#container',
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.0,
+    minWidth: 200.0,
+    scale: 1.0,
+    scaleMobile: 1.0,
+  });
+</script> -->
+
 <style lang="less" scoped>
   .container {
     display: flex;

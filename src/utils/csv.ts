@@ -22,7 +22,7 @@ export function toCSV(list: any[], title: string) {
   }
 }
 
-export function formCSV(file: File): any[] {
+export function formCSV(file: File, callback: any) {
   // 从上传的csv文件中读取并解析数据
   const reader = new FileReader();
   reader.readAsText(file, 'utf-8');
@@ -38,11 +38,8 @@ export function formCSV(file: File): any[] {
       });
       return obj;
     });
-    console.log(list);
-    return list;
+    callback(list);
   };
-
-  return [];
 }
 
 // const list = data.slice(1).map((item) => {

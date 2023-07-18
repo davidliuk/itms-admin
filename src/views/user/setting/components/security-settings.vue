@@ -21,7 +21,7 @@
         </template>
       </a-list-item-meta>
     </a-list-item>
-    <a-list-item>
+    <!-- <a-list-item>
       <a-list-item-meta>
         <template #avatar>
           <a-typography-paragraph>
@@ -43,7 +43,7 @@
           </div>
         </template>
       </a-list-item-meta>
-    </a-list-item>
+    </a-list-item> -->
     <a-list-item>
       <a-list-item-meta>
         <template #avatar>
@@ -54,7 +54,7 @@
         <template #description>
           <div class="content">
             <a-typography-paragraph>
-              已绑定：150******50
+              已绑定：150******16
             </a-typography-paragraph>
           </div>
           <div class="operation">
@@ -74,9 +74,12 @@
         </template>
         <template #description>
           <div class="content">
-            <a-typography-paragraph class="tip">
-              {{ $t('userSetting.SecuritySettings.placeholder.email') }}
+            <a-typography-paragraph>
+              已绑定：l72***74@163.com
             </a-typography-paragraph>
+            <!-- <a-typography-paragraph class="tip">
+              {{ $t('userSetting.SecuritySettings.placeholder.email') }}
+            </a-typography-paragraph> -->
           </div>
           <div class="operation">
             <a-link>

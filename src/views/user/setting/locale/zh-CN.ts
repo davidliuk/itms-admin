@@ -27,7 +27,7 @@ export default {
   'userSetting.tab.securitySettings': '安全设置',
   'userSetting.tab.certification': '实名认证',
   'userSetting.basicInfo.form.label.email': '邮箱',
-  'userSetting.basicInfo.placeholder.email': `请输入邮箱地址，如xxx{'@'}bytedance.com`,
+  'userSetting.basicInfo.placeholder.email': `请输入邮箱地址，如xxx{'@'}163.com`,
   'userSetting.form.error.email.required': '请输入邮箱',
   'userSetting.basicInfo.form.label.nickname': '昵称',
   'userSetting.basicInfo.placeholder.nickname': '请输入您的昵称',

@@ -49,7 +49,7 @@ export default {
   'skuInfo.columns.skuCode': '代码',
   'skuInfo.columns.imgUrl': '图片',
   'skuInfo.columns.price': '价格',
-  'skuInfo.columns.marketPrice': '价格',
+  'skuInfo.columns.marketPrice': '市场价格',
   'skuInfo.columns.sort': '排序',
   'skuInfo.columns.createTime': '创建时间',
   'skuInfo.columns.updateTime': '修改时间',
