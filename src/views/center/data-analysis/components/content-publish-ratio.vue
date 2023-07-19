@@ -110,7 +110,7 @@
       },
       series: [
         {
-          name: '新鲜蔬菜',
+          name: '纯文本',
           data: textChartsData.value,
           stack: 'one',
           type: 'bar',
@@ -118,14 +118,14 @@
           color: isDark ? '#4A7FF7' : '#246EFF',
         },
         {
-          name: '时令水果',
+          name: '图文类',
           data: imgChartsData.value,
           stack: 'one',
           type: 'bar',
           color: isDark ? '#085FEF' : '#00B2FF',
         },
         {
-          name: '日用百货',
+          name: '视频类',
           data: videoChartsData.value,
           stack: 'one',
           type: 'bar',
@@ -143,9 +143,9 @@
       const { data: chartData } = await queryContentPublish();
       xAxis.value = chartData[0].x;
       chartData.forEach((el: ContentPublishRecord) => {
-        if (el.name === '新鲜蔬菜') {
+        if (el.name === '纯文本') {
           textChartsData.value = el.y;
-        } else if (el.name === '时令水果') {
+        } else if (el.name === '图文类') {
           imgChartsData.value = el.y;
         }
         videoChartsData.value = el.y;

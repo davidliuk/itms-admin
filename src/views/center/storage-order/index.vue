@@ -366,7 +366,6 @@
     { label: '创建时间', value: '' },
     { label: '更新时间', value: '' },
   ];
-
   const printVisible = ref(false);
   const printClick = (storageOrder: StorageOrder) => {
     data = [

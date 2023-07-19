@@ -56,7 +56,7 @@
 
   .title-fix {
     margin: 0 0 12px 0;
-    font-size: 14px;
+    font-size: 14;
   }
   :deep(.section-title) {
     margin: 0 0 12px 0;

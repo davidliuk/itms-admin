@@ -108,7 +108,6 @@
           </a-space>
         </a-col>
       </a-row>
-
       <a-divider style="margin-top: 0" />
       <!-- 表格上面的一排按钮 -->
       <a-row style="margin-bottom: 16px">
@@ -200,7 +199,6 @@
           </a-tooltip>
         </a-col>
       </a-row>
-
       <!-- 表格 -->
       <a-table
         id="printTable"
@@ -217,7 +215,6 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-
         <!-- 状态类型 -->
         <template #status="{ record }">
           <span v-if="record.status === 'OUT'" class="circle"></span>
@@ -237,8 +234,6 @@
           <span v-else-if="record.type === 'RETURN'" class="circle pass"></span>
           {{ $t(`CheckOrder.form.type.${record.type}`) }}
         </template>
-        <!-- 状态类型  -->
-
         <!-- 打印 -->
         <template #operations="{ record }">
           <a-popconfirm
@@ -289,7 +284,6 @@
             ></a-descriptions>
           </a-modal>
         </template>
-
         <template #skuDetails="{ record }">
           <!--  分发单商品详情 -->
           <a-button
@@ -353,7 +347,6 @@
 
   // 退货入库
   const visibleReturnInWare = ref(false);
-
   const checkOrderReturnInWare = async (orderId: number) => {
     setLoading(true);
     try {
@@ -389,7 +382,6 @@
     { label: '出站时间', value: '' },
     { label: '入站时间', value: '' },
   ];
-
   const printVisible = ref(false);
   const printClick = (checkOrder: CheckOrder) => {
     data = [
@@ -415,8 +407,7 @@
   };
   const printBeforeOk = () => {
     console.log('打印');
-    const text = '分发单详情';
-    // text:文件标题
+    const text = '分发单详情'; // text:文件标题
     htmlToPdf(text, '#capture');
   };
   const printCancel = () => {
@@ -443,6 +434,7 @@
       outTime: null,
     };
   };
+  const formModel = ref(generateFormModel()); // 输入框要用的
   const generateorderItemModel = () => {
     return {
       orderItemList: [],
@@ -452,7 +444,7 @@
   const { t } = useI18n();
   const renderData = ref<CheckOrder[]>([]);
   const orderItemData = ref<OrderItem[]>([]);
-  const formModel = ref(generateFormModel()); // 输入框要用的
+
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
@@ -462,6 +454,7 @@
     current: 1,
     pageSize: 20,
   };
+
   const pagination = reactive({
     ...basePagination,
   });

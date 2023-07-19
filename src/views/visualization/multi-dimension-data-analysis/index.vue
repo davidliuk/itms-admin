@@ -13,7 +13,7 @@
         >
           <DataOverview />
         </a-grid-item>
-        <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 6, xl: 6, xxl: 6 }">
+        <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 6, xl: 6, xxl:6 }">
           <UserActions style="margin-bottom: 16px" />
           <ContentTypeDistribution />
         </a-grid-item>

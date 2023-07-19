@@ -100,7 +100,7 @@
   const renderData = computed(() => [
     {
       title: t('multiDAnalysis.dataOverview.contentProduction'),
-      value: 1902,
+      value: 230,
       prefix: {
         icon: 'icon-edit',
         background: isDark.value ? '#593E2F' : '#FFE4BA',
@@ -109,7 +109,7 @@
     },
     {
       title: t('multiDAnalysis.dataOverview.contentClick'),
-      value: 2445,
+      value: 179,
       prefix: {
         icon: 'icon-thumb-up',
         background: isDark.value ? '#3D5A62' : '#E8FFFB',
@@ -118,7 +118,7 @@
     },
     {
       title: t('multiDAnalysis.dataOverview.contentExposure'),
-      value: 3034,
+      value: 157,
       prefix: {
         icon: 'icon-heart',
         background: isDark.value ? '#354276' : '#E8F3FF',
@@ -127,7 +127,7 @@
     },
     {
       title: t('multiDAnalysis.dataOverview.activeUsers'),
-      value: 1275,
+      value: 275,
       prefix: {
         icon: 'icon-user',
         background: isDark.value ? '#3F385E' : '#F5E8FF',
@@ -234,25 +234,25 @@
       },
       series: [
         generateSeries(
-          '内容生产量',
+          '订单数量',
           '#722ED1',
           '#F5E8FF',
           contentProductionData.value
         ),
         generateSeries(
-          '内容点击量',
+          '商品入库量',
           '#F77234',
           '#FFE4BA',
           contentClickData.value
         ),
         generateSeries(
-          '内容曝光量',
+          '商品出库量',
           '#33D1C9',
           '#E8FFFB',
           contentExposureData.value
         ),
         generateSeries(
-          '活跃用户数',
+          '退货量',
           '#3469FF',
           '#E8F3FF',
           activeUsersData.value
@@ -266,11 +266,11 @@
       const { data } = await queryDataOverview();
       xAxis.value = data.xAxis;
       data.data.forEach((el) => {
-        if (el.name === '内容生产量') {
+        if (el.name === '订单数量') {
           contentProductionData.value = el.value;
-        } else if (el.name === '内容点击量') {
+        } else if (el.name === '商品入库量') {
           contentClickData.value = el.value;
-        } else if (el.name === '内容曝光量') {
+        } else if (el.name === '商品出库量') {
           contentExposureData.value = el.value;
         }
         activeUsersData.value = el.value;

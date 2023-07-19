@@ -404,13 +404,6 @@
     copy(skuWare, form);
     isUpdating.value = true;
   };
-  // 退货到供应商
-  const returnSkuWare = async (skuWare: SkuWare) => {
-    skuWare.stock = '';
-    copy(skuWare, form);
-    isReturning.value = true;
-    // await returnSkuWareToSupplier(skuWare);
-  };
   // 往后面传参数的时候记得异步操作
   const handleBeforeOk = async () => {
     if (isCreating.value) {
@@ -420,7 +413,6 @@
     } else {
       await returnSkuWareToSupplier(form as unknown as SkuWare);
     }
-
     handleClose();
   };
   const handleClose = () => {
@@ -429,6 +421,14 @@
     isReturning.value = false;
     form = reactive(generateFormModel());
     fetchData(basePagination.current, basePagination.pageSize, formModel.value);
+  };
+
+  // 退货到供应商
+  const returnSkuWare = async (skuWare: SkuWare) => {
+    skuWare.stock = '';
+    copy(skuWare, form);
+    isReturning.value = true;
+    // await returnSkuWareToSupplier(skuWare);
   };
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';

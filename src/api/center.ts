@@ -45,7 +45,6 @@ export interface Station {
   detailAddress: string; // 详细地址
   latitude: number; // 维度
   longitude: number; // 经度
-  // param: object;
   storePath: string; // 门店照片
   workTime: string; // 营业时间
   workStatus: number; // 营业状态
@@ -107,6 +106,7 @@ export function queryLogisticsList(
 export function addLogistics(logistics: Logistics) {
   return axios.post<any>('/admin/sys/logistics', logistics);
 }
+
 export function updateLogistics(logistics: Logistics) {
   return axios.put<any>('/admin/sys/logistics', logistics);
 }
@@ -119,6 +119,7 @@ export function deleteLogistics(id: number) {
   return axios.delete<any>(`/admin/sys/logistics/${id}`);
 }
 
+// 购货单
 export interface PurchaseOrder {
   // 接口文档匹配 7.11
   id: number; //	id
@@ -145,6 +146,7 @@ export function queryPurchaseOrderList(
   );
 }
 
+// 出库单
 export interface StorageOrder {
   id: string; // 出库单编号
   wareId: number; // 区域中心库房编号
@@ -175,6 +177,7 @@ export function queryStorageOrderList(
   );
 }
 
+// 区域中心库房库存
 export interface SkuWare {
   // 中心库房库存
   // 定义类型
@@ -245,6 +248,7 @@ export function deleteCheckOrder(id: number) {
   return axios.delete<any>(`/admin/sys/checkOrder/${id}`);
 }
 
+// 订单商品
 export interface OrderItem {
   categoryId: number;
   createTime: string;
@@ -321,14 +325,9 @@ export interface WorkOrder {
     | 'WAITING_USER_TAKE'
     | 'FINISHED'
     | 'CANCEL'; //	状态,=>那些状态
-  workType: string; // 配送类型
-  // DELIVERY(0, "送货"),
-  // EXCHANGE(1, "换货"),
-  // RETURN(2, "退货");
+  workType: string; // 配送类型 DELIVERY(0, "送货"),EXCHANGE(1, "换货"),RETURN(2, "退货");
   updateTime: string;
   createTime: string;
-  // orderInfo
-  // 个人信息
   name: string; //	姓名
   phone: string; // 电话号码
   postCode: string; //	邮编

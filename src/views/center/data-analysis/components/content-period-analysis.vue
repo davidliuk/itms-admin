@@ -108,7 +108,7 @@
       },
       series: [
         {
-          name: '新鲜蔬菜',
+          name: '新鲜水果',
           data: textChartsData.value,
           type: 'line',
           smooth: true,
@@ -125,7 +125,7 @@
           },
         },
         {
-          name: '时令水果',
+          name: '时令蔬菜',
           data: imgChartsData.value,
           type: 'line',
           smooth: true,

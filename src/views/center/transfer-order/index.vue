@@ -265,7 +265,7 @@
                 <img
                   :src="record.imgUrl"
                   alt="Product Image"
-                  style="width: 100px; height: 100px"
+                  style="width: 140px; height: 100px"
                 />
               </template>
             </a-table>
@@ -337,7 +337,6 @@
 
   // 调拨出库
   const visibleOutWare = ref(false);
-
   const transferOutWare = async (orderId: number) => {
     setLoading(true);
     try {

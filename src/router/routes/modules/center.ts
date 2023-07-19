@@ -12,16 +12,6 @@ const LIST: AppRouteRecordRaw = {
     order: 10, // 排序路由菜单项。如果设置该值，值越高，越靠前
   },
   children: [
-    // {
-    //   path: 'search-table', // The midline path complies with SEO specifications
-    //   name: 'centerSearchTable',
-    //   components: () => import('@/views/center/search-table/index.vue'),
-    //   meta: {
-    //     locale: 'menu.center.searchTable',
-    //     requiresAuth: true,
-    //     roles: ['*'],
-    //   },
-    // },
     {
       path: 'sku-ware', // The midline path complies with SEO specifications
       name: 'centerSkuWare',
@@ -33,17 +23,6 @@ const LIST: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
-    // {
-    //   path: 'transfer_order', // The midline path complies with SEO specifications
-    //   name: 'centerTransferOrder',
-    //   components: () => import('@/views/center/transfer_order/index.vue'),
-    //   meta: {
-    //     // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
-    //     locale: 'menu.center.transferOrder',
-    //     requiresAuth: true,
-    //     roles: ['*'],
-    //   },
-    // },
     {
       path: 'check-order', // The midline path complies with SEO specifications
       name: 'centerCheckOrder',
@@ -66,17 +45,6 @@ const LIST: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
-    // {
-    //   path: 'workOrder',
-    //   name: 'centerWorkOrder',
-    //   components: () => import('@/views/center/work-order/index.vue'),
-    //   meta: {
-    //     // 这个名字定义在views的zhCN里，然后要把locale的zhCN引入全局locale
-    //     locale: 'menu.center.WorkOrder',
-    //     requiresAuth: true,
-    //     roles: ['*'],
-    //   },
-    // },
     {
       path: 'storage-order',
       name: 'centerStorageOrder',
@@ -128,6 +96,27 @@ const LIST: AppRouteRecordRaw = {
       meta: {
         hideInMenu: true,
         locale: '批量进货',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'data-analysis',
+      name: 'DataAnalysis',
+      component: () => import('@/views/visualization/data-analysis/index.vue'),
+      meta: {
+        locale: 'menu.visualization.dataAnalysis',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'multi-dimension-data-analysis',
+      name: 'MultiDimensionDataAnalysis',
+      component: () =>
+        import('@/views/visualization/multi-dimension-data-analysis/index.vue'),
+      meta: {
+        locale: 'menu.visualization.multiDimensionDataAnalysis',
         requiresAuth: true,
         roles: ['*'],
       },
