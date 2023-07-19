@@ -29,27 +29,22 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="code" :label="$t('category.form.code')">
+                <a-form-item field="status" :label="$t('category.form.status')">
                   <a-input
-                    v-model="formModel.code"
-                    :placeholder="$t('category.form.code.placeholder')"
+                    v-model="formModel.status"
+                    :placeholder="$t('category.form.status.placeholder')"
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <!-- <a-col :span="8">
                 <a-form-item field="remark" :label="$t('category.form.remark')">
                   <a-input
                     v-model="formModel.remark"
                     :placeholder="$t('category.form.remark.placeholder')"
                   />
-                  <!-- <a-select
-                    v-model="formModel.remark"
-                    :options="filterTypeOptions"
-                    :placeholder="$t('category.form.selectDefault')"
-                  /> -->
                 </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              </a-col> -->
+              <!-- <a-col :span="8">
                 <a-form-item
                   field="createTime"
                   :label="$t('category.form.createTime')"
@@ -59,8 +54,8 @@
                     style="width: 100%"
                   />
                 </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              </a-col> -->
+              <!-- <a-col :span="8">
                 <a-form-item
                   field="updateTime"
                   :label="$t('category.form.updateTime')"
@@ -70,7 +65,7 @@
                     style="width: 100%"
                   />
                 </a-form-item>
-              </a-col>
+              </a-col> -->
               <!-- <a-col :span="8">
                 <a-form-item
                   field="status"
@@ -88,10 +83,10 @@
         </a-col>
 
         <!-- 分割线 -->
-        <a-divider style="height: 84px" direction="vertical" />
+        <a-divider style="height: 32px" direction="vertical" />
         <!-- 查找重置按钮 -->
         <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
+          <a-space :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
                 <icon-search />

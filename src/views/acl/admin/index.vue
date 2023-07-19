@@ -144,7 +144,7 @@
               </template>
               {{ $t('admin.operation.batchDelete') }}
             </a-button>
-            <a-upload action="/" @before-upload="beforeUpload">
+            <a-upload @before-upload="beforeUpload">
               <template #upload-button>
                 <a-button>
                   {{ $t('admin.operation.import') }}
@@ -388,6 +388,7 @@
         addAdmin(admin);
         // console.log(admin);
       });
+      return true;
     });
   };
 
