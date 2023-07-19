@@ -144,7 +144,7 @@
               </template>
               {{ $t('admin.operation.batchDelete') }}
             </a-button>
-            <a-upload action="/">
+            <a-upload action="/" @before-upload="beforeUpload">
               <template #upload-button>
                 <a-button>
                   {{ $t('admin.operation.import') }}
@@ -377,10 +377,18 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { toCSV } from '@/utils/csv';
+  import { toCSV, formCSV } from '@/utils/csv';
 
   const exportToCSV = () => {
     toCSV(renderData.value, 'admin');
+  };
+  const beforeUpload = (file: File) => {
+    formCSV(file, (admins: any) => {
+      admins.forEach((admin: Admin) => {
+        addAdmin(admin);
+        // console.log(admin);
+      });
+    });
   };
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -396,7 +404,7 @@
       id: '',
       username: '',
       name: '',
-      password: '',
+      // password: '',
       phone: '',
       email: '',
       wareId: '',
@@ -468,7 +476,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,

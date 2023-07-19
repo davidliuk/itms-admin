@@ -2,12 +2,13 @@
   <a-card :bordered="false">
     <a-space :size="54">
       <a-upload
-        :custom-request="customRequest"
         list-type="picture-card"
         :file-list="fileList"
         :show-upload-button="true"
         :show-file-list="false"
+        action="http://localhost:8201/admin/product/fileUpload"
         @change="uploadChange"
+        @success="onImageSuccess"
       >
         <template #upload-button>
           <a-avatar :size="100" class="info-avatar">
@@ -60,6 +61,7 @@
   import { userUploadApi } from '@/api/user-center';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
   import { useUserStore } from '@/store';
+  import { Admin, updateAdmin } from '@/api/acl';
 
   const userStore = useUserStore();
   const file = {
@@ -67,6 +69,12 @@
     name: 'avatar.png',
     url: userStore.avatar,
   };
+
+  const onImageSuccess = (res: any) => {
+    userStore.avatar = res.response.data;
+    updateAdmin({ id: userStore.id, avatar: res.response.data } as Admin);
+  };
+
   const renderData = [
     {
       label: 'userSetting.label.name',

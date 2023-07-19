@@ -26,6 +26,10 @@ import locale500 from '@/views/exception/500/locale/en-US';
 import localeUserInfo from '@/views/user/info/locale/en-US';
 import localeUserSetting from '@/views/user/setting/locale/en-US';
 
+import localeAdmin from '@/views/acl/admin/locale/en-US';
+import localeRole from '@/views/acl/role/locale/en-US';
+import localePermission from '@/views/acl/permission/locale/en-US';
+
 import localSkuWare from '@/views/center/skuware/locale/en-US';
 
 import localeSettings from './en-US/settings';
@@ -46,6 +50,19 @@ export default {
   'menu.faq': 'FAQ',
   'navbar.docs': 'Docs',
   'navbar.action.locale': 'Switch to English',
+  'menu.center': 'Center Warehouse',
+  'menu.acl': 'Acess Control',
+  'menu.product': 'Product Management',
+  'menu.dispatch': 'Dispatch',
+  'menu.station': 'Region Station',
+  'menu.DistributionCenter': 'Distribution',
+  'menu.finance': 'Finance',
+  // 'menu.finance': 'Finance',
+
+  ...localeAdmin,
+  ...localeRole,
+  ...localePermission,
+
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,

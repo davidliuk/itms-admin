@@ -1,5 +1,5 @@
 export default {
-  'menu.acl.role': 'Role Table',
+  'menu.acl.role': 'Role Management',
   'role.form.number': 'Set Number',
   'role.form.number.placeholder': 'Please enter Set Number',
   'role.form.name': 'Set Name',

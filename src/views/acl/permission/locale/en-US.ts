@@ -1,5 +1,5 @@
 export default {
-  'menu.list.cardList': 'Card List',
+  'menu.acl.permission': 'Permission Management',
   'cardList.tab.title.all': 'All',
   'cardList.tab.title.content': 'Quality Inspection',
   'cardList.tab.title.service': 'The service',
