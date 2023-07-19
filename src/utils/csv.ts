@@ -34,7 +34,9 @@ export function formCSV(file: File, callback: any) {
       const values = item.split(',');
       const obj: any = {};
       keys.forEach((key, index) => {
-        obj[key] = values[index];
+        if (values[index] != null && values[index] !== '') {
+          obj[key] = values[index];
+        }
       });
       return obj;
     });

@@ -386,7 +386,7 @@
     formCSV(file, (admins: any) => {
       admins.forEach((admin: Admin) => {
         addAdmin(admin);
-        // console.log(admin);
+        console.log(admin);
       });
       return true;
     });
