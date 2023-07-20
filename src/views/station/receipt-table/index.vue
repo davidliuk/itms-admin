@@ -35,7 +35,10 @@
               </a-col>
               <!--收货人姓名-->
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('receiptTable.form.name')">
+                <a-form-item
+                  field="name"
+                  :label="$t('receiptTable.form.userName')"
+                >
                   <a-input
                     v-model="formModel.name"
                     :placeholder="$t('receiptTable.form.name.placeholder')"
@@ -267,8 +270,8 @@
       id: '',
       orderId: '',
       userId: '',
-      name: '',
-      phone: '',
+      userName: '',
+      userPhone: '',
       stationId: '', // 分站
       stationName: '', // 分站名称
       stationPhone: '', // 分站电话

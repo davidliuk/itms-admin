@@ -259,11 +259,16 @@
           :bordered="false"
           :size="size"
           :row-selection="rowSelection"
-          @page-change="onPageChange"
+          :pagination="paginationCourier"
+          @page-change="onPageChangeCourier"
         >
           <!--编号-->
           <template #index="{ rowIndex }">
-            {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+            {{
+              rowIndex +
+              1 +
+              (paginationCourier.current - 1) * paginationCourier.pageSize
+            }}
           </template>
         </a-table>
       </a-modal>
@@ -348,24 +353,11 @@
         <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
         </template>
-        <!--        状态-->
+        <!--状态-->
         <template #status="{ record }">
-          <span v-if="record.workStatus === 'DISPATCH'" class="circle"></span>
-          <span
-            v-else-if="record.workStatus === 'OUT'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.workStatus === 'IN'"
-            class="circle pass"
-          ></span>
-          <span
-            v-else-if="record.workStatus === 'CANCEL'"
-            class="circle pass"
-          ></span>
           {{ $t(`missionTable.form.workStatus.${record.workStatus}`) }}
         </template>
-        <!--        类型-->
+        <!--类型-->
         <template #type="{ record }">
           <span v-if="record.workType === 'DELIVERY'" class="circle"></span>
           <span
@@ -380,6 +372,7 @@
         </template>
         <!--操作-->
         <template #operations="{ record }">
+          <!--          查看-->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -391,27 +384,23 @@
             </template>
             {{ $t('missionTable.columns.operations.view') }}
           </a-button>
+          <!--          送货分配-->
           <template v-if="record.workStatus === 'IN'">
             <a-button
               v-permission="['admin']"
               type="text"
               size="small"
-              @click="assignById(record.id, record.stationId)"
+              @click="assignById(record.id)"
             >
               {{ $t('missionTable.columns.operations.assign') }}
             </a-button>
           </template>
-          <template v-else-if="record.workStatus === 'CANCEL'">
-            <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="deleteById(record.id)"
-            >
-              {{ $t('missionTable.columns.operations.delete') }}
-            </a-button>
-          </template>
-          <template v-else-if="record.workStatus === 'RECEIVE'">
+          <!--          回执-->
+          <template
+            v-else-if="
+              record.workStatus === 'RECEIVE' && record.remark === null
+            "
+          >
             <a-button
               v-permission="['admin']"
               type="text"
@@ -421,6 +410,7 @@
               {{ $t('missionTable.columns.operations.return') }}
             </a-button>
           </template>
+          <!--          打印-->
           <template v-else-if="record.workStatus === 'ASSIGN'">
             <a-button
               v-permission="['admin']"
@@ -431,6 +421,7 @@
               {{ $t('missionTable.columns.operations.print') }}
             </a-button>
           </template>
+          <!--          退货分配-->
           <template v-else-if="record.workStatus === 'RETURN_UNASSIGNED'">
             <a-button
               v-permission="['admin']"
@@ -441,15 +432,42 @@
               {{ $t('missionTable.columns.operations.returnAssign') }}
             </a-button>
           </template>
-          <template v-else-if="record.workStatus === 'RETURN_TAKE'">
-            <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="returnInById(record.orderId)"
+          <!--          删除-->
+          <template v-else-if="record.workStatus === 'CANCEL'">
+            <a-popconfirm
+              v-if="record.status === 'CANCEL'"
+              content="是否确认删除该任务单?"
+              type="warning"
+              @ok="deleteById(record.id)"
             >
-              {{ $t('missionTable.columns.operations.returnIn') }}
-            </a-button>
+              <a-button v-permission="['admin']" type="text" size="small">
+                {{ $t('missionTable.columns.operations.delete') }}
+              </a-button>
+            </a-popconfirm>
+          </template>
+          <!--退货入站-->
+          <template v-else-if="record.workStatus === 'RETURN_TAKE'">
+            <a-popconfirm
+              content="是否确认退货入站?"
+              type="warning"
+              @ok="returnInById(record.orderId)"
+            >
+              <a-button v-permission="['admin']" type="text" size="small">
+                {{ $t('missionTable.columns.operations.returnIn') }}
+              </a-button>
+            </a-popconfirm>
+          </template>
+          <!--          退货出库-->
+          <template v-else-if="record.workStatus === 'RETURN_STATION'">
+            <a-popconfirm
+              content="是否确认退货出库?"
+              type="warning"
+              @ok="transferOutStation(record.orderId)"
+            >
+              <a-button v-permission="['admin']" type="text" size="small">
+                {{ $t('missionTable.columns.operations.returnWare') }}
+              </a-button>
+            </a-popconfirm>
           </template>
         </template>
       </a-table>
@@ -471,8 +489,10 @@
     assign,
     returnAssign,
     inTransferOrder,
+    outTransferOrder,
   } from '@/api/station';
   import { Pagination } from '@/types/global';
+  import { getUserInfo } from '@/api/user';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -544,11 +564,12 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
   });
+
   const densityList = computed(() => [
     {
       name: t('missionTable.size.mini'),
@@ -723,7 +744,6 @@
     try {
       const { data } = await queryWorkOrderList(current, pageSize, params);
       renderData.value = data.records;
-      console.log(renderData.value);
       pagination.current = current;
       pagination.total = data.total;
     } catch (err) {
@@ -732,9 +752,13 @@
       setLoading(false);
     }
   };
+
   fetchData(pagination.current, pagination.pageSize, formModel.value);
   const onPageChange = (current: number) => {
-    fetchData(current, basePagination.pageSize, formModel.value);
+    fetchData(current, pagination.pageSize, formModel.value);
+  };
+  const onPageChangeCourier = (current: number) => {
+    fetchCourierData(current, paginationCourier.pageSize, formModel.value);
   };
 
   // 详情
@@ -748,12 +772,15 @@
     isDetailing.value = false;
   };
 
-  // 分配
+  // 分配配送员
   const assignWorkOrderId = ref();
   const selectedKeys = ref();
   const rowSelection = {
     type: 'radio',
   };
+
+  // 送货分配
+
   const handleBeforeOk = async () => {
     if (deliverOrReturn.value) {
       await returnAssign(assignWorkOrderId.value, selectedKeys.value);
@@ -761,14 +788,18 @@
       await assign(assignWorkOrderId.value, selectedKeys.value);
     }
     handleClose();
+    fetchData(pagination.current, pagination.pageSize, formModel.value);
   };
   const handleClose = () => {
     isAssigning.value = false;
     deliverOrReturn.value = false;
     selectedKeys.value = null;
     assignWorkOrderId.value = null;
-    search();
   };
+
+  const paginationCourier = reactive({
+    ...basePagination,
+  });
   const fetchCourierData = async (
     current: number,
     pageSize: number,
@@ -779,36 +810,37 @@
       const { data } = await queryCourierList(current, pageSize, params);
       courierData.value = data.records;
       console.log(courierData.value);
-      pagination.current = current;
-      pagination.total = data.total;
+      paginationCourier.current = current;
+      paginationCourier.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  // 送货分配
-  const assignById = (id: number, staId: number) => {
+  const stId = ref();
+  const assignById = async (id: number) => {
+    const { data } = await getUserInfo();
+    stId.value = data.stationId;
     // 根据任务单id分配任务
     isAssigning.value = true;
     assignWorkOrderId.value = id;
-    const params: Partial<Courier> = {
-      name: '',
-      stationId: staId,
-      idNo: '',
-    };
-    fetchCourierData(pagination.current, pagination.pageSize, params);
+    fetchCourierData(paginationCourier.current, paginationCourier.pageSize, {
+      stationId: stId.value,
+    });
   };
+
   // 退货分配
-  const returnAssignById = (id: number, staId: number) => {
+  const returnAssignById = async (id: number) => {
     // 根据任务单id分配任务
+    const { data } = await getUserInfo();
+    stId.value = data.stationId;
     deliverOrReturn.value = true;
     isAssigning.value = true;
     assignWorkOrderId.value = id;
-    const params: Partial<Courier> = {
-      stationId: staId,
-    };
-    fetchCourierData(pagination.current, pagination.pageSize, params);
+    fetchCourierData(paginationCourier.current, paginationCourier.pageSize, {
+      stationId: stId.value,
+    });
   };
 
   // 退货入站
@@ -824,7 +856,23 @@
       setLoading(false);
     }
   };
-
+  // 调拨出库
+  const transferOutStation = async (orderId: number) => {
+    setLoading(true);
+    try {
+      const { data } = await outTransferOrder(orderId);
+      console.log(data);
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      fetchData(
+        basePagination.current,
+        basePagination.pageSize,
+        formModel.value
+      );
+      setLoading(false);
+    }
+  };
   // 删除
   const deleteById = async (id: number) => {
     setLoading(true);
@@ -852,15 +900,19 @@
     isReturning.value = false;
     formReturn = reactive(generateFormModel());
   };
+
   // 打印任务单
-  const handlePrinting = () => {
+  const handlePrinting = async () => {
     // 打印当前任务单详情
     const text = '任务单详情';
     setTimeout(() => {
       htmlToPdf(text, '#capture');
-    }, 5000);
-    handlePrintClose();
+    }, 200);
+    setTimeout(() => {
+      handlePrintClose();
+    }, 2000);
   };
+
   const handlePrintClose = () => {
     formShow = reactive(generateFormModel());
     isPrinting.value = false;
@@ -868,6 +920,10 @@
   const printWorkOrder = (workOrder: WorkOrder) => {
     copy(workOrder, formShow);
     isPrinting.value = true;
+    // const text = '任务单详情';
+    // setTimeout(() => {
+    //   htmlToPdf(text, '#capture');
+    // }, 5000);
   };
 
   // 查询重置

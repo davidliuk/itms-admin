@@ -1,7 +1,7 @@
 export default {
-  'menu.station.StorageTable': '出库单表格',
-  'StorageTable.form.id': '出库单编号',
-  'StorageTable.form.id.placeholder': '请输入出库单编号',
+  'menu.station.StorageTable': '库存单列表',
+  'StorageTable.form.id': '库存单编号',
+  'StorageTable.form.id.placeholder': '请输入库存单编号',
   'StorageTable.form.wareId': '中心库房编号',
   'StorageTable.form.wareId.placeholder': '请输入中心库房编号',
   'StorageTable.form.stationId': '分站编号',
@@ -39,7 +39,7 @@ export default {
 
   // column
   'StorageTable.columns.index': '#',
-  'StorageTable.columns.id': '出库单编号',
+  'StorageTable.columns.id': '库存单编号',
   'StorageTable.columns.orderId': '订单编号',
   'StorageTable.columns.wareId': '仓库编号',
   'StorageTable.columns.stationId': '分站编号',

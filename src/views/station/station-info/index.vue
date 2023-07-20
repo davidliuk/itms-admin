@@ -7,15 +7,14 @@
         <Banner />
         <!--统计-->
         <DataPanel />
-        <!--图表-->
-        <ContentChart />
         <!--下面两个小图-->
       </div>
       <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
-          <DetailData />
+          <ContentChart />
+          <!--          <DetailData />-->
         </a-grid-item>
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
@@ -24,25 +23,6 @@
         </a-grid-item>
       </a-grid>
     </div>
-    <!--<div class="right-side">-->
-    <!--<a-grid :cols="24" :row-gap="16">-->
-    <!--<a-grid-item :span="24">-->
-    <!--<div class="panel moduler-wrap">-->
-    <!--<QuickOperation />-->
-    <!--<RecentlyVisited />-->
-    <!--</div>-->
-    <!--</a-grid-item>-->
-    <!--<a-grid-item class="panel" :span="24">-->
-    <!--<Carousel />-->
-    <!--</a-grid-item>-->
-    <!--<a-grid-item class="panel" :span="24">-->
-    <!--<Announcement />-->
-    <!--</a-grid-item>-->
-    <!--<a-grid-item class="panel" :span="24">-->
-    <!--<Docs />-->
-    <!--</a-grid-item>-->
-    <!--</a-grid>-->
-    <!--</div>-->
   </div>
 </template>
 
@@ -52,11 +32,6 @@
   import ContentChart from './components/content-chart.vue';
   import DetailData from './components/detail-data.vue';
   import CategoriesPercent from './components/categories-percent.vue';
-  import RecentlyVisited from './components/recently-visited.vue';
-  import QuickOperation from './components/quick-operation.vue';
-  import Announcement from './components/announcement.vue';
-  import Carousel from './components/carousel.vue';
-  import Docs from './components/docs.vue';
 </script>
 
 <script lang="ts">

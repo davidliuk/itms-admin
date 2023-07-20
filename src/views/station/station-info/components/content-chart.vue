@@ -99,7 +99,7 @@
         axisLabel: {
           formatter(value: any, idx: number) {
             if (idx === 0) return value;
-            return `${value}k`;
+            return `${value}`;
           },
         },
         splitLine: {
@@ -116,8 +116,8 @@
           const [firstElement] = params as ToolTipFormatterParams[];
           return `<div>
             <p class="tooltip-title">${firstElement.axisValueLabel}</p>
-            <div class="content-panel"><span>配送任务单量</span><span class="tooltip-value">${(
-              Number(firstElement.value) * 10000
+            <div class="content-panel"><span>配送任务单量</span><span class="tooltip-value">${Number(
+              firstElement.value
             ).toLocaleString()}</span></div>
           </div>`;
         },

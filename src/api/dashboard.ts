@@ -132,7 +132,6 @@ export function deleteWareHouse(warehouseId: string) {
   return axios.delete<any>(`/admin/sys/ware/${warehouseId}`);
 }
 
-
 export interface WareAdmins {
   id: number;
   createTime: string;

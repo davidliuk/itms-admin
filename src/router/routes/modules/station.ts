@@ -13,31 +13,11 @@ const STATION: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: 'mission-table', // The midline path complies with SEO specifications
+      path: 'mission-table',
       name: 'MissionTable',
       component: () => import('@/views/station/mission-table/index.vue'),
       meta: {
         locale: 'menu.station.missionTable',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
-    {
-      path: 'courier-table', // The midline path complies with SEO specifications
-      name: 'CourierTable',
-      component: () => import('@/views/station/courier-table/index.vue'),
-      meta: {
-        locale: 'menu.station.courierTable',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
-    {
-      path: 'station-info',
-      name: 'StationInfo',
-      component: () => import('@/views/station/station-info/index.vue'),
-      meta: {
-        locale: 'menu.station.stationInfo',
         requiresAuth: true,
         roles: ['*'],
       },
@@ -88,6 +68,26 @@ const STATION: AppRouteRecordRaw = {
       component: () => import('@/views/station/storage-table/index.vue'),
       meta: {
         locale: 'menu.station.StorageTable',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'station-info',
+      name: 'StationInfo',
+      component: () => import('@/views/station/station-info/index.vue'),
+      meta: {
+        locale: 'menu.station.stationInfo',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'courier-table', // The midline path complies with SEO specifications
+      name: 'CourierTable',
+      component: () => import('@/views/station/courier-table/index.vue'),
+      meta: {
+        locale: 'menu.station.courierTable',
         requiresAuth: true,
         roles: ['*'],
       },

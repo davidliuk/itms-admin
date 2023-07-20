@@ -84,6 +84,7 @@ export default {
   'missionTable.columns.operations.select': '选择',
   'missionTable.columns.operations.returnAssign': '退货分配',
   'missionTable.columns.operations.returnIn': '退货入站',
+  'missionTable.columns.operations.returnWare': '退货出库',
 
   // size
   'missionTable.size.mini': '迷你',

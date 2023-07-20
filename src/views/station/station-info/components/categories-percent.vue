@@ -26,7 +26,7 @@
     return {
       legend: {
         left: 'center',
-        data: ['送货', '收款', '退货', '换货'],
+        data: ['送货', '退货', '换货'],
         bottom: 0,
         icon: 'circle',
         itemWidth: 8,
@@ -84,31 +84,24 @@
           },
           data: [
             {
-              value: [148564],
+              value: [48564],
               name: '送货',
               itemStyle: {
-                color: isDark ? '#3D72F6' : '#249EFF',
+                color: isDark ? '#3f9173' : '#89e1bc',
               },
             },
             {
-              value: [334271],
-              name: '收款',
-              itemStyle: {
-                color: isDark ? '#A079DC' : '#313CA9',
-              },
-            },
-            {
-              value: [445694],
+              value: [15694],
               name: '退货',
               itemStyle: {
-                color: isDark ? '#6CAAF5' : '#21CCFF',
+                color: isDark ? '#e36f88' : '#e35555',
               },
             },
             {
-              value: [237845],
+              value: [7845],
               name: '换货',
               itemStyle: {
-                color: isDark ? '#0057FE' : '#0057FE',
+                color: isDark ? '#0752f5' : '#2553c0',
               },
             },
           ],

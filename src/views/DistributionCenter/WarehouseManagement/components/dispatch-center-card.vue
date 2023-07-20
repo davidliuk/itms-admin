@@ -7,40 +7,38 @@
       @before-ok="handleBeforeOk"
     >
       <a-space>
-
         <div class="horizontal-container">
           <span class="label">请输入名称：</span>
-          <a-input  v-model="form.name" :placeholder="'中心仓库名'"  />
+          <a-input v-model="form.name" :placeholder="'中心仓库名'" />
         </div>
-
       </a-space>
 
       <a-space>
-      <div class="horizontal-container">
-        <span class="label">请输入省份：</span>
-        <a-input v-model="form.province" :placeholder="'省'" />
-      </div>
+        <div class="horizontal-container">
+          <span class="label">请输入省份：</span>
+          <a-input v-model="form.province" :placeholder="'省'" />
+        </div>
       </a-space>
 
       <a-space>
-      <div class="horizontal-container">
-        <span class="label">请输入市：</span>
-        <a-input v-model="form.city" :placeholder="'市'" />
-      </div>
+        <div class="horizontal-container">
+          <span class="label">请输入市：</span>
+          <a-input v-model="form.city" :placeholder="'市'" />
+        </div>
       </a-space>
 
       <a-space>
-      <div class="horizontal-container">
-        <span class="label">请输入区：</span>
-        <a-input v-model="form.district" :placeholder="'区'" />
-      </div>
+        <div class="horizontal-container">
+          <span class="label">请输入区：</span>
+          <a-input v-model="form.district" :placeholder="'区'" />
+        </div>
       </a-space>
 
       <a-space>
-      <div class="horizontal-container">
-        <span class="label">请输入详细地址：</span>
-        <a-input v-model="form.detailAddress" :placeholder="'详细地址'" />
-      </div>
+        <div class="horizontal-container">
+          <span class="label">请输入详细地址：</span>
+          <a-input v-model="form.detailAddress" :placeholder="'详细地址'" />
+        </div>
       </a-space>
 
       <div class="horizontal-container">
@@ -63,27 +61,25 @@
               :style="{ width: '100%', marginBottom: '10px' }"
               :size="'small'"
             >
-            <span
-              :style="{
-                width: '200px',
-                display: 'flex',
-                alignItems: 'center',
-              }"
-            >
-              <a-avatar :size="36">
-                <img alt="avatar" :src="idleAdminList[index].avatar" />
-              </a-avatar>
-              <a-typography-text class="admin-name">
-                <a-col>{{ idleAdminList[index].name }}</a-col>
-                <a-col>{{ idleAdminList[index].email }}</a-col>
-              </a-typography-text>
-            </span>
+              <span
+                :style="{
+                  width: '200px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }"
+              >
+                <a-avatar :size="36">
+                  <img alt="avatar" :src="idleAdminList[index].avatar" />
+                </a-avatar>
+                <a-typography-text class="admin-name">
+                  <a-col>{{ idleAdminList[index].name }}</a-col>
+                  <a-col>{{ idleAdminList[index].email }}</a-col>
+                </a-typography-text>
+              </span>
             </a-card>
           </a-option>
         </a-select>
       </div>
-
-
     </a-modal>
 
     <a-row class="list-row" :gutter="24">
@@ -317,15 +313,14 @@
     }
   }
 
-
   .horizontal-container {
     display: flex;
     align-items: center;
     justify-content: space-around;
   }
 
-  .input,.label{
+  .input,
+  .label {
     width: 250px;
   }
-
 </style>

@@ -13,14 +13,14 @@
         </a-avatar>
         <a-statistic
           :title="$t('stationInfo.missionTotal')"
-          :value="373.5"
+          :value="statistics.missionTotal"
           :precision="1"
           :value-from="0"
           animation
           show-group-separator
         >
           <template #suffix>
-            W+ <span class="unit">{{ $t('stationInfo.pecs') }}</span>
+            <span class="unit">{{ $t('stationInfo.pecs') }}</span>
           </template>
         </a-statistic>
       </a-space>
@@ -37,8 +37,8 @@
           />
         </a-avatar>
         <a-statistic
-          :title="$t('stationInfo.successMission')"
-          :value="368"
+          :title="$t('stationInfo.receipts')"
+          :value="statistics.receipts"
           :value-from="0"
           animation
           show-group-separator
@@ -62,7 +62,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('stationInfo.couriers')"
-          :value="8874"
+          :value="statistics.couriers"
           :value-from="0"
           animation
           show-group-separator
@@ -87,13 +87,13 @@
         </a-avatar>
         <a-statistic
           :title="$t('stationInfo.products')"
-          :value="2.8"
+          :value="statistics.products"
           :precision="1"
           :value-from="0"
           animation
         >
           <template #suffix>
-            <span class="unit">件</span>
+            <span class="unit">次</span>
           </template>
         </a-statistic>
       </a-space>
@@ -104,7 +104,107 @@
   </a-grid>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { computed, reactive } from 'vue';
+  import { useUserStore } from '@/store';
+  import {
+    Courier,
+    queryCourierList,
+    queryReceiptList,
+    queryWorkOrderList,
+    Receipt,
+    WorkOrder,
+  } from '@/api/station';
+  import useLoading from '@/hooks/loading';
+  import { queryStorageOrderList, StorageOrder } from '@/api/center';
+
+  const { loading, setLoading } = useLoading(true);
+  const userStore = useUserStore();
+  const statistics = reactive({
+    missionTotal: 0,
+    couriers: 0,
+    products: 0,
+    receipts: 0,
+  });
+  const userInfo = computed(() => {
+    return {
+      name: userStore.name,
+    };
+  });
+  // const statistics = computed(() => {
+  //   return {
+  //     missionTotal:queryWorkOrderList(1, 1, {stationId:1}),
+  //     couriers:0,
+  //     products:0,
+  //     receipts:0,
+  //   };
+  // });
+
+  const fetchDataMission = async (
+    current: number,
+    pageSize: number,
+    params: Partial<WorkOrder>
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryWorkOrderList(current, pageSize, params);
+      statistics.missionTotal = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchDataMission(1, 1, { stationId: 1 });
+  const fetchDataCourier = async (
+    current: number,
+    pageSize: number,
+    params: Partial<Courier>
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryCourierList(current, pageSize, params);
+      statistics.couriers = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchDataCourier(1, 1, { stationId: 1 });
+  const fetchDataStorage = async (
+    current: number,
+    pageSize: number,
+    params: Partial<StorageOrder>
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryStorageOrderList(current, pageSize, params);
+      statistics.products = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchDataStorage(1, 1, { stationId: 1 });
+  const fetchDataReciept = async (
+    current: number,
+    pageSize: number,
+    params: Partial<Receipt>
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryReceiptList(current, pageSize, params);
+      statistics.receipts = data.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchDataReciept(1, 1, { stationId: 1 });
+</script>
 
 <style lang="less" scoped>
   .arco-grid.panel {

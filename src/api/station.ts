@@ -1,15 +1,9 @@
 import axios from 'axios';
-import qs from 'query-string';
-import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-import { TableData } from '@arco-design/web-vue/es/table/interface';
-import { Role } from '@/api/acl';
-import Mock from 'mockjs';
 
 export interface PageRes<T> {
   records: T[];
   total: number;
 }
-
 // 任务单
 export interface WorkOrder {
   // 内容不影响
@@ -51,15 +45,16 @@ export function queryWorkOrderList(
     params
   );
 }
-
+// 获取任务单
 export function getWorkOrder(id: number) {
   return axios.get<any>(`/admin/sys/station/${id}`);
 }
 
+// 修改任务单
 export function changeWorkOrder(workOrder: WorkOrder) {
   return axios.put<any>(`/admin/sys/workOrder`, workOrder);
 }
-
+// 删除任务单
 export function deleteWorkOrder(id: number) {
   return axios.delete<any>(`/admin/sys/workOrder/${id}`);
 }
@@ -89,7 +84,6 @@ export interface Courier {
   createTime: Date;
   updateTime: Date;
   workNum: number;
-  // param: object;
 }
 export function updateCourier(courier: Courier) {
   return axios.put<any>('/admin/user/courier/', courier);
@@ -114,12 +108,11 @@ export function inCheckOrder(orderId: number) {
   return axios.get<any>(`/admin/sys/station/in/${orderId}`);
 }
 
-// 调拨单
-
+// 调拨入库
 export function inTransferOrder(orderId: number) {
   return axios.get<any>(`/admin/sys/station/returnOrder/in/${orderId}`);
 }
-
+// 调拨出库
 export function outTransferOrder(orderId: number) {
   return axios.get<any>(`/admin/sys/station/returnOrder/out/${orderId}`);
 }

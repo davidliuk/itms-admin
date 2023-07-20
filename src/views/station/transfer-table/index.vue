@@ -230,25 +230,25 @@
             </template>
             {{ $t('TransferTable.columns.operations.view') }}
           </a-button>
-          <template v-if="record.status === 'DISPATCH'">
-            <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="transferOutStation(record.orderId)"
-            >
-              {{ $t('TransferTable.columns.operations.returnWare') }}
-            </a-button>
-            <!--            <a-popconfirm-->
-            <!--              content="是否确认出库?"-->
-            <!--              type="warning"-->
-            <!--              @ok="transferOutStation(record.orderId)"-->
-            <!--            >-->
-            <!--              <a-button v-permission="['admin']" type="text" size="small">-->
-            <!--                {{ $t(`TransferTable.columns.operations.returnWare`) }}-->
-            <!--              </a-button>-->
-            <!--            </a-popconfirm>-->
-          </template>
+          <!--          <template v-if="record.status === 'IN' && record.type === 'DELIVERY'">-->
+          <!--            <a-button-->
+          <!--              v-permission="['admin']"-->
+          <!--              type="text"-->
+          <!--              size="small"-->
+          <!--              @click="transferOutStation(record.orderId)"-->
+          <!--            >-->
+          <!--              {{ $t('TransferTable.columns.operations.returnWare') }}-->
+          <!--            </a-button>-->
+          <!--            &lt;!&ndash;            <a-popconfirm&ndash;&gt;-->
+          <!--            &lt;!&ndash;              content="是否确认出库?"&ndash;&gt;-->
+          <!--            &lt;!&ndash;              type="warning"&ndash;&gt;-->
+          <!--            &lt;!&ndash;              @ok="transferOutStation(record.orderId)"&ndash;&gt;-->
+          <!--            &lt;!&ndash;            >&ndash;&gt;-->
+          <!--            &lt;!&ndash;              <a-button v-permission="['admin']" type="text" size="small">&ndash;&gt;-->
+          <!--            &lt;!&ndash;                {{ $t(`TransferTable.columns.operations.returnWare`) }}&ndash;&gt;-->
+          <!--            &lt;!&ndash;              </a-button>&ndash;&gt;-->
+          <!--            &lt;!&ndash;            </a-popconfirm>&ndash;&gt;-->
+          <!--          </template>-->
           <a-modal
             v-model:visible="visible"
             @ok="handleOk"
@@ -330,22 +330,22 @@
   const showColumns = ref<Column[]>([]);
 
   // 调拨出库
-  const transferOutStation = async (orderId: number) => {
-    setLoading(true);
-    try {
-      const { data } = await outTransferOrder(orderId);
-      console.log(data);
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      fetchData(
-        basePagination.current,
-        basePagination.pageSize,
-        formModel.value
-      );
-      setLoading(false);
-    }
-  };
+  // const transferOutStation = async (orderId: number) => {
+  //   setLoading(true);
+  //   try {
+  //     const { data } = await outTransferOrder(orderId);
+  //     console.log(data);
+  //   } catch (err) {
+  //     // you can report use errorHandler or other
+  //   } finally {
+  //     fetchData(
+  //       basePagination.current,
+  //       basePagination.pageSize,
+  //       formModel.value
+  //     );
+  //     setLoading(false);
+  //   }
+  // };
   // const handleCancelOutWare = () => {
   //
   // };
@@ -524,7 +524,7 @@
   // 分页
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,

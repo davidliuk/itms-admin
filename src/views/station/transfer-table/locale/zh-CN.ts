@@ -1,6 +1,6 @@
 export default {
   // 定义调拨单类型
-  'menu.station.TransferTable': '调拨单表格',
+  'menu.station.TransferTable': '调拨单列表',
   'TransferTable.form.id': '调拨单编号',
   'TransferTable.form.id.placeholder': '请输入调拨单编号',
   'TransferTable.form.wareId': '中心库房编号',

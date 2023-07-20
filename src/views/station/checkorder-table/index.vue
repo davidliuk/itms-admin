@@ -257,16 +257,16 @@
               </template>
             </a-table>
           </a-modal>
-          <template v-if="record.status === 'OUT'">
-            <a-button
-              v-permission="['admin']"
-              type="text"
-              size="small"
-              @click="inCheckOrderById(record.orderId)"
-            >
+          <a-popconfirm
+            v-if="record.status === 'OUT' && record.type === 'DELIVERY'"
+            content="是否确认入库?"
+            type="warning"
+            @ok="transferInWare(record.orderId)"
+          >
+            <a-button v-permission="['admin']" type="text" size="small">
               {{ $t('CheckOrderTable.columns.operations.in') }}
             </a-button>
-          </template>
+          </a-popconfirm>
         </template>
         <!-- 查看 -->
       </a-table>
@@ -319,7 +319,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -447,17 +447,11 @@
     },
   ]);
 
-  // 删除分发单
-  const inCheckOrderById = async (orderId: number) => {
-    setLoading(true);
-    try {
-      await inCheckOrder(orderId);
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
+  // 入库
+
+  const transferInWare = (orderId: number) => {
+    inCheckOrder(orderId);
+    fetchData(basePagination.current, basePagination.pageSize, formModel.value);
   };
 
   // 展示商品详细信息

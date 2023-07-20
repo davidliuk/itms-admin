@@ -6,7 +6,7 @@ import { PageRes, Role } from '@/api/acl';
 import { Pagination } from '@/types/global';
 import { Region } from 'echarts/types/src/coord/geo/Region';
 import { RegionList } from '@/mock/user';
-import { Station } from "@/api/station";
+import { Station } from '@/api/station';
 
 export interface LSPPage {
   current: number;
@@ -90,10 +90,11 @@ export async function queryRegionList() {
 }
 
 export async function queryRegionIdByKeyword(keyword: string) {
-  return axios.get<Station[]>(`/admin/sys/station/findRegionStationByKeyword/${keyword}`);
+  return axios.get<Station[]>(
+    `/admin/sys/station/findRegionStationByKeyword/${keyword}`
+  );
 }
 
-
 export async function addWareHouse(param: PostWareHouse) {
-  return axios.post<any>(`/admin/sys/ware`,param);
+  return axios.post<any>(`/admin/sys/ware`, param);
 }

@@ -357,7 +357,7 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 10,
   };
   const pagination = reactive({
     ...basePagination,
@@ -440,7 +440,7 @@
   };
   fetchData(pagination.current, pagination.pageSize, formModel.value);
 
-  // 改
+  // 修改
   const handleUpdateClick = (courier: Courier) => {
     copy(courier, form);
     isUpdating.value = true;
