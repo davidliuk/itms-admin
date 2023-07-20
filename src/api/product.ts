@@ -90,6 +90,10 @@ export interface SkuInfo {
   skuWareList: any[];
 }
 
+// export function addSkuInfo(skuInfo: SkuInfo) {
+//   return axios.post<SkuInfo>('/admin/product/skuInfo', skuInfo);
+// }
+
 export function querySkuInfoList(
   current: number,
   limit: number,
@@ -100,6 +104,7 @@ export function querySkuInfoList(
     params
   );
 }
+
 export function updateSkuInfo(skuInfo: SkuInfo) {
   return axios.put<any>('/admin/product/skuInfo', skuInfo);
 }
@@ -201,6 +206,10 @@ export type SkuInfoVO = SkuBasicInfo &
 
 export function addSkuInfo(skuInfoVo: SkuInfoVO) {
   return axios.post<any>('/admin/product/skuInfo', skuInfoVo);
+}
+
+export function addSkuInfoUpload(skuInfo: SkuInfo) {
+  return axios.post<any>('/admin/product/skuInfo', skuInfo);
 }
 
 export interface Supplier {

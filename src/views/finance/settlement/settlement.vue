@@ -63,7 +63,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="
+              (ev) => {
+                toCSV(renderData, 'settlement');
+              }
+            ">
             <template #icon>
               <icon-download />
             </template>
@@ -213,6 +217,7 @@
   import copy from '@/utils/objects';
   import { CheckOrder } from '@/api/center';
   import htmlToPdf from '@/utils/pdf';
+  import { toCSV } from "@/utils/csv";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

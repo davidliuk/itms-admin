@@ -14,7 +14,6 @@ export default {
   'multiDAnalysis.card.title.contentPublishingSource': '内容发布来源',
 };
 
-
 // 'dataAnalysis.card.title.allVisitors': '订单数量',
 //     'dataAnalysis.card.title.contentPublished': '商品入库量',
 //     'dataAnalysis.card.title.totalComment': '商品出库量',

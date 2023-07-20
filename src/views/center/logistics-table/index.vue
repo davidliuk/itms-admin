@@ -84,7 +84,14 @@
               </template>
               {{ $t('Logistics.operation.create') }}
             </a-button>
-            <a-upload action="/">
+            <a-upload @before-upload="(file: File) => {
+                formCSV(file, (order: any) => {
+                    order.forEach((order: Logistics) => {
+                      addLogistics(order);
+                    });
+                    return true;
+                  });
+                }">
               <template #upload-button>
                 <a-button>
                   {{ $t('Logistics.operation.import') }}
@@ -98,7 +105,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="
+              (ev) => {
+                toCSV(renderData, 'logistics');
+              }
+            ">
             <template #icon>
               <icon-download />
             </template>
@@ -245,6 +256,8 @@
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
   import { createReactiveFn } from '@vueuse/core';
+  import { formCSV, toCSV } from "@/utils/csv";
+  import { AddRole, Role } from "@/api/acl";
 
   const generateFormModel = () => {
     return {

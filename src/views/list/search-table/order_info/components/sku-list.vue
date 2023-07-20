@@ -8,14 +8,17 @@
           <a-table-column title="名称" data-index="skuName" />
           <a-table-column title="分类" data-index="skuType">
             <template #cell="{ record }">
-              <p v-if="record === 'COMMON'">
+              <div v-if="record.skuType === 'COMMON'">
                 <span class="circle"></span>
                 <span>普通</span>
-              </p>
-              <p v-if="record === 'SECKILL'">
+              </div>
+              <div v-else-if="record.skuType === 'SECKILL'">
                 <span class="circle pass"></span>
                 <span>秒杀商品</span>
-              </p>
+              </div>
+              <div v-else>
+                <span>其他分类</span>
+              </div>
             </template>
           </a-table-column>
           <a-table-column title="数量" data-index="skuNum" />
@@ -45,7 +48,7 @@
 
   const props = defineProps({
     renderData: {
-      type: Object,
+      type: Object as () => OrderDetail,
       required: true,
     },
     loading: {
@@ -55,6 +58,7 @@
   });
 
   const renderData = ref(props.renderData as OrderDetail);
+  console.log(renderData.value);
 </script>
 
 <style scoped lang="less">

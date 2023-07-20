@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div ref="abcde" class="container">
     <div class="logo">
       <!-- <img
         alt="logo"
@@ -8,6 +8,7 @@
       <img alt="logo" src="/src/assets/logo.svg" />
       <div class="logo-text">iTMS - 灵创物运</div>
     </div>
+
     <LoginBanner />
     <div class="content">
       <div class="content-inner">
@@ -22,8 +23,9 @@
 
 <script lang="ts" setup>
   import Footer from '@/components/footer/index.vue';
-  import LoginBanner from './components/banner.vue';
+
   import LoginForm from './components/login-form.vue';
+  import LoginBanner from './components/banner.vue';
 </script>
 
 <!-- <script src="three.r134.min.js"></script>
@@ -60,6 +62,7 @@
       align-items: center;
       justify-content: center;
       padding-bottom: 40px;
+      background-color: transparent;
     }
 
     .footer {

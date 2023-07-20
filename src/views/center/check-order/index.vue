@@ -120,7 +120,14 @@
             <!--              </template>-->
             <!--              {{ $t('CheckOrder.operation.create') }}-->
             <!--            </a-button>-->
-            <a-upload action="/">
+            <a-upload @before-upload="(file: File) => {
+                formCSV(file, (order: any) => {
+                    order.forEach((order: CheckOrder) => {
+                      addCheckOrder(CheckOrder);
+                    });
+                    return true;
+                  });
+                }">
               <template #upload-button>
                 <a-button type="primary">
                   {{ $t('CheckOrder.operation.import') }}
@@ -333,14 +340,16 @@
     CheckOrder,
     queryOrderInfo,
     OrderItem,
-    checkorderReturnInWareByOrderId,
-  } from '@/api/center';
+    checkorderReturnInWareByOrderId, addCheckOrder
+  } from "@/api/center";
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import htmlToPdf from '@/utils/pdf';
+  import { formCSV } from "@/utils/csv";
+  import { AddRole, Role } from "@/api/acl";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

@@ -16,9 +16,9 @@
           placeholder="选择类别"
           @change="typeChange"
         >
-          <a-option v-for="category in categoriesAllName" :key="category">{{
-            category
-          }}</a-option>
+          <a-option v-for="category in categoriesAllName" :key="category">
+            {{ category }}
+          </a-option>
         </a-select>
         <a-table
           :loading="loading"
@@ -27,9 +27,10 @@
           :bordered="true"
           :scroll="{ x: '100%', y: '264px' }"
         >
-          <template #columns>
+          <template #columns >
             <a-table-column title="名称" data-index="skuName" />
-            <a-table-column title="类别" data-index="category" />
+            <a-table-column title="类别" data-index="skuInfo.categoryName">
+            </a-table-column>
             <a-table-column
               title="销量"
               data-index="sale"
@@ -75,7 +76,7 @@
   const baseData: Ref<WareInfo[]> = ref([]);
   const renderList = ref([{}]);
 
-  const getrenderList = () => {
+  const getRenderList = () => {
     const tempData: Ref<WareInfo[]> = ref([]);
     for (let i = 0; i < baseData.value.length; i += 1) {
       if (
@@ -89,14 +90,17 @@
 
     renderList.value = Array(tempData.value.length)
       .fill(null)
-      .map((_, index) => ({
+      .map((_, index) => (
+        {
         key: String(index),
         skuName: tempData.value[index].skuName,
-        category: tempData.value[index].skuInfo.categoryName,
+        skuInfo: tempData.value[index].skuInfo,
         stock: tempData.value[index].stock,
         maxStock: tempData.value[index].maxStock,
         sale: tempData.value[index].sale,
       }));
+
+    console.log(renderList.value);
   };
 
   const baseCategoriesMap: Ref<CategoriesMap[]> = ref([]);
@@ -120,7 +124,7 @@
       baseData.value = data;
 
       // console.log(renderList.value);
-      getrenderList();
+      getRenderList();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -152,7 +156,7 @@
   });
   const typeChange = () => {
     console.log(type.value);
-    getrenderList();
+    getRenderList();
   };
   fetchData(useWarehouseInfoStore().$state.id as string);
 </script>

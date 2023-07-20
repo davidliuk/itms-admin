@@ -22,7 +22,6 @@
           :disabled="disableSelecting"
           :options="logisticsOptions"
         />
-
         <a-select
           v-model="stationsBaseInfoIndex"
           :style="{ width: '160px' }"
@@ -47,6 +46,7 @@
       <template #title> 订单详情 </template>
       <div><OrderInfo /></div>
     </a-modal>
+
     <a-card class="general-card" title="订单列表">
       <a-row>
         <a-col :flex="1">
@@ -58,12 +58,9 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('searchTable.form.number')"
-                >
+                <a-form-item field="number" :label="'订单号'">
                   <a-input
-                    v-model="formModel.order_no"
+                    v-model="formModel.orderNo"
                     :placeholder="$t('searchTable.form.number.placeholder')"
                   />
                 </a-form-item>
@@ -71,8 +68,20 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('searchTable.form.name')">
                   <a-input
-                    v-model="formModel.nick_name"
+                    v-model="formModel.userId"
                     :placeholder="$t('searchTable.form.name.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="order_status"
+                  :label="$t('searchTable.form.order_status')"
+                >
+                  <a-select
+                    v-model="formModel.orderStatus"
+                    :options="order_statusOptions"
+                    :placeholder="$t('searchTable.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
@@ -82,7 +91,7 @@
                   :label="$t('searchTable.form.receiver_name')"
                 >
                   <a-input
-                    v-model="formModel.receiver_name"
+                    v-model="formModel.receiverName"
                     :placeholder="
                       $t('searchTable.form.receiver_name.placeholder')
                     "
@@ -101,26 +110,15 @@
               <!--                  />-->
               <!--                </a-form-item>-->
               <!--              </a-col>-->
+
               <a-col :span="8">
                 <a-form-item
-                  field="order_status"
-                  :label="$t('searchTable.form.order_status')"
+                  field="name"
+                  :label="$t('searchTable.form.logistics')"
                 >
-                  <a-select
-                    v-model="formModel.order_status"
-                    :options="order_statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="createdTime"
-                  :label="$t('searchTable.form.payment_time')"
-                >
-                  <a-range-picker
-                    v-model="formModel.payment_time"
-                    style="width: 100%"
+                  <a-input
+                    v-model="formModel.logisticsName"
+                    :placeholder="$t('searchTable.form.logistics.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -130,8 +128,8 @@
                   :label="$t('searchTable.form.take_name')"
                 >
                   <a-input
-                    v-model="formModel.take_name"
-                    :placeholder="$t('searchTable.form.take_name')"
+                    v-model="formModel.courierName"
+                    :placeholder="$t('searchTable.form.courier')"
                   />
                 </a-form-item>
               </a-col>
@@ -172,15 +170,27 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('searchTable.operation.create') }}
-            </a-button>
-            <a-upload action="/">
+            <!--            <a-button type="primary">-->
+            <!--              <template #icon>-->
+            <!--                <icon-plus />-->
+            <!--              </template>-->
+            <!--              {{ $t('searchTable.operation.create') }}-->
+            <!--            </a-button>-->
+            <a-upload
+              @before-upload="(file: File) => {
+                formCSV(file, (order: any) => {
+                    order.forEach((order: PolicyRecord) => {
+                      AddOrder(order);
+                    });
+                    return true;
+                  });
+                }"
+            >
               <template #upload-button>
                 <a-button>
+                  <template #icon>
+                    <icon-upload />
+                  </template>
                   {{ $t('searchTable.operation.import') }}
                 </a-button>
               </template>
@@ -191,7 +201,16 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button
+            :loading="loadingDownload"
+            @click="
+              (ev) => {
+                loadingDownload = true;
+                toCSV(renderData, 'orderList');
+                loadingDownload = false;
+              }
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -367,6 +386,8 @@
     queryStationBaseInfo,
     SelfDispatchParam,
     postSelfDispatch,
+    AddOrder,
+    PostParamsOnPageSearch,
   } from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -377,8 +398,9 @@
   import router from '@/router';
   import { useOrderInfoStore } from '@/store';
   import { LSPPage } from '@/api/dispatch-center';
+  import { formCSV, toCSV } from '@/utils/csv';
+  import { OrderStateGetString } from '@/utils/lsp-utils/order_state_to_string';
   import OrderInfo from './order_info/index.vue';
-  import { OrderStateGetString } from '../../../utils/lsp-utils/order_state_to_string';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -392,12 +414,13 @@
 
   const generateFormModel = () => {
     return {
-      order_no: '',
-      nick_name: '',
-      receiver_name: '',
-      order_status: '',
-      payment_time: '',
-      take_name: '',
+      courierName: '',
+      logisticsName: '',
+      receiverName: '',
+      orderNo: '',
+      orderStatus: '',
+      userId: '',
+      orderType: 'COMMON',
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -508,24 +531,48 @@
   // eslint-disable-next-line camelcase
   const order_statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('searchTable.form.order_status.PendingPayment'),
-      value: 'PendingPayment',
+      label: t('searchTable.form.order_status.ALL'),
+      value: '',
     },
     {
-      label: t('searchTable.form.order_status.PendingShipment'),
-      value: 'PendingShipment',
+      label: t('searchTable.form.order_status.UNPAID'),
+      value: 'UNPAID',
     },
     {
-      label: t('searchTable.form.order_status.Shipped'),
-      value: 'Shipped',
+      label: t('searchTable.form.order_status.PAID'),
+      value: 'PAID',
     },
     {
-      label: t('searchTable.form.order_status.Completed'),
-      value: 'Completed',
+      label: t('searchTable.form.order_status.DISPATCH'),
+      value: 'DISPATCH',
     },
     {
-      label: t('searchTable.form.order_status.Cancelled'),
-      value: 'Cancelled',
+      label: t('searchTable.form.order_status.OUT'),
+      value: 'OUT',
+    },
+    {
+      label: t('searchTable.form.order_status.IN'),
+      value: 'IN',
+    },
+    {
+      label: t('searchTable.form.order_status.ASSIGN'),
+      value: 'ASSIGN',
+    },
+    {
+      label: t('searchTable.form.order_status.TAKE'),
+      value: 'TAKE',
+    },
+    {
+      label: t('searchTable.form.order_status.RECEIVE'),
+      value: 'RECEIVE',
+    },
+    {
+      label: t('searchTable.form.order_status.REFUND'),
+      value: 'REFUND',
+    },
+    {
+      label: t('searchTable.form.order_status.CANCEL'),
+      value: 'CANCEL',
     },
   ]);
   computed<SelectOptionData[]>(() => [
@@ -541,7 +588,7 @@
   // 从后端获取各种数据，我们把查询条件也传过去，让后端处理处数据来
   const fetchData = async (
     pageSetting: LSPPage,
-    params: PolicyRecord | null
+    params: PostParamsOnPageSearch | null
   ) => {
     setLoading(true);
     try {
@@ -550,7 +597,7 @@
         pageSetting.limit,
         params
       );
-      // console.log(data);
+      console.log(data);
       renderData.value = data.records;
       // console.log(renderData.value);
       pagination.current = data.current;
@@ -562,7 +609,10 @@
   };
 
   const search = () => {
-    fetchData(basePagination, formModel.value as unknown as PolicyRecord);
+    fetchData(
+      basePagination,
+      formModel.value as unknown as PostParamsOnPageSearch
+    );
     // 传入和数据结构就是两个字典拼在一起，仅此而已
     // console.log({
     //     ...basePagination,
@@ -656,6 +706,10 @@
       const { data } = await deletePolicyList(renderData.value[index].id); // 这里收集返回信息,如果失败 todo 要提醒
       if (false) {
         // todo 如果失败 弹框提示
+        Modal.error({
+          title: '删除失败',
+          content: `详细信息：\n ${data}`,
+        });
       } else {
         renderData.value.splice(index, 1); // 只有这个的话,前端的就会直接减少一列
       }
@@ -694,6 +748,7 @@
   const stationBaseInfo: Ref<StationBaseInfo[]> = ref([]);
   const loadingLogistics = ref(true);
   const loadingStations = ref(true);
+  const loadingDownload = ref(false);
   // 计算属性生成选项数组
   const logisticsOptions = computed<SelectOptionData[]>(() => {
     return logisticsBaseInfo.value.map((item, index) => {
@@ -761,7 +816,6 @@
         logisticsBaseInfo.value[logisticsBaseInfoIndex.value].phone,
     };
 
-    console.log(selfDispatchParam);
     await postSelfDispatch(selfDispatchParam);
 
     disableSelecting.value = false;

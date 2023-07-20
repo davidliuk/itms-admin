@@ -89,7 +89,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="
+              (ev) => {
+                toCSV(renderData, 'supplier');
+              }
+            ">
             <template #icon>
               <icon-download />
             </template>
@@ -230,6 +234,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
+  import { toCSV } from "@/utils/csv";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

@@ -150,5 +150,11 @@ setupMock({
 
       return successResponseWrap(provinces);
     });
+
+    // 获得文件
+    Mock.mock(new RegExp('/api/upload'), (options) => {
+      // console.log(options);
+      // return successResponseWrap(options.body);
+    });
   },
 });

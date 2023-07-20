@@ -83,7 +83,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, Ref, ref } from 'vue';
+  import { onMounted, reactive, Ref, ref, watch } from 'vue';
 
   import useLoading from '@/hooks/loading';
   import { useOrderInfoStore } from '@/store';
@@ -96,6 +96,7 @@
   import TransferOrderInfo from '@/views/list/search-table/order_info/components/transfer-order-info.vue';
   import WorkOrderInfo from '@/views/list/search-table/order_info/components/work-order-info.vue';
   import SkuList from '@/views/list/search-table/order_info/components/sku-list.vue';
+  import vue from '@vitejs/plugin-vue';
 
   const orderStore = useOrderInfoStore();
 
@@ -115,7 +116,7 @@
     try {
       const { data } = await queryOrderDetail(orderId);
       orderDetail.value = data;
-      // console.log(orderDetail);
+      console.log(orderDetail);
       stepAndString.value = reactive(
         OrderStateGetStepAndString(orderDetail.value)
       );
@@ -127,7 +128,10 @@
       setLoading(false);
     }
   };
-  fetchOrderDetail(currentData.orderNo as string);
+  // fetchOrderDetail(currentData.orderNo as string);
+  onMounted(() => {
+    fetchOrderDetail(currentData.orderNo as string); // 在组件挂载后调用异步函数获取数据
+  });
 </script>
 
 <script lang="ts">

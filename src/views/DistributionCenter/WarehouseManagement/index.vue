@@ -13,29 +13,19 @@
       <a-col :span="24">
         <a-card class="general-card" :title="$t('menu.list.warehouseList')">
           <a-row justify="space-between">
+<!--            <a-row>-->
+<!--              <a-input-search-->
+<!--                :placeholder="$t('cardList.searchInput.placeholder')"-->
+<!--                style="width: 240px; position: absolute; top: 60px; right: 20px"-->
+<!--              />-->
+<!--            </a-row>-->
+          </a-row>
+          <a-row>
             <a-col :span="24">
-              <a-tabs :default-active-tab="1" type="rounded">
-                <!--                <a-tab-pane key="1" :title="$t('warehouseList.tab.title.all')">-->
-                <!--                  <DispatchCenterCard wareHouseType="All" />-->
-                <!--                </a-tab-pane>-->
-                <a-tab-pane
-                  key="2"
-                  :title="$t('warehouseList.tab.title.center')"
-                >
-                  <DispatchCenterCard v-model:shuttle-data="shuttleData" />
-                </a-tab-pane>
-                <a-tab-pane
-                  key="3"
-                  :title="$t('warehouseList.tab.title.region')"
-                >
-                  <DispatchRegionCard />
-                </a-tab-pane>
-              </a-tabs>
+
+              <DispatchCenterCard v-model:shuttle-data="shuttleData" />
+
             </a-col>
-            <a-input-search
-              :placeholder="$t('cardList.searchInput.placeholder')"
-              style="width: 240px; position: absolute; top: 60px; right: 20px"
-            />
           </a-row>
         </a-card>
       </a-col>

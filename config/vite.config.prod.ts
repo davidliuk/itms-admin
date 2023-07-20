@@ -23,6 +23,7 @@ export default mergeConfig(
             vue: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'vue-i18n'],
           },
         },
+        external: ['@arco-design/web-vue'],
       },
       chunkSizeWarningLimit: 2000,
     },

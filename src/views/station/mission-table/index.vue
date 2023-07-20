@@ -114,7 +114,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: flex-end"
         >
-          <a-button>
+          <a-button @click="
+              (ev) => {
+                toCSV(renderData, 'mission-table');
+              }
+            ">
             <template #icon>
               <icon-download />
             </template>
@@ -473,6 +477,7 @@
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
   import htmlToPdf from '@/utils/pdf';
+  import { toCSV } from "@/utils/csv";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

@@ -146,6 +146,10 @@ export function queryPurchaseOrderList(
   );
 }
 
+export function addPurchaseOrder(order: PurchaseOrder) {
+  return axios.post<any>('/admin/sys/purchaseOrder', order);
+}
+
 // 出库单
 export interface StorageOrder {
   id: string; // 出库单编号
@@ -175,6 +179,10 @@ export function queryStorageOrderList(
     `/admin/sys/storageOrder/${current}/${limit}`,
     params
   );
+}
+
+export function addStorageOrder(order: StorageOrder) {
+  return axios.post<any>('/admin/sys/storageOrder', order);
 }
 
 // 区域中心库房库存
@@ -240,6 +248,10 @@ export function queryCheckOrderList(
   );
 }
 
+export function addCheckOrder(checkorder: CheckOrder) {
+  return axios.post<any>('/admin/sys/checkOrder', checkorder);
+}
+
 export function updateCheckOrder(checkorder: CheckOrder) {
   return axios.put<any>('/admin/sys/checkOrder', checkorder);
 }
@@ -292,6 +304,10 @@ export interface TransferOrder {
   outTime: Date; // 出库时间
   createTime: Date; // 创建时间
   updateTime: Date; // 更新时间
+}
+
+export function addTransferOrder(order: TransferOrder) {
+  return axios.post<any>(`/admin/sys/transferOrder`,order);
 }
 
 export function queryTransferOrderList(

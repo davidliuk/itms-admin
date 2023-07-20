@@ -2,7 +2,7 @@ export default {
   'menu.list.searchTable': 'Search Table',
   'searchTable.form.number': 'Set Number',
   'searchTable.form.number.placeholder': 'Please enter Set Number',
-  'searchTable.form.name': 'Set Name',
+  'searchTable.form.name': 'Set ID',
   'searchTable.form.name.placeholder': 'Please enter Set Name',
   'searchTable.form.contentType': 'Content Type',
   'searchTable.form.contentType.img': 'image-text',

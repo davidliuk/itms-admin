@@ -2,7 +2,34 @@ import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 import { LoginRes } from '@/api/user';
-import { PageRes, Role } from '@/api/acl';
+import { Admin, PageRes, Role } from '@/api/acl';
+import { computed, Ref } from 'vue';
+
+interface AddressAddOrder {
+  city: string;
+  detailAddress: string;
+  district: string;
+  isDefault: number;
+  name: string;
+  phone: string;
+  postCode: string;
+  province: string;
+  regionId: number;
+  stationId: number;
+  userId: number;
+  wareId: number;
+}
+
+interface AddOrder {
+  address: AddressAddOrder;
+  couponId: number;
+  orderNo: string;
+  receiverName: string;
+  receiverPhone: string;
+  stationId: number;
+  userId: number;
+  wareId: number;
+}
 
 export interface PolicyRecord {
   id: string;
@@ -18,10 +45,8 @@ export interface PolicyRecord {
   freightFeeReduce: number;
   refundableTime: string;
   payType: number;
-  // payType: '微信' | '支付宝';
   sourceType: number;
   orderStatus: number;
-  // orderStatus: '待付款' | '代发货' | '已发货' | '待收货' | '已完成' | '已取消';
   processStatus: number;
   logisticsId: number;
   logisticsName: string;
@@ -52,6 +77,36 @@ export interface PolicyRecord {
   isDeleted: number;
 }
 
+function convertPolicyRecordToAddOrder(policyRecord: PolicyRecord): AddOrder {
+  const address: AddressAddOrder = {
+    city: policyRecord.receiverCity.toString(), // Assuming receiverCity is a number in PolicyRecord
+    detailAddress: policyRecord.receiverAddress,
+    district: policyRecord.receiverDistrict.toString(), // Assuming receiverDistrict is a number in PolicyRecord
+    isDefault: 0, // You can set a default value or use a different logic to populate this field
+    name: policyRecord.takeName, // Assuming takeName is the same as name
+    phone: policyRecord.receiverPhone,
+    postCode: policyRecord.receiverPostCode,
+    province: policyRecord.receiverProvince.toString(), // Assuming receiverProvince is a number in PolicyRecord
+    regionId: 0, // You can set a default value or use a different logic to populate this field
+    stationId: policyRecord.stationId,
+    userId: policyRecord.userId,
+    wareId: policyRecord.wareId,
+  };
+
+  const addOrder: AddOrder = {
+    address,
+    couponId: policyRecord.couponId,
+    orderNo: policyRecord.orderNo,
+    receiverName: policyRecord.receiverName,
+    receiverPhone: policyRecord.receiverPhone,
+    stationId: policyRecord.stationId,
+    userId: policyRecord.userId,
+    wareId: policyRecord.wareId,
+  };
+
+  return addOrder;
+}
+
 // export interface PolicyParams extends Partial<PolicyRecord> {
 //   current: number;
 //   limit: number;
@@ -62,17 +117,37 @@ export interface PolicyListRes {
   current: number;
   total: number;
 }
+
+export interface PostParamsOnPageSearch {
+  courierName?: string;
+  logisticsName?: string;
+  orderNo?: string;
+  orderStatus?: string;
+  orderType?: string;
+  receiverName?: string;
+  userId?: string;
+}
+
 export function queryPolicyList(
   current: number,
   limit: number,
-  params: PolicyRecord | null
+  params: PostParamsOnPageSearch | null
 ) {
-  return axios.post<PolicyListRes>(`/admin/order/${current}/${limit}`, {
-    params,
-    // paramsSerializer: (obj) => {
-    //   return qs.stringify(obj);
-    // },
-  });
+  console.log(params);
+
+  if (params == null) params = {};
+  else if (params.orderStatus === '') {
+    delete params.orderStatus;
+  }
+
+  return axios.post<PolicyListRes>(`/admin/order/${current}/${limit}`, params);
+}
+
+export function AddOrder(admin: PolicyRecord) {
+  return axios.post<any>(
+    '/api/order/auth/submitOrder',
+    convertPolicyRecordToAddOrder(admin)
+  );
 }
 
 // export function queryPolicyList(params: PolicyParams) {
@@ -103,7 +178,7 @@ export function queryPolicyList(
 // }
 
 export function deletePolicyList(id: string) {
-  return axios.delete('/api/list/policy', { params: { id } });
+  return axios.delete(`/admin/order/${id}`, { params: { id } });
   // return axios.get<PolicyListRes>('/api/list/policy', {
   //   params,
   //   paramsSerializer: (obj) => {

@@ -17,7 +17,7 @@ export default {
   'searchTable.form.reset': '重置',
   'searchTable.form.selectDefault': '全部',
   'searchTable.operation.create': '新建',
-  'searchTable.operation.import': '批量导入',
+  'searchTable.operation.import': '导入',
   'searchTable.operation.download': '下载',
   // columns
 

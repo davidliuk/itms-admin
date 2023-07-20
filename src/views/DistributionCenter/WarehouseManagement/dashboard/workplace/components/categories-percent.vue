@@ -62,7 +62,7 @@
 
       const { data } = await queryCategoriesNameList();
       baseCategoriesMap.value = data;
-      // console.log(renderList.value);
+      console.log(baseCategoriesMap.value);
     } catch (err) {
       // you can report use errorHandler or other
       console.error(`error in fetch catrgoryList: ${err}`);

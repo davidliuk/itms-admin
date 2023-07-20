@@ -113,7 +113,14 @@
               </template>
               {{ $t('stationTable.operation.create') }}
             </a-button>
-            <a-upload action="/">
+            <a-upload @before-upload="(file: File) => {
+                formCSV(file, (order: any) => {
+                    order.forEach((order: Station) => {
+                      addStation(order);
+                    });
+                    return true;
+                  });
+                }">
               <template #upload-button>
                 <a-button>
                   {{ $t('stationTable.operation.import') }}
@@ -127,7 +134,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="
+              (ev) => {
+                toCSV(renderData, 'station-table');
+              }
+            ">
             <template #icon>
               <icon-download />
             </template>
@@ -404,7 +415,8 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { Permission } from '@/api/acl';
+  import { AddRole, Permission, Role } from "@/api/acl";
+  import { formCSV, toCSV } from "@/utils/csv";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

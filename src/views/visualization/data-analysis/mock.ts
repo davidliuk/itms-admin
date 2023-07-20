@@ -78,7 +78,7 @@ setupMock({
           y: [] as number[],
         };
         new Array(12).fill(0).forEach((_item, index) => {
-          result.x.push(`${index+1}月`);
+          result.x.push(`${index + 1}月`);
           result.y.push(Mock.Random.natural(100, 999));
         });
         return result;
@@ -91,8 +91,19 @@ setupMock({
     });
 
     // 排行榜
-    const authorNames = ['新鲜蔬菜', '时令水果', '肉禽蛋类', '海鲜水产',
-      '速食冻品','乳品烘焙','面包蛋糕','酒饮冲调','休闲零食','粮油调味','日用百货'];
+    const authorNames = [
+      '新鲜蔬菜',
+      '时令水果',
+      '肉禽蛋类',
+      '海鲜水产',
+      '速食冻品',
+      '乳品烘焙',
+      '面包蛋糕',
+      '酒饮冲调',
+      '休闲零食',
+      '粮油调味',
+      '日用百货',
+    ];
     function getRandomUniqueAuthor() {
       if (authorNames.length === 0) {
         return null; // All authors have been used, return null or handle this case as needed

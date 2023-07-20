@@ -251,12 +251,7 @@
           '#E8FFFB',
           contentExposureData.value
         ),
-        generateSeries(
-          '退货量',
-          '#3469FF',
-          '#E8F3FF',
-          activeUsersData.value
-        ),
+        generateSeries('退货量', '#3469FF', '#E8F3FF', activeUsersData.value),
       ],
     };
   });

@@ -3,7 +3,7 @@ export default {
   'searchTable.form.number': 'Set Number',
   'searchTable.form.number.placeholder': 'Please enter Set Number',
   'searchTable.form.name': 'Set Name',
-  'searchTable.form.name.placeholder': 'Please enter Set Name',
+  'searchTable.form.name.placeholder': 'Please enter Set UserID',
   'searchTable.form.contentType': 'Content Type',
   'searchTable.form.contentType.img': 'image-text',
   'searchTable.form.contentType.horizontalVideo': 'Horizontal short video',

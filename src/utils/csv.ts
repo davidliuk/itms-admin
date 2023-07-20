@@ -9,7 +9,7 @@ export function toCSV(list: any[], title: string) {
     }),
   ];
   const csvString = data.join('\n');
-  const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+  const blob = new Blob([csvString], { type: 'text/csv;charset=UTF-8;' });
   const link = document.createElement('a');
   if (link.download !== undefined) {
     const url = URL.createObjectURL(blob);
@@ -26,6 +26,7 @@ export function formCSV(file: File, callback: any) {
   // 从上传的csv文件中读取并解析数据
   const reader = new FileReader();
   reader.readAsText(file, 'utf-8');
+  console.log(reader);
   reader.onload = (e) => {
     const csvData = e.target?.result as string;
     const data = csvData.split('\n');

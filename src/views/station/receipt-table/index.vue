@@ -108,7 +108,11 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button @click="
+              (ev) => {
+                toCSV(renderData, 'receipt-table');
+              }
+            ">
             <template #icon>
               <icon-download />
             </template>
@@ -251,6 +255,7 @@
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
   import { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import { toCSV } from "@/utils/csv";
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

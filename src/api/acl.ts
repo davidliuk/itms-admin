@@ -22,6 +22,10 @@ export function queryRoleList(current: number, limit: number, params: Role) {
   );
 }
 
+export function AddRole(admin: Role) {
+  return axios.post<any>('/admin/acl/role', admin);
+}
+
 export function toAssign(adminId: string) {
   return axios.get<any>(`/admin/acl/user/toAssign/${adminId}`);
 }

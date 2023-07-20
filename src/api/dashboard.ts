@@ -80,6 +80,17 @@ export interface StationInfo {
   workStatus: number; // 营业状态
 }
 
+export interface ShowStation{
+  key: string;
+  regionId: number;
+  name: string;
+  address: string;
+  status: number;
+  postCode: string;
+  phone: string;
+  workTime: string;
+}
+
 export function queryStationList(wareId: string) {
   // console.log(`/admin/sys/station/getByWareId/${wareId}`);
   const data = axios.get<StationInfo[]>(
