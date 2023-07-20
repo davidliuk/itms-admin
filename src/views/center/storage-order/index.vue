@@ -112,14 +112,16 @@
         <!-- 表格上面的新建、批量导入 -->
         <a-col :span="12">
           <a-space>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((order: StorageOrder) => {
                       addStorageOrder(order);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button type="primary">
                   {{ $t('StorageOrder.operation.import') }}
@@ -320,16 +322,17 @@
     StorageOrder,
     queryOrderInfo,
     OrderItem,
-    CheckOrder, addStorageOrder
-  } from "@/api/center";
+    CheckOrder,
+    addStorageOrder,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import htmlToPdf from '@/utils/pdf';
-  import { formCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

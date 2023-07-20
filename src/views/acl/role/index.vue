@@ -120,14 +120,16 @@
               </template>
               {{ $t('role.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((order: Role) => {
                       AddRole(order);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('role.operation.import') }}
@@ -146,7 +148,8 @@
               (ev) => {
                 toCSV(renderData, 'role');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -336,8 +339,8 @@
     queryPermissionList,
     queryRoleList,
     Role,
-    updateRole
-  } from "@/api/acl";
+    updateRole,
+  } from '@/api/acl';
   import { Pagination } from '@/types/global';
   import type {
     TableColumnData,
@@ -346,8 +349,8 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { formCSV, toCSV } from "@/utils/csv";
-  import { AddOrder, PolicyRecord } from "@/api/list";
+  import { formCSV, toCSV } from '@/utils/csv';
+  import { AddOrder, PolicyRecord } from '@/api/list';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -373,7 +376,6 @@
   } as TableRowSelection);
 
   let options: Permission[];
-
 
   const isCreating = ref(false);
   const isUpdating = ref(false);

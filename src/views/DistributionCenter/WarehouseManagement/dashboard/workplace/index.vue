@@ -70,6 +70,11 @@
     margin-left: 16px;
   }
 
+  .horizontal-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
   .panel {
     background-color: var(--color-bg-2);
     border-radius: 4px;

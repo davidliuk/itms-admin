@@ -13,18 +13,16 @@
       <a-col :span="24">
         <a-card class="general-card" :title="$t('menu.list.warehouseList')">
           <a-row justify="space-between">
-<!--            <a-row>-->
-<!--              <a-input-search-->
-<!--                :placeholder="$t('cardList.searchInput.placeholder')"-->
-<!--                style="width: 240px; position: absolute; top: 60px; right: 20px"-->
-<!--              />-->
-<!--            </a-row>-->
+            <!--            <a-row>-->
+            <!--              <a-input-search-->
+            <!--                :placeholder="$t('cardList.searchInput.placeholder')"-->
+            <!--                style="width: 240px; position: absolute; top: 60px; right: 20px"-->
+            <!--              />-->
+            <!--            </a-row>-->
           </a-row>
           <a-row>
             <a-col :span="24">
-
               <DispatchCenterCard v-model:shuttle-data="shuttleData" />
-
             </a-col>
           </a-row>
         </a-card>

@@ -69,14 +69,16 @@
               </template>
               {{ $t('supplier.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((supplier: Supplier) => {
                       addSupplier(supplier);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('supplier.operation.import') }}
@@ -89,11 +91,13 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="
+          <a-button
+            @click="
               (ev) => {
                 toCSV(renderData, 'supplier');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -248,8 +252,8 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
-  import { formCSV, toCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV, toCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

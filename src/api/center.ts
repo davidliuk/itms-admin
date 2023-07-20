@@ -307,7 +307,7 @@ export interface TransferOrder {
 }
 
 export function addTransferOrder(order: TransferOrder) {
-  return axios.post<any>(`/admin/sys/transferOrder`,order);
+  return axios.post<any>(`/admin/sys/transferOrder`, order);
 }
 
 export function queryTransferOrderList(

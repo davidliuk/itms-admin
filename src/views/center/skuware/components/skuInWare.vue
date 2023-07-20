@@ -122,14 +122,16 @@
               </template>
               {{ $t('skuInfo.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((order: SkuInfo) => {
                       addSkuInfoUpload(order);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('skuInfo.operation.import') }}
@@ -143,11 +145,13 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="
+          <a-button
+            @click="
               (ev) => {
                 toCSV(renderData, 'skuInWare');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -268,15 +272,20 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { addSkuInfo, addSkuInfoUpload, querySkuInfoList, SkuInfo } from "@/api/product";
+  import {
+    addSkuInfo,
+    addSkuInfoUpload,
+    querySkuInfoList,
+    SkuInfo,
+  } from '@/api/product';
   import { addSkuWare, SkuWare, getSkuInfoBySkuId } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { Notification } from '@arco-design/web-vue';
-  import { formCSV, toCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV, toCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

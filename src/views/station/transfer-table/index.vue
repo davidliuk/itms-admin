@@ -108,11 +108,13 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="
+          <a-button
+            @click="
               (ev) => {
                 toCSV(renderData, 'transfer-table');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -295,7 +297,7 @@
   import Sortable from 'sortablejs';
   import htmlToPdf from '@/utils/pdf';
   import { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
-  import { toCSV } from "@/utils/csv";
+  import { toCSV } from '@/utils/csv';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

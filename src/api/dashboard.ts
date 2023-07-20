@@ -80,7 +80,7 @@ export interface StationInfo {
   workStatus: number; // 营业状态
 }
 
-export interface ShowStation{
+export interface ShowStation {
   key: string;
   regionId: number;
   name: string;
@@ -126,6 +126,12 @@ export function updateWareHouseInfo(warehouseInfo: WarehouseInfo) {
   // console.log(`/admin/sys/station/getByWareId/${wareId}`);
   return axios.put<any>(`/admin/sys/ware`, warehouseInfo);
 }
+
+export function deleteWareHouse(warehouseId: string) {
+  // console.log(`/admin/sys/station/getByWareId/${wareId}`);
+  return axios.delete<any>(`/admin/sys/ware/${warehouseId}`);
+}
+
 
 export interface WareAdmins {
   id: number;

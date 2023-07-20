@@ -75,14 +75,16 @@
               </template>
               {{ $t('attrGroup.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((attrGroup: AttrGroup) => {
                       addAttrGroup(attrGroup);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('attrGroup.operation.import') }}
@@ -96,11 +98,13 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="
+          <a-button
+            @click="
               (ev) => {
                 toCSV(renderData, 'attr-group');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -272,8 +276,8 @@
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
   import { useRouter } from 'vue-router';
-  import { formCSV, toCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV, toCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

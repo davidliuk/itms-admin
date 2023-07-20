@@ -10,7 +10,7 @@
       class="table-style"
     >
       <template #status="{ record }">
-          {{ (record as ShowStation).status ===0? '休息':'营业' }}
+        {{ (record as ShowStation).status === 0 ? '休息' : '营业' }}
       </template>
       <template #order_status="{ record }">
         <a-typography-paragraph>
@@ -63,8 +63,9 @@
     queryContentData,
     ContentDataRecord,
     queryStationList,
-    StationInfo, ShowStation
-  } from "@/api/dashboard";
+    StationInfo,
+    ShowStation,
+  } from '@/api/dashboard';
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
   import { AnyObject } from '@/types/global';

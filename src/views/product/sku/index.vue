@@ -142,14 +142,16 @@
               </template>
               {{ $t('skuInfo.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((skuInfo: SkuInfo) => {
                       addSkuInfoUpload(skuInfo);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('skuInfo.operation.import') }}
@@ -163,11 +165,13 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="
+          <a-button
+            @click="
               (ev) => {
                 toCSV(renderData, 'sku');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -329,8 +333,10 @@
     querySkuInfoList,
     updateSkuInfo,
     deleteSkuInfo,
-    SkuInfo, addSkuInfo, addSkuInfoUpload
-  } from "@/api/product";
+    SkuInfo,
+    addSkuInfo,
+    addSkuInfoUpload,
+  } from '@/api/product';
   import { Pagination } from '@/types/global';
   import type {
     TableColumnData,
@@ -340,8 +346,8 @@
   import Sortable from 'sortablejs';
   import copy from '@/utils/objects';
   import { useRouter } from 'vue-router';
-  import { formCSV, toCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV, toCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   const router = useRouter();
 

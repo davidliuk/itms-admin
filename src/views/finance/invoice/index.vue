@@ -70,14 +70,16 @@
               </template>
               {{ $t('invoice.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((order: Invoice) => {
                       addInvoice(order);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('invoice.operation.import') }}
@@ -90,11 +92,13 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button @click="
+          <a-button
+            @click="
               (ev) => {
                 toCSV(renderData, 'invoice');
               }
-            ">
+            "
+          >
             <template #icon>
               <icon-download />
             </template>
@@ -268,9 +272,16 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { addAdmin, AddRole, Admin, deleteAdmin, Role, updateAdmin } from "@/api/acl";
+  import {
+    addAdmin,
+    AddRole,
+    Admin,
+    deleteAdmin,
+    Role,
+    updateAdmin,
+  } from '@/api/acl';
   import copy from '@/utils/objects';
-  import { formCSV, toCSV } from "@/utils/csv";
+  import { formCSV, toCSV } from '@/utils/csv';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

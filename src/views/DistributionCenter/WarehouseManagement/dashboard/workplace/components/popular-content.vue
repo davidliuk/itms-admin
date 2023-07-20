@@ -27,7 +27,7 @@
           :bordered="true"
           :scroll="{ x: '100%', y: '264px' }"
         >
-          <template #columns >
+          <template #columns>
             <a-table-column title="名称" data-index="skuName" />
             <a-table-column title="类别" data-index="skuInfo.categoryName">
             </a-table-column>
@@ -90,8 +90,7 @@
 
     renderList.value = Array(tempData.value.length)
       .fill(null)
-      .map((_, index) => (
-        {
+      .map((_, index) => ({
         key: String(index),
         skuName: tempData.value[index].skuName,
         skuInfo: tempData.value[index].skuInfo,

@@ -91,14 +91,16 @@
               </template>
               批量进货
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((order: SkuWare) => {
                       addSkuWare(SkuWare);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('skuWare.operation.import') }}
@@ -297,8 +299,8 @@
   import copy from '@/utils/objects';
   import htmlToPdf from '@/utils/pdf';
   import { useRouter } from 'vue-router';
-  import { formCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   const generateFormModel = () => {
     return {

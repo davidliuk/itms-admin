@@ -116,14 +116,16 @@
               </template>
               {{ $t('PurchaseOrder.operation.create') }}
             </a-button>
-            <a-upload @before-upload="(file: File) => {
+            <a-upload
+              @before-upload="(file: File) => {
                 formCSV(file, (order: any) => {
                     order.forEach((order: PurchaseOrder) => {
                       addPurchaseOrder(order);
                     });
                     return true;
                   });
-                }">
+                }"
+            >
               <template #upload-button>
                 <a-button>
                   {{ $t('PurchaseOrder.operation.import') }}
@@ -320,15 +322,19 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPurchaseOrderList, PurchaseOrder, addPurchaseOrder } from "@/api/center";
+  import {
+    queryPurchaseOrderList,
+    PurchaseOrder,
+    addPurchaseOrder,
+  } from '@/api/center';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import htmlToPdf from '@/utils/pdf';
   import copy from '@/utils/objects';
-  import { formCSV } from "@/utils/csv";
-  import { AddRole, Role } from "@/api/acl";
+  import { formCSV } from '@/utils/csv';
+  import { AddRole, Role } from '@/api/acl';
 
   const generateFormModel = () => {
     return {
