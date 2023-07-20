@@ -112,7 +112,7 @@ export interface Attr {
   name: string;
   inputType: number;
   selectList: string;
-  groupId: string;
+  attrGroupId: string;
   createTime: Date;
   updateTime: Date;
 }

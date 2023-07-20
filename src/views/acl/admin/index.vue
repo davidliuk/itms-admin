@@ -405,7 +405,7 @@
       id: '',
       username: '',
       name: '',
-      // password: '',
+      password: '',
       phone: '',
       email: '',
       wareId: '',

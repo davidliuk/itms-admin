@@ -219,7 +219,7 @@
       selectList: [],
       // createTime: null,
       // updateTime: null,
-    };
+    } as Attr;
   };
 
   const selectedKeys = ref([]);
